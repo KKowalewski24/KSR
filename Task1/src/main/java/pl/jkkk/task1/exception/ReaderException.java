@@ -1,18 +1,20 @@
 package pl.jkkk.task1.exception;
 
-public class FileDaoException extends DaoException {
+import java.io.IOException;
+
+public class ReaderException extends IOException {
 
     /*------------------------ FIELDS REGION ------------------------*/
 
     /*------------------------ METHODS REGION ------------------------*/
-    public FileDaoException() {
+    public ReaderException() {
     }
 
-    public FileDaoException(String message) {
+    public ReaderException(String message) {
         super(message);
     }
 
-    public FileDaoException(Throwable cause) {
+    public ReaderException(Throwable cause) {
         super(cause);
     }
 }

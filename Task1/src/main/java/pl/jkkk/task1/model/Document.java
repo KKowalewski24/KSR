@@ -1,15 +1,11 @@
 package pl.jkkk.task1.model;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.List;
 
-@Getter
-@Setter
 public class Document {
 
     /*------------------------ FIELDS REGION ------------------------*/
@@ -20,6 +16,14 @@ public class Document {
     public Document(String title, List<String> wordList) {
         this.title = title;
         this.wordList = wordList;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public List<String> getWordList() {
+        return wordList;
     }
 
     @Override

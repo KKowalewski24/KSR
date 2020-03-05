@@ -1,9 +1,9 @@
 package pl.jkkk.task1.featureextraction;
 
+import pl.jkkk.task1.model.Document;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import pl.jkkk.task1.model.Document;
 
 public class FeatureExtractorDecorator implements FeatureExtractor {
 

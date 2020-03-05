@@ -25,7 +25,6 @@ public class FileReader {
     public static final String D_NODE = "D";
     public static final String TEXT_NODE = "TEXT";
     public static final String TITLE_NODE = "TITLE";
-    public static final String BODY_NODE = "BODY";
 
     /*------------------------ METHODS REGION ------------------------*/
     private static Path preparePath(String filename) throws URISyntaxException {

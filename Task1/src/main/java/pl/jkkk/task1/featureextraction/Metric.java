@@ -1,5 +1,13 @@
 package pl.jkkk.task1.featureextraction;
 
 public enum Metric {
-//    TODO ADD METRICS
+    EUCLIDEAN("Euclidean"),
+    MANHATTAN("Manhattan"),
+    CHEBYSHEV("Chebyshev");
+
+    public final String label;
+
+    Metric(String label) {
+        this.label = label;
+    }
 }

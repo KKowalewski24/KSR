@@ -41,6 +41,6 @@ public class Main {
     public static void main(String[] args) throws IOException, URISyntaxException {
         System.out.println("abc");
 
-        FileReader.readFromFiles(filenameList);
+        System.out.println("Number of objects: " + FileReader.readFromFiles(filenameList).size());
     }
 }

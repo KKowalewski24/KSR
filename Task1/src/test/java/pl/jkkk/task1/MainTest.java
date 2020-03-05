@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class MainTest {
 
     @Test
-    void contextLoads() {
+    void exampleTest() {
         assertEquals(5, 5);
     }
 }

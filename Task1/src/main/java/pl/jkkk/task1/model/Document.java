@@ -5,17 +5,36 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Document {
 
     /*------------------------ FIELDS REGION ------------------------*/
+    private final UUID uuid = UUID.randomUUID();
+    private List<String> topicList;
+    private List<String> placeList;
     private String title;
     private List<String> wordList;
 
     /*------------------------ METHODS REGION ------------------------*/
-    public Document(String title, List<String> wordList) {
+    public Document(List<String> topicList, List<String> placeList, String title,
+                    List<String> wordList) {
+        this.topicList = topicList;
+        this.placeList = placeList;
         this.title = title;
         this.wordList = wordList;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public List<String> getTopicList() {
+        return topicList;
+    }
+
+    public List<String> getPlaceList() {
+        return placeList;
     }
 
     public String getTitle() {
@@ -39,6 +58,9 @@ public class Document {
         Document document = (Document) o;
 
         return new EqualsBuilder()
+                .append(uuid, document.uuid)
+                .append(topicList, document.topicList)
+                .append(placeList, document.placeList)
                 .append(title, document.title)
                 .append(wordList, document.wordList)
                 .isEquals();
@@ -47,6 +69,9 @@ public class Document {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
+                .append(uuid)
+                .append(topicList)
+                .append(placeList)
                 .append(title)
                 .append(wordList)
                 .toHashCode();
@@ -55,6 +80,9 @@ public class Document {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
+                .append("uuid", uuid)
+                .append("topicList", topicList)
+                .append("placeList", placeList)
                 .append("title", title)
                 .append("wordList", wordList)
                 .toString();

@@ -16,10 +16,12 @@ class FileReaderTest {
     /*------------------------ FIELDS REGION ------------------------*/
     private static final Integer NUMBER_OF_DOCUMENTS_IN_FILE = 1000;
 
+    private FileReader fileReader = new FileReader();
+
     /*------------------------ METHODS REGION ------------------------*/
     @Test
     void numberOfObjectsTest() throws IOException, URISyntaxException {
-        assertEquals(NUMBER_OF_DOCUMENTS_IN_FILE, FileReader.readFromFiles(
+        assertEquals(NUMBER_OF_DOCUMENTS_IN_FILE, fileReader.readFromFiles(
                 Stream.of(SUBDIRECTORY + "reut2-000.sgm")
                         .collect(Collectors.toCollection(ArrayList::new))).size());
     }

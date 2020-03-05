@@ -27,7 +27,7 @@ public class FileReader {
     public static final String TITLE_NODE = "TITLE";
 
     /*------------------------ METHODS REGION ------------------------*/
-    private static Path preparePath(String filename) throws URISyntaxException {
+    private Path preparePath(String filename) throws URISyntaxException {
         return Paths.get(Thread
                 .currentThread()
                 .getContextClassLoader()
@@ -35,15 +35,15 @@ public class FileReader {
                 .toURI());
     }
 
-    private static List<String> stringToListOfStringBySpace(String string) {
+    private List<String> stringToListOfStringBySpace(String string) {
         return new ArrayList<>(Arrays.asList(string.split(" ")));
     }
 
-    private static Node takeLastChildNode(Node node) {
+    private Node takeLastChildNode(Node node) {
         return node.childNode(node.childNodeSize() - 1);
     }
 
-    public static List<Document> readFromFiles(List<String> filenameList)
+    public List<Document> readFromFiles(List<String> filenameList)
             throws IOException, URISyntaxException {
         List<Document> documentList = new ArrayList();
 

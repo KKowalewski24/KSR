@@ -10,11 +10,12 @@ import static pl.jkkk.task1.constant.Constants.FILENAME_LIST;
 public class Main {
 
     /*------------------------ FIELDS REGION ------------------------*/
+    private static FileReader fileReader = new FileReader();
 
     /*------------------------ METHODS REGION ------------------------*/
     public static void main(String[] args) throws IOException, URISyntaxException {
         System.out.println("abc");
 
-        FileReader.readFromFiles(FILENAME_LIST);
+        fileReader.readFromFiles(FILENAME_LIST);
     }
 }

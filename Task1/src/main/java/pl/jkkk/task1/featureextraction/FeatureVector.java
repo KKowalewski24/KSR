@@ -8,11 +8,12 @@ import java.util.Collections;
 public class FeatureVector extends ArrayList<Double> {
 
     /*------------------------ FIELDS REGION ------------------------*/
+    public static final double DEFAULT_VALUE = 0.0;
 
     /*------------------------ METHODS REGION ------------------------*/
     private static Double calculateEuclidean(FeatureVector featureVectorOne,
                                              FeatureVector featureVectorTwo) {
-        Double result = new Double(0.0);
+        Double result = new Double(DEFAULT_VALUE);
 
         for (int i = 0; i < featureVectorOne.size(); i++) {
             result += Math.pow(featureVectorOne.get(i) - featureVectorTwo.get(i), 2);
@@ -23,7 +24,7 @@ public class FeatureVector extends ArrayList<Double> {
 
     private static Double calculateManhattan(FeatureVector featureVectorOne,
                                              FeatureVector featureVectorTwo) {
-        Double result = new Double(0.0);
+        Double result = new Double(DEFAULT_VALUE);
 
         for (int i = 0; i < featureVectorOne.size(); i++) {
             result += Math.abs(featureVectorOne.get(i) - featureVectorTwo.get(i));
@@ -48,13 +49,13 @@ public class FeatureVector extends ArrayList<Double> {
                                            Metric metric) throws MetricNotSupportedException {
         switch (metric) {
             case EUCLIDEAN: {
-                calculateEuclidean(featureVectorOne, featureVectorTwo);
+                return calculateEuclidean(featureVectorOne, featureVectorTwo);
             }
             case MANHATTAN: {
-                calculateManhattan(featureVectorOne, featureVectorTwo);
+                return calculateManhattan(featureVectorOne, featureVectorTwo);
             }
             case CHEBYSHEV: {
-                calculateChebyshev(featureVectorOne, featureVectorTwo);
+                return calculateChebyshev(featureVectorOne, featureVectorTwo);
             }
             default: {
                 throw new MetricNotSupportedException();

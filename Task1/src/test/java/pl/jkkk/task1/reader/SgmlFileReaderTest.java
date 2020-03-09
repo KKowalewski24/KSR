@@ -11,17 +11,17 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static pl.jkkk.task1.constant.Constants.SUBDIRECTORY;
 
-class FileReaderTest {
+class SgmlFileReaderTest {
 
     /*------------------------ FIELDS REGION ------------------------*/
     private static final Integer NUMBER_OF_DOCUMENTS_IN_FILE = 1000;
 
-    private FileReader fileReader = new FileReader();
+    private SgmlFileReader sgmlFileReader = new SgmlFileReader();
 
     /*------------------------ METHODS REGION ------------------------*/
     @Test
     void numberOfObjectsTest() throws IOException, URISyntaxException {
-        assertEquals(NUMBER_OF_DOCUMENTS_IN_FILE, fileReader.readFromFiles(
+        assertEquals(NUMBER_OF_DOCUMENTS_IN_FILE, sgmlFileReader.readFromFiles(
                 Stream.of(SUBDIRECTORY + "reut2-000.sgm")
                         .collect(Collectors.toCollection(ArrayList::new))).size());
     }

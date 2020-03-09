@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 public class Constants {
 
     /*------------------------ FIELDS REGION ------------------------*/
+    public static final String STOP_WORDS = "stop-words.json";
     public static final String SUBDIRECTORY = "article/";
     public static final ArrayList<String> FILENAME_LIST = Stream.of(
             SUBDIRECTORY + "reut2-000.sgm",

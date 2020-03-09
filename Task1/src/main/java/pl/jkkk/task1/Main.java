@@ -1,10 +1,12 @@
 package pl.jkkk.task1;
 
+import pl.jkkk.task1.model.Document;
+import pl.jkkk.task1.reader.FileReader;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import pl.jkkk.task1.reader.FileReader;
 import static pl.jkkk.task1.constant.Constants.FILENAME_LIST;
 
 public class Main {
@@ -17,12 +19,12 @@ public class Main {
 
         /* Read documents */
         List<Document> documents = fileReader.readFromFiles(FILENAME_LIST);
-        
+
         /* Stemme documents */
         //TODO
 
         /* Remove words from STOP-LIST */
         //TODO
-        
+
     }
 }

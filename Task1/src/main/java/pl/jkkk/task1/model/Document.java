@@ -33,16 +33,32 @@ public class Document {
         return topicList;
     }
 
+    public void setTopicList(List<String> topicList) {
+        this.topicList = topicList;
+    }
+
     public List<String> getPlaceList() {
         return placeList;
+    }
+
+    public void setPlaceList(List<String> placeList) {
+        this.placeList = placeList;
     }
 
     public String getTitle() {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public List<String> getWordList() {
         return wordList;
+    }
+
+    public void setWordList(List<String> wordList) {
+        this.wordList = wordList;
     }
 
     @Override

@@ -74,7 +74,6 @@ public class Document {
         Document document = (Document) o;
 
         return new EqualsBuilder()
-                .append(uuid, document.uuid)
                 .append(topicList, document.topicList)
                 .append(placeList, document.placeList)
                 .append(title, document.title)
@@ -85,7 +84,6 @@ public class Document {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(uuid)
                 .append(topicList)
                 .append(placeList)
                 .append(title)

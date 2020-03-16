@@ -17,24 +17,24 @@ class KnnAlgorithmTest {
     /*------------------------ FIELDS REGION ------------------------*/
     private KnnAlgorithm knnAlgorithm = new KnnAlgorithm();
 
-    private FeatureVector testVector = new FeatureVector(1.0, 2.0);
+    private FeatureVector testVector = new FeatureVector(1.0, 2.0, 7.9);
     private List<FeatureVector> trainingVectors = Stream.of(
-            new FeatureVector(12.0, 22.0),
-            new FeatureVector(17.0, 17.0),
-            new FeatureVector(22.0, 0.0),
-            new FeatureVector(4.0, -5.0),
-            new FeatureVector(8.0, -15.0),
-            new FeatureVector(2.0, 3.0),
-            new FeatureVector(5.0, 7.0)
+            new FeatureVector(12.0, 22.0, 15.0),
+            new FeatureVector(17.0, 17.0, 12.0),
+            new FeatureVector(22.0, 0.0, 8.0),
+            new FeatureVector(4.0, -5.0, 7.5),
+            new FeatureVector(8.0, -15.0, 12.8),
+            new FeatureVector(2.0, 3.0, 4.9),
+            new FeatureVector(5.0, 7.0, 15.9)
     ).collect(Collectors.toCollection(ArrayList::new));
 
     /*------------------------ METHODS REGION ------------------------*/
     @Test
-    void calcaulateTest() throws MetricNotSupportedException {
+    void calculateTest() throws MetricNotSupportedException {
         List<FeatureVector> correctVectors = Stream.of(
-                new FeatureVector(2.0, 3.0),
-                new FeatureVector(5.0, 7.0),
-                new FeatureVector(4.0, -5.0)
+                new FeatureVector(2.0, 3.0, 4.9),
+                new FeatureVector(4.0, -5.0, 7.5),
+                new FeatureVector(5.0, 7.0, 15.9)
         ).collect(Collectors.toCollection(ArrayList::new));
 
         List<CalculatedFeatureVector> resultVectors = knnAlgorithm.calculate(
@@ -46,6 +46,5 @@ class KnnAlgorithmTest {
                         resultVectors.get(i).getFeatureVector().get(j));
             }
         }
-
     }
 }

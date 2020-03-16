@@ -2,19 +2,19 @@ package pl.jkkk.task1.reader;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
 import pl.jkkk.task1.model.Document;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class FileReader {
+import static pl.jkkk.task1.reader.ReaderUtil.preparePath;
+import static pl.jkkk.task1.reader.ReaderUtil.stringToListOfStringBySpace;
+import static pl.jkkk.task1.reader.ReaderUtil.takeLastChildNode;
+
+public class SgmlFileReader {
 
     /*------------------------ FIELDS REGION ------------------------*/
     public static final String CHARSET_UTF_8 = "UTF-8";
@@ -27,22 +27,6 @@ public class FileReader {
     public static final String TITLE_NODE = "TITLE";
 
     /*------------------------ METHODS REGION ------------------------*/
-    private Path preparePath(String filename) throws URISyntaxException {
-        return Paths.get(Thread
-                .currentThread()
-                .getContextClassLoader()
-                .getResource(filename)
-                .toURI());
-    }
-
-    private List<String> stringToListOfStringBySpace(String string) {
-        return new ArrayList<>(Arrays.asList(string.split(" ")));
-    }
-
-    private Node takeLastChildNode(Node node) {
-        return node.childNode(node.childNodeSize() - 1);
-    }
-
     public List<Document> readFromFiles(List<String> filenameList)
             throws IOException, URISyntaxException {
         List<Document> documentList = new ArrayList();

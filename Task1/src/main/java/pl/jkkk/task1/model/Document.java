@@ -33,16 +33,32 @@ public class Document {
         return topicList;
     }
 
+    public void setTopicList(List<String> topicList) {
+        this.topicList = topicList;
+    }
+
     public List<String> getPlaceList() {
         return placeList;
+    }
+
+    public void setPlaceList(List<String> placeList) {
+        this.placeList = placeList;
     }
 
     public String getTitle() {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public List<String> getWordList() {
         return wordList;
+    }
+
+    public void setWordList(List<String> wordList) {
+        this.wordList = wordList;
     }
 
     @Override
@@ -58,7 +74,6 @@ public class Document {
         Document document = (Document) o;
 
         return new EqualsBuilder()
-                .append(uuid, document.uuid)
                 .append(topicList, document.topicList)
                 .append(placeList, document.placeList)
                 .append(title, document.title)
@@ -69,7 +84,6 @@ public class Document {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(uuid)
                 .append(topicList)
                 .append(placeList)
                 .append(title)

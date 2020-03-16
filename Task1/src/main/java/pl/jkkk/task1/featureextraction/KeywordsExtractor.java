@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import pl.jkkk.task1.model.Document;
@@ -79,7 +80,7 @@ public class KeywordsExtractor {
         });
     }
 
-    private List<String> retrieveKeywords(int numberOfKeywords){
+    private Set<String> retrieveKeywords(int numberOfKeywords){
         return scores.keySet().stream()
             .sorted((String word1, String word2) -> {
                if(scores.get(word1) < scores.get(word2)) return -1;
@@ -87,7 +88,7 @@ public class KeywordsExtractor {
                 else return 0;
             })
             .limit(numberOfKeywords)
-            .collect(Collectors.toList());
+            .collect(Collectors.toSet());
     }
 
     /**
@@ -95,7 +96,7 @@ public class KeywordsExtractor {
      *
      * @param numberOfKeywords number of keywords to retrieve
      */
-    public List<String> getKeywordsByTFIDF(int numberOfKeywords){
+    public Set<String> getKeywordsByTFIDF(int numberOfKeywords){
         calculateScoresUsingTFIDF();
         return retrieveKeywords(numberOfKeywords);
     }
@@ -105,7 +106,7 @@ public class KeywordsExtractor {
      *
      * @param numberOfKeywords number of keywords to retrieve
      */
-    public List<String> getKeywordsByTPSD(int numberOfKeywords){
+    public Set<String> getKeywordsByTPSD(int numberOfKeywords){
         calculateScoresUsingTPSD();
         return retrieveKeywords(numberOfKeywords);
     }

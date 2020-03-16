@@ -1,9 +1,14 @@
 package pl.jkkk.task1;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import pl.jkkk.task1.featureextraction.FeatureExtractorDecorator;
+import pl.jkkk.task1.featureextraction.FeatureVector;
 import pl.jkkk.task1.featureextraction.KeywordsExtractor;
+import pl.jkkk.task1.featureextraction.NumberOfKeywordsFE;
 import pl.jkkk.task1.model.Document;
 import pl.jkkk.task1.reader.SgmlFileReader;
 import pl.jkkk.task1.stemmer.DocumentStemmer;
@@ -43,9 +48,19 @@ public class Main {
         action(() -> keywordsExtractor.calculateOccurrences(),
                 "Calculating word occurrences");
 
-        final List<String> keywords = new ArrayList<>();
+        final Set<String> keywords = new HashSet<>();
         action(() -> keywords.addAll(keywordsExtractor.getKeywordsByTPSD(100)),
                 "Retrieving keywords");
+
+        final Set<FeatureVector> featureVectors = new HashSet<>();
+        action(() -> {
+                FeatureExtractorDecorator extractorDecorator = 
+                    new FeatureExtractorDecorator();
+                extractorDecorator.addExtractor(new NumberOfKeywordsFE(keywords));
+                featureVectors.addAll(documents.stream()
+                    .map(document -> extractorDecorator.extract(document))
+                    .collect(Collectors.toSet()));
+            }, "Features extracting");
     }
 
     private static void action(Runnable runnable, String description){

@@ -38,6 +38,7 @@
         </module>
 
         <module name="AvoidStarImport"/>
+        <module name="UnusedImports"/>
         <module name="OneTopLevelClass"/>
         <module name="NoLineWrap"/>
 

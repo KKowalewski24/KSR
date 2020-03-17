@@ -1,19 +1,20 @@
 package pl.jkkk.task1;
 
-import pl.jkkk.task1.featureextraction.FeatureExtractorDecorator;
-import pl.jkkk.task1.featureextraction.FeatureVector;
-import pl.jkkk.task1.featureextraction.KeywordsExtractor;
-import pl.jkkk.task1.featureextraction.NumberOfKeywordsFE;
-import pl.jkkk.task1.model.Document;
-import pl.jkkk.task1.reader.SgmlFileReader;
-import pl.jkkk.task1.stemmer.DocumentStemmer;
-import pl.jkkk.task1.stopwords.WordRemover;
-
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import pl.jkkk.task1.featureextraction.FeatureExtractorDecorator;
+import pl.jkkk.task1.featureextraction.FeatureVector;
+import pl.jkkk.task1.featureextraction.KeywordsExtractor;
+import pl.jkkk.task1.featureextraction.NumberOfKeywordsFE;
+import pl.jkkk.task1.featureextraction.RelativeNumberOfKeywordsFE;
+import pl.jkkk.task1.model.Document;
+import pl.jkkk.task1.reader.SgmlFileReader;
+import pl.jkkk.task1.stemmer.DocumentStemmer;
+import pl.jkkk.task1.stopwords.WordRemover;
 import static pl.jkkk.task1.constant.Constants.FILENAME_LIST;
 
 public class Main {
@@ -62,15 +63,17 @@ public class Main {
         action(() -> keywords.addAll(keywordsExtractor.getKeywordsByTPSD(100)),
                 "Retrieving keywords");
 
-        final Set<FeatureVector> featureVectors = new HashSet<>();
-        action(() -> {
-            FeatureExtractorDecorator extractorDecorator = new FeatureExtractorDecorator();
-            extractorDecorator.addExtractor(new NumberOfKeywordsFE(keywords));
-
+        final List<FeatureVector> featureVectors = new ArrayList<>();
+        final FeatureExtractorDecorator extractorDecorator = 
+            new FeatureExtractorDecorator();
+        extractorDecorator.addExtractor(new NumberOfKeywordsFE(keywords));
+        extractorDecorator.addExtractor(new RelativeNumberOfKeywordsFE(keywords));
+        action(() -> 
             featureVectors.addAll(documents.stream()
-                    .map(document -> extractorDecorator.extract(document))
-                    .collect(Collectors.toSet()));
+                .map(extractorDecorator::extract)
+                .collect(Collectors.toList())),
+            "Features extracting");
 
-        }, "Features extracting");
+        action(() -> {;}, "KNN");
     }
 }

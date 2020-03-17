@@ -11,7 +11,7 @@ public class FeatureExtractorDecorator implements FeatureExtractor {
 
     @Override
     public FeatureVector extract(final Document document) {
-        FeatureVector featureVector = new FeatureVector();
+        FeatureVector featureVector = new FeatureVector(document);
         extractors.stream()
                 .forEach(extractor -> featureVector.addAll(extractor.extract(document)));
         return featureVector;

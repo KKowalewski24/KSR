@@ -1,19 +1,34 @@
 package pl.jkkk.task1.featureextraction;
 
-import pl.jkkk.task1.exception.MetricNotSupportedException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+
+import pl.jkkk.task1.exception.MetricNotSupportedException;
+import pl.jkkk.task1.model.Document;
 
 public class FeatureVector extends ArrayList<Double> {
 
     /*------------------------ FIELDS REGION ------------------------*/
     public static final double DEFAULT_VALUE = 0.0;
 
+    private Document document;
+
     /*------------------------ METHODS REGION ------------------------*/
     public FeatureVector(Double... values) {
         super(Arrays.asList(values));
+    }
+
+    public FeatureVector(final Document document){
+        this.document = document;
+    }
+
+    public Document getDocument(){
+        return document;
+    }
+
+    public void setDocument(final Document document){
+        this.document = document;
     }
 
     private static Double calculateEuclidean(FeatureVector featureVectorOne,

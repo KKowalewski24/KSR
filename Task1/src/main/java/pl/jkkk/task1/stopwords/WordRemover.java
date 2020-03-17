@@ -1,13 +1,14 @@
 package pl.jkkk.task1.stopwords;
 
+import pl.jkkk.task1.exception.ReaderException;
+import pl.jkkk.task1.model.Document;
+import pl.jkkk.task1.reader.JsonFileReader;
+
 import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import pl.jkkk.task1.exception.ReaderException;
-import pl.jkkk.task1.model.Document;
-import pl.jkkk.task1.reader.JsonFileReader;
 import static pl.jkkk.task1.constant.Constants.STOP_WORDS;
 
 public class WordRemover {

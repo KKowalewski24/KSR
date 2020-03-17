@@ -3,17 +3,29 @@ package pl.jkkk.task1.knn;
 import pl.jkkk.task1.exception.MetricNotSupportedException;
 import pl.jkkk.task1.featureextraction.FeatureVector;
 import pl.jkkk.task1.featureextraction.Metric;
+import pl.jkkk.task1.model.Document;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static pl.jkkk.task1.constant.Constants.CHOSEN_PLACES;
+import static pl.jkkk.task1.constant.Constants.PLACES_CANADA;
+import static pl.jkkk.task1.constant.Constants.PLACES_FRANCE;
+import static pl.jkkk.task1.constant.Constants.PLACES_JAPAN;
+import static pl.jkkk.task1.constant.Constants.PLACES_UK;
+import static pl.jkkk.task1.constant.Constants.PLACES_USA;
+import static pl.jkkk.task1.constant.Constants.PLACES_WEST_GERMANY;
 
 public class KnnAlgorithm {
 
     /*------------------------ FIELDS REGION ------------------------*/
 
     /*------------------------ METHODS REGION ------------------------*/
-    public List<CalculatedFeatureVector> calculate(
+    List<FeatureVector> calculate(
             FeatureVector featureVector, List<FeatureVector> trainingVectors,
             int numberK, Metric metric) throws MetricNotSupportedException {
 
@@ -27,9 +39,47 @@ public class KnnAlgorithm {
         Collections.sort(calculatedFeatureVectors);
         calculatedFeatureVectors.subList(numberK, calculatedFeatureVectors.size()).clear();
 
-//        TODO ADD CLASIFICATON TO CERTAIN CLASS
+        return calculatedFeatureVectors.stream()
+                .map((it) -> it.getFeatureVector())
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
 
-        return calculatedFeatureVectors;
+    String classify(List<Document> documents) {
+        Map<String, Integer> placesMap = new HashMap<>();
+        placesMap.put(PLACES_WEST_GERMANY, 0);
+        placesMap.put(PLACES_USA, 0);
+        placesMap.put(PLACES_FRANCE, 0);
+        placesMap.put(PLACES_UK, 0);
+        placesMap.put(PLACES_CANADA, 0);
+        placesMap.put(PLACES_JAPAN, 0);
+
+        documents.forEach((it) -> {
+            String place = it.getPlaceList().get(0);
+
+            if (CHOSEN_PLACES.contains(place)) {
+                placesMap.put(place, placesMap.get(place) + 1);
+            }
+        });
+
+        return placesMap.entrySet()
+                .stream()
+                .max((val1, val2) -> val1.getValue() > val2.getValue() ? 1 : -1)
+                .get()
+                .getKey();
+    }
+
+    public String calculateAndClassify(
+            FeatureVector featureVector, List<FeatureVector> trainingVectors,
+            int numberK, Metric metric) throws MetricNotSupportedException {
+
+        List<FeatureVector> selectedVectors = calculate(featureVector,
+                trainingVectors, numberK, metric);
+
+        return classify(selectedVectors
+                .stream()
+                .map((it) -> it.getDocument())
+                .collect(Collectors.toCollection(ArrayList::new))
+        );
     }
 }
     

@@ -7,6 +7,22 @@ import java.util.stream.Stream;
 public class Constants {
 
     /*------------------------ FIELDS REGION ------------------------*/
+    public static final String PLACES_WEST_GERMANY = "west-germany";
+    public static final String PLACES_USA = "usa";
+    public static final String PLACES_FRANCE = "france";
+    public static final String PLACES_UK = "uk";
+    public static final String PLACES_CANADA = "canada";
+    public static final String PLACES_JAPAN = "japan";
+
+    public static final ArrayList<String> CHOSEN_PLACES = Stream.of(
+            PLACES_WEST_GERMANY,
+            PLACES_USA,
+            PLACES_FRANCE,
+            PLACES_UK,
+            PLACES_CANADA,
+            PLACES_JAPAN
+    ).collect(Collectors.toCollection(ArrayList::new));
+
     public static final String STOP_WORDS = "stop-words.json";
     public static final String SUBDIRECTORY = "article/";
     public static final ArrayList<String> FILENAME_LIST = Stream.of(

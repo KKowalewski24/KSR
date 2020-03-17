@@ -5,7 +5,7 @@ import pl.jkkk.task1.exception.ReaderException;
 
 import java.net.URISyntaxException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static pl.jkkk.task1.constant.Constants.STOP_WORDS;
 
 class JsonFileReaderTest {

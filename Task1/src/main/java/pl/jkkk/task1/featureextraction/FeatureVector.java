@@ -3,6 +3,7 @@ package pl.jkkk.task1.featureextraction;
 import pl.jkkk.task1.exception.MetricNotSupportedException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class FeatureVector extends ArrayList<Double> {
@@ -11,6 +12,10 @@ public class FeatureVector extends ArrayList<Double> {
     public static final double DEFAULT_VALUE = 0.0;
 
     /*------------------------ METHODS REGION ------------------------*/
+    public FeatureVector(Double... values) {
+        super(Arrays.asList(values));
+    }
+
     private static Double calculateEuclidean(FeatureVector featureVectorOne,
                                              FeatureVector featureVectorTwo) {
         Double result = new Double(DEFAULT_VALUE);

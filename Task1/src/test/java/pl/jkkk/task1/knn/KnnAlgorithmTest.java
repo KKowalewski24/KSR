@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static pl.jkkk.task1.constant.Constants.CHOSEN_PLACES;
 import static pl.jkkk.task1.constant.Constants.PLACES_USA;
 import static pl.jkkk.task1.constant.Constants.SUBDIRECTORY;
 
@@ -63,8 +64,9 @@ class KnnAlgorithmTest {
 
         documents = documents
                 .stream()
-                .filter(it -> it.getPlaceList().size() == 1)
-                .collect(Collectors.toCollection(ArrayList::new));
+                .filter(it -> it.getPlaceList().size() == 1
+                        && CHOSEN_PLACES.contains(it.getPlaceList().get(0))
+                ).collect(Collectors.toCollection(ArrayList::new));
 
         documents.subList(15, documents.size()).clear();
 

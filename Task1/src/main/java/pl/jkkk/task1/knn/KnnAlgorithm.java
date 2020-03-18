@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static pl.jkkk.task1.constant.Constants.CHOSEN_PLACES;
 import static pl.jkkk.task1.constant.Constants.PLACES_CANADA;
 import static pl.jkkk.task1.constant.Constants.PLACES_FRANCE;
 import static pl.jkkk.task1.constant.Constants.PLACES_JAPAN;
@@ -53,10 +52,7 @@ public class KnnAlgorithm {
 
         documents.forEach((it) -> {
             String place = it.getPlaceList().get(0);
-
-            if (CHOSEN_PLACES.contains(place)) {
-                placesOccurrences.put(place, placesOccurrences.get(place) + 1);
-            }
+            placesOccurrences.put(place, placesOccurrences.get(place) + 1);
         });
 
         return placesOccurrences.entrySet()

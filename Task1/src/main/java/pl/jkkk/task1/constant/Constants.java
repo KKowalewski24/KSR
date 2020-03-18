@@ -1,6 +1,8 @@
 package pl.jkkk.task1.constant;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -24,14 +26,14 @@ public class Constants {
     public static final String PLACES_CANADA = "canada";
     public static final String PLACES_JAPAN = "japan";
 
-    public static final ArrayList<String> CHOSEN_PLACES = Stream.of(
+    public static final Set<String> CHOSEN_PLACES = Stream.of(
             PLACES_WEST_GERMANY,
             PLACES_USA,
             PLACES_FRANCE,
             PLACES_UK,
             PLACES_CANADA,
             PLACES_JAPAN
-    ).collect(Collectors.toCollection(ArrayList::new));
+    ).collect(Collectors.toCollection(HashSet::new));
 
     /*----- FILES -----*/
     public static final String STOP_WORDS = "stop-words.json";

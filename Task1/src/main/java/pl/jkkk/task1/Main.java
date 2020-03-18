@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static pl.jkkk.task1.constant.Constants.CHEBYSHEV_ABBREVIATION;
+import static pl.jkkk.task1.constant.Constants.CHOSEN_PLACES;
 import static pl.jkkk.task1.constant.Constants.EUCLIDEAN_ABBREVIATION;
 import static pl.jkkk.task1.constant.Constants.FILENAME_LIST;
 import static pl.jkkk.task1.constant.Constants.MANHATTAN_ABBREVIATION;
@@ -119,7 +120,8 @@ public class Main {
     private static void filterDocuments() {
         action(() -> documents = documents
                         .stream()
-                        .filter((it) -> it.getPlaceList().size() == 1)
+                        .filter((it) -> it.getPlaceList().size() == 1
+                                && CHOSEN_PLACES.contains(it.getPlaceList().get(0)))
                         .collect(Collectors.toCollection(ArrayList::new)),
                 "Removing documents with multiple places");
     }

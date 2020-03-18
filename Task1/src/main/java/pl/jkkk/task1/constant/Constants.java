@@ -7,6 +7,16 @@ import java.util.stream.Stream;
 public class Constants {
 
     /*------------------------ FIELDS REGION ------------------------*/
+
+    /*----- METRICS -----*/
+    public static final String EUCLIDEAN = "Euclidean";
+    public static final String EUCLIDEAN_ABBREVIATION = "eucl";
+    public static final String MANHATTAN = "Manhattan";
+    public static final String MANHATTAN_ABBREVIATION = "manh";
+    public static final String CHEBYSHEV = "Chebyshev";
+    public static final String CHEBYSHEV_ABBREVIATION = "cheb";
+
+    /*----- PLACES -----*/
     public static final String PLACES_WEST_GERMANY = "west-germany";
     public static final String PLACES_USA = "usa";
     public static final String PLACES_FRANCE = "france";
@@ -23,6 +33,7 @@ public class Constants {
             PLACES_JAPAN
     ).collect(Collectors.toCollection(ArrayList::new));
 
+    /*----- FILES -----*/
     public static final String STOP_WORDS = "stop-words.json";
     public static final String SUBDIRECTORY = "article/";
     public static final ArrayList<String> FILENAME_LIST = Stream.of(

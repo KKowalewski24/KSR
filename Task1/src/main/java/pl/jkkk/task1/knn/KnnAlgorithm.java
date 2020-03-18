@@ -25,10 +25,8 @@ public class KnnAlgorithm {
     /*------------------------ FIELDS REGION ------------------------*/
 
     /*------------------------ METHODS REGION ------------------------*/
-    List<FeatureVector> calculate(
-            FeatureVector featureVector, List<FeatureVector> trainingVectors,
-            int numberK, Metric metric) throws MetricNotSupportedException {
-
+    List<FeatureVector> calculate(FeatureVector featureVector, List<FeatureVector> trainingVectors,
+                                  int numberK, Metric metric) throws MetricNotSupportedException {
         List<CalculatedFeatureVector> calculatedFeatureVectors = new ArrayList<>();
 
         for (FeatureVector it : trainingVectors) {
@@ -45,41 +43,42 @@ public class KnnAlgorithm {
     }
 
     String classify(List<Document> documents) {
-        Map<String, Integer> placesMap = new HashMap<>();
-        placesMap.put(PLACES_WEST_GERMANY, 0);
-        placesMap.put(PLACES_USA, 0);
-        placesMap.put(PLACES_FRANCE, 0);
-        placesMap.put(PLACES_UK, 0);
-        placesMap.put(PLACES_CANADA, 0);
-        placesMap.put(PLACES_JAPAN, 0);
+        Map<String, Integer> placesOccurrences = new HashMap<>();
+        placesOccurrences.put(PLACES_WEST_GERMANY, 0);
+        placesOccurrences.put(PLACES_USA, 0);
+        placesOccurrences.put(PLACES_FRANCE, 0);
+        placesOccurrences.put(PLACES_UK, 0);
+        placesOccurrences.put(PLACES_CANADA, 0);
+        placesOccurrences.put(PLACES_JAPAN, 0);
 
         documents.forEach((it) -> {
             String place = it.getPlaceList().get(0);
 
             if (CHOSEN_PLACES.contains(place)) {
-                placesMap.put(place, placesMap.get(place) + 1);
+                placesOccurrences.put(place, placesOccurrences.get(place) + 1);
             }
         });
 
-        return placesMap.entrySet()
+        return placesOccurrences.entrySet()
                 .stream()
                 .max((val1, val2) -> val1.getValue() > val2.getValue() ? 1 : -1)
                 .get()
                 .getKey();
     }
 
-    public String calculateAndClassify(
-            FeatureVector featureVector, List<FeatureVector> trainingVectors,
-            int numberK, Metric metric) throws MetricNotSupportedException {
+    public String calculateAndClassify(FeatureVector featureVector,
+                                       List<FeatureVector> trainingVectors, int numberK,
+                                       Metric metric) throws MetricNotSupportedException {
 
         List<FeatureVector> selectedVectors = calculate(featureVector,
                 trainingVectors, numberK, metric);
 
-        return classify(selectedVectors
+        String classifiedPlace = classify(selectedVectors
                 .stream()
                 .map((it) -> it.getDocument())
-                .collect(Collectors.toCollection(ArrayList::new))
-        );
+                .collect(Collectors.toCollection(ArrayList::new)));
+
+        return classifiedPlace;
     }
 }
     

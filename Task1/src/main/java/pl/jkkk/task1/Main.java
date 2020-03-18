@@ -1,10 +1,13 @@
 package pl.jkkk.task1;
 
+import pl.jkkk.task1.exception.MetricNotSupportedException;
 import pl.jkkk.task1.featureextraction.FeatureExtractorDecorator;
 import pl.jkkk.task1.featureextraction.FeatureVector;
 import pl.jkkk.task1.featureextraction.KeywordsExtractor;
+import pl.jkkk.task1.featureextraction.Metric;
 import pl.jkkk.task1.featureextraction.NumberOfKeywordsFE;
 import pl.jkkk.task1.featureextraction.RelativeNumberOfKeywordsFE;
+import pl.jkkk.task1.knn.KnnAlgorithm;
 import pl.jkkk.task1.model.Document;
 import pl.jkkk.task1.reader.SgmlFileReader;
 import pl.jkkk.task1.stemmer.DocumentStemmer;
@@ -13,9 +16,11 @@ import pl.jkkk.task1.stopwords.WordRemover;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static pl.jkkk.task1.constant.Constants.EUCLIDEAN_ABBREVIATION;
 import static pl.jkkk.task1.constant.Constants.FILENAME_LIST;
 
 public class Main {
@@ -26,17 +31,60 @@ public class Main {
     private static WordRemover wordRemover = new WordRemover();
     private static KeywordsExtractor keywordsExtractor;
     private static FeatureExtractorDecorator extractorDecorator;
+    private static KnnAlgorithm knnAlgorithm = new KnnAlgorithm();
+
     private static List<Document> documents;
+    private static List<Document> trainingDocuments;
+    private static List<Document> testDocuments;
     private static Set<String> keywords;
-    private static List<FeatureVector> featureVectors;
+    private static List<FeatureVector> trainingFeatureVectors;
+    private static List<FeatureVector> testFeatureVectors;
+
+    private static double classificationEffectiveness = 0;
     private static double overallTime = 0;
 
-    //    podział na podzbiory uczący i testowy 60/40 z 1 args i wylosowac liczby - podział na
-    //    zbiory
-    //    propocje dzielenia dokumentu
-    //    dla kazdego zbioru elelmentu testowego robie klasuyfikacje w knn
-    //    spradzic czy dobrze zaklasyfikowane są i wyliczne
+    /*
+     * Call parameters
+     *
+     * 1. Percentage of training to test ratio
+     * args[0] = 60 then trainingSet.size():= documents.size()*60/100
+     *
+     * 2. Chosen K for kNN
+     *
+     * 3. Chosen metric - use abbreviation
+     * Euclidean - eucl
+     * Manhattan - manh
+     * Chebyshev - cheb
+     *
+     * */
+
     /*------------------------ METHODS REGION ------------------------*/
+    public static void main(String[] args) {
+        //        if (args.length != 3) {
+        //            System.exit(0);
+        //        }
+
+        /*----- DOCUMENTS PREPARATION -----*/
+        readDocuments();
+        filterDocuments();
+        stemDocuments();
+        removeStopWords();
+
+        /*-----  -----*/
+        calculateWordOccurrences();
+        retrieveKeywords();
+
+        //divideIntoTwoSets(Integer.valueOf(args[0]));
+        divideIntoTwoSets(60);
+        extractFeatures();
+
+        //        knnClassification(Integer.valueOf(args[1]), args[2]);
+        knnClassification(5, EUCLIDEAN_ABBREVIATION);
+
+        /*----- SUMMARY -----*/
+        printStatistics();
+    }
+
     private static void action(Runnable runnable, String description) {
         long startTime = System.currentTimeMillis();
         System.out.print(description + "... ");
@@ -91,45 +139,85 @@ public class Main {
                 "Retrieving keywords");
     }
 
-    private static void extractFeatures() {
-        featureVectors = new ArrayList<>();
-        extractorDecorator = new FeatureExtractorDecorator();
+    private static void divideIntoTwoSets(int divisionRatio) {
+        Random random = new Random();
+        List<Integer> randomNumbers = new ArrayList<>();
 
+        /*----- CALCULATE SIZES -----*/
+        int trainingSetSize = documents.size() * divisionRatio / 100;
+        int testSetSize = documents.size() - trainingSetSize;
+
+        action(() -> {
+            for (int i = 0; i < testSetSize; i++) {
+                randomNumbers.add(random.nextInt(documents.size()));
+            }
+
+            /*----- MAKE A COPY OF DOCUMENTS -----*/
+            testDocuments = new ArrayList<>();
+            trainingDocuments = documents
+                    .stream()
+                    .collect(Collectors.toCollection(ArrayList::new));
+
+            /*----- MOVE RANDOM ITEMS TO TEST LIST -----*/
+            for (int i = 0; i < randomNumbers.size(); i++) {
+                testDocuments.add(trainingDocuments.get(i));
+                trainingDocuments.remove(i);
+            }
+        }, "Dividing into two lists");
+    }
+
+    private static void extractFeatures() {
+        trainingFeatureVectors = new ArrayList<>();
+        testFeatureVectors = new ArrayList<>();
+
+        extractorDecorator = new FeatureExtractorDecorator();
         extractorDecorator.addExtractor(new NumberOfKeywordsFE(keywords));
         extractorDecorator.addExtractor(new RelativeNumberOfKeywordsFE(keywords));
 
-        action(() -> featureVectors.addAll(documents.stream()
-                        .map(extractorDecorator::extract)
-                        .collect(Collectors.toList())),
-                "Features extracting");
+        action(() -> {
+            trainingFeatureVectors.addAll(trainingDocuments.stream()
+                    .map(extractorDecorator::extract)
+                    .collect(Collectors.toList()));
+
+            testFeatureVectors.addAll(testDocuments.stream()
+                    .map(extractorDecorator::extract)
+                    .collect(Collectors.toList()));
+        }, "Features extracting");
     }
 
-    public static void main(String[] args) {
+    private static boolean checkPlaceEquality(FeatureVector featureVector, String classifiedPlace) {
+        if (featureVector.getDocument().getPlaceList().get(0).equals(classifiedPlace)) {
+            return true;
+        }
 
-        readDocuments();
+        return false;
+    }
 
-        filterDocuments();
-
-        stemDocuments();
-
-        removeStopWords();
-
-        calculateWordOccurrences();
-
-        retrieveKeywords();
-
-        //        podział i feature exctracting dla dwóch zbiorów
-
-        extractFeatures();
-
-        //robie for na zbiorze testowym i wybrór  metryki w argumentach
-
+    private static void knnClassification(int numberK, String metricAbbreviation) {
         action(() -> {
-            ;
-        }, "KNN");
+            int succeeded = 0;
 
-        //        wypisac statystyki
+            for (FeatureVector it : testFeatureVectors) {
+                try {
+                    if (checkPlaceEquality(it, knnAlgorithm
+                            .calculateAndClassify(it, trainingFeatureVectors, numberK,
+                                    Metric.convertAbbreviationToMetric(metricAbbreviation)))) {
+                        succeeded++;
+                    }
+                } catch (MetricNotSupportedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
-        System.out.println("\nOverall Time: " + overallTime + "s");
+            classificationEffectiveness = (double) succeeded / (double) testFeatureVectors.size();
+        }, "kNN");
+    }
+
+    private static void printStatistics() {
+        System.out.println("\n-------------------------------------\n");
+        System.out.println("Classification Effectiveness: "
+                + classificationEffectiveness * 100 + "%");
+        System.out.println("Overall Time: " + overallTime + "s");
+        System.out.println("\n-------------------------------------\n");
     }
 }

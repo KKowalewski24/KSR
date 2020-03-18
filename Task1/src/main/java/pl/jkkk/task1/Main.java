@@ -76,7 +76,7 @@ public class Main {
                     || metricAbbr.equals(CHEBYSHEV_ABBREVIATION))) {
 
                 System.err.println("Wrong parameters");
-                System.exit(-1);
+                System.exit(1);
             }
 
             /*----- DOCUMENTS PREPARATION -----*/
@@ -153,17 +153,9 @@ public class Main {
 
     private static void divideIntoTwoSets(int divisionRatio) {
         Random random = new Random();
-        List<Integer> randomNumbers = new ArrayList<>();
-
-        /*----- CALCULATE SIZES -----*/
-        int trainingSetSize = documents.size() * divisionRatio / 100;
-        int testSetSize = documents.size() - trainingSetSize;
+        final int testSetSize = documents.size() * (100 - divisionRatio) / 100;
 
         action(() -> {
-            for (int i = 0; i < testSetSize; i++) {
-                randomNumbers.add(random.nextInt(documents.size()));
-            }
-
             /*----- MAKE A COPY OF DOCUMENTS -----*/
             testDocuments = new ArrayList<>();
             trainingDocuments = documents
@@ -171,9 +163,10 @@ public class Main {
                     .collect(Collectors.toCollection(ArrayList::new));
 
             /*----- MOVE RANDOM ITEMS TO TEST LIST -----*/
-            for (int i = 0; i < randomNumbers.size(); i++) {
-                testDocuments.add(trainingDocuments.get(i));
-                trainingDocuments.remove(i);
+            for (int i = 0; i < testSetSize; i++) {
+                int number = random.nextInt(trainingDocuments.size());
+                testDocuments.add(trainingDocuments.get(number));
+                trainingDocuments.remove(number);
             }
         }, "Dividing into two lists");
     }

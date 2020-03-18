@@ -1,11 +1,11 @@
 package pl.jkkk.task1.featureextraction;
 
+import pl.jkkk.task1.exception.MetricNotSupportedException;
+import pl.jkkk.task1.model.Document;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-
-import pl.jkkk.task1.exception.MetricNotSupportedException;
-import pl.jkkk.task1.model.Document;
 
 public class FeatureVector extends ArrayList<Double> {
 
@@ -19,15 +19,15 @@ public class FeatureVector extends ArrayList<Double> {
         super(Arrays.asList(values));
     }
 
-    public FeatureVector(final Document document){
+    public FeatureVector(final Document document) {
         this.document = document;
     }
 
-    public Document getDocument(){
+    public Document getDocument() {
         return document;
     }
 
-    public void setDocument(final Document document){
+    public void setDocument(final Document document) {
         this.document = document;
     }
 

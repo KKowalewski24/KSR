@@ -20,8 +20,10 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static pl.jkkk.task1.constant.Constants.CHEBYSHEV_ABBREVIATION;
 import static pl.jkkk.task1.constant.Constants.EUCLIDEAN_ABBREVIATION;
 import static pl.jkkk.task1.constant.Constants.FILENAME_LIST;
+import static pl.jkkk.task1.constant.Constants.MANHATTAN_ABBREVIATION;
 
 public class Main {
 
@@ -60,29 +62,39 @@ public class Main {
 
     /*------------------------ METHODS REGION ------------------------*/
     public static void main(String[] args) {
-        //        if (args.length != 3) {
-        //            System.exit(0);
-        //        }
+        if (args.length != 3) {
+            System.exit(0);
+        } else {
+            int percentageOfTrainingSet = Integer.valueOf(args[0]);
+            int numberK = Integer.valueOf(args[1]);
+            String metricAbbr = args[2];
 
-        /*----- DOCUMENTS PREPARATION -----*/
-        readDocuments();
-        filterDocuments();
-        stemDocuments();
-        removeStopWords();
+            if ((percentageOfTrainingSet < 1 || percentageOfTrainingSet > 99)
+                    || numberK < 1
+                    || !(metricAbbr.equals(EUCLIDEAN_ABBREVIATION)
+                    || metricAbbr.equals(MANHATTAN_ABBREVIATION)
+                    || metricAbbr.equals(CHEBYSHEV_ABBREVIATION))) {
 
-        /*-----  -----*/
-        calculateWordOccurrences();
-        retrieveKeywords();
+                System.err.println("Wrong parameters");
+                System.exit(-1);
+            }
 
-        //divideIntoTwoSets(Integer.valueOf(args[0]));
-        divideIntoTwoSets(60);
-        extractFeatures();
+            /*----- DOCUMENTS PREPARATION -----*/
+            readDocuments();
+            filterDocuments();
+            stemDocuments();
+            removeStopWords();
 
-        //        knnClassification(Integer.valueOf(args[1]), args[2]);
-        knnClassification(5, EUCLIDEAN_ABBREVIATION);
+            /*-----  -----*/
+            calculateWordOccurrences();
+            retrieveKeywords();
+            divideIntoTwoSets(percentageOfTrainingSet);
+            extractFeatures();
+            knnClassification(numberK, metricAbbr);
 
-        /*----- SUMMARY -----*/
-        printStatistics();
+            /*----- SUMMARY -----*/
+            printStatistics();
+        }
     }
 
     private static void action(Runnable runnable, String description) {

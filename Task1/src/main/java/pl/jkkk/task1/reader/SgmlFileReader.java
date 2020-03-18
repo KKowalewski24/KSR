@@ -4,13 +4,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import pl.jkkk.task1.model.Document;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static pl.jkkk.task1.reader.ReaderUtil.preparePath;
 import static pl.jkkk.task1.reader.ReaderUtil.stringToListOfStringBySpace;
 import static pl.jkkk.task1.reader.ReaderUtil.takeLastChildNode;
 
@@ -32,7 +30,7 @@ public class SgmlFileReader {
         List<Document> documentList = new ArrayList();
 
         for (String it : filenameList) {
-            Jsoup.parse(new File(String.valueOf(preparePath(it))), CHARSET_UTF_8)
+            Jsoup.parse(getClass().getResourceAsStream(it), CHARSET_UTF_8, "")
                     .select(MAIN_NODE)
                     .forEach((jt) -> {
                         Element textNodeElement = jt.getElementsByTag(TEXT_NODE).first();

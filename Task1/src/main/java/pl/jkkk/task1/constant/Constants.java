@@ -36,8 +36,8 @@ public class Constants {
     ).collect(Collectors.toCollection(HashSet::new));
 
     /*----- FILES -----*/
-    public static final String STOP_WORDS = "stop-words.json";
-    public static final String SUBDIRECTORY = "article/";
+    public static final String STOP_WORDS = "/stop-words.json";
+    public static final String SUBDIRECTORY = "/article/";
     public static final ArrayList<String> FILENAME_LIST = Stream.of(
             SUBDIRECTORY + "reut2-000.sgm",
             SUBDIRECTORY + "reut2-001.sgm",

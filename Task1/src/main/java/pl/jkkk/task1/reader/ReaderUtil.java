@@ -14,13 +14,6 @@ public class ReaderUtil {
     /*------------------------ FIELDS REGION ------------------------*/
 
     /*------------------------ METHODS REGION ------------------------*/
-    public static Path preparePath(String filename) throws URISyntaxException {
-        return Paths.get(Thread
-                .currentThread()
-                .getContextClassLoader()
-                .getResource(filename)
-                .toURI());
-    }
 
     public static List<String> stringToListOfStringBySpace(String string) {
         return new ArrayList<>(Arrays.asList(string.split(" ")));

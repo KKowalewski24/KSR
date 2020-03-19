@@ -2,9 +2,6 @@ package pl.jkkk.task1.reader;
 
 import org.jsoup.nodes.Node;
 
-import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

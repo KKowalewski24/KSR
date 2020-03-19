@@ -25,8 +25,7 @@ public class SgmlFileReader {
     public static final String TITLE_NODE = "TITLE";
 
     /*------------------------ METHODS REGION ------------------------*/
-    public List<Document> readFromFiles(List<String> filenameList)
-            throws IOException, URISyntaxException {
+    public List<Document> readFromFiles(List<String> filenameList) throws IOException {
         List<Document> documentList = new ArrayList();
 
         for (String it : filenameList) {

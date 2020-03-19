@@ -222,8 +222,8 @@ public class Main {
 
     private static void printStatistics() {
         System.out.println("\n-------------------------------------\n");
-        System.out.println("Classification Effectiveness: "
-                + classificationEffectiveness * 100 + "%");
+        System.out.println(
+                "Classification Effectiveness: " + classificationEffectiveness * 100 + "%");
         System.out.println("Overall Time: " + overallTime + "s");
         System.out.println("\n-------------------------------------\n");
     }

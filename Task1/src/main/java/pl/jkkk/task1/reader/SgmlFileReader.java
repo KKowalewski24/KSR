@@ -5,7 +5,6 @@ import org.jsoup.nodes.Element;
 import pl.jkkk.task1.model.Document;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 

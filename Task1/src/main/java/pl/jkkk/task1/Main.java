@@ -64,6 +64,10 @@ public class Main {
     /*------------------------ METHODS REGION ------------------------*/
     public static void main(String[] args) {
         if (args.length != 3) {
+            System.out.println("Wrong parameters");
+            System.out.println(
+                    "<Percentage of training set> <k for kNN> <metric - eucl or manh or cheb>");
+
             System.exit(0);
         } else {
             int percentageOfTrainingSet = Integer.valueOf(args[0]);
@@ -77,6 +81,9 @@ public class Main {
                     || metricAbbr.equals(CHEBYSHEV_ABBREVIATION))) {
 
                 System.err.println("Wrong parameters");
+                System.out.println(
+                        "<Percentage of training set> <k for kNN> <metric - eucl or manh or cheb>");
+
                 System.exit(1);
             }
 

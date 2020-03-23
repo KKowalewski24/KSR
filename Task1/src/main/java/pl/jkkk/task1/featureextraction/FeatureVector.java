@@ -1,11 +1,13 @@
 package pl.jkkk.task1.featureextraction;
 
-import pl.jkkk.task1.exception.MetricNotSupportedException;
-import pl.jkkk.task1.model.Document;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.IntStream;
+
+import pl.jkkk.task1.exception.MetricNotSupportedException;
+import pl.jkkk.task1.model.Document;
 
 public class FeatureVector extends ArrayList<Double> {
 
@@ -29,6 +31,18 @@ public class FeatureVector extends ArrayList<Double> {
 
     public void setDocument(final Document document) {
         this.document = document;
+    }
+
+    public static void normalize(List<FeatureVector> vectors){
+        FeatureVector maxs = new FeatureVector();
+        IntStream.range(0, vectors.get(0).size()).forEach(i -> {
+            maxs.add(vectors.stream().mapToDouble(vector -> vector.get(i)).max().getAsDouble());
+        });
+        vectors.forEach(vector -> {
+            for(int i = 0; i < vector.size(); i++){
+                vector.set(i, vector.get(i) / maxs.get(i));
+            }
+        });
     }
 
     private static Double calculateEuclidean(FeatureVector featureVectorOne,

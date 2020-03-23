@@ -64,16 +64,17 @@ public class Main {
 
     /*------------------------ METHODS REGION ------------------------*/
     public static void main(String[] args) {
-        if (args.length != 3) {
+        if (args.length != 4) {
             System.out.println("Wrong parameters");
             System.out.println(
-                    "<Percentage of training set> <k for kNN> <metric - eucl or manh or cheb>");
+                    "<Percentage of training set> <k for kNN> <metric - eucl or manh or cheb> <number of keywords>");
 
             System.exit(0);
         } else {
             int percentageOfTrainingSet = Integer.valueOf(args[0]);
             int numberK = Integer.valueOf(args[1]);
             String metricAbbr = args[2];
+            int numberOfKeywords = Integer.valueOf(args[3]);
 
             if ((percentageOfTrainingSet < 1 || percentageOfTrainingSet > 99)
                     || numberK < 1
@@ -96,7 +97,7 @@ public class Main {
 
             /*-----  -----*/
             calculateWordOccurrences();
-            retrieveKeywords();
+            retrieveKeywords(numberOfKeywords);
             divideIntoTwoSets(percentageOfTrainingSet);
             extractFeatures();
             knnClassification(numberK, metricAbbr);
@@ -155,14 +156,14 @@ public class Main {
                 "Calculating word occurrences");
     }
 
-    private static void retrieveKeywords() {
+    private static void retrieveKeywords(int numberOfKeywords) {
         keywordsSets = new ArrayList<>();
         action(() -> {
-            keywordsSets.add(keywordsExtractor.getKeywordsByTFIDF(100));
-            keywordsSets.add(keywordsExtractor.getKeywordsByTPSD(100));
-            keywordsSets.add(keywordsExtractor.getKeywordsByTPD(100));
-            keywordsSets.add(keywordsExtractor.getKeywordsByTF(100));
-            keywordsSets.add(keywordsExtractor.getKeywordsByDF(100));
+            keywordsSets.add(keywordsExtractor.getKeywordsByTFIDF(numberOfKeywords));
+            keywordsSets.add(keywordsExtractor.getKeywordsByTPSD(numberOfKeywords));
+            keywordsSets.add(keywordsExtractor.getKeywordsByTPD(numberOfKeywords));
+            keywordsSets.add(keywordsExtractor.getKeywordsByTF(numberOfKeywords));
+            keywordsSets.add(keywordsExtractor.getKeywordsByDF(numberOfKeywords));
         }, "Retrieving keywords");
     }
 

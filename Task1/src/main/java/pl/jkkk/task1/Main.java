@@ -15,6 +15,7 @@ import pl.jkkk.task1.featureextraction.Metric;
 import pl.jkkk.task1.featureextraction.DocumentLengthFE;
 import pl.jkkk.task1.featureextraction.NumberOfKeywordsInDocumentFragmentFE;
 import pl.jkkk.task1.featureextraction.RelativeNumberOfKeywordsInDocumentFragmentFE;
+import pl.jkkk.task1.featureextraction.UniqueNumberOfKeywordsInDocumentFragmentFE;
 import pl.jkkk.task1.knn.KnnAlgorithm;
 import pl.jkkk.task1.model.Document;
 import pl.jkkk.task1.reader.SgmlFileReader;
@@ -39,7 +40,7 @@ public class Main {
     private static List<Document> documents;
     private static List<Document> trainingDocuments;
     private static List<Document> testDocuments;
-    private static Set<String> keywords;
+    private static List<Set<String>> keywordsSets;
     private static List<FeatureVector> trainingFeatureVectors;
     private static List<FeatureVector> testFeatureVectors;
 
@@ -155,9 +156,14 @@ public class Main {
     }
 
     private static void retrieveKeywords() {
-        keywords = new HashSet<>();
-        action(() -> keywords.addAll(keywordsExtractor.getKeywordsByTFIDF(50)),
-                "Retrieving keywords");
+        keywordsSets = new ArrayList<>();
+        action(() -> {
+            keywordsSets.add(keywordsExtractor.getKeywordsByTFIDF(100));
+            keywordsSets.add(keywordsExtractor.getKeywordsByTPSD(100));
+            keywordsSets.add(keywordsExtractor.getKeywordsByTPD(100));
+            keywordsSets.add(keywordsExtractor.getKeywordsByTF(100));
+            keywordsSets.add(keywordsExtractor.getKeywordsByDF(100));
+        }, "Retrieving keywords");
     }
 
     private static void divideIntoTwoSets(int divisionRatio) {
@@ -186,14 +192,14 @@ public class Main {
 
         extractorDecorator = new FeatureExtractorDecorator();
         extractorDecorator.addExtractor(new DocumentLengthFE());
-        extractorDecorator.addExtractor(new NumberOfKeywordsInDocumentFragmentFE(keywords, 0, 100));
-        extractorDecorator.addExtractor(new NumberOfKeywordsInDocumentFragmentFE(keywords, 0, 30));
-        extractorDecorator.addExtractor(new NumberOfKeywordsInDocumentFragmentFE(keywords, 30, 60));
-        extractorDecorator.addExtractor(new NumberOfKeywordsInDocumentFragmentFE(keywords, 60, 100));
-        extractorDecorator.addExtractor(new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 100));
-        extractorDecorator.addExtractor(new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 30));
-        extractorDecorator.addExtractor(new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 30, 60));
-        extractorDecorator.addExtractor(new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 60, 100));
+        keywordsSets.forEach(keywords -> {
+            extractorDecorator.addExtractor(new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
+            extractorDecorator.addExtractor(new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
+            extractorDecorator.addExtractor(new NumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
+            extractorDecorator.addExtractor(new NumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
+            extractorDecorator.addExtractor(new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
+            extractorDecorator.addExtractor(new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
+        });
 
         action(() -> {
             trainingFeatureVectors.addAll(trainingDocuments.stream()

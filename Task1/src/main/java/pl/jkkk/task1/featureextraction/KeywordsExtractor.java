@@ -93,6 +93,45 @@ public class KeywordsExtractor {
         });
     }
 
+    private void calculateScoresUsingTPD() {
+        if (occurrences.isEmpty()) {
+            throw new NoOccurrencesException();
+        }
+
+        scores.clear();
+
+        occurrences.keySet().forEach((word) -> {
+            double sum = occurrences.get(word).values().stream()
+                    .mapToDouble((value) -> value).sum();
+            double count = occurrences.get(word).values().size();
+            scores.put(word, sum / count);
+        });
+    }
+
+    private void calculateScoresUsingTF() {
+        if (occurrences.isEmpty()) {
+            throw new NoOccurrencesException();
+        }
+
+        scores.clear();
+
+        occurrences.keySet().forEach((word) -> {
+            scores.put(word, occurrences.get(word).values().stream().mapToDouble((value) -> value).sum());
+        });
+    }
+
+    private void calculateScoresUsingDF() {
+        if (occurrences.isEmpty()) {
+            throw new NoOccurrencesException();
+        }
+
+        scores.clear();
+
+        occurrences.keySet().forEach((word) -> {
+            scores.put(word, (double)occurrences.get(word).values().size());
+        });
+    }
+
     private Set<String> retrieveKeywords(int numberOfKeywords) {
         return scores.keySet().stream()
                 .sorted((String word1, String word2) -> {
@@ -126,6 +165,24 @@ public class KeywordsExtractor {
      */
     public Set<String> getKeywordsByTPSD(int numberOfKeywords) {
         calculateScoresUsingTPSD();
+
+        return retrieveKeywords(numberOfKeywords);
+    }
+
+    public Set<String> getKeywordsByTPD(int numberOfKeywords) {
+        calculateScoresUsingTPD();
+
+        return retrieveKeywords(numberOfKeywords);
+    }
+
+    public Set<String> getKeywordsByTF(int numberOfKeywords) {
+        calculateScoresUsingTF();
+
+        return retrieveKeywords(numberOfKeywords);
+    }
+
+    public Set<String> getKeywordsByDF(int numberOfKeywords) {
+        calculateScoresUsingDF();
 
         return retrieveKeywords(numberOfKeywords);
     }

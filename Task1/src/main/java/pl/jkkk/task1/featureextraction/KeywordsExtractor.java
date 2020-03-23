@@ -5,17 +5,18 @@ import pl.jkkk.task1.exception.NoOccurrencesException;
 import pl.jkkk.task1.model.Document;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class KeywordsExtractor {
 
     /*------------------------ FIELDS REGION ------------------------*/
-    /* Occurrences per documents for each word */
-    private Map<String, Map<Document, Integer>> occurrences;
+    private Map<String, Map<Document, Integer>> termFrequencyPerDocument;
 
     /* Score (from some algorithm) for each word */
     private Map<String, Double> scores;
@@ -25,13 +26,13 @@ public class KeywordsExtractor {
 
     /*------------------------ METHODS REGION ------------------------*/
     public KeywordsExtractor(final List<Document> documents) {
-        this.occurrences = new HashMap<>();
+        this.termFrequencyPerDocument = new HashMap<>();
         this.scores = new HashMap<>();
         this.documents = documents;
     }
 
     /**
-     * Calculate occurrences per document for each word from documents' list,
+     * Calculate term frequency per each document,
      * must be called before any keywords retrieving method.
      * param documents list of documents
      */
@@ -40,150 +41,129 @@ public class KeywordsExtractor {
             throw new NoDocumentsException();
         }
 
-        occurrences.clear();
+        termFrequencyPerDocument.clear();
 
         documents.forEach((document) -> {
             document.getWordList().forEach((word) -> {
-                if (!occurrences.containsKey(word)) {
-                    occurrences.put(word, new HashMap<>());
+                if (!termFrequencyPerDocument.containsKey(word)) {
+                    termFrequencyPerDocument.put(word, new HashMap<>());
                 }
 
-                Map<Document, Integer> occurrence = occurrences.get(word);
-                occurrence.put(document,
-                        Optional.ofNullable(occurrence.get(document)).orElse(0) + 1);
+                termFrequencyPerDocument.get(word).put(document,
+                        Optional.ofNullable(termFrequencyPerDocument.get(word).get(document)).orElse(0) + 1);
+            });
+        });
+    }
+
+    private void calculateScoresUsingClassTF() {
+        if (termFrequencyPerDocument.isEmpty()) {
+            throw new NoOccurrencesException();
+        }
+        termFrequencyPerDocument.keySet().forEach(word -> scores.put(word, Double.MIN_VALUE));
+
+        Set<String> classes = new HashSet<>();
+        final Map<String, Map<String, Integer>> termFrequencyPerClass = new HashMap<>();
+        termFrequencyPerDocument.keySet().forEach(word -> {
+            termFrequencyPerClass.put(word, new HashMap<>());
+            termFrequencyPerDocument.get(word).keySet().forEach(document -> {
+                classes.add(document.getPlaceList().get(0));
+                termFrequencyPerClass.get(word).put(document.getPlaceList().get(0),
+                        Optional.ofNullable(termFrequencyPerClass.get(word).get(document.getPlaceList().get(0)))
+                                .orElse(0) + termFrequencyPerDocument.get(word).get(document));
+            });
+        });
+        classes.forEach(clazz -> {
+            double numberOfWordsInClass = termFrequencyPerClass.values().stream().mapToInt(map -> Optional.ofNullable(map.get(clazz)).orElse(0)).sum();
+            termFrequencyPerDocument.keySet().forEach(word -> {
+                if(termFrequencyPerClass.get(word).get(clazz) != null) {
+                    double tf = termFrequencyPerClass.get(word).get(clazz) / numberOfWordsInClass;
+                    if (tf > scores.get(word))
+                        scores.put(word, tf);
+                }
+            });
+        });
+    }
+
+    private void calculateScoresUsingClassTFIDF() {
+        if (termFrequencyPerDocument.isEmpty()) {
+            throw new NoOccurrencesException();
+        }
+        termFrequencyPerDocument.keySet().forEach(word -> scores.put(word, Double.MIN_VALUE));
+
+        Set<String> classes = new HashSet<>();
+        final Map<String, Map<String, Integer>> termFrequencyPerClass = new HashMap<>();
+        final Map<String, Map<String, Integer>> documentFrequencyPerClass = new HashMap<>();
+        termFrequencyPerDocument.keySet().forEach(word -> {
+            termFrequencyPerClass.put(word, new HashMap<>());
+            documentFrequencyPerClass.put(word, new HashMap<>());
+            termFrequencyPerDocument.get(word).keySet().forEach(document -> {
+                classes.add(document.getPlaceList().get(0));
+                termFrequencyPerClass.get(word).put(document.getPlaceList().get(0),
+                        Optional.ofNullable(termFrequencyPerClass.get(word).get(document.getPlaceList().get(0)))
+                                .orElse(0) + termFrequencyPerDocument.get(word).get(document));
+                documentFrequencyPerClass.get(word).put(document.getPlaceList().get(0),
+                        Optional.ofNullable(documentFrequencyPerClass.get(word).get(document.getPlaceList().get(0)))
+                                .orElse(0) + 1);
+            });
+        });
+        classes.forEach(clazz -> {
+            double numberOfWordsInClass = termFrequencyPerClass.values().stream().mapToInt(map -> Optional.ofNullable(map.get(clazz)).orElse(0)).sum();
+            double numberOfDocumentsInClass = documents.stream().filter(document -> document.getPlaceList().get(0).equals(clazz)).count();
+            termFrequencyPerDocument.keySet().forEach(word -> {
+                if(termFrequencyPerClass.get(word).get(clazz) != null) {
+                    double tf = termFrequencyPerClass.get(word).get(clazz) / numberOfWordsInClass;
+                    double df = documentFrequencyPerClass.get(word).get(clazz) / numberOfDocumentsInClass;
+                    double tfidf = tf * (1.0 / df);
+                    if (tfidf > scores.get(word))
+                        scores.put(word, tfidf);
+                }
             });
         });
     }
 
     private void calculateScoresUsingTFIDF() {
-        if (occurrences.isEmpty()) {
+        if (termFrequencyPerDocument.isEmpty()) {
             throw new NoOccurrencesException();
         }
+        termFrequencyPerDocument.keySet().forEach(word -> scores.put(word, Double.MIN_VALUE));
 
-        scores.clear();
-
-        occurrences.keySet().forEach((word) -> {
-            Map<Document, Integer> occurrence = occurrences.get(word);
+        termFrequencyPerDocument.keySet().forEach((word) -> {
+            Map<Document, Integer> occurrence = termFrequencyPerDocument.get(word);
             occurrence.keySet().forEach((document) -> {
-                double tf = occurrence.get(document)
-                        / (double) document.getWordList().size();
-                double idf = documents.size()
-                        / (double) occurrence.keySet().size();
-                scores.put(word,
-                        Optional.ofNullable(scores.get(word)).orElse(0.0) + tf * idf);
+                double tf = termFrequencyPerDocument.get(word).get(document) / (double) document.getWordList().size();
+                double df = termFrequencyPerDocument.get(word).keySet().size() / (double) documents.size();
+                double tfidf = tf * (1.0 / df);
+                if(tfidf > scores.get(word))
+                    scores.put(word, tfidf);
             });
         });
     }
 
-    /**
-     * Calculate scores using Terms Per Squared Documents' number method.
-     */
-    private void calculateScoresUsingTPSD() {
-        if (occurrences.isEmpty()) {
-            throw new NoOccurrencesException();
-        }
-
-        scores.clear();
-
-        occurrences.keySet().forEach((word) -> {
-            double sum = occurrences.get(word).values().stream()
-                    .mapToDouble((value) -> value).sum();
-            double count = occurrences.get(word).values().size();
-            scores.put(word, sum / (count * count));
-        });
-    }
-
-    private void calculateScoresUsingTPD() {
-        if (occurrences.isEmpty()) {
-            throw new NoOccurrencesException();
-        }
-
-        scores.clear();
-
-        occurrences.keySet().forEach((word) -> {
-            double sum = occurrences.get(word).values().stream()
-                    .mapToDouble((value) -> value).sum();
-            double count = occurrences.get(word).values().size();
-            scores.put(word, sum / count);
-        });
-    }
-
-    private void calculateScoresUsingTF() {
-        if (occurrences.isEmpty()) {
-            throw new NoOccurrencesException();
-        }
-
-        scores.clear();
-
-        occurrences.keySet().forEach((word) -> {
-            scores.put(word, occurrences.get(word).values().stream().mapToDouble((value) -> value).sum());
-        });
-    }
-
-    private void calculateScoresUsingDF() {
-        if (occurrences.isEmpty()) {
-            throw new NoOccurrencesException();
-        }
-
-        scores.clear();
-
-        occurrences.keySet().forEach((word) -> {
-            scores.put(word, (double)occurrences.get(word).values().size());
-        });
-    }
-
     private Set<String> retrieveKeywords(int numberOfKeywords) {
-        return scores.keySet().stream()
-                .sorted((String word1, String word2) -> {
-                    if (scores.get(word1) < scores.get(word2)) {
-                        return -1;
-                    } else if (scores.get(word1) > scores.get(word2)) {
-                        return 1;
-                    } else {
-                        return 0;
-                    }
-                })
-                .limit(numberOfKeywords)
-                .collect(Collectors.toSet());
+        return scores.keySet().stream().sorted((String word1, String word2) -> {
+            if (scores.get(word1) < scores.get(word2)) {
+                return -1;
+            } else if (scores.get(word1) > scores.get(word2)) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }).limit(numberOfKeywords).collect(Collectors.toSet());
     }
 
-    /**
-     * Create list of keywords using modified TF-IDF algorithm.
-     *
-     * @param numberOfKeywords number of keywords to retrieve
-     */
     public Set<String> getKeywordsByTFIDF(int numberOfKeywords) {
         calculateScoresUsingTFIDF();
-
         return retrieveKeywords(numberOfKeywords);
     }
 
-    /**
-     * Create list of keywords using Terms Per Squared Document's number algorithm.
-     *
-     * @param numberOfKeywords number of keywords to retrieve
-     */
-    public Set<String> getKeywordsByTPSD(int numberOfKeywords) {
-        calculateScoresUsingTPSD();
-
+    public Set<String> getKeywordsByClassTFIDF(int numberOfKeywords) {
+        calculateScoresUsingClassTFIDF();
         return retrieveKeywords(numberOfKeywords);
     }
 
-    public Set<String> getKeywordsByTPD(int numberOfKeywords) {
-        calculateScoresUsingTPD();
 
-        return retrieveKeywords(numberOfKeywords);
-    }
-
-    public Set<String> getKeywordsByTF(int numberOfKeywords) {
-        calculateScoresUsingTF();
-
-        return retrieveKeywords(numberOfKeywords);
-    }
-
-    public Set<String> getKeywordsByDF(int numberOfKeywords) {
-        calculateScoresUsingDF();
-
+    public Set<String> getKeywordsByClassTF(int numberOfKeywords) {
+        calculateScoresUsingClassTF();
         return retrieveKeywords(numberOfKeywords);
     }
 }

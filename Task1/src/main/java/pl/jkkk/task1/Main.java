@@ -1,8 +1,11 @@
 package pl.jkkk.task1;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -44,7 +47,8 @@ public class Main {
     private static List<FeatureVector> trainingFeatureVectors;
     private static List<FeatureVector> testFeatureVectors;
 
-    private static double classificationEffectiveness = 0;
+    private static Map<String, Integer> properlyClassified;
+    private static Map<String, Integer> classified;
     private static double overallTime = 0;
 
     /*
@@ -159,11 +163,9 @@ public class Main {
     private static void retrieveKeywords(int numberOfKeywords) {
         keywordsSets = new ArrayList<>();
         action(() -> {
+            keywordsSets.add(keywordsExtractor.getKeywordsByClassTF(numberOfKeywords));
+            keywordsSets.add(keywordsExtractor.getKeywordsByClassTFIDF(numberOfKeywords));
             keywordsSets.add(keywordsExtractor.getKeywordsByTFIDF(numberOfKeywords));
-            keywordsSets.add(keywordsExtractor.getKeywordsByTPSD(numberOfKeywords));
-            keywordsSets.add(keywordsExtractor.getKeywordsByTPD(numberOfKeywords));
-            keywordsSets.add(keywordsExtractor.getKeywordsByTF(numberOfKeywords));
-            keywordsSets.add(keywordsExtractor.getKeywordsByDF(numberOfKeywords));
         }, "Retrieving keywords");
     }
 
@@ -218,38 +220,35 @@ public class Main {
         }, "Normalize feature vectors");
     }
 
-    private static boolean checkPlaceEquality(FeatureVector featureVector, String classifiedPlace) {
-        if (featureVector.getDocument().getPlaceList().get(0).equals(classifiedPlace)) {
-            return true;
-        }
-
-        return false;
-    }
-
     private static void knnClassification(int numberK, String metricAbbreviation) {
         action(() -> {
-            int succeeded = 0;
-
+            properlyClassified = new HashMap<>();
+            classified = new HashMap<>();
             for (FeatureVector it : testFeatureVectors) {
                 try {
-                    if (checkPlaceEquality(it, knnAlgorithm
+                    String properPlace = it.getDocument().getPlaceList().get(0);
+                    if (properPlace.equals(knnAlgorithm
                             .calculateAndClassify(it, trainingFeatureVectors, numberK,
                                     Metric.convertAbbreviationToMetric(metricAbbreviation)))) {
-                        succeeded++;
+                        properlyClassified.put(properPlace, Optional.ofNullable(properlyClassified.get(properPlace)).orElse(0) + 1);
                     }
+                    classified.put(properPlace, Optional.ofNullable(classified.get(properPlace)).orElse(0) + 1);
                 } catch (MetricNotSupportedException e) {
                     throw new RuntimeException(e);
                 }
             }
 
-            classificationEffectiveness = (double) succeeded / (double) testFeatureVectors.size();
         }, "kNN");
     }
 
     private static void printStatistics() {
         System.out.println("\n-------------------------------------\n");
-        System.out.println(
-                "Classification Effectiveness: " + classificationEffectiveness * 100 + "%");
+        classified.keySet().forEach(place -> {
+            System.out.println(place + ": " + (Optional.ofNullable(properlyClassified.get(place)).orElse(0) * 100.0 / classified.get(place)) + "%");
+        });
+        System.out.println();
+        System.out.println("All: " + (properlyClassified.values().stream().mapToInt(value -> value).sum() * 100.0 /
+                classified.values().stream().mapToInt(value -> value).sum()) + "%");
         System.out.println("Overall Time: " + overallTime + "s");
         System.out.println("\n-------------------------------------\n");
     }

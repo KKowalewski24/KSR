@@ -1,5 +1,12 @@
 package pl.jkkk.task1;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import pl.jkkk.task1.exception.MetricNotSupportedException;
 import pl.jkkk.task1.featureextraction.FeatureExtractorDecorator;
 import pl.jkkk.task1.featureextraction.FeatureVector;
@@ -12,14 +19,6 @@ import pl.jkkk.task1.model.Document;
 import pl.jkkk.task1.reader.SgmlFileReader;
 import pl.jkkk.task1.stemmer.DocumentStemmer;
 import pl.jkkk.task1.stopwords.WordRemover;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import static pl.jkkk.task1.constant.Constants.CHEBYSHEV_ABBREVIATION;
 import static pl.jkkk.task1.constant.Constants.CHOSEN_PLACES;
 import static pl.jkkk.task1.constant.Constants.EUCLIDEAN_ABBREVIATION;
@@ -197,6 +196,11 @@ public class Main {
                     .map(extractorDecorator::extract)
                     .collect(Collectors.toList()));
         }, "Features extracting");
+
+        action(() -> {
+            FeatureVector.normalize(trainingFeatureVectors);
+            FeatureVector.normalize(testFeatureVectors);
+        }, "Normalize feature vectors");
     }
 
     private static boolean checkPlaceEquality(FeatureVector featureVector, String classifiedPlace) {

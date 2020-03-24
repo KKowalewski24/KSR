@@ -1,21 +1,25 @@
 package pl.jkkk.task1;
 
+import static pl.jkkk.task1.constant.Constants.CHEBYSHEV_ABBREVIATION;
+import static pl.jkkk.task1.constant.Constants.CHOSEN_PLACES;
+import static pl.jkkk.task1.constant.Constants.EUCLIDEAN_ABBREVIATION;
+import static pl.jkkk.task1.constant.Constants.FILENAME_LIST;
+import static pl.jkkk.task1.constant.Constants.MANHATTAN_ABBREVIATION;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import pl.jkkk.task1.exception.MetricNotSupportedException;
+import pl.jkkk.task1.featureextraction.DocumentLengthFE;
 import pl.jkkk.task1.featureextraction.FeatureExtractorDecorator;
 import pl.jkkk.task1.featureextraction.FeatureVector;
 import pl.jkkk.task1.featureextraction.KeywordsExtractor;
 import pl.jkkk.task1.featureextraction.Metric;
-import pl.jkkk.task1.featureextraction.DocumentLengthFE;
 import pl.jkkk.task1.featureextraction.NumberOfKeywordsInDocumentFragmentFE;
 import pl.jkkk.task1.featureextraction.RelativeNumberOfKeywordsInDocumentFragmentFE;
 import pl.jkkk.task1.featureextraction.UniqueNumberOfKeywordsInDocumentFragmentFE;
@@ -24,11 +28,6 @@ import pl.jkkk.task1.model.Document;
 import pl.jkkk.task1.reader.SgmlFileReader;
 import pl.jkkk.task1.stemmer.DocumentStemmer;
 import pl.jkkk.task1.stopwords.WordRemover;
-import static pl.jkkk.task1.constant.Constants.CHEBYSHEV_ABBREVIATION;
-import static pl.jkkk.task1.constant.Constants.CHOSEN_PLACES;
-import static pl.jkkk.task1.constant.Constants.EUCLIDEAN_ABBREVIATION;
-import static pl.jkkk.task1.constant.Constants.FILENAME_LIST;
-import static pl.jkkk.task1.constant.Constants.MANHATTAN_ABBREVIATION;
 
 public class Main {
 
@@ -79,15 +78,12 @@ public class Main {
             String metricAbbr = args[2];
             int numberOfKeywords = Integer.valueOf(args[3]);
 
-            if ((percentageOfTrainingSet < 1 || percentageOfTrainingSet > 99)
-                    || numberK < 1
-                    || !(metricAbbr.equals(EUCLIDEAN_ABBREVIATION)
-                    || metricAbbr.equals(MANHATTAN_ABBREVIATION)
-                    || metricAbbr.equals(CHEBYSHEV_ABBREVIATION))) {
+            if ((percentageOfTrainingSet < 1 || percentageOfTrainingSet > 99) || numberK < 1 || !(
+                    metricAbbr.equals(EUCLIDEAN_ABBREVIATION) || metricAbbr.equals(MANHATTAN_ABBREVIATION) || metricAbbr
+                            .equals(CHEBYSHEV_ABBREVIATION))) {
 
                 System.err.println("Wrong parameters");
-                System.out.println(
-                        "<Percentage of training set> <k for kNN> <metric - eucl or manh or cheb>");
+                System.out.println("<Percentage of training set> <k for kNN> <metric - eucl or manh or cheb>");
 
                 System.exit(1);
             }
@@ -130,17 +126,13 @@ public class Main {
     }
 
     private static void filterDocuments() {
-        action(() -> documents = documents
-                        .stream()
-                        .filter((it) -> it.getPlaceList().size() == 1
-                                && CHOSEN_PLACES.contains(it.getPlaceList().get(0)))
-                        .collect(Collectors.toCollection(ArrayList::new)),
-                "Removing documents with multiple places");
+        action(() -> documents = documents.stream()
+                .filter((it) -> it.getPlaceList().size() == 1 && CHOSEN_PLACES.contains(it.getPlaceList().get(0)))
+                .collect(Collectors.toCollection(ArrayList::new)), "Removing documents with multiple places");
     }
 
     private static void stemDocuments() {
-        action(() -> documentStemmer.performStemmingProcessOnWordList(documents),
-                "Stemming documents");
+        action(() -> documentStemmer.performStemmingProcessOnWordList(documents), "Stemming documents");
     }
 
     private static void removeStopWords() {
@@ -155,8 +147,7 @@ public class Main {
 
     private static void calculateWordOccurrences() {
         keywordsExtractor = new KeywordsExtractor(documents);
-        action(() -> keywordsExtractor.calculateOccurrences(),
-                "Calculating word occurrences");
+        action(() -> keywordsExtractor.calculateOccurrences(), "Calculating word occurrences");
     }
 
     private static void retrieveKeywords(int numberOfKeywords) {
@@ -174,9 +165,7 @@ public class Main {
         action(() -> {
             /*----- MAKE A COPY OF DOCUMENTS -----*/
             testDocuments = new ArrayList<>();
-            trainingDocuments = documents
-                    .stream()
-                    .collect(Collectors.toCollection(ArrayList::new));
+            trainingDocuments = documents.stream().collect(Collectors.toCollection(ArrayList::new));
 
             /*----- MOVE RANDOM ITEMS TO TEST LIST -----*/
             for (int i = 0; i < testSetSize; i++) {
@@ -203,13 +192,11 @@ public class Main {
         });
 
         action(() -> {
-            trainingFeatureVectors.addAll(trainingDocuments.stream()
-                    .map(extractorDecorator::extract)
-                    .collect(Collectors.toList()));
+            trainingFeatureVectors
+                    .addAll(trainingDocuments.stream().map(extractorDecorator::extract).collect(Collectors.toList()));
 
-            testFeatureVectors.addAll(testDocuments.stream()
-                    .map(extractorDecorator::extract)
-                    .collect(Collectors.toList()));
+            testFeatureVectors
+                    .addAll(testDocuments.stream().map(extractorDecorator::extract).collect(Collectors.toList()));
         }, "Features extracting");
 
         action(() -> {
@@ -224,13 +211,15 @@ public class Main {
             for (FeatureVector it : testFeatureVectors) {
                 try {
                     final String properPlace = it.getDocument().getPlaceList().get(0);
-                    final String recognizedPlace = knnAlgorithm.calculateAndClassify(it, trainingFeatureVectors, numberK,
+                    final String recognizedPlace = knnAlgorithm
+                            .calculateAndClassify(it, trainingFeatureVectors, numberK,
                                     Metric.convertAbbreviationToMetric(metricAbbreviation));
 
-                    if(!classification.containsKey(properPlace)){
+                    if (!classification.containsKey(properPlace)) {
                         classification.put(properPlace, new HashMap<>());
                     }
-                    classification.get(properPlace).put(recognizedPlace, classification.get(properPlace).getOrDefault(recognizedPlace, 0) + 1);
+                    classification.get(properPlace)
+                            .put(recognizedPlace, classification.get(properPlace).getOrDefault(recognizedPlace, 0) + 1);
                 } catch (MetricNotSupportedException e) {
                     throw new RuntimeException(e);
                 }
@@ -242,21 +231,20 @@ public class Main {
     private static void printStatistics() {
         System.out.println("\n-------------------------------------\n");
         classification.forEach((clazz, classes) -> {
-            double percent = classes.getOrDefault(clazz, 0) * 100.0 /
-                    classes.values().stream().mapToInt(x -> x).sum();
+            double percent = classes.getOrDefault(clazz, 0) * 100.0 / classes.values().stream().mapToInt(x -> x).sum();
             System.out.println(clazz + "   " + percent + " %");
             classes.forEach((recognizedClass, quantity) -> {
                 System.out.println("\t" + recognizedClass + "  " + quantity);
             });
         });
         System.out.println();
-        final int allSum = classification.values().stream().mapToInt(classes ->
-                classes.values().stream().mapToInt(x -> x).sum()).sum();
-        final int properlyClassifiedSum = classification.keySet().stream().mapToInt(clazz ->
-                classification.get(clazz).keySet().stream()
+        final int allSum =
+                classification.values().stream().mapToInt(classes -> classes.values().stream().mapToInt(x -> x).sum())
+                        .sum();
+        final int properlyClassifiedSum = classification.keySet().stream().mapToInt(
+                clazz -> classification.get(clazz).keySet().stream()
                         .filter(recognizedClass -> recognizedClass.equals(clazz))
-                        .mapToInt(recognizedClass -> classification.get(clazz).get(recognizedClass))
-                        .sum()).sum();
+                        .mapToInt(recognizedClass -> classification.get(clazz).get(recognizedClass)).sum()).sum();
         System.out.println("All: " + (properlyClassifiedSum * 100.0 / allSum) + " %");
         System.out.println("Overall Time: " + overallTime + "s");
         System.out.println("\n-------------------------------------\n");

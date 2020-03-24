@@ -69,7 +69,8 @@ public class Main {
         if (args.length != 4) {
             System.out.println("Wrong parameters");
             System.out.println(
-                    "<Percentage of training set> <k for kNN> <metric - eucl or manh or cheb> <number of keywords>");
+                    "<Percentage of training set> <k for kNN> <metric - eucl or manh or cheb> "
+                            + "<number of keywords>");
 
             System.exit(0);
         } else {
@@ -183,12 +184,18 @@ public class Main {
         extractorDecorator = new FeatureExtractorDecorator();
         extractorDecorator.addExtractor(new DocumentLengthFE());
         keywordsSets.forEach(keywords -> {
-            extractorDecorator.addExtractor(new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
-            extractorDecorator.addExtractor(new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
-            extractorDecorator.addExtractor(new NumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
-            extractorDecorator.addExtractor(new NumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
-            extractorDecorator.addExtractor(new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
-            extractorDecorator.addExtractor(new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
+            extractorDecorator.addExtractor(
+                    new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
+            extractorDecorator.addExtractor(
+                    new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
+            extractorDecorator.addExtractor(
+                    new NumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
+            extractorDecorator.addExtractor(
+                    new NumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
+            extractorDecorator.addExtractor(
+                    new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
+            extractorDecorator.addExtractor(
+                    new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
         });
 
         action(() -> {

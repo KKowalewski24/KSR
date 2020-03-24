@@ -4,9 +4,12 @@ import pl.jkkk.task1.model.Document;
 
 import java.util.Set;
 
-public class RelativeNumberOfKeywordsInDocumentFragmentFE extends NumberOfKeywordsInDocumentFragmentFE {
+public class RelativeNumberOfKeywordsInDocumentFragmentFE
+        extends NumberOfKeywordsInDocumentFragmentFE {
 
-    public RelativeNumberOfKeywordsInDocumentFragmentFE(final Set<String> keywords, int rangeBeginInPercents, int rangeEndInPercents) {
+    public RelativeNumberOfKeywordsInDocumentFragmentFE(final Set<String> keywords,
+                                                        int rangeBeginInPercents,
+                                                        int rangeEndInPercents) {
         super(keywords, rangeBeginInPercents, rangeEndInPercents);
     }
 

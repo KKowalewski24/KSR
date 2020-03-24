@@ -1,21 +1,11 @@
 package pl.jkkk.task1;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import pl.jkkk.task1.exception.MetricNotSupportedException;
+import pl.jkkk.task1.featureextraction.DocumentLengthFE;
 import pl.jkkk.task1.featureextraction.FeatureExtractorDecorator;
 import pl.jkkk.task1.featureextraction.FeatureVector;
 import pl.jkkk.task1.featureextraction.KeywordsExtractor;
 import pl.jkkk.task1.featureextraction.Metric;
-import pl.jkkk.task1.featureextraction.DocumentLengthFE;
 import pl.jkkk.task1.featureextraction.NumberOfKeywordsInDocumentFragmentFE;
 import pl.jkkk.task1.featureextraction.RelativeNumberOfKeywordsInDocumentFragmentFE;
 import pl.jkkk.task1.featureextraction.UniqueNumberOfKeywordsInDocumentFragmentFE;
@@ -24,6 +14,16 @@ import pl.jkkk.task1.model.Document;
 import pl.jkkk.task1.reader.SgmlFileReader;
 import pl.jkkk.task1.stemmer.DocumentStemmer;
 import pl.jkkk.task1.stopwords.WordRemover;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import static pl.jkkk.task1.constant.Constants.CHEBYSHEV_ABBREVIATION;
 import static pl.jkkk.task1.constant.Constants.CHOSEN_PLACES;
 import static pl.jkkk.task1.constant.Constants.EUCLIDEAN_ABBREVIATION;
@@ -71,7 +71,8 @@ public class Main {
         if (args.length != 4) {
             System.out.println("Wrong parameters");
             System.out.println(
-                    "<Percentage of training set> <k for kNN> <metric - eucl or manh or cheb> <number of keywords>");
+                    "<Percentage of training set> <k for kNN> <metric - eucl or manh or cheb> "
+                            + "<number of keywords>");
 
             System.exit(0);
         } else {
@@ -196,12 +197,18 @@ public class Main {
         extractorDecorator = new FeatureExtractorDecorator();
         extractorDecorator.addExtractor(new DocumentLengthFE());
         keywordsSets.forEach(keywords -> {
-            extractorDecorator.addExtractor(new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
-            extractorDecorator.addExtractor(new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
-            extractorDecorator.addExtractor(new NumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
-            extractorDecorator.addExtractor(new NumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
-            extractorDecorator.addExtractor(new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
-            extractorDecorator.addExtractor(new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
+            extractorDecorator.addExtractor(
+                    new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
+            extractorDecorator.addExtractor(
+                    new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
+            extractorDecorator.addExtractor(
+                    new NumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
+            extractorDecorator.addExtractor(
+                    new NumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
+            extractorDecorator.addExtractor(
+                    new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
+            extractorDecorator.addExtractor(
+                    new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
         });
 
         action(() -> {
@@ -230,9 +237,12 @@ public class Main {
                     if (properPlace.equals(knnAlgorithm
                             .calculateAndClassify(it, trainingFeatureVectors, numberK,
                                     Metric.convertAbbreviationToMetric(metricAbbreviation)))) {
-                        properlyClassified.put(properPlace, Optional.ofNullable(properlyClassified.get(properPlace)).orElse(0) + 1);
+                        properlyClassified.put(properPlace,
+                                Optional.ofNullable(properlyClassified.get(properPlace))
+                                        .orElse(0) + 1);
                     }
-                    classified.put(properPlace, Optional.ofNullable(classified.get(properPlace)).orElse(0) + 1);
+                    classified.put(properPlace, Optional.ofNullable(classified.get(properPlace))
+                            .orElse(0) + 1);
                 } catch (MetricNotSupportedException e) {
                     throw new RuntimeException(e);
                 }
@@ -244,11 +254,17 @@ public class Main {
     private static void printStatistics() {
         System.out.println("\n-------------------------------------\n");
         classified.keySet().forEach(place -> {
-            System.out.println(place + ": " + (Optional.ofNullable(properlyClassified.get(place)).orElse(0) * 100.0 / classified.get(place)) + "%");
+            System.out.println(place + ": " + (Optional.ofNullable(properlyClassified.get(place))
+                    .orElse(0) * 100.0 / classified.get(place)) + "%");
         });
         System.out.println();
-        System.out.println("All: " + (properlyClassified.values().stream().mapToInt(value -> value).sum() * 100.0 /
-                classified.values().stream().mapToInt(value -> value).sum()) + "%");
+        System.out.println("All: " + (properlyClassified.values()
+                .stream()
+                .mapToInt(value -> value)
+                .sum() * 100.0 / classified
+                .values()
+                .stream()
+                .mapToInt(value -> value).sum()) + "%");
         System.out.println("Overall Time: " + overallTime + "s");
         System.out.println("\n-------------------------------------\n");
     }

@@ -1,17 +1,18 @@
 package pl.jkkk.task1.featureextraction;
 
+import pl.jkkk.task1.model.Document;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import pl.jkkk.task1.model.Document;
-
 public class NumberOfKeywordsInDocumentFragmentFE implements FeatureExtractor {
-    
+
     private final Set<String> keywords;
     private final int rangeBeginInPercents;
     private final int rangeEndInPercents;
 
-    public NumberOfKeywordsInDocumentFragmentFE(Set<String> keywords, int rangeBeginInPercents, int rangeEndInPercents) {
+    public NumberOfKeywordsInDocumentFragmentFE(Set<String> keywords, int rangeBeginInPercents,
+                                                int rangeEndInPercents) {
         this.keywords = keywords;
         this.rangeBeginInPercents = rangeBeginInPercents;
         this.rangeEndInPercents = rangeEndInPercents;

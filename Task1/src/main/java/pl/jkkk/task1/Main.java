@@ -47,8 +47,7 @@ public class Main {
     private static List<FeatureVector> trainingFeatureVectors;
     private static List<FeatureVector> testFeatureVectors;
 
-    private static Map<String, Integer> properlyClassified;
-    private static Map<String, Integer> classified;
+    private static Map<String, Map<String, Integer>> classification;
     private static double overallTime = 0;
 
     /*
@@ -163,8 +162,7 @@ public class Main {
     private static void retrieveKeywords(int numberOfKeywords) {
         keywordsSets = new ArrayList<>();
         action(() -> {
-            keywordsSets.add(keywordsExtractor.getKeywordsByClassTF(numberOfKeywords));
-            keywordsSets.add(keywordsExtractor.getKeywordsByClassTFIDF(numberOfKeywords));
+            keywordsSets.add(keywordsExtractor.getKeywordsByClassTFIOCTF(numberOfKeywords));
             keywordsSets.add(keywordsExtractor.getKeywordsByTFIDF(numberOfKeywords));
         }, "Retrieving keywords");
     }
@@ -222,17 +220,17 @@ public class Main {
 
     private static void knnClassification(int numberK, String metricAbbreviation) {
         action(() -> {
-            properlyClassified = new HashMap<>();
-            classified = new HashMap<>();
+            classification = new HashMap<>();
             for (FeatureVector it : testFeatureVectors) {
                 try {
-                    String properPlace = it.getDocument().getPlaceList().get(0);
-                    if (properPlace.equals(knnAlgorithm
-                            .calculateAndClassify(it, trainingFeatureVectors, numberK,
-                                    Metric.convertAbbreviationToMetric(metricAbbreviation)))) {
-                        properlyClassified.put(properPlace, Optional.ofNullable(properlyClassified.get(properPlace)).orElse(0) + 1);
+                    final String properPlace = it.getDocument().getPlaceList().get(0);
+                    final String recognizedPlace = knnAlgorithm.calculateAndClassify(it, trainingFeatureVectors, numberK,
+                                    Metric.convertAbbreviationToMetric(metricAbbreviation));
+
+                    if(!classification.containsKey(properPlace)){
+                        classification.put(properPlace, new HashMap<>());
                     }
-                    classified.put(properPlace, Optional.ofNullable(classified.get(properPlace)).orElse(0) + 1);
+                    classification.get(properPlace).put(recognizedPlace, classification.get(properPlace).getOrDefault(recognizedPlace, 0) + 1);
                 } catch (MetricNotSupportedException e) {
                     throw new RuntimeException(e);
                 }
@@ -243,12 +241,23 @@ public class Main {
 
     private static void printStatistics() {
         System.out.println("\n-------------------------------------\n");
-        classified.keySet().forEach(place -> {
-            System.out.println(place + ": " + (Optional.ofNullable(properlyClassified.get(place)).orElse(0) * 100.0 / classified.get(place)) + "%");
+        classification.forEach((clazz, classes) -> {
+            double percent = classes.getOrDefault(clazz, 0) * 100.0 /
+                    classes.values().stream().mapToInt(x -> x).sum();
+            System.out.println(clazz + "   " + percent + " %");
+            classes.forEach((recognizedClass, quantity) -> {
+                System.out.println("\t" + recognizedClass + "  " + quantity);
+            });
         });
         System.out.println();
-        System.out.println("All: " + (properlyClassified.values().stream().mapToInt(value -> value).sum() * 100.0 /
-                classified.values().stream().mapToInt(value -> value).sum()) + "%");
+        final int allSum = classification.values().stream().mapToInt(classes ->
+                classes.values().stream().mapToInt(x -> x).sum()).sum();
+        final int properlyClassifiedSum = classification.keySet().stream().mapToInt(clazz ->
+                classification.get(clazz).keySet().stream()
+                        .filter(recognizedClass -> recognizedClass.equals(clazz))
+                        .mapToInt(recognizedClass -> classification.get(clazz).get(recognizedClass))
+                        .sum()).sum();
+        System.out.println("All: " + (properlyClassifiedSum * 100.0 / allSum) + " %");
         System.out.println("Overall Time: " + overallTime + "s");
         System.out.println("\n-------------------------------------\n");
     }

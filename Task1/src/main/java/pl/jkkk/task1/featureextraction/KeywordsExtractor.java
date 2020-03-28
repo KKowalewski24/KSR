@@ -54,7 +54,8 @@ public class KeywordsExtractor {
                 }
 
                 termFrequencyPerDocument.get(word)
-                        .put(document, termFrequencyPerDocument.get(word).getOrDefault(document, 0) + 1);
+                        .put(document, termFrequencyPerDocument.get(word)
+                                .getOrDefault(document, 0) + 1);
             });
         });
 
@@ -64,7 +65,8 @@ public class KeywordsExtractor {
                 final String clazz = document.getPlaceList().get(0);
                 classesQuantity.put(clazz, classesQuantity.getOrDefault(clazz, 0) + quantity);
                 termFrequencyPerClass.get(word)
-                        .put(clazz, termFrequencyPerClass.get(word).getOrDefault(clazz, 0) + quantity);
+                        .put(clazz, termFrequencyPerClass.get(word)
+                                .getOrDefault(clazz, 0) + quantity);
             });
         });
     }
@@ -80,9 +82,12 @@ public class KeywordsExtractor {
                 /* calculate term frequency in this class */
                 final double TF = quantity / (double) classesQuantity.get(clazz);
                 /* calculate term frequency in the rest of classes */
-                final double otherClassTF = classes.keySet().stream().filter(key -> !key.equals(clazz))
-                        .mapToDouble(key -> classes.get(key) / (double) classesQuantity.get(key)).sum();
-                final double TFIOCTF = TF * (1.0 / otherClassTF);
+                final double otherClassTF = classes.keySet()
+                        .stream()
+                        .filter(key -> !key.equals(clazz))
+                        .mapToDouble(key -> classes.get(key) / (double) classesQuantity.get(key))
+                        .sum();
+                final double TFIOCTF = TF * Math.log(1.0 / otherClassTF);
                 if (TFIOCTF > scores.get(word)) {
                     scores.put(word, TFIOCTF);
                 }
@@ -100,7 +105,7 @@ public class KeywordsExtractor {
             wordDocuments.forEach((document, quantity) -> {
                 final double tf = quantity / (double) document.getWordList().size();
                 final double df = wordDocuments.size() / (double) documents.size();
-                final double tfidf = tf * (1.0 / df);
+                final double tfidf = tf * Math.log(1.0 / df);
                 if (tfidf > scores.get(word)) {
                     scores.put(word, tfidf);
                 }
@@ -109,8 +114,11 @@ public class KeywordsExtractor {
     }
 
     private Set<String> retrieveKeywords(final int numberOfKeywords) {
-        return scores.keySet().stream().sorted(Comparator.comparing((String word) -> scores.get(word)))
-                .limit(numberOfKeywords).collect(Collectors.toSet());
+        return scores.keySet()
+                .stream()
+                .sorted(Comparator.comparing((String word) -> scores.get(word)))
+                .limit(numberOfKeywords)
+                .collect(Collectors.toSet());
     }
 
     public Set<String> getKeywordsByTFIDF(final int numberOfKeywords) {

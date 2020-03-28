@@ -84,7 +84,8 @@ public class Main {
                             .equals(CHEBYSHEV_ABBREVIATION))) {
 
                 System.err.println("Wrong parameters");
-                System.out.println("<Percentage of training set> <k for kNN> <metric - eucl or manh or cheb>");
+                System.out.println(
+                        "<Percentage of training set> <k for kNN> <metric - eucl or manh or cheb>");
 
                 System.exit(1);
             }
@@ -128,12 +129,15 @@ public class Main {
 
     private static void filterDocuments() {
         action(() -> documents = documents.stream()
-                .filter((it) -> it.getPlaceList().size() == 1 && CHOSEN_PLACES.contains(it.getPlaceList().get(0)))
-                .collect(Collectors.toCollection(ArrayList::new)), "Removing documents with multiple places");
+                        .filter((it) -> it.getPlaceList()
+                                .size() == 1 && CHOSEN_PLACES.contains(it.getPlaceList().get(0)))
+                        .collect(Collectors.toCollection(ArrayList::new)),
+                "Removing documents with multiple places");
     }
 
     private static void stemDocuments() {
-        action(() -> documentStemmer.performStemmingProcessOnWordList(documents), "Stemming documents");
+        action(() -> documentStemmer.performStemmingProcessOnWordList(documents),
+                "Stemming documents");
     }
 
     private static void removeStopWords() {
@@ -200,10 +204,14 @@ public class Main {
 
         action(() -> {
             trainingFeatureVectors
-                    .addAll(trainingDocuments.stream().map(extractorDecorator::extract).collect(Collectors.toList()));
+                    .addAll(trainingDocuments.stream()
+                            .map(extractorDecorator::extract)
+                            .collect(Collectors.toList()));
 
             testFeatureVectors
-                    .addAll(testDocuments.stream().map(extractorDecorator::extract).collect(Collectors.toList()));
+                    .addAll(testDocuments.stream()
+                            .map(extractorDecorator::extract)
+                            .collect(Collectors.toList()));
         }, "Features extracting");
 
         action(() -> {
@@ -226,7 +234,8 @@ public class Main {
                         classification.put(properPlace, new HashMap<>());
                     }
                     classification.get(properPlace)
-                            .put(recognizedPlace, classification.get(properPlace).getOrDefault(recognizedPlace, 0) + 1);
+                            .put(recognizedPlace, classification.get(properPlace)
+                                    .getOrDefault(recognizedPlace, 0) + 1);
                 } catch (MetricNotSupportedException e) {
                     throw new RuntimeException(e);
                 }
@@ -238,7 +247,10 @@ public class Main {
     private static void printStatistics() {
         System.out.println("\n-------------------------------------\n");
         classification.forEach((clazz, classes) -> {
-            double percent = classes.getOrDefault(clazz, 0) * 100.0 / classes.values().stream().mapToInt(x -> x).sum();
+            double percent = classes.getOrDefault(clazz, 0) * 100.0 / classes.values()
+                    .stream()
+                    .mapToInt(x -> x)
+                    .sum();
             System.out.println(clazz + "   " + percent + " %");
             classes.forEach((recognizedClass, quantity) -> {
                 System.out.println("\t" + recognizedClass + "  " + quantity);
@@ -246,12 +258,17 @@ public class Main {
         });
         System.out.println();
         final int allSum =
-                classification.values().stream().mapToInt(classes -> classes.values().stream().mapToInt(x -> x).sum())
+                classification.values()
+                        .stream()
+                        .mapToInt(classes -> classes.values().stream().mapToInt(x -> x).sum())
                         .sum();
         final int properlyClassifiedSum = classification.keySet().stream().mapToInt(
-                clazz -> classification.get(clazz).keySet().stream()
+                clazz -> classification.get(clazz)
+                        .keySet()
+                        .stream()
                         .filter(recognizedClass -> recognizedClass.equals(clazz))
-                        .mapToInt(recognizedClass -> classification.get(clazz).get(recognizedClass)).sum()).sum();
+                        .mapToInt(recognizedClass -> classification.get(clazz).get(recognizedClass))
+                        .sum()).sum();
         System.out.println("All: " + (properlyClassifiedSum * 100.0 / allSum) + " %");
         System.out.println("Overall Time: " + overallTime + "s");
         System.out.println("\n-------------------------------------\n");

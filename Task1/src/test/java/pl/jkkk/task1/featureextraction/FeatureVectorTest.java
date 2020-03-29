@@ -2,7 +2,6 @@ package pl.jkkk.task1.featureextraction;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.jkkk.task1.exception.MetricNotSupportedException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -22,17 +21,17 @@ class FeatureVectorTest {
     }
 
     @Test
-    void calculateEuclideanMetricTest() throws MetricNotSupportedException {
+    void calculateEuclideanMetricTest() {
         assertEquals(26, FeatureVector.calculateDistance(first, second, Metric.EUCLIDEAN));
     }
 
     @Test
-    void calculateManhattanMetricTest() throws MetricNotSupportedException {
+    void calculateManhattanMetricTest() {
         assertEquals(34, FeatureVector.calculateDistance(first, second, Metric.MANHATTAN));
     }
 
     @Test
-    void calculateChebyshevMetricTest() throws MetricNotSupportedException {
+    void calculateChebyshevMetricTest() {
         assertEquals(24, FeatureVector.calculateDistance(first, second, Metric.CHEBYSHEV));
     }
 }

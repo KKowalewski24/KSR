@@ -1,11 +1,5 @@
 package pl.jkkk.task1;
 
-import static pl.jkkk.task1.constant.Constants.CHEBYSHEV_ABBREVIATION;
-import static pl.jkkk.task1.constant.Constants.CHOSEN_PLACES;
-import static pl.jkkk.task1.constant.Constants.EUCLIDEAN_ABBREVIATION;
-import static pl.jkkk.task1.constant.Constants.FILENAME_LIST;
-import static pl.jkkk.task1.constant.Constants.MANHATTAN_ABBREVIATION;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +8,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import pl.jkkk.task1.exception.MetricNotSupportedException;
 import pl.jkkk.task1.featureextraction.DocumentLengthFE;
 import pl.jkkk.task1.featureextraction.FeatureExtractorDecorator;
 import pl.jkkk.task1.featureextraction.FeatureVector;
@@ -22,12 +15,15 @@ import pl.jkkk.task1.featureextraction.KeywordsExtractor;
 import pl.jkkk.task1.featureextraction.Metric;
 import pl.jkkk.task1.featureextraction.NumberOfKeywordsInDocumentFragmentFE;
 import pl.jkkk.task1.featureextraction.RelativeNumberOfKeywordsInDocumentFragmentFE;
+import pl.jkkk.task1.featureextraction.TypeOfClassification;
 import pl.jkkk.task1.featureextraction.UniqueNumberOfKeywordsInDocumentFragmentFE;
 import pl.jkkk.task1.knn.KnnAlgorithm;
 import pl.jkkk.task1.model.Document;
 import pl.jkkk.task1.reader.SgmlFileReader;
 import pl.jkkk.task1.stemmer.DocumentStemmer;
 import pl.jkkk.task1.stopwords.WordRemover;
+import static pl.jkkk.task1.constant.Constants.CHOSEN_PLACES;
+import static pl.jkkk.task1.constant.Constants.FILENAME_LIST;
 
 public class Main {
 
@@ -49,63 +45,61 @@ public class Main {
     private static Map<String, Map<String, Integer>> classification;
     private static double overallTime = 0;
 
-    /*
-     * Call parameters
-     *
-     * 1. Percentage of training to test ratio
-     * args[0] = 60 then trainingSet.size():= documents.size()*60/100
-     *
-     * 2. Chosen K for kNN
-     *
-     * 3. Chosen metric - use abbreviation
-     * Euclidean - eucl
-     * Manhattan - manh
-     * Chebyshev - cheb
-     *
-     * */
+
+    private static void printUsage() {
+        System.out.println(
+                "Required parameters:  \nt" + 
+                "\t<type of classification [features|tfm|ngram]>\n" +
+                "\t<percentage of training set (integer 1-99)>\n" +
+                "\t<k for kNN (integer >0)>\n" +
+                "\t(in case of features/tfm)\n" +
+                "\t\t<number of keywords (integer >0)>\n" +
+                "\t\t<metric (for features/tfm) [eucl|manh|cheb]>\n" +
+                "\t(in case of ngram)\n" +
+                "\t\t<number N (integer >0)"
+        );
+        System.exit(0);
+    }
 
     /*------------------------ METHODS REGION ------------------------*/
     public static void main(String[] args) {
-        if (args.length != 4) {
-            System.out.println("Wrong parameters");
-            System.out.println(
-                    "<Percentage of training set> <k for kNN> <metric - eucl or manh or cheb> "
-                            + "<number of keywords>");
-
-            System.exit(0);
-        } else {
-            int percentageOfTrainingSet = Integer.valueOf(args[0]);
-            int numberK = Integer.valueOf(args[1]);
-            String metricAbbr = args[2];
-            int numberOfKeywords = Integer.valueOf(args[3]);
-
-            if ((percentageOfTrainingSet < 1 || percentageOfTrainingSet > 99) || numberK < 1 || !(
-                    metricAbbr.equals(EUCLIDEAN_ABBREVIATION) || metricAbbr.equals(MANHATTAN_ABBREVIATION) || metricAbbr
-                            .equals(CHEBYSHEV_ABBREVIATION))) {
-
-                System.err.println("Wrong parameters");
-                System.out.println(
-                        "<Percentage of training set> <k for kNN> <metric - eucl or manh or cheb>");
-
-                System.exit(1);
+        /*----- RETRIEVE PROGRAM PARAMS -----*/
+        TypeOfClassification typeOfClassification = null;
+        int percentageOfTrainingSet = 0;
+        int numberK = 0;
+        int numberOfKeywords = 0;
+        Metric metric = null;
+        int numberN = 0;
+        try {
+            typeOfClassification = TypeOfClassification.fromString(args[0]);
+            percentageOfTrainingSet = Integer.valueOf(args[1]);
+            numberK = Integer.valueOf(args[2]);
+            if (typeOfClassification == TypeOfClassification.NGRAM) {
+                numberN = Integer.valueOf(args[3]);
+            } else {
+                numberOfKeywords = Integer.valueOf(args[3]);
+                metric = Metric.convertAbbreviationToMetric(args[4]);
             }
-
-            /*----- DOCUMENTS PREPARATION -----*/
-            readDocuments();
-            filterDocuments();
-            stemDocuments();
-            removeStopWords();
-
-            /*-----  -----*/
-            calculateWordOccurrences();
-            retrieveKeywords(numberOfKeywords);
-            divideIntoTwoSets(percentageOfTrainingSet);
-            extractFeatures();
-            knnClassification(numberK, metricAbbr);
-
-            /*----- SUMMARY -----*/
-            printStatistics();
+        } catch(Exception e) {
+            System.out.println(e);
+            printUsage();
         }
+
+        /*----- DOCUMENTS PREPARATION -----*/
+        readDocuments();
+        filterDocuments();
+        stemDocuments();
+        removeStopWords();
+
+        /*-----  -----*/
+        calculateWordOccurrences();
+        retrieveKeywords(numberOfKeywords);
+        divideIntoTwoSets(percentageOfTrainingSet);
+        extractFeatures();
+        knnClassification(numberK, metric);
+
+        /*----- SUMMARY -----*/
+        printStatistics();
     }
 
     private static void action(Runnable runnable, String description) {
@@ -220,25 +214,19 @@ public class Main {
         }, "Normalize feature vectors");
     }
 
-    private static void knnClassification(int numberK, String metricAbbreviation) {
+    private static void knnClassification(int numberK, Metric metric) {
         action(() -> {
             classification = new HashMap<>();
             for (FeatureVector it : testFeatureVectors) {
-                try {
-                    final String properPlace = it.getDocument().getPlaceList().get(0);
-                    final String recognizedPlace = knnAlgorithm
-                            .calculateAndClassify(it, trainingFeatureVectors, numberK,
-                                    Metric.convertAbbreviationToMetric(metricAbbreviation));
-
-                    if (!classification.containsKey(properPlace)) {
-                        classification.put(properPlace, new HashMap<>());
-                    }
-                    classification.get(properPlace)
-                            .put(recognizedPlace, classification.get(properPlace)
-                                    .getOrDefault(recognizedPlace, 0) + 1);
-                } catch (MetricNotSupportedException e) {
-                    throw new RuntimeException(e);
+                final String properPlace = it.getDocument().getPlaceList().get(0);
+                final String recognizedPlace = knnAlgorithm
+                        .calculateAndClassify(it, trainingFeatureVectors, numberK, metric);
+                if (!classification.containsKey(properPlace)) {
+                    classification.put(properPlace, new HashMap<>());
                 }
+                classification.get(properPlace)
+                        .put(recognizedPlace, classification.get(properPlace)
+                                .getOrDefault(recognizedPlace, 0) + 1);
             }
 
         }, "kNN");

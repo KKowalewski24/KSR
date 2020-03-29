@@ -1,6 +1,5 @@
 package pl.jkkk.task1.featureextraction;
 
-import pl.jkkk.task1.exception.MetricNotSupportedException;
 import pl.jkkk.task1.model.Document;
 
 import java.util.ArrayList;
@@ -80,7 +79,7 @@ public class FeatureVector extends ArrayList<Double> {
 
     public static Double calculateDistance(FeatureVector featureVectorOne,
                                            FeatureVector featureVectorTwo,
-                                           Metric metric) throws MetricNotSupportedException {
+                                           Metric metric) {
         switch (metric) {
             case EUCLIDEAN: {
                 return calculateEuclidean(featureVectorOne, featureVectorTwo);
@@ -88,11 +87,8 @@ public class FeatureVector extends ArrayList<Double> {
             case MANHATTAN: {
                 return calculateManhattan(featureVectorOne, featureVectorTwo);
             }
-            case CHEBYSHEV: {
+            default /*CHEBYSHEV*/: {
                 return calculateChebyshev(featureVectorOne, featureVectorTwo);
-            }
-            default: {
-                throw new MetricNotSupportedException();
             }
         }
     }

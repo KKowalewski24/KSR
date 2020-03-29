@@ -1,7 +1,6 @@
 package pl.jkkk.task1.knn;
 
 import org.junit.jupiter.api.Test;
-import pl.jkkk.task1.exception.MetricNotSupportedException;
 import pl.jkkk.task1.featureextraction.FeatureVector;
 import pl.jkkk.task1.featureextraction.Metric;
 import pl.jkkk.task1.model.Document;
@@ -45,7 +44,7 @@ class KnnAlgorithmTest {
 
     /*------------------------ METHODS REGION ------------------------*/
     @Test
-    void calculateTest() throws MetricNotSupportedException {
+    void calculateTest() {
         List<FeatureVector> resultVectors = knnAlgorithm.calculate(
                 testVector, trainingVectors, correctVectors.size(), Metric.EUCLIDEAN);
 

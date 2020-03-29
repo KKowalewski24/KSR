@@ -1,6 +1,5 @@
 package pl.jkkk.task1.knn;
 
-import pl.jkkk.task1.exception.MetricNotSupportedException;
 import pl.jkkk.task1.featureextraction.FeatureVector;
 import pl.jkkk.task1.featureextraction.Metric;
 import pl.jkkk.task1.model.Document;
@@ -25,7 +24,7 @@ public class KnnAlgorithm {
 
     /*------------------------ METHODS REGION ------------------------*/
     List<FeatureVector> calculate(FeatureVector featureVector, List<FeatureVector> trainingVectors,
-                                  int numberK, Metric metric) throws MetricNotSupportedException {
+                                  int numberK, Metric metric) {
         List<CalculatedFeatureVector> calculatedFeatureVectors = new ArrayList<>();
 
         for (FeatureVector it : trainingVectors) {
@@ -64,7 +63,7 @@ public class KnnAlgorithm {
 
     public String calculateAndClassify(FeatureVector featureVector,
                                        List<FeatureVector> trainingVectors, int numberK,
-                                       Metric metric) throws MetricNotSupportedException {
+                                       Metric metric) {
 
         List<FeatureVector> selectedVectors = calculate(featureVector,
                 trainingVectors, numberK, metric);

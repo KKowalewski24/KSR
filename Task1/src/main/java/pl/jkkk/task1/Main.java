@@ -16,6 +16,7 @@ import pl.jkkk.task1.featureextraction.Metric;
 import pl.jkkk.task1.featureextraction.NumberOfKeywordsInDocumentFragmentFE;
 import pl.jkkk.task1.featureextraction.RelativeNumberOfKeywordsInDocumentFragmentFE;
 import pl.jkkk.task1.featureextraction.TypeOfClassification;
+import pl.jkkk.task1.featureextraction.TermFrequencyMatrixFE;
 import pl.jkkk.task1.featureextraction.UniqueNumberOfKeywordsInDocumentFragmentFE;
 import pl.jkkk.task1.knn.KnnAlgorithm;
 import pl.jkkk.task1.model.Document;
@@ -95,7 +96,7 @@ public class Main {
         calculateWordOccurrences();
         retrieveKeywords(numberOfKeywords);
         divideIntoTwoSets(percentageOfTrainingSet);
-        extractFeatures();
+        extractFeatures(typeOfClassification);
         knnClassification(numberK, metric);
 
         /*----- SUMMARY -----*/
@@ -175,26 +176,30 @@ public class Main {
         }, "Dividing into two lists");
     }
 
-    private static void extractFeatures() {
+    private static void extractFeatures(TypeOfClassification typeOfClassification) {
         trainingFeatureVectors = new ArrayList<>();
         testFeatureVectors = new ArrayList<>();
 
         extractorDecorator = new FeatureExtractorDecorator();
-        extractorDecorator.addExtractor(new DocumentLengthFE());
-        keywordsSets.forEach(keywords -> {
-            extractorDecorator.addExtractor(
-                    new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
-            extractorDecorator.addExtractor(
-                    new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
-            extractorDecorator.addExtractor(
-                    new NumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
-            extractorDecorator.addExtractor(
-                    new NumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
-            extractorDecorator.addExtractor(
-                    new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
-            extractorDecorator.addExtractor(
-                    new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
-        });
+        if(typeOfClassification == TypeOfClassification.FEATURES){
+            extractorDecorator.addExtractor(new DocumentLengthFE());
+            keywordsSets.forEach(keywords -> {
+                extractorDecorator.addExtractor(
+                        new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
+                extractorDecorator.addExtractor(
+                        new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
+                extractorDecorator.addExtractor(
+                        new NumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
+                extractorDecorator.addExtractor(
+                        new NumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
+                extractorDecorator.addExtractor(
+                        new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
+                extractorDecorator.addExtractor(
+                        new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
+            });
+        }else if(typeOfClassification == TypeOfClassification.TFM){
+            extractorDecorator.addExtractor(new TermFrequencyMatrixFE(keywordsSets.get(0)));
+        }
 
         action(() -> {
             trainingFeatureVectors

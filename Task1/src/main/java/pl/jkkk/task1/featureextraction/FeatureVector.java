@@ -1,12 +1,13 @@
 package pl.jkkk.task1.featureextraction;
 
-import pl.jkkk.task1.model.Document;
-
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import pl.jkkk.task1.model.Document;
 
 public class FeatureVector extends ArrayList<Double> {
 
@@ -16,6 +17,11 @@ public class FeatureVector extends ArrayList<Double> {
     private Document document;
 
     /*------------------------ METHODS REGION ------------------------*/
+
+    public FeatureVector(Collection<Double> collection){
+        super(collection);
+    }
+
     public FeatureVector(Double... values) {
         super(Arrays.asList(values));
     }

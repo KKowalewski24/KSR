@@ -2,7 +2,9 @@ package pl.jkkk.task1.featureextraction;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import pl.jkkk.task1.model.Document;
 
@@ -82,9 +84,27 @@ public class FeatureVector extends ArrayList<Feature> {
     /**
      * Calculate trigram distance between two strings
      */
-    public static Double calculateTrigramDistance(String a, String b){
-        //TODO
-        return 0.0;
+    public static Double calculateTrigramDistance(String a, String b) {
+        final int n = 3;
+
+        /* retrieve ngrams */
+        Set<String> ngramsA = new HashSet<>();
+        Set<String> ngramsB = new HashSet<>();
+        for(int i = 0; i < a.length() - n + 1; i++) {
+            ngramsA.add(a.substring(i, i + 3));
+        }
+        for(int i = 0; i < b.length() - n + 1; i++) {
+            ngramsB.add(b.substring(i, i + 3));
+        }
+        
+        /* calculate distance */
+        double sum = 0.0;
+        for(String ngramA : ngramsA) {
+            if(ngramsB.contains(ngramA)) {
+                sum += 1.0;
+            }
+        }
+        return sum / ngramsA.size();
     }
 
     /**

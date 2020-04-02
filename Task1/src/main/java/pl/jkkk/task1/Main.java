@@ -195,11 +195,9 @@ public class Main {
                     new MostFrequentKeywordInDocumentFragmentFE(keywords, 0, 50));
             extractorDecorator.addExtractor(
                     new MostFrequentKeywordInDocumentFragmentFE(keywords, 50, 100));
-            extractorDecorator.addExtractor(
-                    new MostFrequentWordInDocumentFragmentFE(0, 50));
-            extractorDecorator.addExtractor(
-                    new MostFrequentWordInDocumentFragmentFE(50, 100));
         });
+        extractorDecorator.addExtractor(new MostFrequentWordInDocumentFragmentFE(0, 50));
+        extractorDecorator.addExtractor(new MostFrequentWordInDocumentFragmentFE(50, 100));
 
         action(() -> {
             trainingFeatureVectors

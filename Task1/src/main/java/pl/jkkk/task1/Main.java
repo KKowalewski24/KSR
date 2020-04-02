@@ -1,21 +1,5 @@
 package pl.jkkk.task1;
 
-import pl.jkkk.task1.featureextraction.DocumentLengthFE;
-import pl.jkkk.task1.featureextraction.FeatureExtractorDecorator;
-import pl.jkkk.task1.featureextraction.FeatureVector;
-import pl.jkkk.task1.featureextraction.KeywordsExtractor;
-import pl.jkkk.task1.featureextraction.Metric;
-import pl.jkkk.task1.featureextraction.NumberOfKeywordsInDocumentFragmentFE;
-import pl.jkkk.task1.featureextraction.RelativeNumberOfKeywordsInDocumentFragmentFE;
-import pl.jkkk.task1.featureextraction.TermFrequencyMatrixFE;
-import pl.jkkk.task1.featureextraction.TypeOfClassification;
-import pl.jkkk.task1.featureextraction.UniqueNumberOfKeywordsInDocumentFragmentFE;
-import pl.jkkk.task1.knn.KnnAlgorithm;
-import pl.jkkk.task1.model.Document;
-import pl.jkkk.task1.reader.SgmlFileReader;
-import pl.jkkk.task1.stemmer.DocumentStemmer;
-import pl.jkkk.task1.stopwords.WordRemover;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalTime;
@@ -27,6 +11,20 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import pl.jkkk.task1.featureextraction.DocumentLengthFE;
+import pl.jkkk.task1.featureextraction.FeatureExtractorDecorator;
+import pl.jkkk.task1.featureextraction.FeatureVector;
+import pl.jkkk.task1.featureextraction.KeywordsExtractor;
+import pl.jkkk.task1.featureextraction.NumberOfKeywordsInDocumentFragmentFE;
+import pl.jkkk.task1.featureextraction.NumericalMetric;
+import pl.jkkk.task1.featureextraction.RelativeNumberOfKeywordsInDocumentFragmentFE;
+import pl.jkkk.task1.featureextraction.TextMetric;
+import pl.jkkk.task1.featureextraction.UniqueNumberOfKeywordsInDocumentFragmentFE;
+import pl.jkkk.task1.knn.KnnAlgorithm;
+import pl.jkkk.task1.model.Document;
+import pl.jkkk.task1.reader.SgmlFileReader;
+import pl.jkkk.task1.stemmer.DocumentStemmer;
+import pl.jkkk.task1.stopwords.WordRemover;
 import static pl.jkkk.task1.constant.Constants.CHOSEN_PLACES;
 import static pl.jkkk.task1.constant.Constants.FILENAME_LIST;
 
@@ -52,15 +50,12 @@ public class Main {
 
     private static void printUsage() {
         System.out.println(
-                "Required parameters:  \nt" +
-                        "\t<type of classification [features|tfm|ngram]>\n" +
+                "Required parameters:  \n" +
                         "\t<percentage of training set (integer 1-99)>\n" +
                         "\t<k for kNN (integer >0)>\n" +
-                        "\t(in case of features/tfm)\n" +
-                        "\t\t<number of keywords (integer >0)>\n" +
-                        "\t\t<metric (for features/tfm) [eucl|manh|cheb]>\n" +
-                        "\t(in case of ngram)\n" +
-                        "\t\t<number N (integer >0)"
+                        "\t<number of keywords (integer >0)>\n" +
+                        "\t<numerical metric [eucl|manh|cheb]>\n" +
+                        "\t<text metric [trigram|tfm]>"
         );
         System.exit(0);
     }
@@ -68,22 +63,16 @@ public class Main {
     /*------------------------ METHODS REGION ------------------------*/
     public static void main(String[] args) {
         /*----- RETRIEVE PROGRAM PARAMS -----*/
-        TypeOfClassification typeOfClassification = null;
         int percentageOfTrainingSet = 0;
         int numberK = 0;
         int numberOfKeywords = 0;
-        Metric metric = null;
-        int numberN = 0;
+        NumericalMetric numericalMetric = null;
+        TextMetric textMetric = null;
         try {
-            typeOfClassification = TypeOfClassification.fromString(args[0]);
             percentageOfTrainingSet = Integer.valueOf(args[1]);
             numberK = Integer.valueOf(args[2]);
-            if (typeOfClassification == TypeOfClassification.NGRAM) {
-                numberN = Integer.valueOf(args[3]);
-            } else {
-                numberOfKeywords = Integer.valueOf(args[3]);
-                metric = Metric.convertAbbreviationToMetric(args[4]);
-            }
+            numericalMetric = NumericalMetric.fromString(args[3]);
+            textMetric = TextMetric.fromString(args[4]);
         } catch (Exception e) {
             System.out.println(e);
             printUsage();
@@ -99,8 +88,8 @@ public class Main {
         calculateWordOccurrences();
         retrieveKeywords(numberOfKeywords);
         divideIntoTwoSets(percentageOfTrainingSet);
-        extractFeatures(typeOfClassification);
-        knnClassification(numberK, metric);
+        extractFeatures();
+        knnClassification(numberK, numericalMetric, textMetric);
 
         /*----- SUMMARY -----*/
         printStatistics();
@@ -180,30 +169,26 @@ public class Main {
         }, "Dividing into two lists");
     }
 
-    private static void extractFeatures(TypeOfClassification typeOfClassification) {
+    private static void extractFeatures() {
         trainingFeatureVectors = new ArrayList<>();
         testFeatureVectors = new ArrayList<>();
 
         extractorDecorator = new FeatureExtractorDecorator();
-        if (typeOfClassification == TypeOfClassification.FEATURES) {
-            extractorDecorator.addExtractor(new DocumentLengthFE());
-            keywordsSets.forEach(keywords -> {
-                extractorDecorator.addExtractor(
-                        new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
-                extractorDecorator.addExtractor(
-                        new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
-                extractorDecorator.addExtractor(
-                        new NumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
-                extractorDecorator.addExtractor(
-                        new NumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
-                extractorDecorator.addExtractor(
-                        new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
-                extractorDecorator.addExtractor(
-                        new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
-            });
-        } else if (typeOfClassification == TypeOfClassification.TFM) {
-            extractorDecorator.addExtractor(new TermFrequencyMatrixFE(keywordsSets.get(0)));
-        }
+        extractorDecorator.addExtractor(new DocumentLengthFE());
+        keywordsSets.forEach(keywords -> {
+            extractorDecorator.addExtractor(
+                    new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
+            extractorDecorator.addExtractor(
+                    new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
+            extractorDecorator.addExtractor(
+                    new NumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
+            extractorDecorator.addExtractor(
+                    new NumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
+            extractorDecorator.addExtractor(
+                    new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
+            extractorDecorator.addExtractor(
+                    new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
+        });
 
         action(() -> {
             trainingFeatureVectors
@@ -223,13 +208,14 @@ public class Main {
         }, "Normalize feature vectors");
     }
 
-    private static void knnClassification(int numberK, Metric metric) {
+    private static void knnClassification(int numberK, NumericalMetric numericalMetric,
+                                    TextMetric textMetric) {
         action(() -> {
             classification = new HashMap<>();
             for (FeatureVector it : testFeatureVectors) {
                 final String properPlace = it.getDocument().getPlaceList().get(0);
                 final String recognizedPlace = knnAlgorithm
-                        .calculateAndClassify(it, trainingFeatureVectors, numberK, metric);
+                        .calculateAndClassify(it, trainingFeatureVectors, numberK, numericalMetric, textMetric);
                 if (!classification.containsKey(properPlace)) {
                     classification.put(properPlace, new HashMap<>());
                 }

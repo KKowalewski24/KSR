@@ -6,8 +6,8 @@ public class DocumentLengthFE implements FeatureExtractor {
 
     @Override
     public FeatureVector extract(Document document) {
-        FeatureVector vector = new FeatureVector();
-        vector.add((double) document.getWordList().size());
+        FeatureVector vector = new FeatureVector(document);
+        vector.add(new Feature((double) document.getWordList().size()));
         return vector;
     }
 }

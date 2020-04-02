@@ -16,7 +16,7 @@ public class RelativeNumberOfKeywordsInDocumentFragmentFE
     @Override
     public FeatureVector extract(Document document) {
         FeatureVector vector = super.extract(document);
-        vector.set(0, vector.get(0) / document.getWordList().size());
+        vector.get(0).setNumber(vector.get(0).getNumber() / document.getWordList().size());
         return vector;
     }
 

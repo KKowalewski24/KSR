@@ -21,15 +21,15 @@ public class UniqueNumberOfKeywordsInDocumentFragmentFE implements FeatureExtrac
 
     @Override
     public FeatureVector extract(Document document) {
-        FeatureVector vector = new FeatureVector();
+        FeatureVector vector = new FeatureVector(document);
         int rangeBegin = rangeBeginInPercents * document.getWordList().size() / 100;
         int rangeEnd = rangeEndInPercents * document.getWordList().size() / 100;
-        vector.add((double) document.getWordList().stream()
+        vector.add(new Feature((double) document.getWordList().stream()
                 .skip(rangeBegin)
                 .limit(rangeEnd - rangeBegin)
                 .filter((word) -> keywords.contains(word))
                 .collect(Collectors.toSet())
-                .size());
+                .size()));
 
         return vector;
     }

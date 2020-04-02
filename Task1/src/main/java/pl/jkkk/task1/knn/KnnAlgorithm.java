@@ -1,7 +1,8 @@
 package pl.jkkk.task1.knn;
 
 import pl.jkkk.task1.featureextraction.FeatureVector;
-import pl.jkkk.task1.featureextraction.Metric;
+import pl.jkkk.task1.featureextraction.NumericalMetric;
+import pl.jkkk.task1.featureextraction.TextMetric;
 import pl.jkkk.task1.model.Document;
 
 import java.util.ArrayList;
@@ -23,13 +24,17 @@ public class KnnAlgorithm {
     /*------------------------ FIELDS REGION ------------------------*/
 
     /*------------------------ METHODS REGION ------------------------*/
-    List<FeatureVector> calculate(FeatureVector featureVector, List<FeatureVector> trainingVectors,
-                                  int numberK, Metric metric) {
+    List<FeatureVector> calculate(FeatureVector featureVector,
+                                  List<FeatureVector> trainingVectors, 
+                                  int numberK, 
+                                  NumericalMetric numericalMetric, 
+                                  TextMetric textMetric) {
+
         List<CalculatedFeatureVector> calculatedFeatureVectors = new ArrayList<>();
 
         for (FeatureVector it : trainingVectors) {
             calculatedFeatureVectors.add(new CalculatedFeatureVector(it,
-                    FeatureVector.calculateDistance(featureVector, it, metric)));
+                    FeatureVector.calculateDistance(featureVector, it, numericalMetric, textMetric)));
         }
 
         Collections.sort(calculatedFeatureVectors);
@@ -62,11 +67,13 @@ public class KnnAlgorithm {
     }
 
     public String calculateAndClassify(FeatureVector featureVector,
-                                       List<FeatureVector> trainingVectors, int numberK,
-                                       Metric metric) {
+                                       List<FeatureVector> trainingVectors,
+                                       int numberK,
+                                       NumericalMetric numericalMetric,
+                                       TextMetric textMetric) {
 
         List<FeatureVector> selectedVectors = calculate(featureVector,
-                trainingVectors, numberK, metric);
+                trainingVectors, numberK, numericalMetric, textMetric);
 
         String classifiedPlace = classify(selectedVectors
                 .stream()

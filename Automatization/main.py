@@ -18,14 +18,14 @@ JAR_NAME = "task1-0.0.1-jar-with-dependencies.jar"
 # For ngram
 def call_jar_with_four_args(classification, training_set, knn, number_n):
     subprocess.call(
-        ["java", "-jar", JAR_NAME, classification, training_set, knn, number_n], shell=True
+        ["java", "-jar", JAR_NAME, classification, training_set, knn, number_n]
     )
 
 
 # For features and tfm
 def call_jar_with_five_args(classification, training_set, knn, keywords, metric):
     subprocess.call(
-        ["java", "-jar", JAR_NAME, classification, training_set, knn, keywords, metric], shell=True
+        ["java", "-jar", JAR_NAME, classification, training_set, knn, keywords, metric]
     )
 
 

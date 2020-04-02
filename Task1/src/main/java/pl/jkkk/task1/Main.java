@@ -1,5 +1,24 @@
 package pl.jkkk.task1;
 
+import pl.jkkk.task1.featureextraction.DocumentLengthFE;
+import pl.jkkk.task1.featureextraction.FeatureExtractorDecorator;
+import pl.jkkk.task1.featureextraction.FeatureVector;
+import pl.jkkk.task1.featureextraction.KeywordsExtractor;
+import pl.jkkk.task1.featureextraction.Metric;
+import pl.jkkk.task1.featureextraction.NumberOfKeywordsInDocumentFragmentFE;
+import pl.jkkk.task1.featureextraction.RelativeNumberOfKeywordsInDocumentFragmentFE;
+import pl.jkkk.task1.featureextraction.TermFrequencyMatrixFE;
+import pl.jkkk.task1.featureextraction.TypeOfClassification;
+import pl.jkkk.task1.featureextraction.UniqueNumberOfKeywordsInDocumentFragmentFE;
+import pl.jkkk.task1.knn.KnnAlgorithm;
+import pl.jkkk.task1.model.Document;
+import pl.jkkk.task1.reader.SgmlFileReader;
+import pl.jkkk.task1.stemmer.DocumentStemmer;
+import pl.jkkk.task1.stopwords.WordRemover;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,21 +27,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import pl.jkkk.task1.featureextraction.DocumentLengthFE;
-import pl.jkkk.task1.featureextraction.FeatureExtractorDecorator;
-import pl.jkkk.task1.featureextraction.FeatureVector;
-import pl.jkkk.task1.featureextraction.KeywordsExtractor;
-import pl.jkkk.task1.featureextraction.Metric;
-import pl.jkkk.task1.featureextraction.NumberOfKeywordsInDocumentFragmentFE;
-import pl.jkkk.task1.featureextraction.RelativeNumberOfKeywordsInDocumentFragmentFE;
-import pl.jkkk.task1.featureextraction.TypeOfClassification;
-import pl.jkkk.task1.featureextraction.TermFrequencyMatrixFE;
-import pl.jkkk.task1.featureextraction.UniqueNumberOfKeywordsInDocumentFragmentFE;
-import pl.jkkk.task1.knn.KnnAlgorithm;
-import pl.jkkk.task1.model.Document;
-import pl.jkkk.task1.reader.SgmlFileReader;
-import pl.jkkk.task1.stemmer.DocumentStemmer;
-import pl.jkkk.task1.stopwords.WordRemover;
 import static pl.jkkk.task1.constant.Constants.CHOSEN_PLACES;
 import static pl.jkkk.task1.constant.Constants.FILENAME_LIST;
 
@@ -46,18 +50,17 @@ public class Main {
     private static Map<String, Map<String, Integer>> classification;
     private static double overallTime = 0;
 
-
     private static void printUsage() {
         System.out.println(
-                "Required parameters:  \nt" + 
-                "\t<type of classification [features|tfm|ngram]>\n" +
-                "\t<percentage of training set (integer 1-99)>\n" +
-                "\t<k for kNN (integer >0)>\n" +
-                "\t(in case of features/tfm)\n" +
-                "\t\t<number of keywords (integer >0)>\n" +
-                "\t\t<metric (for features/tfm) [eucl|manh|cheb]>\n" +
-                "\t(in case of ngram)\n" +
-                "\t\t<number N (integer >0)"
+                "Required parameters:  \nt" +
+                        "\t<type of classification [features|tfm|ngram]>\n" +
+                        "\t<percentage of training set (integer 1-99)>\n" +
+                        "\t<k for kNN (integer >0)>\n" +
+                        "\t(in case of features/tfm)\n" +
+                        "\t\t<number of keywords (integer >0)>\n" +
+                        "\t\t<metric (for features/tfm) [eucl|manh|cheb]>\n" +
+                        "\t(in case of ngram)\n" +
+                        "\t\t<number N (integer >0)"
         );
         System.exit(0);
     }
@@ -81,7 +84,7 @@ public class Main {
                 numberOfKeywords = Integer.valueOf(args[3]);
                 metric = Metric.convertAbbreviationToMetric(args[4]);
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
             printUsage();
         }
@@ -101,6 +104,7 @@ public class Main {
 
         /*----- SUMMARY -----*/
         printStatistics();
+        saveGeneratedDataToFile(args);
     }
 
     private static void action(Runnable runnable, String description) {
@@ -181,7 +185,7 @@ public class Main {
         testFeatureVectors = new ArrayList<>();
 
         extractorDecorator = new FeatureExtractorDecorator();
-        if(typeOfClassification == TypeOfClassification.FEATURES){
+        if (typeOfClassification == TypeOfClassification.FEATURES) {
             extractorDecorator.addExtractor(new DocumentLengthFE());
             keywordsSets.forEach(keywords -> {
                 extractorDecorator.addExtractor(
@@ -197,7 +201,7 @@ public class Main {
                 extractorDecorator.addExtractor(
                         new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
             });
-        }else if(typeOfClassification == TypeOfClassification.TFM){
+        } else if (typeOfClassification == TypeOfClassification.TFM) {
             extractorDecorator.addExtractor(new TermFrequencyMatrixFE(keywordsSets.get(0)));
         }
 
@@ -237,19 +241,22 @@ public class Main {
         }, "kNN");
     }
 
-    private static void printStatistics() {
-        System.out.println("\n-------------------------------------\n");
+    private static String generateStatistics() {
+        StringBuilder result = new StringBuilder();
+
+        result.append("\n-------------------------------------\n");
         classification.forEach((clazz, classes) -> {
             double percent = classes.getOrDefault(clazz, 0) * 100.0 / classes.values()
                     .stream()
                     .mapToInt(x -> x)
                     .sum();
-            System.out.println(clazz + "   " + percent + " %");
+            result.append(clazz + "   " + percent + " %\n");
             classes.forEach((recognizedClass, quantity) -> {
-                System.out.println("\t" + recognizedClass + "  " + quantity);
+                result.append("\t" + recognizedClass + "  " + quantity + "\n");
             });
         });
-        System.out.println();
+        result.append("\n");
+
         final int allSum =
                 classification.values()
                         .stream()
@@ -262,8 +269,63 @@ public class Main {
                         .filter(recognizedClass -> recognizedClass.equals(clazz))
                         .mapToInt(recognizedClass -> classification.get(clazz).get(recognizedClass))
                         .sum()).sum();
-        System.out.println("All: " + (properlyClassifiedSum * 100.0 / allSum) + " %");
-        System.out.println("Overall Time: " + overallTime + "s");
-        System.out.println("\n-------------------------------------\n");
+        result.append("All: " + (properlyClassifiedSum * 100.0 / allSum) + " %\n");
+        result.append("Overall Time: " + overallTime + "s\n");
+        result.append("\n-------------------------------------\n\n");
+
+        return result.toString();
+    }
+
+    private static void printStatistics() {
+        System.out.println(generateStatistics());
+    }
+
+    private static void writeToPlainFile(String filename, String value) {
+        try (FileWriter fileWriter = new FileWriter(filename)) {
+            fileWriter.write(value);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void saveGeneratedDataToFile(String[] args) {
+        /*TODO FILL WITH REAL DATA*/
+        StringBuilder result = new StringBuilder("\\begin{table}[H]\n"
+                + "\t\\centering\n"
+                + "\t\\begin{tabular}{c c c c} \n"
+                + "\t\t\\hline\n"
+                + "\t\t\\textbf{k} & \\textbf{places [\\%]} & \\textbf{topics [\\%]} &  "
+                + "\\textbf{authors "
+                + "[\\%]} \\\\ [0.5ex] \n"
+                + "\t\t\\hline\n"
+                + "\t\t\\hline \n"
+                + "\t\t2 & 74.4 & 53.7 & 43.9 \\\\ \n"
+                + "\t\t3 & 78.5 & 52.2 & 43.9 \\\\\n"
+                + "\t\t5 & 80.2 & 52.2 & 36.6 \\\\\n"
+                + "\t\t7 & 81.0 & 53.7 & 26.8 \\\\\n"
+                + "\t\t10 & 81.5 & 60.4 & 24.4 \\\\\n"
+                + "\t\t15 & 81.6 & 62.7 & 29.3 \\\\\n"
+                + "\t\t20 & 81.4 & 61.2 & 31.7 \\\\ \n"
+                + "\t\t\\hline\n"
+                + "\t\\end{tabular}\n"
+                + "\t\\caption{Skuteczność klasyfikacji dla metryki Euklidesowej dla pierwszego "
+                + "sposobu "
+                + "ekstrakcji}\n"
+                + "\\end{table}");
+
+        result.append("\n\n-------------------------------\n\n");
+
+        result.append(generateStatistics());
+
+        StringBuilder filename = new StringBuilder();
+
+        for (String it : args) {
+            filename.append(it).append("_");
+        }
+
+        filename.append(LocalTime.now().getHour() + "h_" + LocalTime.now().getMinute()
+                + "min_" + LocalTime.now().getSecond() + "sek");
+        filename.append(".txt");
+        writeToPlainFile(filename.toString(), result.toString());
     }
 }

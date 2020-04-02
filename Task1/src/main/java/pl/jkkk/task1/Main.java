@@ -323,9 +323,13 @@ public class Main {
             filename.append(it).append("_");
         }
 
-        filename.append(LocalTime.now().getHour() + "h_" + LocalTime.now().getMinute()
-                + "min_" + LocalTime.now().getSecond() + "sek");
-        filename.append(".txt");
+        filename.append(LocalTime.now().getHour())
+                .append("h_")
+                .append(LocalTime.now().getMinute())
+                .append("min_")
+                .append(LocalTime.now().getSecond())
+                .append("sek")
+                .append(".txt");
         writeToPlainFile(filename.toString(), result.toString());
     }
 }

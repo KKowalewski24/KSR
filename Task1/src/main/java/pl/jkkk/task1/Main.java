@@ -20,6 +20,8 @@ import pl.jkkk.task1.featureextraction.NumericalMetric;
 import pl.jkkk.task1.featureextraction.RelativeNumberOfKeywordsInDocumentFragmentFE;
 import pl.jkkk.task1.featureextraction.TextMetric;
 import pl.jkkk.task1.featureextraction.UniqueNumberOfKeywordsInDocumentFragmentFE;
+import pl.jkkk.task1.featureextraction.MostFrequentKeywordInDocumentFragmentFE;
+import pl.jkkk.task1.featureextraction.MostFrequentWordInDocumentFragmentFE;
 import pl.jkkk.task1.knn.KnnAlgorithm;
 import pl.jkkk.task1.model.Document;
 import pl.jkkk.task1.reader.SgmlFileReader;
@@ -188,6 +190,14 @@ public class Main {
                     new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
             extractorDecorator.addExtractor(
                     new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
+            extractorDecorator.addExtractor(
+                    new MostFrequentKeywordInDocumentFragmentFE(keywords, 0, 50));
+            extractorDecorator.addExtractor(
+                    new MostFrequentKeywordInDocumentFragmentFE(keywords, 50, 100));
+            extractorDecorator.addExtractor(
+                    new MostFrequentWordInDocumentFragmentFE(0, 50));
+            extractorDecorator.addExtractor(
+                    new MostFrequentWordInDocumentFragmentFE(50, 100));
         });
 
         action(() -> {

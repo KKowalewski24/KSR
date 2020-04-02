@@ -112,9 +112,9 @@ public class FeatureVector extends ArrayList<Feature> {
      */
     public static Double calculateTFMDistance(String a, String b){
         if(a.equals(b))
-            return 1.0;
-        else
             return 0.0;
+        else
+            return 1.0;
     }
 
     /**

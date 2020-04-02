@@ -155,7 +155,7 @@ public class Main {
     }
 
     private static void divideIntoTwoSets(int divisionRatio) {
-        Random random = new Random();
+        Random random = new Random(47);
         final int testSetSize = documents.size() * (100 - divisionRatio) / 100;
 
         action(() -> {

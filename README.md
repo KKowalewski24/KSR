@@ -21,3 +21,14 @@ Manhattan - manh \
 Chebyshev - cheb 
       
 ## Task 2
+
+# Automatization
+##### How to use
+Copy generated jar with dependencies to directory 'Automatization', set jar file name,
+optionally add parameters and run in cmd by typing python main.py
+
+##### Sample call of the function 
+subprocess.call(
+        ["java", "-jar", JAR_NAME, "features", "60", "5", "5", "eucl"], shell=True
+    )
+    

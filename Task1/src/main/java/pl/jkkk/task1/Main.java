@@ -71,8 +71,9 @@ public class Main {
         NumericalMetric numericalMetric = null;
         TextMetric textMetric = null;
         try {
-            percentageOfTrainingSet = Integer.valueOf(args[1]);
-            numberK = Integer.valueOf(args[2]);
+            percentageOfTrainingSet = Integer.valueOf(args[0]);
+            numberK = Integer.valueOf(args[1]);
+            numberOfKeywords = Integer.valueOf(args[2]);
             numericalMetric = NumericalMetric.fromString(args[3]);
             textMetric = TextMetric.fromString(args[4]);
         } catch (Exception e) {

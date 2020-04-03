@@ -31,6 +31,7 @@ def call_jar_with_five_args(training_set, knn, keywords, metric, text_metric):
         ["java", "-jar", JAR_NAME, training_set, knn, keywords, metric, text_metric]
     )
 
+
 def series(training_set, k, number_of_keywords):
     call_jar_with_five_args(training_set, k, number_of_keywords, "eucl", "tfm")
     call_jar_with_five_args(training_set, k, number_of_keywords, "manh", "tfm")
@@ -38,22 +39,71 @@ def series(training_set, k, number_of_keywords):
     call_jar_with_five_args(training_set, k, number_of_keywords, "eucl", "trigram")
     call_jar_with_five_args(training_set, k, number_of_keywords, "manh", "trigram")
     call_jar_with_five_args(training_set, k, number_of_keywords, "cheb", "trigram")
-    
+
+
+# ----------------------------------------------------------------------------- #
+def series_1(k_number):
+    call_jar_with_five_args("40", k_number, "1000", "eucl", "tfm")
+
+
+def series_2(k_number):
+    call_jar_with_five_args("40", k_number, "1000", "manh", "tfm")
+
+
+def series_3(k_number):
+    call_jar_with_five_args("40", k_number, "10000", "eucl", "tfm")
+
+
+def second_round():
+    series_1("1")
+    series_1("3")
+    series_1("5")
+    series_1("7")
+    series_1("9")
+    series_1("11")
+    series_1("13")
+    series_1("15")
+    series_1("17")
+    series_1("19")
+
+    # series_2("1")
+    # series_2("3")
+    # series_2("5")
+    # series_2("7")
+    # series_2("9")
+    # series_2("11")
+    # series_2("13")
+    # series_2("15")
+    # series_2("17")
+    # series_2("19")
+    #
+    # series_3("1")
+    # series_3("3")
+    # series_3("5")
+    # series_3("7")
+    # series_3("9")
+    # series_3("11")
+    # series_3("13")
+    # series_3("15")
+    # series_3("17")
+    # series_3("19")
+
 
 # ----------------------------------------------------------------------------- #
 def main():
+    # series("40", "3", "1000")
+    # series("40", "5", "1000")
+    # series("40", "9", "1000")
+    # series("40", "19", "1000")
+    # series("40", "51", "1000")
+    #
+    # series("40", "3", "10000")
+    # series("40", "5", "10000")
+    # series("40", "9", "10000")
+    # series("40", "19", "10000")
+    # series("40", "51", "10000")
 
-    series("40", "3", "1000")
-    series("40", "5", "1000")
-    series("40", "9", "1000")
-    series("40", "19", "1000")
-    series("40", "51", "1000")
-
-    series("40", "3", "10000")
-    series("40", "5", "10000")
-    series("40", "9", "10000")
-    series("40", "19", "10000")
-    series("40", "51", "10000")
+    second_round()
 
     print("==========================================================================")
     print("END OF PROCESS")

@@ -31,76 +31,29 @@ def call_jar_with_five_args(training_set, knn, keywords, metric, text_metric):
         ["java", "-jar", JAR_NAME, training_set, knn, keywords, metric, text_metric]
     )
 
-
-# --------------------------- FIRST SESSION --------------------------- #
-
-def experiment_tfm_1():
-    call_jar_with_five_args("40", "5", "10", "eucl", "tfm")
-    call_jar_with_five_args("60", "5", "10", "eucl", "tfm")
-    call_jar_with_five_args("80", "5", "10", "eucl", "tfm")
-
-    call_jar_with_five_args("40", "5", "10", "manh", "tfm")
-    call_jar_with_five_args("60", "5", "10", "manh", "tfm")
-    call_jar_with_five_args("80", "5", "10", "manh", "tfm")
-
-    call_jar_with_five_args("40", "5", "10", "cheb", "tfm")
-    call_jar_with_five_args("60", "5", "10", "cheb", "tfm")
-    call_jar_with_five_args("80", "5", "10", "cheb", "tfm")
-
-
-def experiment_trigram_1():
-    call_jar_with_five_args("40", "5", "10", "eucl", "trigram")
-    call_jar_with_five_args("60", "5", "10", "eucl", "trigram")
-    call_jar_with_five_args("80", "5", "10", "eucl", "trigram")
-
-    call_jar_with_five_args("40", "5", "10", "manh", "trigram")
-    call_jar_with_five_args("60", "5", "10", "manh", "trigram")
-    call_jar_with_five_args("80", "5", "10", "manh", "trigram")
-
-    call_jar_with_five_args("40", "5", "10", "cheb", "trigram")
-    call_jar_with_five_args("60", "5", "10", "cheb", "trigram")
-    call_jar_with_five_args("80", "5", "10", "cheb", "trigram")
-
-
-# --------------------------- SECOND SESSION --------------------------- #
-def experiment_eucl_2():
-    call_jar_with_five_args("60", "1", "10", "eucl", "tfm")
-    call_jar_with_five_args("60", "2", "10", "eucl", "tfm")
-    call_jar_with_five_args("60", "3", "10", "eucl", "tfm")
-    call_jar_with_five_args("60", "5", "10", "eucl", "tfm")
-    call_jar_with_five_args("60", "7", "10", "eucl", "tfm")
-    call_jar_with_five_args("60", "15", "10", "eucl", "tfm")
-    call_jar_with_five_args("60", "20", "10", "eucl", "tfm")
-
-
-def experiment_manh_2():
-    call_jar_with_five_args("60", "1", "10", "manh", "tfm")
-    call_jar_with_five_args("60", "2", "10", "manh", "tfm")
-    call_jar_with_five_args("60", "3", "10", "manh", "tfm")
-    call_jar_with_five_args("60", "5", "10", "manh", "tfm")
-    call_jar_with_five_args("60", "7", "10", "manh", "tfm")
-    call_jar_with_five_args("60", "15", "10", "manh", "tfm")
-    call_jar_with_five_args("60", "20", "10", "manh", "tfm")
-
-
-def experiment_cheb_2():
-    call_jar_with_five_args("60", "1", "10", "cheb", "tfm")
-    call_jar_with_five_args("60", "2", "10", "cheb", "tfm")
-    call_jar_with_five_args("60", "3", "10", "cheb", "tfm")
-    call_jar_with_five_args("60", "5", "10", "cheb", "tfm")
-    call_jar_with_five_args("60", "7", "10", "cheb", "tfm")
-    call_jar_with_five_args("60", "15", "10", "cheb", "tfm")
-    call_jar_with_five_args("60", "20", "10", "cheb", "tfm")
-
+def series(training_set, k, number_of_keywords):
+    call_jar_with_five_args(training_set, k, number_of_keywords, "eucl", "tfm")
+    call_jar_with_five_args(training_set, k, number_of_keywords, "manh", "tfm")
+    call_jar_with_five_args(training_set, k, number_of_keywords, "cheb", "tfm")
+    call_jar_with_five_args(training_set, k, number_of_keywords, "eucl", "trigram")
+    call_jar_with_five_args(training_set, k, number_of_keywords, "manh", "trigram")
+    call_jar_with_five_args(training_set, k, number_of_keywords, "cheb", "trigram")
+    
 
 # ----------------------------------------------------------------------------- #
 def main():
-    # experiment_tfm_1()
-    # experiment_trigram_1()
 
-    # experiment_eucl_2()
-    # experiment_manh_2()
-    # experiment_cheb_2()
+    series("40", "3", "1000")
+    series("40", "5", "1000")
+    series("40", "9", "1000")
+    series("40", "19", "1000")
+    series("40", "51", "1000")
+
+    series("40", "3", "10000")
+    series("40", "5", "10000")
+    series("40", "9", "10000")
+    series("40", "19", "10000")
+    series("40", "51", "10000")
 
     print("==========================================================================")
     print("END OF PROCESS")

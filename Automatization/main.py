@@ -25,16 +25,49 @@ call_jar_with_five_args("", "", "", "", "")
 JAR_NAME = "task1-0.0.1-jar-with-dependencies.jar"
 
 
+# ----------------------------------------------------------------------------- #
 def call_jar_with_five_args(training_set, knn, keywords, metric, text_metric):
     subprocess.call(
         ["java", "-jar", JAR_NAME, training_set, knn, keywords, metric, text_metric]
     )
 
 
+# --------------------------- FIRST SESSION --------------------------- #
+
+def experiment_tfm_1():
+    call_jar_with_five_args("40", "5", "10", "eucl", "tfm")
+    call_jar_with_five_args("60", "5", "10", "eucl", "tfm")
+    call_jar_with_five_args("80", "5", "10", "eucl", "tfm")
+
+    call_jar_with_five_args("40", "5", "10", "manh", "tfm")
+    call_jar_with_five_args("60", "5", "10", "manh", "tfm")
+    call_jar_with_five_args("80", "5", "10", "manh", "tfm")
+
+    call_jar_with_five_args("40", "5", "10", "cheb", "tfm")
+    call_jar_with_five_args("60", "5", "10", "cheb", "tfm")
+    call_jar_with_five_args("80", "5", "10", "cheb", "tfm")
+
+
+def experiment_trigram_1():
+    call_jar_with_five_args("40", "5", "10", "eucl", "trigram")
+    call_jar_with_five_args("60", "5", "10", "eucl", "trigram")
+    call_jar_with_five_args("80", "5", "10", "eucl", "trigram")
+
+    call_jar_with_five_args("40", "5", "10", "manh", "trigram")
+    call_jar_with_five_args("60", "5", "10", "manh", "trigram")
+    call_jar_with_five_args("80", "5", "10", "manh", "trigram")
+
+    call_jar_with_five_args("40", "5", "10", "cheb", "trigram")
+    call_jar_with_five_args("60", "5", "10", "cheb", "trigram")
+    call_jar_with_five_args("80", "5", "10", "cheb", "trigram")
+
+
+# ---------------------------  --------------------------- #
+
+# ----------------------------------------------------------------------------- #
 def main():
-    for i in range(3):
-        print("Iteration number(counted from 1): " + str(i + 1))
-        call_jar_with_five_args("", "", "", "", "")
+    experiment_tfm_1()
+    experiment_trigram_1()
 
     print("==========================================================================")
     print("END OF PROCESS")

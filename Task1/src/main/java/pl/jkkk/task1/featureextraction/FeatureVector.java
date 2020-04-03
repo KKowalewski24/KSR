@@ -1,12 +1,12 @@
 package pl.jkkk.task1.featureextraction;
 
+import pl.jkkk.task1.model.Document;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import pl.jkkk.task1.model.Document;
 
 public class FeatureVector extends ArrayList<Feature> {
 
@@ -26,22 +26,22 @@ public class FeatureVector extends ArrayList<Feature> {
         return document;
     }
 
-    /** 
-     * Normalize numerical parts of provided feature vectors
+    /**
+     * Normalize numerical parts of provided feature vectors.
      */
     public static void normalize(List<FeatureVector> vectors) {
         double[] maxs = new double[vectors.get(0).size()];
-        for(int i = 0; i < vectors.get(0).size(); i++){
-            if(vectors.get(0).get(i).isNumber()){
+        for (int i = 0; i < vectors.get(0).size(); i++) {
+            if (vectors.get(0).get(i).isNumber()) {
                 final int index = i;
                 maxs[i] = vectors.stream()
-                    .mapToDouble(vector -> vector.get(index).getNumber())
-                    .max().getAsDouble();
+                        .mapToDouble(vector -> vector.get(index).getNumber())
+                        .max().getAsDouble();
             }
         }
-        for(FeatureVector vector : vectors) {
-            for(int i = 0; i < vector.size(); i++) {
-                if(vector.get(i).isNumber()) {
+        for (FeatureVector vector : vectors) {
+            for (int i = 0; i < vector.size(); i++) {
+                if (vector.get(i).isNumber()) {
                     vector.get(i).setNumber(vector.get(i).getNumber() / maxs[i]);
                 }
             }
@@ -49,7 +49,7 @@ public class FeatureVector extends ArrayList<Feature> {
     }
 
     /**
-     * Calculate euclidean distance between numerical vectors
+     * Calculate euclidean distance between numerical vectors.
      */
     private static Double calculateEuclidean(List<Double> a, List<Double> b) {
         double result = 0.0;
@@ -60,7 +60,7 @@ public class FeatureVector extends ArrayList<Feature> {
     }
 
     /**
-     * Calculate manhattan distance between numerical vectors
+     * Calculate manhattan distance between numerical vectors.
      */
     private static Double calculateManhattan(List<Double> a, List<Double> b) {
         double result = 0.0;
@@ -71,7 +71,7 @@ public class FeatureVector extends ArrayList<Feature> {
     }
 
     /**
-     * Calculate chebyshev distance beetween numerical vectors
+     * Calculate chebyshev distance beetween numerical vectors.
      */
     private static Double calculateChebyshev(List<Double> a, List<Double> b) {
         List<Double> maxs = new ArrayList<>();
@@ -82,7 +82,7 @@ public class FeatureVector extends ArrayList<Feature> {
     }
 
     /**
-     * Calculate trigram distance between two strings
+     * Calculate trigram distance between two strings.
      */
     public static Double calculateTrigramDistance(String a, String b) {
         final int n = 3;
@@ -90,17 +90,17 @@ public class FeatureVector extends ArrayList<Feature> {
         /* retrieve ngrams */
         Set<String> ngramsA = new HashSet<>();
         Set<String> ngramsB = new HashSet<>();
-        for(int i = 0; i < a.length() - n + 1; i++) {
+        for (int i = 0; i < a.length() - n + 1; i++) {
             ngramsA.add(a.substring(i, i + 3));
         }
-        for(int i = 0; i < b.length() - n + 1; i++) {
+        for (int i = 0; i < b.length() - n + 1; i++) {
             ngramsB.add(b.substring(i, i + 3));
         }
-        
+
         /* calculate distance */
         double sum = 0.0;
-        for(String ngramA : ngramsA) {
-            if(ngramsB.contains(ngramA)) {
+        for (String ngramA : ngramsA) {
+            if (ngramsB.contains(ngramA)) {
                 sum += 1.0;
             }
         }
@@ -108,32 +108,33 @@ public class FeatureVector extends ArrayList<Feature> {
     }
 
     /**
-     * Calculate tfm distance between two strings
+     * Calculate tfm distance between two strings.
      */
-    public static Double calculateTFMDistance(String a, String b){
-        if(a.equals(b))
+    public static Double calculateTFMDistance(String a, String b) {
+        if (a.equals(b)) {
             return 0.0;
-        else
+        } else {
             return 1.0;
+        }
     }
 
     /**
      * Calculate distance between feature vectors using provided
-     * text metric and numerical metric
+     * text metric and numerical metric.
      */
     public static Double calculateDistance(FeatureVector a, FeatureVector b,
-                    NumericalMetric numericalMetric, TextMetric textMetric) {
+                                           NumericalMetric numericalMetric, TextMetric textMetric) {
 
         /* Convert feature vectors to numercial vectors using selected text metric.
          * Text values from first vector are set to 0.0, text values from second
          * vector are set to computed distance to parallel values from first vector. */
         List<Double> numericalA = new ArrayList<>();
         List<Double> numericalB = new ArrayList<>();
-        for(int i = 0; i < a.size(); i++){
-            if(a.get(i).isNumber()){
+        for (int i = 0; i < a.size(); i++) {
+            if (a.get(i).isNumber()) {
                 numericalA.add(a.get(i).getNumber());
                 numericalB.add(b.get(i).getNumber());
-            }else{
+            } else {
                 double distance;
                 switch (textMetric) {
                     case TFM:

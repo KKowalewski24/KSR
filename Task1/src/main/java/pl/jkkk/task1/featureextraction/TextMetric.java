@@ -14,8 +14,8 @@ public enum TextMetric {
 
     public static TextMetric fromString(final String text) {
         return Arrays.asList(TextMetric.values()).stream()
-            .filter(metric -> metric.abbreviation.equals(text))
-            .findAny()
-            .orElseThrow(IllegalArgumentException::new);
+                .filter(metric -> metric.abbreviation.equals(text))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
     }
 }

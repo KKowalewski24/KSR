@@ -25,16 +25,17 @@ public class KnnAlgorithm {
 
     /*------------------------ METHODS REGION ------------------------*/
     List<FeatureVector> calculate(FeatureVector featureVector,
-                                  List<FeatureVector> trainingVectors, 
-                                  int numberK, 
-                                  NumericalMetric numericalMetric, 
+                                  List<FeatureVector> trainingVectors,
+                                  int numberK,
+                                  NumericalMetric numericalMetric,
                                   TextMetric textMetric) {
 
         List<CalculatedFeatureVector> calculatedFeatureVectors = new ArrayList<>();
 
         for (FeatureVector it : trainingVectors) {
             calculatedFeatureVectors.add(new CalculatedFeatureVector(it,
-                    FeatureVector.calculateDistance(featureVector, it, numericalMetric, textMetric)));
+                    FeatureVector.calculateDistance(featureVector, it, numericalMetric,
+                            textMetric)));
         }
 
         Collections.sort(calculatedFeatureVectors);

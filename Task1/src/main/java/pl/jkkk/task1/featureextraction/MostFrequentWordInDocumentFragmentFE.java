@@ -1,10 +1,9 @@
 package pl.jkkk.task1.featureextraction;
 
+import pl.jkkk.task1.model.Document;
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-
-import pl.jkkk.task1.model.Document;
 
 public class MostFrequentWordInDocumentFragmentFE implements FeatureExtractor {
 
@@ -29,9 +28,9 @@ public class MostFrequentWordInDocumentFragmentFE implements FeatureExtractor {
                     termFrequency.put(word, termFrequency.getOrDefault(word, 0) + 1);
                 });
         vector.add(new Feature(termFrequency.keySet().stream()
-                    .sorted((word1, word2) -> termFrequency.get(word1) - termFrequency.get(word2))
-                    .findFirst()
-                    .orElse("")));
+                .sorted((word1, word2) -> termFrequency.get(word1) - termFrequency.get(word2))
+                .findFirst()
+                .orElse("")));
         return vector;
     }
 }

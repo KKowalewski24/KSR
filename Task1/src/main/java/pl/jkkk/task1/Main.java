@@ -1,5 +1,22 @@
 package pl.jkkk.task1;
 
+import pl.jkkk.task1.featureextraction.DocumentLengthFE;
+import pl.jkkk.task1.featureextraction.FeatureExtractorDecorator;
+import pl.jkkk.task1.featureextraction.FeatureVector;
+import pl.jkkk.task1.featureextraction.KeywordsExtractor;
+import pl.jkkk.task1.featureextraction.MostFrequentKeywordInDocumentFragmentFE;
+import pl.jkkk.task1.featureextraction.MostFrequentWordInDocumentFragmentFE;
+import pl.jkkk.task1.featureextraction.NumberOfKeywordsInDocumentFragmentFE;
+import pl.jkkk.task1.featureextraction.NumericalMetric;
+import pl.jkkk.task1.featureextraction.RelativeNumberOfKeywordsInDocumentFragmentFE;
+import pl.jkkk.task1.featureextraction.TextMetric;
+import pl.jkkk.task1.featureextraction.UniqueNumberOfKeywordsInDocumentFragmentFE;
+import pl.jkkk.task1.knn.KnnAlgorithm;
+import pl.jkkk.task1.model.Document;
+import pl.jkkk.task1.reader.SgmlFileReader;
+import pl.jkkk.task1.stemmer.DocumentStemmer;
+import pl.jkkk.task1.stopwords.WordRemover;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalTime;
@@ -11,22 +28,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import pl.jkkk.task1.featureextraction.DocumentLengthFE;
-import pl.jkkk.task1.featureextraction.FeatureExtractorDecorator;
-import pl.jkkk.task1.featureextraction.FeatureVector;
-import pl.jkkk.task1.featureextraction.KeywordsExtractor;
-import pl.jkkk.task1.featureextraction.NumberOfKeywordsInDocumentFragmentFE;
-import pl.jkkk.task1.featureextraction.NumericalMetric;
-import pl.jkkk.task1.featureextraction.RelativeNumberOfKeywordsInDocumentFragmentFE;
-import pl.jkkk.task1.featureextraction.TextMetric;
-import pl.jkkk.task1.featureextraction.UniqueNumberOfKeywordsInDocumentFragmentFE;
-import pl.jkkk.task1.featureextraction.MostFrequentKeywordInDocumentFragmentFE;
-import pl.jkkk.task1.featureextraction.MostFrequentWordInDocumentFragmentFE;
-import pl.jkkk.task1.knn.KnnAlgorithm;
-import pl.jkkk.task1.model.Document;
-import pl.jkkk.task1.reader.SgmlFileReader;
-import pl.jkkk.task1.stemmer.DocumentStemmer;
-import pl.jkkk.task1.stopwords.WordRemover;
 import static pl.jkkk.task1.constant.Constants.CHOSEN_PLACES;
 import static pl.jkkk.task1.constant.Constants.FILENAME_LIST;
 
@@ -218,13 +219,14 @@ public class Main {
     }
 
     private static void knnClassification(int numberK, NumericalMetric numericalMetric,
-                                    TextMetric textMetric) {
+                                          TextMetric textMetric) {
         action(() -> {
             classification = new HashMap<>();
             for (FeatureVector it : testFeatureVectors) {
                 final String properPlace = it.getDocument().getPlaceList().get(0);
                 final String recognizedPlace = knnAlgorithm
-                        .calculateAndClassify(it, trainingFeatureVectors, numberK, numericalMetric, textMetric);
+                        .calculateAndClassify(it, trainingFeatureVectors, numberK,
+                                numericalMetric, textMetric);
                 if (!classification.containsKey(properPlace)) {
                     classification.put(properPlace, new HashMap<>());
                 }

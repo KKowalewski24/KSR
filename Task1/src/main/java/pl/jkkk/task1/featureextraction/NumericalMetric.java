@@ -15,8 +15,8 @@ public enum NumericalMetric {
 
     public static NumericalMetric fromString(final String text) {
         return Arrays.asList(NumericalMetric.values()).stream()
-            .filter(metric -> metric.abbreviation.equals(text))
-            .findAny()
-            .orElseThrow(IllegalArgumentException::new);
+                .filter(metric -> metric.abbreviation.equals(text))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
     }
 }

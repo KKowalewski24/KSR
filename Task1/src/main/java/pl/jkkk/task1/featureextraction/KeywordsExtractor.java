@@ -1,15 +1,15 @@
 package pl.jkkk.task1.featureextraction;
 
+import pl.jkkk.task1.exception.NoDocumentsException;
+import pl.jkkk.task1.exception.NoOccurrencesException;
+import pl.jkkk.task1.model.Document;
+
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import pl.jkkk.task1.exception.NoDocumentsException;
-import pl.jkkk.task1.exception.NoOccurrencesException;
-import pl.jkkk.task1.model.Document;
 
 public class KeywordsExtractor {
 

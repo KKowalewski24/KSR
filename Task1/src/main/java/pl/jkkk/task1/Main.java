@@ -52,14 +52,9 @@ public class Main {
     private static double overallTime = 0;
 
     private static void printUsage() {
-        System.out.println(
-                "Required parameters:  \n" +
-                        "\t<percentage of training set (integer 1-99)>\n" +
-                        "\t<k for kNN (integer >0)>\n" +
-                        "\t<number of keywords (integer >0)>\n" +
-                        "\t<numerical metric [eucl|manh|cheb]>\n" +
-                        "\t<text metric [trigram|tfm]>"
-        );
+        System.out.println("Required parameters:  \n" + "\t<percentage of training set (integer 1-99)>\n"
+                + "\t<k for kNN (integer >0)>\n" + "\t<number of keywords (integer >0)>\n"
+                + "\t<numerical metric [eucl|manh|cheb]>\n" + "\t<text metric [trigram|tfm]>");
         System.exit(0);
     }
 
@@ -121,15 +116,12 @@ public class Main {
 
     private static void filterDocuments() {
         action(() -> documents = documents.stream()
-                        .filter((it) -> it.getPlaceList()
-                                .size() == 1 && CHOSEN_PLACES.contains(it.getPlaceList().get(0)))
-                        .collect(Collectors.toCollection(ArrayList::new)),
-                "Removing documents with multiple places");
+                .filter((it) -> it.getPlaceList().size() == 1 && CHOSEN_PLACES.contains(it.getPlaceList().get(0)))
+                .collect(Collectors.toCollection(ArrayList::new)), "Removing documents with multiple places");
     }
 
     private static void stemDocuments() {
-        action(() -> documentStemmer.performStemmingProcessOnWordList(documents),
-                "Stemming documents");
+        action(() -> documentStemmer.performStemmingProcessOnWordList(documents), "Stemming documents");
     }
 
     private static void removeStopWords() {
@@ -180,36 +172,24 @@ public class Main {
         extractorDecorator = new FeatureExtractorDecorator();
         extractorDecorator.addExtractor(new DocumentLengthFE());
         keywordsSets.forEach(keywords -> {
-            extractorDecorator.addExtractor(
-                    new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
-            extractorDecorator.addExtractor(
-                    new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
-            extractorDecorator.addExtractor(
-                    new NumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
-            extractorDecorator.addExtractor(
-                    new NumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
-            extractorDecorator.addExtractor(
-                    new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
-            extractorDecorator.addExtractor(
-                    new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
-            extractorDecorator.addExtractor(
-                    new MostFrequentKeywordInDocumentFragmentFE(keywords, 0, 50));
-            extractorDecorator.addExtractor(
-                    new MostFrequentKeywordInDocumentFragmentFE(keywords, 50, 100));
+            extractorDecorator.addExtractor(new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
+            extractorDecorator.addExtractor(new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
+            extractorDecorator.addExtractor(new NumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
+            extractorDecorator.addExtractor(new NumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
+            extractorDecorator.addExtractor(new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
+            extractorDecorator.addExtractor(new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
+            extractorDecorator.addExtractor(new MostFrequentKeywordInDocumentFragmentFE(keywords, 0, 50));
+            extractorDecorator.addExtractor(new MostFrequentKeywordInDocumentFragmentFE(keywords, 50, 100));
         });
         extractorDecorator.addExtractor(new MostFrequentWordInDocumentFragmentFE(0, 50));
         extractorDecorator.addExtractor(new MostFrequentWordInDocumentFragmentFE(50, 100));
 
         action(() -> {
             trainingFeatureVectors
-                    .addAll(trainingDocuments.stream()
-                            .map(extractorDecorator::extract)
-                            .collect(Collectors.toList()));
+                    .addAll(trainingDocuments.stream().map(extractorDecorator::extract).collect(Collectors.toList()));
 
             testFeatureVectors
-                    .addAll(testDocuments.stream()
-                            .map(extractorDecorator::extract)
-                            .collect(Collectors.toList()));
+                    .addAll(testDocuments.stream().map(extractorDecorator::extract).collect(Collectors.toList()));
         }, "Features extracting");
 
         action(() -> {
@@ -218,21 +198,18 @@ public class Main {
         }, "Normalize feature vectors");
     }
 
-    private static void knnClassification(int numberK, NumericalMetric numericalMetric,
-                                          TextMetric textMetric) {
+    private static void knnClassification(int numberK, NumericalMetric numericalMetric, TextMetric textMetric) {
         action(() -> {
             classification = new HashMap<>();
             for (FeatureVector it : testFeatureVectors) {
                 final String properPlace = it.getDocument().getPlaceList().get(0);
                 final String recognizedPlace = knnAlgorithm
-                        .calculateAndClassify(it, trainingFeatureVectors, numberK,
-                                numericalMetric, textMetric);
+                        .calculateAndClassify(it, trainingFeatureVectors, numberK, numericalMetric, textMetric);
                 if (!classification.containsKey(properPlace)) {
                     classification.put(properPlace, new HashMap<>());
                 }
                 classification.get(properPlace)
-                        .put(recognizedPlace, classification.get(properPlace)
-                                .getOrDefault(recognizedPlace, 0) + 1);
+                        .put(recognizedPlace, classification.get(properPlace).getOrDefault(recognizedPlace, 0) + 1);
             }
 
         }, "kNN");
@@ -243,30 +220,27 @@ public class Main {
 
         result.append("\n-------------------------------------\n");
         classification.forEach((clazz, classes) -> {
-            double percent = classes.getOrDefault(clazz, 0) * 100.0 / classes.values()
-                    .stream()
-                    .mapToInt(x -> x)
+            final int classifiedToClazz = classification.values().stream()
+                    .mapToInt(allClasses -> allClasses.getOrDefault(clazz, 0))
                     .sum();
-            result.append(clazz + "   " + percent + " %\n");
+            final int classifiedFromClazz = classes.values().stream().mapToInt(x -> x).sum();
+            final int classifiedFromClazzToClazz = classes.getOrDefault(clazz, 0);
+            final double recall = classifiedFromClazzToClazz / (double) classifiedFromClazz;
+            final double precision = classifiedFromClazzToClazz / (double) classifiedToClazz;
+            result.append(clazz + "   recall = " + recall + "   precision = " + precision + "\n");
             classes.forEach((recognizedClass, quantity) -> {
                 result.append("\t" + recognizedClass + "  " + quantity + "\n");
             });
-        });
-        result.append("\n");
+        }); result.append("\n");
 
-        final int allSum =
-                classification.values()
-                        .stream()
-                        .mapToInt(classes -> classes.values().stream().mapToInt(x -> x).sum())
-                        .sum();
-        final int properlyClassifiedSum = classification.keySet().stream().mapToInt(
-                clazz -> classification.get(clazz)
-                        .keySet()
-                        .stream()
+        final int classified = classification.values().stream()
+                .mapToInt(classes -> classes.values().stream().mapToInt(x -> x).sum()).sum();
+        final int properlyClassified = classification.keySet().stream().mapToInt(
+                clazz -> classification.get(clazz).keySet().stream()
                         .filter(recognizedClass -> recognizedClass.equals(clazz))
-                        .mapToInt(recognizedClass -> classification.get(clazz).get(recognizedClass))
-                        .sum()).sum();
-        result.append("All: " + (properlyClassifiedSum * 100.0 / allSum) + " %\n");
+                        .mapToInt(recognizedClass -> classification.get(clazz).get(recognizedClass)).sum()).sum();
+        double accuracy = properlyClassified / (double) classified;
+        result.append("accuracy = " + accuracy + "\n");
         result.append("Overall Time: " + overallTime + "s\n");
         result.append("\n-------------------------------------\n\n");
 
@@ -287,28 +261,16 @@ public class Main {
 
     private static void saveGeneratedDataToFile(String[] args) {
         /*TODO FILL WITH REAL DATA*/
-        StringBuilder result = new StringBuilder("\\begin{table}[H]\n"
-                + "\t\\centering\n"
-                + "\t\\begin{tabular}{c c c c} \n"
-                + "\t\t\\hline\n"
-                + "\t\t\\textbf{k} & \\textbf{places [\\%]} & \\textbf{topics [\\%]} &  "
-                + "\\textbf{authors "
-                + "[\\%]} \\\\ [0.5ex] \n"
-                + "\t\t\\hline\n"
-                + "\t\t\\hline \n"
-                + "\t\t2 & 74.4 & 53.7 & 43.9 \\\\ \n"
-                + "\t\t3 & 78.5 & 52.2 & 43.9 \\\\\n"
-                + "\t\t5 & 80.2 & 52.2 & 36.6 \\\\\n"
-                + "\t\t7 & 81.0 & 53.7 & 26.8 \\\\\n"
-                + "\t\t10 & 81.5 & 60.4 & 24.4 \\\\\n"
-                + "\t\t15 & 81.6 & 62.7 & 29.3 \\\\\n"
-                + "\t\t20 & 81.4 & 61.2 & 31.7 \\\\ \n"
-                + "\t\t\\hline\n"
-                + "\t\\end{tabular}\n"
-                + "\t\\caption{Skuteczność klasyfikacji dla metryki Euklidesowej dla pierwszego "
-                + "sposobu "
-                + "ekstrakcji}\n"
-                + "\\end{table}");
+        StringBuilder result = new StringBuilder(
+                "\\begin{table}[H]\n" + "\t\\centering\n" + "\t\\begin{tabular}{c c c c} \n" + "\t\t\\hline\n"
+                        + "\t\t\\textbf{k} & \\textbf{places [\\%]} & \\textbf{topics [\\%]} &  " + "\\textbf{authors "
+                        + "[\\%]} \\\\ [0.5ex] \n" + "\t\t\\hline\n" + "\t\t\\hline \n"
+                        + "\t\t2 & 74.4 & 53.7 & 43.9 \\\\ \n" + "\t\t3 & 78.5 & 52.2 & 43.9 \\\\\n"
+                        + "\t\t5 & 80.2 & 52.2 & 36.6 \\\\\n" + "\t\t7 & 81.0 & 53.7 & 26.8 \\\\\n"
+                        + "\t\t10 & 81.5 & 60.4 & 24.4 \\\\\n" + "\t\t15 & 81.6 & 62.7 & 29.3 \\\\\n"
+                        + "\t\t20 & 81.4 & 61.2 & 31.7 \\\\ \n" + "\t\t\\hline\n" + "\t\\end{tabular}\n"
+                        + "\t\\caption{Skuteczność klasyfikacji dla metryki Euklidesowej dla pierwszego " + "sposobu "
+                        + "ekstrakcji}\n" + "\\end{table}");
 
         result.append("\n\n-------------------------------\n\n");
 
@@ -320,13 +282,8 @@ public class Main {
             filename.append(it).append("_");
         }
 
-        filename.append(LocalTime.now().getHour())
-                .append("h_")
-                .append(LocalTime.now().getMinute())
-                .append("min_")
-                .append(LocalTime.now().getSecond())
-                .append("sek")
-                .append(".txt");
+        filename.append(LocalTime.now().getHour()).append("h_").append(LocalTime.now().getMinute()).append("min_")
+                .append(LocalTime.now().getSecond()).append("sek").append(".txt");
         writeToPlainFile(filename.toString(), result.toString());
     }
 }

@@ -7,6 +7,8 @@ import java.util.Set;
 public class RelativeNumberOfKeywordsInDocumentFragmentFE
         extends NumberOfKeywordsInDocumentFragmentFE {
 
+    public static final String ABBREVIATION = "rnkidf";
+
     public RelativeNumberOfKeywordsInDocumentFragmentFE(final Set<String> keywords,
                                                         int rangeBeginInPercents,
                                                         int rangeEndInPercents) {

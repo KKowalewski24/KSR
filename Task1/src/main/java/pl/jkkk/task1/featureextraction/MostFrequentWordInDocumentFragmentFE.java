@@ -7,6 +7,8 @@ import java.util.Map;
 
 public class MostFrequentWordInDocumentFragmentFE implements FeatureExtractor {
 
+    public static final String ABBREVIATION = "mfwidf";
+
     private final int rangeBeginInPercents;
     private final int rangeEndInPercents;
 

@@ -4,6 +4,8 @@ import pl.jkkk.task1.model.Document;
 
 public class DocumentLengthFE implements FeatureExtractor {
 
+    public static final String ABBREVIATION = "dl";
+
     @Override
     public FeatureVector extract(Document document) {
         FeatureVector vector = new FeatureVector(document);

@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 public class NumberOfKeywordsInDocumentFragmentFE implements FeatureExtractor {
 
+    public static final String ABBREVIATION = "nkidf";
+
     private final Set<String> keywords;
     private final int rangeBeginInPercents;
     private final int rangeEndInPercents;

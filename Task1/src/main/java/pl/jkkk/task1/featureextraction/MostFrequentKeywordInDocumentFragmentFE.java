@@ -8,6 +8,8 @@ import java.util.Set;
 
 public class MostFrequentKeywordInDocumentFragmentFE implements FeatureExtractor {
 
+    public static final String ABBREVIATION = "mfkidf";
+
     private final Set<String> keywords;
     private final int rangeBeginInPercents;
     private final int rangeEndInPercents;

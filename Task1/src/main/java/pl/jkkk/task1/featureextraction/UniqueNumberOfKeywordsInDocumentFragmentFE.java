@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 public class UniqueNumberOfKeywordsInDocumentFragmentFE implements FeatureExtractor {
 
+    public static final String ABBREVIATION = "unkidf";
+
     private final Set<String> keywords;
     private final int rangeBeginInPercents;
     private final int rangeEndInPercents;

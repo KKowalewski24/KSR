@@ -62,12 +62,45 @@ def experiment_trigram_1():
     call_jar_with_five_args("80", "5", "10", "cheb", "trigram")
 
 
-# ---------------------------  --------------------------- #
+# --------------------------- SECOND SESSION --------------------------- #
+def experiment_eucl_2():
+    call_jar_with_five_args("60", "1", "10", "eucl", "tfm")
+    call_jar_with_five_args("60", "2", "10", "eucl", "tfm")
+    call_jar_with_five_args("60", "3", "10", "eucl", "tfm")
+    call_jar_with_five_args("60", "5", "10", "eucl", "tfm")
+    call_jar_with_five_args("60", "7", "10", "eucl", "tfm")
+    call_jar_with_five_args("60", "15", "10", "eucl", "tfm")
+    call_jar_with_five_args("60", "20", "10", "eucl", "tfm")
+
+
+def experiment_manh_2():
+    call_jar_with_five_args("60", "1", "10", "manh", "tfm")
+    call_jar_with_five_args("60", "2", "10", "manh", "tfm")
+    call_jar_with_five_args("60", "3", "10", "manh", "tfm")
+    call_jar_with_five_args("60", "5", "10", "manh", "tfm")
+    call_jar_with_five_args("60", "7", "10", "manh", "tfm")
+    call_jar_with_five_args("60", "15", "10", "manh", "tfm")
+    call_jar_with_five_args("60", "20", "10", "manh", "tfm")
+
+
+def experiment_cheb_2():
+    call_jar_with_five_args("60", "1", "10", "cheb", "tfm")
+    call_jar_with_five_args("60", "2", "10", "cheb", "tfm")
+    call_jar_with_five_args("60", "3", "10", "cheb", "tfm")
+    call_jar_with_five_args("60", "5", "10", "cheb", "tfm")
+    call_jar_with_five_args("60", "7", "10", "cheb", "tfm")
+    call_jar_with_five_args("60", "15", "10", "cheb", "tfm")
+    call_jar_with_five_args("60", "20", "10", "cheb", "tfm")
+
 
 # ----------------------------------------------------------------------------- #
 def main():
-    experiment_tfm_1()
-    experiment_trigram_1()
+    # experiment_tfm_1()
+    # experiment_trigram_1()
+
+    # experiment_eucl_2()
+    # experiment_manh_2()
+    # experiment_cheb_2()
 
     print("==========================================================================")
     print("END OF PROCESS")

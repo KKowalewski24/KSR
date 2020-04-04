@@ -265,6 +265,8 @@ public class Main {
                     .append("& ").append(df.format(overallTime)).append("\t\t\t\n");
         }
 
+        result.append("\n-------------------------------------\n\n");
+
         classification.forEach((clazz, classes) -> {
             final int classifiedToClazz = classification.values().stream()
                     .mapToInt(allClasses -> allClasses.getOrDefault(clazz, 0))

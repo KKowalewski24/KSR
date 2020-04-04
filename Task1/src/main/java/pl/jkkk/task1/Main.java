@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +53,15 @@ public class Main {
     private static Map<String, Map<String, Integer>> classification;
     private static double overallTime = 0;
 
+    private static String[] featureExtractorAbbreviations = {
+            "1",
+            "2,0-50", "2,50-100",
+            "3,0-50,tfidf", "3,50-100,tfidf", "3,0-50,tfcitfoc", "3,50-100,tfcitfoc",
+            "4,0-50,tfidf", "4,50-100,tfidf", "4,0-50,tfcitfoc", "4,50-100,tfcitfoc",
+            "5,0-50,tfidf", "5,50-100,tfidf", "5,0-50,tfcitfoc", "5,50-100,tfcitfoc",
+            "6,0-50,tfidf", "6,50-100,tfidf", "6,0-50,tfcitfoc", "6,50-100,tfcitfoc",
+    };
+
     private static void printUsage() {
         System.out.println("Required parameters:  \n"
                 + "\t<percentage of training set (integer 1-99)>\n"
@@ -76,6 +86,8 @@ public class Main {
             numberOfKeywords = Integer.valueOf(args[2]);
             numericalMetric = NumericalMetric.fromString(args[3]);
             textMetric = TextMetric.fromString(args[4]);
+            if(args.length > 5)
+                featureExtractorAbbreviations = Arrays.copyOfRange(args, 5, args.length);
         } catch (Exception e) {
             System.out.println(e);
             printUsage();
@@ -149,8 +161,8 @@ public class Main {
     private static void retrieveKeywords(int numberOfKeywords) {
         keywordsSets = new ArrayList<>();
         action(() -> {
-            keywordsSets.add(keywordsExtractor.getKeywordsByClassTFIOCTF(numberOfKeywords));
             keywordsSets.add(keywordsExtractor.getKeywordsByTFIDF(numberOfKeywords));
+            keywordsSets.add(keywordsExtractor.getKeywordsByClassTFIOCTF(numberOfKeywords));
         }, "Retrieving keywords");
     }
 
@@ -176,24 +188,11 @@ public class Main {
         trainingFeatureVectors = new ArrayList<>();
         testFeatureVectors = new ArrayList<>();
 
+        final FeatureExtractorAbbreviationResolver featureExtractorAbbreviationResolver =
+                new FeatureExtractorAbbreviationResolver(keywordsSets.get(0), keywordsSets.get(1));
         extractorDecorator = new FeatureExtractorDecorator();
-        extractorDecorator.addExtractor(new DocumentLengthFE());
-        keywordsSets.forEach(keywords -> {
-            extractorDecorator.addExtractor(new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
-            extractorDecorator.addExtractor(new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
-            extractorDecorator.addExtractor(new NumberOfKeywordsInDocumentFragmentFE(keywords, 0,
-                    50));
-            extractorDecorator.addExtractor(new NumberOfKeywordsInDocumentFragmentFE(keywords, 50
-                    , 100));
-            extractorDecorator.addExtractor(new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
-            extractorDecorator.addExtractor(new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
-            extractorDecorator.addExtractor(new MostFrequentKeywordInDocumentFragmentFE(keywords,
-                    0, 50));
-            extractorDecorator.addExtractor(new MostFrequentKeywordInDocumentFragmentFE(keywords,
-                    50, 100));
-        });
-        extractorDecorator.addExtractor(new MostFrequentWordInDocumentFragmentFE(0, 50));
-        extractorDecorator.addExtractor(new MostFrequentWordInDocumentFragmentFE(50, 100));
+        for(final String abbr : featureExtractorAbbreviations)
+            extractorDecorator.addExtractor(featureExtractorAbbreviationResolver.resolveAbbreviation(abbr));
 
         action(() -> {
             trainingFeatureVectors

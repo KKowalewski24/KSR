@@ -52,9 +52,12 @@ public class Main {
     private static double overallTime = 0;
 
     private static void printUsage() {
-        System.out.println("Required parameters:  \n" + "\t<percentage of training set (integer 1-99)>\n"
-                + "\t<k for kNN (integer >0)>\n" + "\t<number of keywords (integer >0)>\n"
-                + "\t<numerical metric [eucl|manh|cheb]>\n" + "\t<text metric [trigram|tfm]>");
+        System.out.println("Required parameters:  \n"
+                + "\t<percentage of training set (integer 1-99)>\n"
+                + "\t<k for kNN (integer >0)>\n"
+                + "\t<number of keywords (integer >0)>\n"
+                + "\t<numerical metric [eucl|manh|cheb]>\n"
+                + "\t<text metric [trigram|tfm]>");
         System.exit(0);
     }
 
@@ -260,21 +263,7 @@ public class Main {
     }
 
     private static void saveGeneratedDataToFile(String[] args) {
-        /*TODO FILL WITH REAL DATA*/
-        StringBuilder result = new StringBuilder(
-                "\\begin{table}[H]\n" + "\t\\centering\n" + "\t\\begin{tabular}{c c c c} \n" + "\t\t\\hline\n"
-                        + "\t\t\\textbf{k} & \\textbf{places [\\%]} & \\textbf{topics [\\%]} &  " + "\\textbf{authors "
-                        + "[\\%]} \\\\ [0.5ex] \n" + "\t\t\\hline\n" + "\t\t\\hline \n"
-                        + "\t\t2 & 74.4 & 53.7 & 43.9 \\\\ \n" + "\t\t3 & 78.5 & 52.2 & 43.9 \\\\\n"
-                        + "\t\t5 & 80.2 & 52.2 & 36.6 \\\\\n" + "\t\t7 & 81.0 & 53.7 & 26.8 \\\\\n"
-                        + "\t\t10 & 81.5 & 60.4 & 24.4 \\\\\n" + "\t\t15 & 81.6 & 62.7 & 29.3 \\\\\n"
-                        + "\t\t20 & 81.4 & 61.2 & 31.7 \\\\ \n" + "\t\t\\hline\n" + "\t\\end{tabular}\n"
-                        + "\t\\caption{Skuteczność klasyfikacji dla metryki Euklidesowej dla pierwszego " + "sposobu "
-                        + "ekstrakcji}\n" + "\\end{table}");
-
-        result.append("\n\n-------------------------------\n\n");
-
-        result.append(generateStatistics());
+        StringBuilder result = new StringBuilder(generateStatistics());
 
         StringBuilder filename = new StringBuilder();
 
@@ -282,8 +271,13 @@ public class Main {
             filename.append(it).append("_");
         }
 
-        filename.append(LocalTime.now().getHour()).append("h_").append(LocalTime.now().getMinute()).append("min_")
-                .append(LocalTime.now().getSecond()).append("sek").append(".txt");
+        filename.append(LocalTime.now().getHour())
+                .append("h_")
+                .append(LocalTime.now().getMinute())
+                .append("min_")
+                .append(LocalTime.now().getSecond())
+                .append("sek")
+                .append(".txt");
         writeToPlainFile(filename.toString(), result.toString());
     }
 }

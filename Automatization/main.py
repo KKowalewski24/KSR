@@ -121,7 +121,9 @@ def third_round():
 def main():
     # first_round()
     # second_round()
-    third_round()
+    # third_round()
+
+    # series("60", "9", "10000")
 
     print("==========================================================================")
     print("END OF PROCESS")

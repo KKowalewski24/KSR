@@ -105,8 +105,16 @@ def second_round():
 
 
 # ----------------------------------------------------------------------------- #
+def series_4(training_set):
+    call_jar_with_five_args(training_set, "9", "10000", "eucl", "tfm")
+
+
 def third_round():
-    pass
+    series_4("30")
+    series_4("40")
+    series_4("50")
+    series_4("60")
+    series_4("70")
 
 
 # ----------------------------------------------------------------------------- #

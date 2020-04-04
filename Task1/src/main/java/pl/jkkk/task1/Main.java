@@ -19,6 +19,7 @@ import pl.jkkk.task1.stopwords.WordRemover;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,7 +95,7 @@ public class Main {
         knnClassification(numberK, numericalMetric, textMetric);
 
         /*----- SUMMARY -----*/
-        printStatistics();
+        printStatistics(args);
         saveGeneratedDataToFile(args);
     }
 
@@ -119,12 +120,15 @@ public class Main {
 
     private static void filterDocuments() {
         action(() -> documents = documents.stream()
-                .filter((it) -> it.getPlaceList().size() == 1 && CHOSEN_PLACES.contains(it.getPlaceList().get(0)))
-                .collect(Collectors.toCollection(ArrayList::new)), "Removing documents with multiple places");
+                .filter((it) -> it.getPlaceList()
+                        .size() == 1 && CHOSEN_PLACES.contains(it.getPlaceList().get(0)))
+                .collect(Collectors.toCollection(ArrayList::new)), "Removing documents with "
+                + "multiple places");
     }
 
     private static void stemDocuments() {
-        action(() -> documentStemmer.performStemmingProcessOnWordList(documents), "Stemming documents");
+        action(() -> documentStemmer.performStemmingProcessOnWordList(documents), "Stemming "
+                + "documents");
     }
 
     private static void removeStopWords() {
@@ -177,22 +181,30 @@ public class Main {
         keywordsSets.forEach(keywords -> {
             extractorDecorator.addExtractor(new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
             extractorDecorator.addExtractor(new UniqueNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
-            extractorDecorator.addExtractor(new NumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
-            extractorDecorator.addExtractor(new NumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
+            extractorDecorator.addExtractor(new NumberOfKeywordsInDocumentFragmentFE(keywords, 0,
+                    50));
+            extractorDecorator.addExtractor(new NumberOfKeywordsInDocumentFragmentFE(keywords, 50
+                    , 100));
             extractorDecorator.addExtractor(new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 0, 50));
             extractorDecorator.addExtractor(new RelativeNumberOfKeywordsInDocumentFragmentFE(keywords, 50, 100));
-            extractorDecorator.addExtractor(new MostFrequentKeywordInDocumentFragmentFE(keywords, 0, 50));
-            extractorDecorator.addExtractor(new MostFrequentKeywordInDocumentFragmentFE(keywords, 50, 100));
+            extractorDecorator.addExtractor(new MostFrequentKeywordInDocumentFragmentFE(keywords,
+                    0, 50));
+            extractorDecorator.addExtractor(new MostFrequentKeywordInDocumentFragmentFE(keywords,
+                    50, 100));
         });
         extractorDecorator.addExtractor(new MostFrequentWordInDocumentFragmentFE(0, 50));
         extractorDecorator.addExtractor(new MostFrequentWordInDocumentFragmentFE(50, 100));
 
         action(() -> {
             trainingFeatureVectors
-                    .addAll(trainingDocuments.stream().map(extractorDecorator::extract).collect(Collectors.toList()));
+                    .addAll(trainingDocuments.stream()
+                            .map(extractorDecorator::extract)
+                            .collect(Collectors.toList()));
 
             testFeatureVectors
-                    .addAll(testDocuments.stream().map(extractorDecorator::extract).collect(Collectors.toList()));
+                    .addAll(testDocuments.stream()
+                            .map(extractorDecorator::extract)
+                            .collect(Collectors.toList()));
         }, "Features extracting");
 
         action(() -> {
@@ -201,27 +213,58 @@ public class Main {
         }, "Normalize feature vectors");
     }
 
-    private static void knnClassification(int numberK, NumericalMetric numericalMetric, TextMetric textMetric) {
+    private static void knnClassification(int numberK, NumericalMetric numericalMetric,
+                                          TextMetric textMetric) {
         action(() -> {
             classification = new HashMap<>();
             for (FeatureVector it : testFeatureVectors) {
                 final String properPlace = it.getDocument().getPlaceList().get(0);
                 final String recognizedPlace = knnAlgorithm
-                        .calculateAndClassify(it, trainingFeatureVectors, numberK, numericalMetric, textMetric);
+                        .calculateAndClassify(it, trainingFeatureVectors, numberK,
+                                numericalMetric, textMetric);
                 if (!classification.containsKey(properPlace)) {
                     classification.put(properPlace, new HashMap<>());
                 }
                 classification.get(properPlace)
-                        .put(recognizedPlace, classification.get(properPlace).getOrDefault(recognizedPlace, 0) + 1);
+                        .put(recognizedPlace, classification.get(properPlace)
+                                .getOrDefault(recognizedPlace, 0) + 1);
             }
 
         }, "kNN");
     }
 
-    private static String generateStatistics() {
+    private static String generateStatistics(String[] args, boolean printTable) {
         StringBuilder result = new StringBuilder();
+        StringBuilder resultFile = new StringBuilder();
+        DecimalFormat df = new DecimalFormat("0.00");
 
-        result.append("\n-------------------------------------\n");
+        final int classified = classification.values().stream()
+                .mapToInt(classes -> classes.values().stream().mapToInt(x -> x).sum()).sum();
+        final int properlyClassified = classification.keySet().stream().mapToInt(
+                clazz -> classification.get(clazz)
+                        .keySet()
+                        .stream()
+                        .filter(recognizedClass -> recognizedClass.equals(clazz))
+                        .mapToInt(recognizedClass -> classification.get(clazz).get(recognizedClass))
+                        .sum()).sum();
+        double accuracy = properlyClassified / (double) classified;
+
+        if (printTable) {
+            int percentageOfTrainingSet = Integer.valueOf(args[0]);
+            int numberK = Integer.valueOf(args[1]);
+            int numberOfKeywords = Integer.valueOf(args[2]);
+            NumericalMetric numericalMetric = NumericalMetric.fromString(args[3]);
+            TextMetric textMetric = TextMetric.fromString(args[4]);
+
+            resultFile.append("& ").append(percentageOfTrainingSet).append("\t\t\t\n")
+                    .append("& ").append(numberK).append("\t\t\t\n")
+                    .append("& ").append(numberOfKeywords).append("\t\t\t\n")
+                    .append("& ").append(numericalMetric).append("\t\t\t\n")
+                    .append("& ").append(textMetric).append("\t\t\t\n")
+                    .append("& ").append(df.format(accuracy * 100)).append("\t\t\t\n")
+                    .append("& ").append(df.format(overallTime)).append("\t\t\t\n");
+        }
+
         classification.forEach((clazz, classes) -> {
             final int classifiedToClazz = classification.values().stream()
                     .mapToInt(allClasses -> allClasses.getOrDefault(clazz, 0))
@@ -231,27 +274,30 @@ public class Main {
             final double recall = classifiedFromClazzToClazz / (double) classifiedFromClazz;
             final double precision = classifiedFromClazzToClazz / (double) classifiedToClazz;
             result.append(clazz + "   recall = " + recall + "   precision = " + precision + "\n");
+
+            if (printTable) {
+                resultFile.append("& ").append(df.format(recall)).append("\t\t\t\n");
+                resultFile.append("& ").append(df.format(precision)).append("\t\t\t\n");
+            }
+
             classes.forEach((recognizedClass, quantity) -> {
                 result.append("\t" + recognizedClass + "  " + quantity + "\n");
             });
-        }); result.append("\n");
+        });
+        result.append("\n");
 
-        final int classified = classification.values().stream()
-                .mapToInt(classes -> classes.values().stream().mapToInt(x -> x).sum()).sum();
-        final int properlyClassified = classification.keySet().stream().mapToInt(
-                clazz -> classification.get(clazz).keySet().stream()
-                        .filter(recognizedClass -> recognizedClass.equals(clazz))
-                        .mapToInt(recognizedClass -> classification.get(clazz).get(recognizedClass)).sum()).sum();
-        double accuracy = properlyClassified / (double) classified;
         result.append("accuracy = " + accuracy + "\n");
         result.append("Overall Time: " + overallTime + "s\n");
         result.append("\n-------------------------------------\n\n");
 
-        return result.toString();
+        StringBuilder finalString = new StringBuilder();
+        finalString.append(result).append(resultFile);
+
+        return finalString.toString();
     }
 
-    private static void printStatistics() {
-        System.out.println(generateStatistics());
+    private static void printStatistics(String[] args) {
+        System.out.println(generateStatistics(args, false));
     }
 
     private static void writeToPlainFile(String filename, String value) {
@@ -263,7 +309,7 @@ public class Main {
     }
 
     private static void saveGeneratedDataToFile(String[] args) {
-        StringBuilder result = new StringBuilder(generateStatistics());
+        StringBuilder result = new StringBuilder(generateStatistics(args, true));
 
         StringBuilder filename = new StringBuilder();
 

@@ -3,7 +3,7 @@ import subprocess
 '''
 How to use
 Copy generated jar with dependencies to directory 'Automatization', set jar file name,
-optionally add parameters and run in cmd by typing python main.py
+optionally add parameters and run in cmd by typing python main_1.py
 
  "Required parameters:  \n" +
                         "\t<percentage of training set (integer 1-99)>\n" +
@@ -119,11 +119,17 @@ def third_round():
 
 # ----------------------------------------------------------------------------- #
 def main():
+    # Wstepne okreslenie dla jakich wartosci warto przeprowadzac dalsze badania
     # first_round()
+
+    # Wpływ użytej wartość liczby k-najbliższych sąsiadów na skuteczość
     # second_round()
+
+    # Wpływ podziału zbioru na treningowy i testowy na skuteczość
     # third_round()
 
-    # series("60", "9", "10000")
+    # Wpływ użytej metryki i miary na skuteczość
+    # series("60", "3", "10000")
 
     print("==========================================================================")
     print("END OF PROCESS")

@@ -42,9 +42,9 @@ public class Loader {
                 System.out.println(e);
             }
         } else {
-            System.out.println("\n-------------------------------------------------\n");
-            System.out.println("\nLOGGING TO FILE DISABLED\n");
-            System.out.println("\n-------------------------------------------------\n");
+            System.out.println("-------------------------------------------------");
+            System.out.println("LOGGING TO FILE DISABLED");
+            System.out.println("-------------------------------------------------");
         }
     }
 

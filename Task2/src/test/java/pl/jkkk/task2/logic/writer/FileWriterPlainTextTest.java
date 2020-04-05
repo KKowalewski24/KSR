@@ -31,8 +31,8 @@ class FileWriterPlainTextTest {
     @Test
     void writeTest() throws IOException {
         Files.deleteIfExists(Paths.get(testFilename));
-        FileWriterPlainText<Sample> fileWriterPlainText = new FileWriterPlainText<>(testFilename);
+        FileWriterPlainText fileWriterPlainText = new FileWriterPlainText();
 
-        fileWriterPlainText.write(new Sample());
+        fileWriterPlainText.writePlainText(testFilename, new Sample().toString());
     }
 }

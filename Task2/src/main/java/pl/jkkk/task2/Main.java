@@ -6,6 +6,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 import pl.jkkk.task2.view.fxml.StageController;
 import pl.jkkk.task2.view.fxml.core.WindowDimensions;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import static pl.jkkk.task2.view.constant.Constants.PATH_CSS_STYLING;
 import static pl.jkkk.task2.view.constant.Constants.PATH_MAIN_PANEL;
 import static pl.jkkk.task2.view.constant.Constants.TITLE_MAIN_PANEL;
@@ -15,9 +19,14 @@ public class Main extends Application {
 
     /*------------------------ FIELDS REGION ------------------------*/
     private ConfigurableApplicationContext applicationContext;
+    private static List<String> mainArgs;
 
     // TODO UNCOMMENT SPRING CONTEXT
     /*------------------------ METHODS REGION ------------------------*/
+    public static List<String> getMainArgs() {
+        return Collections.unmodifiableList(mainArgs);
+    }
+
     @Override
     public void init() throws Exception {
         //        applicationContext = SpringApplication.run(Main.class);
@@ -36,6 +45,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        mainArgs = Arrays.asList(args);
         launch(args);
     }
 }

@@ -33,7 +33,7 @@
 * "6,0-50,tfcitfoc", 
 * "6,50-100,tfcitfoc",
 
-#### Automatization
+#### Script
 Uncomment selected function in main function in `main_1.py` and run by `python main_1.py`\
 The rest of information is stored in script
 

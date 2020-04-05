@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static pl.jkkk.task2.logic.constant.Constants.QUALIFIER_SUMMARIZER_OPERATIONS;
+import static pl.jkkk.task2.logic.constant.LogicConstants.QUALIFIER_SUMMARIZER_OPERATIONS;
 import static pl.jkkk.task2.view.fxml.FxHelper.fillComboBox;
 
 public class Initializer {

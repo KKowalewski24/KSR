@@ -1,17 +1,14 @@
 package pl.jkkk.task2.view.controller.mainpanel;
 
-import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
-import javafx.stage.FileChooser;
 import pl.jkkk.task2.Main;
 import pl.jkkk.task2.logic.exception.FileOperationException;
 import pl.jkkk.task2.logic.writer.FileWriterPlainText;
-import pl.jkkk.task2.view.fxml.PopOutWindow;
-import pl.jkkk.task2.view.fxml.StageController;
 
 import java.util.ArrayList;
 
+import static pl.jkkk.task2.Main.IS_LOGGING_DATA;
 import static pl.jkkk.task2.view.fxml.FxHelper.fillListView;
 import static pl.jkkk.task2.view.fxml.FxHelper.getValueFromComboBox;
 
@@ -38,10 +35,16 @@ public class Loader {
     }
 
     private void saveDataLog(String value) {
-        try {
-            fileWriterPlainText.writePlainText(Main.getMainArgs(), value);
-        } catch (FileOperationException e) {
-            System.out.println(e);
+        if (IS_LOGGING_DATA) {
+            try {
+                fileWriterPlainText.writePlainText(Main.getMainArgs(), value);
+            } catch (FileOperationException e) {
+                System.out.println(e);
+            }
+        } else {
+            System.out.println("\n-------------------------------------------------\n");
+            System.out.println("\nLOGGING TO FILE DISABLED\n");
+            System.out.println("\n-------------------------------------------------\n");
         }
     }
 
@@ -51,7 +54,7 @@ public class Loader {
         String selectedSummarizerBasic = getValueFromComboBox(comboBoxSummarizerBasic);
 
         fillListView(listViewResults, new ArrayList<>());
-//        saveDataLog("abc");
+        //        saveDataLog("abc");
     }
 
     public void generateAdvancedSummarization() {
@@ -62,7 +65,7 @@ public class Loader {
         String selectedSummarizerAdvanced = getValueFromComboBox(comboBoxSummarizeAdvanced);
 
         fillListView(listViewResults, new ArrayList<>());
-//        saveDataLog("cde");
+        //        saveDataLog("cde");
     }
 
     public void saveSummarization() {

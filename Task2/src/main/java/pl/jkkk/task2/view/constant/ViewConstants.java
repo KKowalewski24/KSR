@@ -1,6 +1,6 @@
 package pl.jkkk.task2.view.constant;
 
-public class Constants {
+public class ViewConstants {
 
     /*------------------------ FIELDS REGION ------------------------*/
     public static final String PATH_MAIN_PANEL = "/panel/MainPanel.fxml";
@@ -9,7 +9,7 @@ public class Constants {
     public static final String PATH_CSS_STYLING = "/PanelStyles.css";
 
     /*------------------------ METHODS REGION ------------------------*/
-    private Constants() {
+    private ViewConstants() {
     }
 }
     

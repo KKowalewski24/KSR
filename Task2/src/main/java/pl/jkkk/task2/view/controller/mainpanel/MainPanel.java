@@ -10,9 +10,9 @@ import pl.jkkk.task2.view.fxml.StageController;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static pl.jkkk.task2.view.constant.Constants.PATH_CSS_STYLING;
-import static pl.jkkk.task2.view.constant.Constants.PATH_MAIN_PANEL;
-import static pl.jkkk.task2.view.constant.Constants.TITLE_MAIN_PANEL;
+import static pl.jkkk.task2.view.constant.ViewConstants.PATH_CSS_STYLING;
+import static pl.jkkk.task2.view.constant.ViewConstants.PATH_MAIN_PANEL;
+import static pl.jkkk.task2.view.constant.ViewConstants.TITLE_MAIN_PANEL;
 
 public class MainPanel implements Initializable {
 

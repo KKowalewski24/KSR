@@ -10,16 +10,18 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static pl.jkkk.task2.view.constant.Constants.PATH_CSS_STYLING;
-import static pl.jkkk.task2.view.constant.Constants.PATH_MAIN_PANEL;
-import static pl.jkkk.task2.view.constant.Constants.TITLE_MAIN_PANEL;
+import static pl.jkkk.task2.view.constant.ViewConstants.PATH_CSS_STYLING;
+import static pl.jkkk.task2.view.constant.ViewConstants.PATH_MAIN_PANEL;
+import static pl.jkkk.task2.view.constant.ViewConstants.TITLE_MAIN_PANEL;
 
 //@SpringBootApplication
 public class Main extends Application {
 
     /*------------------------ FIELDS REGION ------------------------*/
-    private ConfigurableApplicationContext applicationContext;
+    public static final boolean IS_LOGGING_DATA = true;
     private static List<String> mainArgs;
+
+    private ConfigurableApplicationContext applicationContext;
 
     // TODO UNCOMMENT SPRING CONTEXT
     /*------------------------ METHODS REGION ------------------------*/

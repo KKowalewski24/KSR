@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Constants {
+public class LogicConstants {
 
     /*------------------------ FIELDS REGION ------------------------*/
     //    TODO FILL SETS
@@ -14,7 +14,7 @@ public class Constants {
     ).collect(Collectors.toCollection(ArrayList::new));
 
     /*------------------------ METHODS REGION ------------------------*/
-    private Constants() {
+    private LogicConstants() {
     }
 }
     

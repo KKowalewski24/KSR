@@ -1,16 +1,10 @@
 package pl.jkkk.task1;
 
-import pl.jkkk.task1.featureextraction.DocumentLengthFE;
 import pl.jkkk.task1.featureextraction.FeatureExtractorDecorator;
 import pl.jkkk.task1.featureextraction.FeatureVector;
 import pl.jkkk.task1.featureextraction.KeywordsExtractor;
-import pl.jkkk.task1.featureextraction.MostFrequentKeywordInDocumentFragmentFE;
-import pl.jkkk.task1.featureextraction.MostFrequentWordInDocumentFragmentFE;
-import pl.jkkk.task1.featureextraction.NumberOfKeywordsInDocumentFragmentFE;
 import pl.jkkk.task1.featureextraction.NumericalMetric;
-import pl.jkkk.task1.featureextraction.RelativeNumberOfKeywordsInDocumentFragmentFE;
 import pl.jkkk.task1.featureextraction.TextMetric;
-import pl.jkkk.task1.featureextraction.UniqueNumberOfKeywordsInDocumentFragmentFE;
 import pl.jkkk.task1.knn.KnnAlgorithm;
 import pl.jkkk.task1.model.Document;
 import pl.jkkk.task1.reader.SgmlFileReader;
@@ -86,8 +80,9 @@ public class Main {
             numberOfKeywords = Integer.valueOf(args[2]);
             numericalMetric = NumericalMetric.fromString(args[3]);
             textMetric = TextMetric.fromString(args[4]);
-            if(args.length > 5)
+            if (args.length > 5) {
                 featureExtractorAbbreviations = Arrays.copyOfRange(args, 5, args.length);
+            }
         } catch (Exception e) {
             System.out.println(e);
             printUsage();
@@ -191,8 +186,9 @@ public class Main {
         final FeatureExtractorAbbreviationResolver featureExtractorAbbreviationResolver =
                 new FeatureExtractorAbbreviationResolver(keywordsSets.get(0), keywordsSets.get(1));
         extractorDecorator = new FeatureExtractorDecorator();
-        for(final String abbr : featureExtractorAbbreviations)
+        for (final String abbr : featureExtractorAbbreviations) {
             extractorDecorator.addExtractor(featureExtractorAbbreviationResolver.resolveAbbreviation(abbr));
+        }
 
         action(() -> {
             trainingFeatureVectors

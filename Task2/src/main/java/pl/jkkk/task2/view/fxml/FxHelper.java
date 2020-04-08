@@ -14,15 +14,15 @@ public class FxHelper {
     private FxHelper() {
     }
 
-    public static void fillComboBox(ComboBox comboBox, Collection collection) {
+    public static void fillComboBox(ComboBox comboBox, List list) {
         List items = comboBox.getItems();
         items.clear();
-        collection.forEach((it) -> items.add(it));
+        list.forEach((it) -> items.add(it));
         comboBox.getSelectionModel().selectFirst();
     }
 
-    public static void fillListView(ListView listView, List collection) {
-        listView.getItems().addAll(collection);
+    public static void fillListView(ListView listView, List list) {
+        listView.getItems().addAll(list);
     }
 
     public static String getValueFromComboBox(ComboBox comboBox) {

@@ -8,6 +8,8 @@ import java.util.stream.Stream;
 public class LogicConstants {
 
     /*------------------------ FIELDS REGION ------------------------*/
+    public static final boolean IS_LOGGING_DATA = true;
+
     //    TODO FILL SETS
     public static final List<String> QUALIFIER_SUMMARIZER_OPERATIONS = Stream.of(
             ""

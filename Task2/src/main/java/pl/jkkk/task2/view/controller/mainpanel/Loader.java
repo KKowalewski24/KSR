@@ -1,14 +1,18 @@
 package pl.jkkk.task2.view.controller.mainpanel;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.stage.FileChooser;
 import pl.jkkk.task2.Main;
 import pl.jkkk.task2.logic.exception.FileOperationException;
 import pl.jkkk.task2.logic.writer.FileWriterPlainText;
+import pl.jkkk.task2.view.fxml.PopOutWindow;
+import pl.jkkk.task2.view.fxml.StageController;
 
 import java.util.ArrayList;
 
-import static pl.jkkk.task2.Main.IS_LOGGING_DATA;
+import static pl.jkkk.task2.logic.constant.LogicConstants.IS_LOGGING_DATA;
 import static pl.jkkk.task2.view.fxml.FxHelper.fillListView;
 import static pl.jkkk.task2.view.fxml.FxHelper.getValueFromComboBox;
 
@@ -34,6 +38,7 @@ public class Loader {
         this.listViewResults = listViewResults;
     }
 
+    //    TODO MOVE THIS METHOD TO LOGIC AND CALL DURING MAKING SUMMARIZATION PROCESS
     private void saveDataLog(String value) {
         if (IS_LOGGING_DATA) {
             try {
@@ -49,41 +54,41 @@ public class Loader {
     }
 
     public void generateBasicSummarization() {
-        //        TODO CHANGE FOR REAL DATA
         String selectedQualifier = getValueFromComboBox(comboBoxQualifier);
         String selectedSummarizerBasic = getValueFromComboBox(comboBoxSummarizerBasic);
 
+        //        TODO CHANGE FOR REAL DATA - METHOD FROM LOGIC WHICH WILL BE RETURNING LIST OF
+        //         STRINGS
         fillListView(listViewResults, new ArrayList<>());
-        //        saveDataLog("abc");
     }
 
     public void generateAdvancedSummarization() {
-        //        TODO CHANGE FOR REAL DATA
         String selectedQualifier = getValueFromComboBox(comboBoxQualifier);
         String selectedSummarizerBasic = getValueFromComboBox(comboBoxSummarizerBasic);
         String selectedConjunction = getValueFromComboBox(comboBoxConjunction);
         String selectedSummarizerAdvanced = getValueFromComboBox(comboBoxSummarizeAdvanced);
 
+        //        TODO CHANGE FOR REAL DATA - METHOD FROM LOGIC WHICH WILL BE RETURNING LIST OF
+        //         STRINGS
         fillListView(listViewResults, new ArrayList<>());
-        //        saveDataLog("cde");
     }
 
     public void saveSummarization() {
-        //        try {
-        //            if (!=null){
-        //            String filename = new FileChooser()
-        //                    .showSaveDialog(StageController.getApplicationStage())
-        //                    .getName();
-        //            fileWriterPlainText.writePlainText(filename, "");
-        //            } else{
-        //                PopOutWindow.messageBox("File Write Error",
-        //                        "Summarization has not been generated yet",
-        //                        Alert.AlertType.WARNING);
-        //            }
-        //        } catch (NullPointerException | FileOperationException e) {
-        //            PopOutWindow.messageBox("File Write Error",
-        //                    "Could not save the selected file", Alert.AlertType.WARNING);
-        //        }
+        try {
+            //            if (!=null){
+            String filename = new FileChooser()
+                    .showSaveDialog(StageController.getApplicationStage())
+                    .getName();
+            fileWriterPlainText.writePlainText(filename, "");
+            //            } else{
+            //                PopOutWindow.messageBox("File Write Error",
+            //                        "Summarization has not been generated yet",
+            //                        Alert.AlertType.WARNING);
+            //            }
+        } catch (NullPointerException | FileOperationException e) {
+            PopOutWindow.messageBox("File Write Error",
+                    "Could not save the selected file", Alert.AlertType.WARNING);
+        }
     }
 }
     

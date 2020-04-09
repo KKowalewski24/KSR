@@ -4,7 +4,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.stage.FileChooser;
-import pl.jkkk.task2.Main;
 import pl.jkkk.task2.logic.exception.FileOperationException;
 import pl.jkkk.task2.logic.writer.FileWriterPlainText;
 import pl.jkkk.task2.view.fxml.PopOutWindow;
@@ -12,7 +11,6 @@ import pl.jkkk.task2.view.fxml.StageController;
 
 import java.util.ArrayList;
 
-import static pl.jkkk.task2.logic.constant.LogicConstants.IS_LOGGING_DATA;
 import static pl.jkkk.task2.view.fxml.FxHelper.fillListView;
 import static pl.jkkk.task2.view.fxml.FxHelper.getValueFromComboBox;
 
@@ -36,21 +34,6 @@ public class Loader {
         this.comboBoxConjunction = comboBoxConjunction;
         this.comboBoxSummarizeAdvanced = comboBoxSummarizeAdvanced;
         this.listViewResults = listViewResults;
-    }
-
-    //    TODO MOVE THIS METHOD TO LOGIC AND CALL DURING MAKING SUMMARIZATION PROCESS
-    private void saveDataLog(String value) {
-        if (IS_LOGGING_DATA) {
-            try {
-                fileWriterPlainText.writePlainText(Main.getMainArgs(), value);
-            } catch (FileOperationException e) {
-                System.out.println(e);
-            }
-        } else {
-            System.out.println("-------------------------------------------------");
-            System.out.println("LOGGING TO FILE DISABLED");
-            System.out.println("-------------------------------------------------");
-        }
     }
 
     public void generateBasicSummarization() {

@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 class FileWriterPlainTextTest {
 
     /*------------------------ FIELDS REGION ------------------------*/
-    private static final String testFilename = "xxx.txt";
+    private static final String testFilename = "xxx";
 
     private static class Sample implements Serializable {
         int number = 5;

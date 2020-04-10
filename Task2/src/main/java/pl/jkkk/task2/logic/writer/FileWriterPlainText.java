@@ -18,11 +18,8 @@ public class FileWriterPlainText {
         result.append(type)
                 .append("_")
                 .append(LocalTime.now().getHour())
-                .append("h_")
                 .append(LocalTime.now().getMinute())
-                .append("min_")
                 .append(LocalTime.now().getSecond())
-                .append("sek")
                 .append(fileExtension);
 
         return result.toString();

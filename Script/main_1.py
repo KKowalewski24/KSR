@@ -1,9 +1,13 @@
+import os
+import pathlib
+import platform
 import subprocess
+import sys
 
 '''
 How to use
-Copy generated jar with dependencies to directory 'Automatization', set jar file name,
-optionally add parameters and run in cmd by typing python main_1.py
+To build run `python main.py build` or `python main.py -b` in order to build jar file, 
+then run program without args to run experiments
 
  "Required parameters:  \n" +
                         "\t<percentage of training set (integer 1-99)>\n" +
@@ -26,6 +30,18 @@ JAR_NAME = "task1-0.0.1-jar-with-dependencies.jar"
 
 
 # ----------------------------------------------------------------------------- #
+def build_jar():
+    script_directory = pathlib.Path(os.getcwd())
+    os.chdir(script_directory.parent)
+    os.chdir("Task1")
+    if platform.system().lower() == "windows":
+        subprocess.call("mvnw.cmd clean package", shell=True)
+        subprocess.call("copy target\\" + JAR_NAME + " " + str(script_directory), shell=True)
+    elif platform.system().lower() == "linux":
+        subprocess.call("./mvnw clean package", shell=True)
+        subprocess.call("copy target/" + JAR_NAME + " " + str(script_directory), shell=True)
+
+
 def call_jar_with_five_args(training_set, knn, keywords, metric, text_metric):
     subprocess.call(
         ["java", "-jar", JAR_NAME, training_set, knn, keywords, metric, text_metric]
@@ -119,17 +135,21 @@ def third_round():
 
 # ----------------------------------------------------------------------------- #
 def main():
-    # Wstepne okreslenie dla jakich wartosci warto przeprowadzac dalsze badania
-    # first_round()
+    if len(sys.argv) > 1 and (sys.argv[1] == "build" or sys.argv[1] == "-b"):
+        build_jar()
+    else:
+        # Wstepne okreslenie dla jakich wartosci warto przeprowadzac dalsze badania
+        # first_round()
 
-    # Wpływ użytej wartość liczby k-najbliższych sąsiadów na skuteczość
-    # second_round()
+        # Wpływ użytej wartość liczby k-najbliższych sąsiadów na skuteczość
+        # second_round()
 
-    # Wpływ podziału zbioru na treningowy i testowy na skuteczość
-    # third_round()
+        # Wpływ podziału zbioru na treningowy i testowy na skuteczość
+        # third_round()
 
-    # Wpływ użytej metryki i miary na skuteczość
-    # series("60", "3", "10000")
+        # Wpływ użytej metryki i miary na skuteczość
+        # series("60", "3", "10000")
+        pass
 
     print("------------------------------------------------------------------------")
     print("FINISHED SUCCESSFULLY")

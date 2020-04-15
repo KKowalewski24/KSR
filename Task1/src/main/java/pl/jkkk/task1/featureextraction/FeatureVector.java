@@ -82,9 +82,9 @@ public class FeatureVector extends ArrayList<Feature> {
     }
 
     /**
-     * Calculate trigram distance between two strings.
+     * Calculate trigram similarity between two strings.
      */
-    public static Double calculateTrigramDistance(String a, String b) {
+    public static Double calculateTrigramSim(String a, String b) {
         final int n = 3;
 
         /* retrieve ngrams */
@@ -97,7 +97,7 @@ public class FeatureVector extends ArrayList<Feature> {
             ngramsB.add(b.substring(i, i + 3));
         }
 
-        /* calculate distance */
+        /* calculate similarity */
         double sum = 0.0;
         for (String ngramA : ngramsA) {
             if (ngramsB.contains(ngramA)) {
@@ -107,14 +107,14 @@ public class FeatureVector extends ArrayList<Feature> {
         return sum / ngramsA.size();
     }
 
-    /**
-     * Calculate tfm distance between two strings.
+    /*
+     * Calculate tfm similarity between two strings.
      */
-    public static Double calculateTFMDistance(String a, String b) {
+    public static Double calculateTFMSim(String a, String b) {
         if (a.equals(b)) {
-            return 0.0;
-        } else {
             return 1.0;
+        } else {
+            return 0.0;
         }
     }
 
@@ -127,7 +127,7 @@ public class FeatureVector extends ArrayList<Feature> {
 
         /* Convert feature vectors to numercial vectors using selected text metric.
          * Text values from first vector are set to 0.0, text values from second
-         * vector are set to computed distance to parallel values from first vector. */
+         * vector are set to 1 - computed sim to parallel values from first vector. */
         List<Double> numericalA = new ArrayList<>();
         List<Double> numericalB = new ArrayList<>();
         for (int i = 0; i < a.size(); i++) {
@@ -135,16 +135,16 @@ public class FeatureVector extends ArrayList<Feature> {
                 numericalA.add(a.get(i).getNumber());
                 numericalB.add(b.get(i).getNumber());
             } else {
-                double distance;
+                double sim;
                 switch (textMetric) {
                     case TFM:
-                        distance = calculateTFMDistance(a.get(i).getText(), b.get(i).getText());
+                        sim = calculateTFMSim(a.get(i).getText(), b.get(i).getText());
                         break;
                     default:
-                        distance = calculateTrigramDistance(a.get(i).getText(), b.get(i).getText());
+                        sim = calculateTrigramSim(a.get(i).getText(), b.get(i).getText());
                 }
                 numericalA.add(0.0);
-                numericalB.add(distance);
+                numericalB.add(1.0 - sim);
             }
         }
 

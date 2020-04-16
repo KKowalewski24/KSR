@@ -1,7 +1,5 @@
 # KSR
 
-#### [Google Drive Storage](https://drive.google.com/folderview?id=1SRepZ-OXN6XKP0zGv4DO-OgFMCxQ-F2l) 
-
 ## Task 1
 `mvn clean package` \
 `java -jar <jar-with-dependencies> param1 param2 param3 param4 param5`

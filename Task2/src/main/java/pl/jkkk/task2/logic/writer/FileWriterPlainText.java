@@ -14,15 +14,14 @@ public class FileWriterPlainText {
 
     /*------------------------ METHODS REGION ------------------------*/
     public String generateFilename(String type, String fileExtension) {
-        StringBuilder result = new StringBuilder();
-        result.append(type)
+        return new StringBuilder()
+                .append(type)
                 .append("_")
                 .append(LocalTime.now().getHour())
                 .append(LocalTime.now().getMinute())
                 .append(LocalTime.now().getSecond())
-                .append(fileExtension);
-
-        return result.toString();
+                .append(fileExtension)
+                .toString();
     }
 
     private void write(String filename, String value) throws FileOperationException {

@@ -21,11 +21,14 @@ public class CommandMode {
         QualifierSummarizationType advancedSummarizer = null;
 
         try {
-            if (args.length > 0) {
+            if (args.length > 1) {
                 qualifier = QualifierSummarizationType.fromString(args[1]);
                 basicSummarizer = QualifierSummarizationType.fromString(args[2]);
-                conjuntion = ConjuctionType.fromString(args[3]);
-                advancedSummarizer = QualifierSummarizationType.fromString(args[4]);
+
+                if (args.length == 4) {
+                    conjuntion = ConjuctionType.fromString(args[3]);
+                    advancedSummarizer = QualifierSummarizationType.fromString(args[4]);
+                }
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -33,7 +36,7 @@ public class CommandMode {
         }
 
         //TODO ADD CALLING METHOD FROM LOGIC
-//        saveDataLog("");
+        //        saveDataLog("");
     }
 
     private static void printUsage() {

@@ -2,12 +2,10 @@ package pl.jkkk.task2.view.controller.mainpanel;
 
 import javafx.scene.control.ComboBox;
 import pl.jkkk.task2.logic.model.ConjuctionType;
+import pl.jkkk.task2.logic.model.QualifierSummarizationType;
 
-import java.util.ArrayList;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static pl.jkkk.task2.logic.constant.LogicConstants.QUALIFIER_SUMMARIZER_OPERATIONS;
 import static pl.jkkk.task2.view.fxml.FxHelper.fillComboBox;
 
 public class Initializer {
@@ -30,11 +28,14 @@ public class Initializer {
     }
 
     public void fillScene() {
-        fillComboBox(comboBoxQualifier, QUALIFIER_SUMMARIZER_OPERATIONS);
-        fillComboBox(comboBoxSummarizerBasic, QUALIFIER_SUMMARIZER_OPERATIONS);
-        fillComboBox(comboBoxConjunction, Stream.of(ConjuctionType.values())
-                .collect(Collectors.toCollection(ArrayList::new)));
-        fillComboBox(comboBoxSummarizeAdvanced, QUALIFIER_SUMMARIZER_OPERATIONS);
+        fillComboBox(comboBoxQualifier, QualifierSummarizationType.getNamesList());
+        fillComboBox(comboBoxSummarizerBasic, QualifierSummarizationType.getNamesList());
+        fillComboBox(comboBoxConjunction,
+                ConjuctionType.getNamesList()
+                        .stream()
+                        .map((it) -> it.toUpperCase())
+                        .collect(Collectors.toList()));
+        fillComboBox(comboBoxSummarizeAdvanced, QualifierSummarizationType.getNamesList());
     }
 }
     

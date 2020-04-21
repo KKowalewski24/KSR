@@ -1,22 +1,35 @@
 package pl.jkkk.task2.logic.model;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public enum QualifierSummarizationType {
     //    TODO ADD TYPES
     ;
 
-    public final String name;
+    private final String name;
 
     QualifierSummarizationType(String name) {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public static QualifierSummarizationType fromString(String text) {
         return Arrays.asList(QualifierSummarizationType.values())
                 .stream()
-                .filter((it) -> it.name.equals(text))
+                .filter((it) -> it.getName().equals(text))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public static List<String> getNamesList() {
+        return Arrays.asList(QualifierSummarizationType.values())
+                .stream()
+                .map((it) -> it.getName())
+                .collect(Collectors.toList());
     }
 }

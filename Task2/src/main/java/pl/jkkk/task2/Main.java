@@ -3,6 +3,7 @@ package pl.jkkk.task2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import pl.jkkk.task2.logic.model.ConjuctionType;
 import pl.jkkk.task2.mode.CommandMode;
 import pl.jkkk.task2.mode.GraphicalMode;
 
@@ -14,6 +15,8 @@ import java.util.List;
 public class Main {
 
     /*------------------------ FIELDS REGION ------------------------*/
+    public static final boolean IS_LOGGING_DATA = true;
+
     private static ConfigurableApplicationContext applicationContext;
     private static List<String> mainArgs;
 
@@ -25,7 +28,7 @@ public class Main {
     public static void main(String[] args) {
         mainArgs = Arrays.asList(args);
         applicationContext = SpringApplication.run(Main.class, args);
-
+        System.out.println(ConjuctionType.getNamesList());
         if (args.length == 0) {
             new GraphicalMode().main(args);
         } else {

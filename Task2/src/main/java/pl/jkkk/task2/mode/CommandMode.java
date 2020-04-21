@@ -6,7 +6,7 @@ import pl.jkkk.task2.logic.model.ConjuctionType;
 import pl.jkkk.task2.logic.model.QualifierSummarizationType;
 import pl.jkkk.task2.logic.writer.FileWriterPlainText;
 
-import static pl.jkkk.task2.logic.constant.LogicConstants.IS_LOGGING_DATA;
+import static pl.jkkk.task2.Main.IS_LOGGING_DATA;
 
 public class CommandMode {
 

@@ -33,7 +33,6 @@ JAR_NAME = "task1-0.0.1-jar-with-dependencies.jar"
 def build_jar():
     script_directory = pathlib.Path(os.getcwd())
     os.chdir(script_directory.parent)
-    os.chdir("Task1")
     if platform.system().lower() == "windows":
         subprocess.call("mvnw.cmd clean package", shell=True)
         subprocess.call("copy target\\" + JAR_NAME + " " + str(script_directory), shell=True)
@@ -139,7 +138,7 @@ def main():
         build_jar()
     else:
         # Wstepne okreslenie dla jakich wartosci warto przeprowadzac dalsze badania
-        # first_round()
+        first_round()
 
         # Wpływ użytej wartość liczby k-najbliższych sąsiadów na skuteczość
         # second_round()

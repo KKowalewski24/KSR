@@ -20,7 +20,6 @@ JAR = "*.jar"
 def build_jar() -> None:
     script_directory = pathlib.Path(os.getcwd())
     os.chdir(script_directory.parent)
-    os.chdir("Task2")
     if platform.system().lower() == "windows":
         subprocess.call("mvnw.cmd clean package", shell=True)
         subprocess.call("copy target\\" + JAR_NAME + " " + str(script_directory), shell=True)
@@ -40,7 +39,6 @@ def clean_project_directories(remove_jar: bool) -> None:
         remove_files(glob.glob(JAR))
 
     os.chdir(script_directory.parent)
-    os.chdir("Task2")
     # remove_files([])
     pass
 

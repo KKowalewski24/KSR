@@ -13,6 +13,7 @@ then run program without args to run experiments
 '''
 
 JAR_NAME = "task2-0.0.1.jar"
+TXT = "*.txt"
 JAR = "*.jar"
 
 
@@ -39,7 +40,7 @@ def clean_project_directories(remove_jar: bool) -> None:
         remove_files(glob.glob(JAR))
 
     os.chdir(script_directory.parent)
-    # remove_files([])
+    remove_files(glob.glob(TXT))
     pass
 
 

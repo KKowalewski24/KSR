@@ -1,4 +1,4 @@
-package pl.jkkk.task2.logic.writer;
+package pl.jkkk.task2.logic.readerwriter;
 
 import org.junit.jupiter.api.Test;
 

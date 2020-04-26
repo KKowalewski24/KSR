@@ -4,7 +4,7 @@ import pl.jkkk.task2.Main;
 import pl.jkkk.task2.logic.exception.FileOperationException;
 import pl.jkkk.task2.logic.model.enumtype.ConjuctionType;
 import pl.jkkk.task2.logic.model.enumtype.QualifierSummarizationType;
-import pl.jkkk.task2.logic.writer.FileWriterPlainText;
+import pl.jkkk.task2.logic.readerwriter.FileWriterPlainText;
 
 import static pl.jkkk.task2.Main.IS_LOGGING_DATA;
 

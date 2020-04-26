@@ -2,8 +2,8 @@ package pl.jkkk.task2.mode;
 
 import pl.jkkk.task2.Main;
 import pl.jkkk.task2.logic.exception.FileOperationException;
-import pl.jkkk.task2.logic.model.ConjuctionType;
-import pl.jkkk.task2.logic.model.QualifierSummarizationType;
+import pl.jkkk.task2.logic.model.enumtype.ConjuctionType;
+import pl.jkkk.task2.logic.model.enumtype.QualifierSummarizationType;
 import pl.jkkk.task2.logic.writer.FileWriterPlainText;
 
 import static pl.jkkk.task2.Main.IS_LOGGING_DATA;

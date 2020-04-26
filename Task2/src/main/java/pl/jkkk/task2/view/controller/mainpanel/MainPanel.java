@@ -10,9 +10,11 @@ import pl.jkkk.task2.view.fxml.StageController;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static pl.jkkk.task2.view.constant.ViewConstants.PATH_CSS_STYLING;
+import static pl.jkkk.task2.view.constant.ViewConstants.PATH_CSS_DARK_STYLING;
+import static pl.jkkk.task2.view.constant.ViewConstants.PATH_CSS_LIGHT_STYLING;
 import static pl.jkkk.task2.view.constant.ViewConstants.PATH_MAIN_PANEL;
 import static pl.jkkk.task2.view.constant.ViewConstants.TITLE_MAIN_PANEL;
+import static pl.jkkk.task2.view.fxml.FxHelper.changeTheme;
 
 public class MainPanel implements Initializable {
 
@@ -65,13 +67,8 @@ public class MainPanel implements Initializable {
 
     @FXML
     private void onActionButtonChangeTheme(ActionEvent actionEvent) {
-        if (StageController.getGlobalCssStyling() != null) {
-            StageController.setGlobalCssStyling(null);
-            StageController.reloadStage(PATH_MAIN_PANEL, TITLE_MAIN_PANEL);
-        } else {
-            StageController.setGlobalCssStyling(PATH_CSS_STYLING);
-            StageController.reloadStage(PATH_MAIN_PANEL, TITLE_MAIN_PANEL);
-        }
+        changeTheme(PATH_MAIN_PANEL, TITLE_MAIN_PANEL,
+                PATH_CSS_DARK_STYLING, PATH_CSS_LIGHT_STYLING);
     }
 
     @FXML

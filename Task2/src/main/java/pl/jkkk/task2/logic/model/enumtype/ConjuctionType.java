@@ -1,4 +1,4 @@
-package pl.jkkk.task2.logic.model;
+package pl.jkkk.task2.logic.model.enumtype;
 
 import java.util.Arrays;
 import java.util.List;

@@ -3,7 +3,6 @@ package pl.jkkk.task2.view.fxml;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 
-import java.util.Collection;
 import java.util.List;
 
 public class FxHelper {
@@ -12,6 +11,17 @@ public class FxHelper {
 
     /*------------------------ METHODS REGION ------------------------*/
     private FxHelper() {
+    }
+
+    public static void changeTheme(String pathPanel, String title,
+                                   String pathCssDarkTheme, String pathCssLightTheme) {
+        if (StageController.getGlobalCssStyling().equals(pathCssDarkTheme)) {
+            StageController.setGlobalCssStyling(pathCssLightTheme);
+            StageController.reloadStage(pathPanel, title);
+        } else if (StageController.getGlobalCssStyling().equals(pathCssLightTheme)) {
+            StageController.setGlobalCssStyling(pathCssDarkTheme);
+            StageController.reloadStage(pathPanel, title);
+        }
     }
 
     public static void fillComboBox(ComboBox comboBox, List list) {

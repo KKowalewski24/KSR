@@ -1,8 +1,8 @@
 package pl.jkkk.task2.view.controller.mainpanel;
 
 import javafx.scene.control.ComboBox;
-import pl.jkkk.task2.logic.model.ConjuctionType;
-import pl.jkkk.task2.logic.model.QualifierSummarizationType;
+import pl.jkkk.task2.logic.model.enumtype.ConjuctionType;
+import pl.jkkk.task2.logic.model.enumtype.QualifierSummarizationType;
 
 import java.util.stream.Collectors;
 

@@ -8,6 +8,7 @@ import pl.jkkk.task2.logic.model.Pollution;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +25,44 @@ public class FileReaderCsv {
                 .build();
 
         List<String[]> fileRows = csvReader.readAll();
-
         List<Pollution> pollutions = new ArrayList<>();
+        fileRows.forEach((it) -> {
+            int argCounter = 0;
+            pollutions.add(new Pollution(
+                    Integer.valueOf(it[argCounter++]),
+                    Integer.valueOf(it[argCounter++]),
+                    Integer.valueOf(it[argCounter++]),
+                    it[argCounter++],
+                    it[argCounter++],
+                    it[argCounter++],
+                    it[argCounter++],
+                    LocalDate.parse(it[argCounter++]),
 
-        System.out.println(fileRows.size());
+                    it[argCounter++],
+                    Double.valueOf(it[argCounter++]),
+                    Double.valueOf(it[argCounter++]),
+                    Double.valueOf(it[argCounter++]),
+                    Double.valueOf(it[argCounter++]),
+
+                    it[argCounter++],
+                    Double.valueOf(it[argCounter++]),
+                    Double.valueOf(it[argCounter++]),
+                    Double.valueOf(it[argCounter++]),
+                    Double.valueOf(it[argCounter++]),
+
+                    it[argCounter++],
+                    Double.valueOf(it[argCounter++]),
+                    Double.valueOf(it[argCounter++]),
+                    Double.valueOf(it[argCounter++]),
+                    Double.valueOf(it[argCounter++]),
+
+                    it[argCounter++],
+                    Double.valueOf(it[argCounter++]),
+                    Double.valueOf(it[argCounter++]),
+                    Double.valueOf(it[argCounter++]),
+                    Double.valueOf(it[argCounter++])
+            ));
+        });
 
         return pollutions;
     }

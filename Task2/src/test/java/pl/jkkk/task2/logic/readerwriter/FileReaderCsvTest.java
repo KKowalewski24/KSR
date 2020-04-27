@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static pl.jkkk.task2.logic.constant.LogicConstants.POLLUTION_DATA_FILENAME;
 
 class FileReaderCsvTest {
@@ -15,7 +16,7 @@ class FileReaderCsvTest {
     /*------------------------ METHODS REGION ------------------------*/
     @Test
     void readCsvTest() throws IOException, CsvException {
-        fileReaderCsv.readCsv(POLLUTION_DATA_FILENAME);
+        assertNotNull(fileReaderCsv.readCsv(POLLUTION_DATA_FILENAME));
     }
 }
     

@@ -6,7 +6,7 @@ FILTERED_FILE_PATH = "../src/main/resources/filtered_pollution_data.csv"
 
 
 def main():
-    data = pandas.read_csv(INITIAL_FILE_PATH, nrows=400000)
+    data = pandas.read_csv(INITIAL_FILE_PATH, nrows=100000)
     data.dropna(how="any", inplace=True)
     data.drop(data.columns[0], axis=1, inplace=True)
     data.to_csv(FILTERED_FILE_PATH, index=False, header=False)

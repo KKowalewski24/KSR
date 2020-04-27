@@ -5,6 +5,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDate;
 
@@ -13,6 +15,7 @@ public class Pollution {
 
     /*------------------------ FIELDS REGION ------------------------*/
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private Integer stateCode;
@@ -27,40 +30,38 @@ public class Pollution {
     private String NO2Units;
     private Double NO2Mean;
     private Double NO21stMaxValue;
-    private Integer NO21stMaxHour;
-    private Integer NO2AQI;
+    private Double NO21stMaxHour;
+    private Double NO2AQI;
 
     private String O3Units;
     private Double O3Mean;
     private Double O31stMaxValue;
-    private Integer O31stMaxHour;
-    private Integer O3AQI;
+    private Double O31stMaxHour;
+    private Double O3AQI;
 
     private String SO2Units;
     private Double SO2Mean;
     private Double SO21stMaxValue;
-    private Integer SO21stMaxHour;
-    private Integer SO2AQI;
+    private Double SO21stMaxHour;
+    private Double SO2AQI;
 
     private String COUnits;
     private Double COMean;
     private Double CO1stMaxValue;
-    private Integer CO1stMaxHour;
-    private Integer COAQI;
+    private Double CO1stMaxHour;
+    private Double COAQI;
 
     /*------------------------ METHODS REGION ------------------------*/
     public Pollution() {
     }
 
-    public Pollution(Integer id, Integer stateCode, Integer countyCode, Integer siteNum,
-                     String address, String state, String county, String city,
-                     LocalDate dateLocal, String NO2Units, Double NO2Mean, Double NO21stMaxValue,
-                     Integer NO21stMaxHour, Integer NO2AQI, String O3Units, Double O3Mean,
-                     Double O31stMaxValue, Integer O31stMaxHour, Integer O3AQI, String SO2Units,
-                     Double SO2Mean, Double SO21stMaxValue, Integer SO21stMaxHour, Integer SO2AQI,
-                     String COUnits, Double COMean, Double CO1stMaxValue, Integer CO1stMaxHour,
-                     Integer COAQI) {
-        this.id = id;
+    public Pollution(Integer stateCode, Integer countyCode, Integer siteNum, String address,
+                     String state, String county, String city, LocalDate dateLocal,
+                     String NO2Units, Double NO2Mean, Double NO21stMaxValue, Double NO21stMaxHour,
+                     Double NO2AQI, String O3Units, Double O3Mean, Double O31stMaxValue,
+                     Double O31stMaxHour, Double O3AQI, String SO2Units, Double SO2Mean,
+                     Double SO21stMaxValue, Double SO21stMaxHour, Double SO2AQI, String COUnits,
+                     Double COMean, Double CO1stMaxValue, Double CO1stMaxHour, Double COAQI) {
         this.stateCode = stateCode;
         this.countyCode = countyCode;
         this.siteNum = siteNum;
@@ -187,19 +188,19 @@ public class Pollution {
         this.NO21stMaxValue = NO21stMaxValue;
     }
 
-    public Integer getNO21stMaxHour() {
+    public Double getNO21stMaxHour() {
         return NO21stMaxHour;
     }
 
-    public void setNO21stMaxHour(Integer NO21stMaxHour) {
+    public void setNO21stMaxHour(Double NO21stMaxHour) {
         this.NO21stMaxHour = NO21stMaxHour;
     }
 
-    public Integer getNO2AQI() {
+    public Double getNO2AQI() {
         return NO2AQI;
     }
 
-    public void setNO2AQI(Integer NO2AQI) {
+    public void setNO2AQI(Double NO2AQI) {
         this.NO2AQI = NO2AQI;
     }
 
@@ -227,19 +228,19 @@ public class Pollution {
         O31stMaxValue = o31stMaxValue;
     }
 
-    public Integer getO31stMaxHour() {
+    public Double getO31stMaxHour() {
         return O31stMaxHour;
     }
 
-    public void setO31stMaxHour(Integer o31stMaxHour) {
+    public void setO31stMaxHour(Double o31stMaxHour) {
         O31stMaxHour = o31stMaxHour;
     }
 
-    public Integer getO3AQI() {
+    public Double getO3AQI() {
         return O3AQI;
     }
 
-    public void setO3AQI(Integer o3AQI) {
+    public void setO3AQI(Double o3AQI) {
         O3AQI = o3AQI;
     }
 
@@ -267,19 +268,19 @@ public class Pollution {
         this.SO21stMaxValue = SO21stMaxValue;
     }
 
-    public Integer getSO21stMaxHour() {
+    public Double getSO21stMaxHour() {
         return SO21stMaxHour;
     }
 
-    public void setSO21stMaxHour(Integer SO21stMaxHour) {
+    public void setSO21stMaxHour(Double SO21stMaxHour) {
         this.SO21stMaxHour = SO21stMaxHour;
     }
 
-    public Integer getSO2AQI() {
+    public Double getSO2AQI() {
         return SO2AQI;
     }
 
-    public void setSO2AQI(Integer SO2AQI) {
+    public void setSO2AQI(Double SO2AQI) {
         this.SO2AQI = SO2AQI;
     }
 
@@ -307,19 +308,19 @@ public class Pollution {
         this.CO1stMaxValue = CO1stMaxValue;
     }
 
-    public Integer getCO1stMaxHour() {
+    public Double getCO1stMaxHour() {
         return CO1stMaxHour;
     }
 
-    public void setCO1stMaxHour(Integer CO1stMaxHour) {
+    public void setCO1stMaxHour(Double CO1stMaxHour) {
         this.CO1stMaxHour = CO1stMaxHour;
     }
 
-    public Integer getCOAQI() {
+    public Double getCOAQI() {
         return COAQI;
     }
 
-    public void setCOAQI(Integer COAQI) {
+    public void setCOAQI(Double COAQI) {
         this.COAQI = COAQI;
     }
 

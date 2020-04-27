@@ -138,7 +138,7 @@ def main():
         build_jar()
     else:
         # Wstepne okreslenie dla jakich wartosci warto przeprowadzac dalsze badania
-        first_round()
+        # first_round()
 
         # Wpływ użytej wartość liczby k-najbliższych sąsiadów na skuteczość
         # second_round()

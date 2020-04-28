@@ -1,7 +1,6 @@
 package pl.jkkk.task2.mode;
 
 import com.opencsv.exceptions.CsvException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.jkkk.task2.Main;
 import pl.jkkk.task2.logic.exception.FileOperationException;
@@ -24,7 +23,6 @@ public class CommandMode {
     private FileWriterPlainText fileWriterPlainText = new FileWriterPlainText();
 
     /*------------------------ METHODS REGION ------------------------*/
-    @Autowired
     public CommandMode(PollutionService pollutionService) {
         this.pollutionService = pollutionService;
     }
@@ -59,7 +57,8 @@ public class CommandMode {
     }
 
     private void seedDatabase() throws IOException, CsvException {
-        pollutionService.saveAll(new FileReaderCsv().readCsv(POLLUTION_DATA_FILENAME));
+        pollutionService.deleteAll();
+        pollutionService.saveAll(new FileReaderCsv().readCsv(POLLUTION_DATA_FILENAME, false));
     }
 
     private static void printUsage() {

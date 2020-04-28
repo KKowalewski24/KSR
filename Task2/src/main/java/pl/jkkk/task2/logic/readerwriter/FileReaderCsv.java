@@ -17,12 +17,14 @@ public class FileReaderCsv {
     /*------------------------ FIELDS REGION ------------------------*/
 
     /*------------------------ METHODS REGION ------------------------*/
-    public List<Pollution> readCsv(String filename) throws IOException, CsvException {
+    public List<Pollution> readCsv(String filename,
+                                   boolean isSkippingFirstRow) throws IOException, CsvException {
         Reader reader = new InputStreamReader(getClass().getResourceAsStream(filename));
+        CSVReader csvReader = new CSVReaderBuilder(reader).build();
 
-        CSVReader csvReader = new CSVReaderBuilder(reader)
-                .withSkipLines(1)
-                .build();
+        if (isSkippingFirstRow) {
+            csvReader.skip(1);
+        }
 
         List<String[]> fileRows = csvReader.readAll();
         List<Pollution> pollutions = new ArrayList<>();

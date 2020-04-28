@@ -38,3 +38,19 @@ The rest of information is stored in script
 ## Task 2
 
 ###### [Dataset](https://www.kaggle.com/sogun3/uspollution) 
+
+###### Database usage
+* Install PostgreSQL with JDBC Driver
+* Create database `ksr_fuzzy` manually or by using python script in sql-script directory
+* Build JAR - `mvn clean package` and the run `java -jar $JAR_NAME$ -s` to read data from csv file 
+and save them into ksr_fuzzy database or restore database from `data-dump.sql` file
+
+##### Call parameters 
+* Single param - `seed` or `-s` to seed database from csv file
+
+##### Scipts description
+* `filter_data.py` - filtering csv data - reads first 100000, 
+removes rows with NaN values, removes first column with ID
+* `main_2.py` - script with experiments for report
+* `data-dump.sql`- script with dumped data from database after filtering
+* `database_util.py` - 

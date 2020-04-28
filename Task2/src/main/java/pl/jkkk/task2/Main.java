@@ -27,11 +27,12 @@ public class Main {
     public static void main(String[] args) {
         mainArgs = Arrays.asList(args);
         applicationContext = SpringApplication.run(Main.class, args);
+        CommandMode commandMode = applicationContext.getBean(CommandMode.class);
 
         if (args.length == 0) {
             new GraphicalMode().main(args);
         } else {
-            new CommandMode().main(args);
+            commandMode.main(args);
             System.exit(0);
         }
 

@@ -2,6 +2,7 @@ package pl.jkkk.task2.view.fxml;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import java.util.List;
 
@@ -14,13 +15,14 @@ public class FxHelper {
     }
 
     public static void changeTheme(String pathPanel, String title,
-                                   String pathCssDarkTheme, String pathCssLightTheme) {
+                                   String pathCssDarkTheme, String pathCssLightTheme,
+                                   ConfigurableApplicationContext applicationContext) {
         if (StageController.getGlobalCssStyling().equals(pathCssDarkTheme)) {
             StageController.setGlobalCssStyling(pathCssLightTheme);
-            StageController.reloadStage(pathPanel, title);
+            StageController.reloadStage(pathPanel, title, applicationContext);
         } else if (StageController.getGlobalCssStyling().equals(pathCssLightTheme)) {
             StageController.setGlobalCssStyling(pathCssDarkTheme);
-            StageController.reloadStage(pathPanel, title);
+            StageController.reloadStage(pathPanel, title, applicationContext);
         }
     }
 

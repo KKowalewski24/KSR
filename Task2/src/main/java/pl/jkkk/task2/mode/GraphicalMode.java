@@ -2,6 +2,7 @@ package pl.jkkk.task2.mode;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import pl.jkkk.task2.Main;
 import pl.jkkk.task2.view.fxml.StageController;
 import pl.jkkk.task2.view.fxml.core.WindowDimensions;
 
@@ -19,7 +20,8 @@ public class GraphicalMode extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         StageController.buildStage(stage, PATH_MAIN_PANEL, TITLE_MAIN_PANEL,
-                new WindowDimensions(PANEL_WIDTH, PANEL_HEIGHT), PATH_CSS_DARK_STYLING);
+                new WindowDimensions(PANEL_WIDTH, PANEL_HEIGHT), PATH_CSS_DARK_STYLING,
+                Main.getApplicationContext());
         StageController.getApplicationStage().setResizable(false);
     }
 

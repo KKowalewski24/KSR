@@ -24,6 +24,10 @@ public class Main {
         return Collections.unmodifiableList(mainArgs);
     }
 
+    public static ConfigurableApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
+
     public static void main(String[] args) {
         mainArgs = Arrays.asList(args);
         applicationContext = SpringApplication.run(Main.class, args);

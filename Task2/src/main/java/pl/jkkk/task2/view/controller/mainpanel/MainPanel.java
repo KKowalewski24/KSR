@@ -5,6 +5,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import pl.jkkk.task2.Main;
+import pl.jkkk.task2.logic.service.pollution.PollutionService;
 import pl.jkkk.task2.view.fxml.StageController;
 
 import java.net.URL;
@@ -16,6 +20,7 @@ import static pl.jkkk.task2.view.constant.ViewConstants.PATH_MAIN_PANEL;
 import static pl.jkkk.task2.view.constant.ViewConstants.TITLE_MAIN_PANEL;
 import static pl.jkkk.task2.view.fxml.FxHelper.changeTheme;
 
+@Component
 public class MainPanel implements Initializable {
 
     /*------------------------ FIELDS REGION ------------------------*/
@@ -33,7 +38,17 @@ public class MainPanel implements Initializable {
     private Initializer initializer;
     private Loader loader;
 
+    private PollutionService pollutionService;
+
     /*------------------------ METHODS REGION ------------------------*/
+    public MainPanel() {
+    }
+
+    @Autowired
+    public MainPanel(PollutionService pollutionService) {
+        this.pollutionService = pollutionService;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializer = new Initializer(
@@ -68,12 +83,14 @@ public class MainPanel implements Initializable {
     @FXML
     private void onActionButtonChangeTheme(ActionEvent actionEvent) {
         changeTheme(PATH_MAIN_PANEL, TITLE_MAIN_PANEL,
-                PATH_CSS_DARK_STYLING, PATH_CSS_LIGHT_STYLING);
+                PATH_CSS_DARK_STYLING, PATH_CSS_LIGHT_STYLING,
+                Main.getApplicationContext());
     }
 
     @FXML
     private void onActionButtonReloadStage(ActionEvent actionEvent) {
-        StageController.reloadStage(PATH_MAIN_PANEL, TITLE_MAIN_PANEL);
+        StageController.reloadStage(PATH_MAIN_PANEL, TITLE_MAIN_PANEL,
+                Main.getApplicationContext());
     }
 
     @FXML

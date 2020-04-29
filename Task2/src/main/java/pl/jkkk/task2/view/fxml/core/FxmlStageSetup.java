@@ -16,30 +16,30 @@ public class FxmlStageSetup {
     private static String globalCssStyling;
 
     /*------------------------ METHODS REGION ------------------------*/
-    private FxmlStageSetup() {
+    protected FxmlStageSetup() {
     }
 
-    public static Stage getApplicationStage() {
+    protected static Stage getApplicationStage() {
         return applicationStage;
     }
 
-    public static void setApplicationStage(Stage applicationStage) {
+    protected static void setApplicationStage(Stage applicationStage) {
         FxmlStageSetup.applicationStage = applicationStage;
     }
 
-    public static WindowDimensions getWindowDimensions() {
+    protected static WindowDimensions getWindowDimensions() {
         return windowDimensions;
     }
 
-    public static void setWindowDimensions(WindowDimensions windowDimensions) {
+    protected static void setWindowDimensions(WindowDimensions windowDimensions) {
         FxmlStageSetup.windowDimensions = windowDimensions;
     }
 
-    public static String getGlobalCssStyling() {
+    protected static String getGlobalCssStyling() {
         return globalCssStyling;
     }
 
-    public static void setGlobalCssStyling(String globalCssStyling) {
+    protected static void setGlobalCssStyling(String globalCssStyling) {
         FxmlStageSetup.globalCssStyling = globalCssStyling;
     }
 
@@ -76,10 +76,10 @@ public class FxmlStageSetup {
      * Method load stage from scratch and set `applicationStage` - use on startup of application
      * stage is passed from start method from Main class.
      */
-    public static void buildStage(Stage stage, String filePath,
-                                  String title, WindowDimensions dimensions,
-                                  String cssFilePath,
-                                  ConfigurableApplicationContext context) throws IOException {
+    protected static void buildStage(Stage stage, String filePath,
+                                     String title, WindowDimensions dimensions,
+                                     String cssFilePath,
+                                     ConfigurableApplicationContext context) throws IOException {
         setApplicationStage(stage);
         setWindowDimensions(dimensions);
         setGlobalCssStyling(cssFilePath);
@@ -90,8 +90,8 @@ public class FxmlStageSetup {
      * Method load new stage and set `applicationStage` to a new one but leave the previous one
      * open.
      */
-    public static void loadStage(String filePath, String title,
-                                 ConfigurableApplicationContext context) throws IOException {
+    protected static void loadStage(String filePath, String title,
+                                    ConfigurableApplicationContext context) throws IOException {
         setApplicationStage(new Stage());
         prepareStage(filePath, title, windowDimensions, context);
     }
@@ -99,8 +99,8 @@ public class FxmlStageSetup {
     /**
      * Method close previous stage and load new stage and set `applicationStage` to a new one.
      */
-    public static void reloadStage(String filePath, String title,
-                                   ConfigurableApplicationContext context) throws IOException {
+    protected static void reloadStage(String filePath, String title,
+                                      ConfigurableApplicationContext context) throws IOException {
         applicationStage.close();
         loadStage(filePath, title, context);
     }

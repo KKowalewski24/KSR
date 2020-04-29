@@ -45,6 +45,10 @@ The rest of information is stored in script
 * Build JAR - `mvn clean package` and the run `java -jar $JAR_NAME$ -s` to read data from csv file 
 and save them into ksr_fuzzy database or restore database from `data-dump.sql` file
 
+###### Protip
+* Install and create database `ksr_fuzzy` otherwise application with fail to start 
+or comment out whole application.properties file - h2 database will be used
+
 ##### Call parameters 
 * Single param - `seed` or `-s` to seed database from csv file
 

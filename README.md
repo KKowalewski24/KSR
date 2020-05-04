@@ -56,5 +56,5 @@ or comment out whole application.properties file - h2 database will be used
 * `filter_data.py` - filtering csv data - reads first 100000, 
 removes rows with NaN values, removes first column with ID
 * `main_2.py` - script with experiments for report
-* `data-dump.sql`- script with dumped data from database after filtering
+* `data-dump.sql`- script with dumped data from database after filtering - restore->custom or tar and filename dump-data
 * `database_util.py` - 

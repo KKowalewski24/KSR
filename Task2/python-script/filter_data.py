@@ -7,7 +7,10 @@ FILTERED_FILE_PATH = "../src/main/resources/filtered_pollution_data.csv"
 
 # ----------------------------------------------------------------------------- #
 def print_statistics():
-    pass
+    data = pandas.read_csv(FILTERED_FILE_PATH)
+    print(data.min())
+    print("\n\n")
+    print(data.max())
 
 
 def filter_and_remove(initial_file_path):

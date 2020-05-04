@@ -33,34 +33,27 @@ public class FileReaderCsv {
             fileRows.forEach((it) -> {
                 int argCounter = 0;
                 pollutions.add(new Pollution(
-                        Integer.valueOf(it[argCounter++]),
-                        Integer.valueOf(it[argCounter++]),
-                        Integer.valueOf(it[argCounter++]),
                         it[argCounter++],
                         it[argCounter++],
                         it[argCounter++],
                         it[argCounter++],
                         LocalDate.parse(it[argCounter++]),
 
-                        it[argCounter++],
                         Double.valueOf(it[argCounter++]),
                         Double.valueOf(it[argCounter++]),
                         Double.valueOf(it[argCounter++]),
                         Double.valueOf(it[argCounter++]),
 
-                        it[argCounter++],
                         Double.valueOf(it[argCounter++]),
                         Double.valueOf(it[argCounter++]),
                         Double.valueOf(it[argCounter++]),
                         Double.valueOf(it[argCounter++]),
 
-                        it[argCounter++],
                         Double.valueOf(it[argCounter++]),
                         Double.valueOf(it[argCounter++]),
                         Double.valueOf(it[argCounter++]),
                         Double.valueOf(it[argCounter++]),
 
-                        it[argCounter++],
                         Double.valueOf(it[argCounter++]),
                         Double.valueOf(it[argCounter++]),
                         Double.valueOf(it[argCounter++]),

@@ -38,6 +38,7 @@
         </StackPane.margin>
         <items>
             <Pane HBox.hgrow="ALWAYS"/>
+            <ProgressIndicator fx:id="progressIndicator" visible="false"/>
             <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false"
                     onAction="#onActionButtonGenerateBasicSummarization" prefHeight="35.0"
                     prefWidth="161.0" text="Generate Summarization"/>

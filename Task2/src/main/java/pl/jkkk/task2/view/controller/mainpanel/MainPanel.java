@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressIndicator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.jkkk.task2.Main;
@@ -19,6 +20,7 @@ import static pl.jkkk.task2.view.constant.ViewConstants.PATH_CSS_LIGHT_STYLING;
 import static pl.jkkk.task2.view.constant.ViewConstants.PATH_MAIN_PANEL;
 import static pl.jkkk.task2.view.constant.ViewConstants.TITLE_MAIN_PANEL;
 import static pl.jkkk.task2.view.fxml.FxHelper.changeTheme;
+import static pl.jkkk.task2.view.fxml.FxHelper.showProgressIndicator;
 
 @Component
 public class MainPanel implements Initializable {
@@ -34,6 +36,8 @@ public class MainPanel implements Initializable {
     private ComboBox comboBoxSummarizeAdvanced;
     @FXML
     private ListView listViewResults;
+    @FXML
+    private ProgressIndicator progressIndicator;
 
     private Initializer initializer;
     private Loader loader;
@@ -67,12 +71,12 @@ public class MainPanel implements Initializable {
 
     @FXML
     private void onActionButtonGenerateBasicSummarization(ActionEvent actionEvent) {
-        loader.generateBasicSummarization();
+        showProgressIndicator(() -> loader.generateBasicSummarization(), progressIndicator);
     }
 
     @FXML
     private void onActionButtonGenerateAdvancedSummarization(ActionEvent actionEvent) {
-        loader.generateAdvancedSummarization();
+        showProgressIndicator(() -> loader.generateAdvancedSummarization(), progressIndicator);
     }
 
     @FXML

@@ -1,7 +1,9 @@
 package pl.jkkk.task2.view.fxml;
 
+import javafx.concurrent.Task;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressIndicator;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.util.List;
@@ -39,6 +41,23 @@ public class FxHelper {
 
     public static String getValueFromComboBox(ComboBox comboBox) {
         return comboBox.getSelectionModel().getSelectedItem().toString();
+    }
+
+    public static void showProgressIndicator(Runnable runnable,
+                                             ProgressIndicator progressIndicator) {
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                progressIndicator.setVisible(true);
+                progressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
+                runnable.run();
+                progressIndicator.setVisible(false);
+
+                return null;
+            }
+        };
+
+        new Thread(task).start();
     }
 }
     

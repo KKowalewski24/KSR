@@ -6,6 +6,7 @@ import javafx.scene.control.ListView;
 import javafx.stage.FileChooser;
 import pl.jkkk.task2.logic.exception.FileOperationException;
 import pl.jkkk.task2.logic.readerwriter.FileWriterPlainText;
+import pl.jkkk.task2.logic.service.pollution.PollutionService;
 import pl.jkkk.task2.view.fxml.PopOutWindow;
 import pl.jkkk.task2.view.fxml.StageController;
 
@@ -25,15 +26,18 @@ public class Loader {
 
     private FileWriterPlainText fileWriterPlainText = new FileWriterPlainText();
 
+    private PollutionService pollutionService;
+
     /*------------------------ METHODS REGION ------------------------*/
     public Loader(ComboBox comboBoxQualifier, ComboBox comboBoxSummarizerBasic,
                   ComboBox comboBoxConjunction, ComboBox comboBoxSummarizeAdvanced,
-                  ListView listViewResults) {
+                  ListView listViewResults, PollutionService pollutionService) {
         this.comboBoxQualifier = comboBoxQualifier;
         this.comboBoxSummarizerBasic = comboBoxSummarizerBasic;
         this.comboBoxConjunction = comboBoxConjunction;
         this.comboBoxSummarizeAdvanced = comboBoxSummarizeAdvanced;
         this.listViewResults = listViewResults;
+        this.pollutionService = pollutionService;
     }
 
     public void generateBasicSummarization() {

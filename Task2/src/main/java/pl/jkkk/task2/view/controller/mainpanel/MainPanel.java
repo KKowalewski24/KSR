@@ -63,7 +63,7 @@ public class MainPanel implements Initializable {
         loader = new Loader(
                 comboBoxQualifier, comboBoxSummarizerBasic,
                 comboBoxConjunction, comboBoxSummarizeAdvanced,
-                listViewResults
+                listViewResults, pollutionService
         );
 
         initializer.fillScene();

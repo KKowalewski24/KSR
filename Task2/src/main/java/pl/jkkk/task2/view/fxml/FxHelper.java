@@ -1,5 +1,6 @@
 package pl.jkkk.task2.view.fxml;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -48,10 +49,17 @@ public class FxHelper {
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                progressIndicator.setVisible(true);
-                progressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
-                runnable.run();
-                progressIndicator.setVisible(false);
+                try {
+                    Platform.runLater(() -> {
+                        progressIndicator.setVisible(true);
+                        progressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
+                    });
+                    runnable.run();
+                    Platform.runLater(() -> progressIndicator.setVisible(false));
+                } catch (Exception e) {
+                    progressIndicator.setVisible(false);
+                    e.printStackTrace();
+                }
 
                 return null;
             }

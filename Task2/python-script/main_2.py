@@ -41,6 +41,9 @@ def clean_project_directories(remove_jar: bool) -> None:
 
     os.chdir(script_directory.parent)
     remove_files(glob.glob(TXT))
+
+    os.chdir(script_directory.parent.parent)
+    remove_files(glob.glob(TXT))
     pass
 
 

@@ -1,6 +1,7 @@
 package pl.jkkk.task2.view.controller.mainpanel;
 
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import pl.jkkk.task2.logic.model.enumtype.ConjuctionType;
 import pl.jkkk.task2.logic.model.enumtype.QualifierSummarizationType;
 
@@ -15,16 +16,19 @@ public class Initializer {
     private ComboBox comboBoxSummarizerBasic;
     private ComboBox comboBoxConjunction;
     private ComboBox comboBoxSummarizeAdvanced;
+    private TextField textFieldSaveSummarizationNumber;
 
     /*------------------------ METHODS REGION ------------------------*/
     public Initializer(ComboBox comboBoxQualifier,
                        ComboBox comboBoxSummarizerBasic,
                        ComboBox comboBoxConjunction,
-                       ComboBox comboBoxSummarizeAdvanced) {
+                       ComboBox comboBoxSummarizeAdvanced,
+                       TextField textFieldSaveSummarizationNumber) {
         this.comboBoxQualifier = comboBoxQualifier;
         this.comboBoxSummarizerBasic = comboBoxSummarizerBasic;
         this.comboBoxConjunction = comboBoxConjunction;
         this.comboBoxSummarizeAdvanced = comboBoxSummarizeAdvanced;
+        this.textFieldSaveSummarizationNumber = textFieldSaveSummarizationNumber;
     }
 
     public void fillScene() {
@@ -36,6 +40,7 @@ public class Initializer {
                         .map((it) -> it.toUpperCase())
                         .collect(Collectors.toList()));
         fillComboBox(comboBoxSummarizeAdvanced, QualifierSummarizationType.getNamesList());
+        textFieldSaveSummarizationNumber.setText("0");
     }
 }
     

@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 class FileWriterPlainTextTest {
 
@@ -34,5 +38,15 @@ class FileWriterPlainTextTest {
         FileWriterPlainText fileWriterPlainText = new FileWriterPlainText();
 
         fileWriterPlainText.writePlainText(testFilename, new Sample().toString());
+    }
+
+    @Test
+    void writeListTest() throws IOException {
+        Files.deleteIfExists(Paths.get(testFilename));
+        FileWriterPlainText fileWriterPlainText = new FileWriterPlainText();
+
+        List listTrimmed = new ArrayList<>(Stream.of("abc", "cde")
+                .collect(Collectors.toList())).subList(0, 2);
+        fileWriterPlainText.writePlainText(testFilename, listTrimmed);
     }
 }

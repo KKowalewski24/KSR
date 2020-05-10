@@ -17,11 +17,29 @@ public class FileWriterPlainText {
         write(filename, value);
     }
 
+    public void writePlainText(String filename, List<String> values) throws FileOperationException {
+        StringBuilder stringBuilderValues = new StringBuilder();
+        values.forEach((it) -> stringBuilderValues.append(it).append("\n"));
+
+        write(filename, stringBuilderValues.toString());
+    }
+
     public void writePlainText(List<String> filenames, String value) throws FileOperationException {
         StringBuilder stringBuilder = new StringBuilder();
         filenames.forEach((it) -> stringBuilder.append(it));
 
         write(stringBuilder.toString(), value);
+    }
+
+    public void writePlainText(List<String> filenames, List<String> values)
+            throws FileOperationException {
+        StringBuilder stringBuilderFilenames = new StringBuilder();
+        filenames.forEach((it) -> stringBuilderFilenames.append(it));
+
+        StringBuilder stringBuilderValues = new StringBuilder();
+        values.forEach((it) -> stringBuilderValues.append(it).append("\n"));
+
+        write(stringBuilderFilenames.toString(), stringBuilderValues.toString());
     }
 
     private void write(String filename, String value) throws FileOperationException {

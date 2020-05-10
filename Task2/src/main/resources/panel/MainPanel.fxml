@@ -11,8 +11,10 @@
     <ToolBar prefHeight="40.0" prefWidth="1200.0">
         <items>
             <Pane HBox.hgrow="ALWAYS"/>
-            <Label alignment="CENTER" prefWidth="200.0" text="Qualifier"/>
+            <Label alignment="CENTER" prefHeight="19.0" prefWidth="191.0" text="Qualifier"/>
             <Label alignment="CENTER" prefWidth="200.0" text="Basic Summarizer"/>
+            <Label alignment="CENTER" prefHeight="19.0" prefWidth="208.0"
+                   text="Number Of Summarization To Save"/>
             <Label alignment="CENTER" prefWidth="200.0" text="Conjunction"/>
             <Label alignment="CENTER" prefWidth="200.0" text="Advanced Summarizer"/>
             <Pane HBox.hgrow="ALWAYS"/>
@@ -26,6 +28,8 @@
             <Pane HBox.hgrow="ALWAYS"/>
             <ComboBox fx:id="comboBoxQualifier" prefWidth="200.0"/>
             <ComboBox fx:id="comboBoxSummarizerBasic" prefWidth="200.0"/>
+            <Separator orientation="VERTICAL" prefHeight="50.0"/>
+            <TextField fx:id="textFieldSaveSummarizationNumber"/>
             <Separator orientation="VERTICAL" prefHeight="50.0"/>
             <ComboBox fx:id="comboBoxConjunction" prefWidth="200.0"/>
             <ComboBox fx:id="comboBoxSummarizeAdvanced" prefWidth="200.0"/>

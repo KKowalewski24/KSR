@@ -3,13 +3,16 @@ package pl.jkkk.task2.view.controller.mainpanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.jkkk.task2.Main;
 import pl.jkkk.task2.logic.service.pollution.PollutionService;
+import pl.jkkk.task2.view.fxml.PopOutWindow;
 import pl.jkkk.task2.view.fxml.StageController;
 
 import java.net.URL;
@@ -38,6 +41,8 @@ public class MainPanel implements Initializable {
     private ListView listViewResults;
     @FXML
     private ProgressIndicator progressIndicator;
+    @FXML
+    private TextField textFieldSaveSummarizationNumber;
 
     private Initializer initializer;
     private Loader loader;
@@ -57,13 +62,15 @@ public class MainPanel implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initializer = new Initializer(
                 comboBoxQualifier, comboBoxSummarizerBasic,
-                comboBoxConjunction, comboBoxSummarizeAdvanced
+                comboBoxConjunction, comboBoxSummarizeAdvanced,
+                textFieldSaveSummarizationNumber
         );
 
         loader = new Loader(
                 comboBoxQualifier, comboBoxSummarizerBasic,
                 comboBoxConjunction, comboBoxSummarizeAdvanced,
-                listViewResults, pollutionService
+                listViewResults, pollutionService,
+                textFieldSaveSummarizationNumber
         );
 
         initializer.fillScene();
@@ -81,7 +88,12 @@ public class MainPanel implements Initializable {
 
     @FXML
     private void onActionSaveSummarization(ActionEvent actionEvent) {
-        loader.saveSummarization();
+        try {
+            loader.saveSummarization(Integer.valueOf(textFieldSaveSummarizationNumber.getText()));
+        } catch (NumberFormatException e) {
+            PopOutWindow.messageBox("Wrong Value",
+                    "Wrong value - must be a number", Alert.AlertType.WARNING);
+        }
     }
 
     @FXML

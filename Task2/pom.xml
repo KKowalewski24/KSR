@@ -56,14 +56,6 @@
         </dependency>
 
         <dependency>
-            <groupId>net.sourceforge.jFuzzyLogic</groupId>
-            <artifactId>jFuzzyLogic</artifactId>
-            <version>1.2.1</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/jFuzzyLogic_v3.0.jar</systemPath>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>

@@ -3,10 +3,13 @@ package pl.jkkk.task2.view.fxml;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.layout.Pane;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class FxHelper {
@@ -42,6 +45,15 @@ public class FxHelper {
 
     public static String getValueFromComboBox(ComboBox comboBox) {
         return comboBox.getSelectionModel().getSelectedItem().toString();
+    }
+
+    public static void setPaneVisibility(boolean value, Pane... panes) {
+        Arrays.stream(panes).forEach((it) -> it.setVisible(value));
+    }
+
+    public static void setLabelTextInPane(Pane pane, int childrenNumber, String text) {
+        Label label = (Label) pane.getChildren().get(childrenNumber);
+        label.setText(text);
     }
 
     public static void showProgressIndicator(Runnable runnable,

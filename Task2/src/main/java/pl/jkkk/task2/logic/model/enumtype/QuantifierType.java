@@ -4,13 +4,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public enum QualifierSummarizationType {
-    //    TODO ADD TYPES
-    ;
+public enum QuantifierType {
+
+    /*------------------------ FIELDS REGION ------------------------*/
+    RELATIVE("Relative"),
+    ABSOLUTE("Absolute");
 
     private final String name;
 
-    QualifierSummarizationType(String name) {
+    /*------------------------ METHODS REGION ------------------------*/
+    QuantifierType(String name) {
         this.name = name;
     }
 
@@ -18,16 +21,16 @@ public enum QualifierSummarizationType {
         return name;
     }
 
-    public static QualifierSummarizationType fromString(String text) {
-        return Arrays.asList(QualifierSummarizationType.values())
+    public static QuantifierType fromString(final String text) {
+        return Arrays.asList(QuantifierType.values())
                 .stream()
                 .filter((it) -> it.getName().equals(text))
-                .findAny()
+                .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
 
     public static List<String> getNamesList() {
-        return Arrays.asList(QualifierSummarizationType.values())
+        return Arrays.asList(QuantifierType.values())
                 .stream()
                 .map((it) -> it.getName())
                 .collect(Collectors.toList());

@@ -28,6 +28,10 @@ public class StageController extends FxmlStageSetup {
         return FxmlStageSetup.getGlobalCssStyling();
     }
 
+    public static void setWindowDimensions(WindowDimensions windowDimensions) {
+        FxmlStageSetup.setWindowDimensions(windowDimensions);
+    }
+
     public static void setGlobalCssStyling(String globalCssStyling) {
         FxmlStageSetup.setGlobalCssStyling(globalCssStyling);
     }

@@ -14,13 +14,18 @@ import pl.jkkk.task2.Main;
 import pl.jkkk.task2.logic.service.pollution.PollutionService;
 import pl.jkkk.task2.view.fxml.PopOutWindow;
 import pl.jkkk.task2.view.fxml.StageController;
+import pl.jkkk.task2.view.fxml.core.WindowDimensions;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static pl.jkkk.task2.view.constant.ViewConstants.EDIT_PANEL_HEIGHT;
+import static pl.jkkk.task2.view.constant.ViewConstants.EDIT_PANEL_WIDTH;
 import static pl.jkkk.task2.view.constant.ViewConstants.PATH_CSS_DARK_STYLING;
 import static pl.jkkk.task2.view.constant.ViewConstants.PATH_CSS_LIGHT_STYLING;
+import static pl.jkkk.task2.view.constant.ViewConstants.PATH_EDIT_PANEL;
 import static pl.jkkk.task2.view.constant.ViewConstants.PATH_MAIN_PANEL;
+import static pl.jkkk.task2.view.constant.ViewConstants.TITLE_EDIT_PANEL;
 import static pl.jkkk.task2.view.constant.ViewConstants.TITLE_MAIN_PANEL;
 import static pl.jkkk.task2.view.fxml.FxHelper.changeTheme;
 import static pl.jkkk.task2.view.fxml.FxHelper.showProgressIndicator;
@@ -29,8 +34,9 @@ import static pl.jkkk.task2.view.fxml.FxHelper.showProgressIndicator;
 public class MainPanel implements Initializable {
 
     /*------------------------ FIELDS REGION ------------------------*/
+    //    TODO CHECK IF COMBOBOXES NAMES' ARE OK
     @FXML
-    private ComboBox comboBoxQualifier;
+    private ComboBox comboBoxQuantifier;
     @FXML
     private ComboBox comboBoxSummarizerBasic;
     @FXML
@@ -61,13 +67,13 @@ public class MainPanel implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializer = new Initializer(
-                comboBoxQualifier, comboBoxSummarizerBasic,
+                comboBoxQuantifier, comboBoxSummarizerBasic,
                 comboBoxConjunction, comboBoxSummarizeAdvanced,
                 textFieldSaveSummarizationNumber
         );
 
         loader = new Loader(
-                comboBoxQualifier, comboBoxSummarizerBasic,
+                comboBoxQuantifier, comboBoxSummarizerBasic,
                 comboBoxConjunction, comboBoxSummarizeAdvanced,
                 listViewResults, pollutionService,
                 textFieldSaveSummarizationNumber
@@ -84,6 +90,14 @@ public class MainPanel implements Initializable {
     @FXML
     private void onActionButtonGenerateAdvancedSummarization(ActionEvent actionEvent) {
         showProgressIndicator(() -> loader.generateAdvancedSummarization(), progressIndicator);
+    }
+
+    @FXML
+    private void onActionButtonOpenEditWindow(ActionEvent actionEvent) {
+        StageController.setWindowDimensions(
+                new WindowDimensions(EDIT_PANEL_WIDTH, EDIT_PANEL_HEIGHT));
+        StageController.reloadStage(PATH_EDIT_PANEL, TITLE_EDIT_PANEL,
+                Main.getApplicationContext());
     }
 
     @FXML

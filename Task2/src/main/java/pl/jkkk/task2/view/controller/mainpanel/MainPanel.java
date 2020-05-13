@@ -98,6 +98,7 @@ public class MainPanel implements Initializable {
                 new WindowDimensions(EDIT_PANEL_WIDTH, EDIT_PANEL_HEIGHT));
         StageController.reloadStage(PATH_EDIT_PANEL, TITLE_EDIT_PANEL,
                 Main.getApplicationContext());
+        StageController.getApplicationStage().setResizable(false);
     }
 
     @FXML

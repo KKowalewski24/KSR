@@ -21,6 +21,7 @@ import pl.jkkk.task2.view.fxml.core.WindowDimensions;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import static pl.jkkk.task2.view.constant.ViewConstants.MAIN_PANEL_HEIGHT;
 import static pl.jkkk.task2.view.constant.ViewConstants.MAIN_PANEL_WIDTH;
@@ -106,10 +107,12 @@ public class EditPanel implements Initializable {
         Integer selectedTab = getSelectedTabIndex(tabPane);
 
         switch (selectedTab) {
+            // Quantifier
             case 0: {
 
                 break;
             }
+            // Summarizer
             case 1: {
 
                 break;
@@ -128,7 +131,7 @@ public class EditPanel implements Initializable {
 
     @FXML
     private void onActionConfirm(ActionEvent actionEvent) {
-        //        TODO ADD SAVING DATA TO FILE
+        //        TODO ADD SAVING DATA TO DB
         prepareStage();
     }
 
@@ -161,9 +164,16 @@ public class EditPanel implements Initializable {
     }
 
     private void fillTabPane() {
-        //        todo
-        //        fillListView(listViewQuantifier, );
-        //        fillListView(listViewSummarizer, );
+        fillListView(listViewQuantifier, labelService
+                .findAll()
+                .stream()
+                .map((it) -> it.getName())
+                .collect(Collectors.toList()));
+        fillListView(listViewSummarizer, linguisticQuantifierService
+                .findAll()
+                .stream()
+                .map((it) -> it.getName())
+                .collect(Collectors.toList()));
     }
 
     private void fillComboBoxes() {
@@ -179,7 +189,11 @@ public class EditPanel implements Initializable {
             fillComboBox(comboBoxType, QuantifierType.getNamesList());
         } else if (ObjectType.SUMMARIZER == objectType) {
             label.setText("Linguistic Variable");
-            //            fillComboBox(comboBoxType, /*todo*/);
+            fillComboBox(comboBoxType, labelService
+                    .findAll()
+                    .stream()
+                    .map((it) -> it.getLinguisticVariable())
+                    .collect(Collectors.toList()));
         }
     }
 

@@ -11,6 +11,8 @@ import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.jkkk.task2.Main;
+import pl.jkkk.task2.logic.service.label.LabelService;
+import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierService;
 import pl.jkkk.task2.logic.service.pollution.PollutionService;
 import pl.jkkk.task2.view.fxml.PopOutWindow;
 import pl.jkkk.task2.view.fxml.StageController;
@@ -49,27 +51,33 @@ public class MainPanel implements Initializable {
     private Loader loader;
 
     private PollutionService pollutionService;
+    private LabelService labelService;
+    private LinguisticQuantifierService quantifierService;
 
     /*------------------------ METHODS REGION ------------------------*/
     public MainPanel() {
     }
 
     @Autowired
-    public MainPanel(PollutionService pollutionService) {
+    public MainPanel(PollutionService pollutionService, LabelService labelService,
+                     LinguisticQuantifierService quantifierService) {
         this.pollutionService = pollutionService;
+        this.labelService = labelService;
+        this.quantifierService = quantifierService;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializer = new Initializer(
                 comboBoxQuantifier, comboBoxSummarizer,
-                textFieldSaveSummarizationNumber
+                textFieldSaveSummarizationNumber, labelService,
+                quantifierService
         );
 
         loader = new Loader(
                 comboBoxQuantifier, comboBoxSummarizer,
-                listViewResults, pollutionService,
-                textFieldSaveSummarizationNumber
+                listViewResults, textFieldSaveSummarizationNumber,
+                pollutionService, labelService, quantifierService
         );
 
         initializer.fillScene();

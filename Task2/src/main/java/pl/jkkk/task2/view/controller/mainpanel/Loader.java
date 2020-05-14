@@ -7,6 +7,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import pl.jkkk.task2.logic.exception.FileOperationException;
 import pl.jkkk.task2.logic.readerwriter.FileWriterPlainText;
+import pl.jkkk.task2.logic.service.label.LabelService;
+import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierService;
 import pl.jkkk.task2.logic.service.pollution.PollutionService;
 import pl.jkkk.task2.view.fxml.PopOutWindow;
 import pl.jkkk.task2.view.fxml.StageController;
@@ -26,20 +28,25 @@ public class Loader {
     private TextField textFieldSaveSummarizationNumber;
 
     private FileWriterPlainText fileWriterPlainText = new FileWriterPlainText();
-    private PollutionService pollutionService;
+    private final PollutionService pollutionService;
+    private final LabelService labelService;
+    private final LinguisticQuantifierService quantifierService;
 
     //    TODO LIST FOR STORING RESULT OF SUMMARIZATION
     private List results;
 
     /*------------------------ METHODS REGION ------------------------*/
     public Loader(ComboBox comboBoxQualifier, ComboBox comboBoxSummarizerBasic,
-                  ListView listViewResults, PollutionService pollutionService,
-                  TextField textFieldSaveSummarizationNumber) {
+                  ListView listViewResults, TextField textFieldSaveSummarizationNumber,
+                  PollutionService pollutionService, LabelService labelService,
+                  LinguisticQuantifierService quantifierService) {
         this.comboBoxQualifier = comboBoxQualifier;
         this.comboBoxSummarizerBasic = comboBoxSummarizerBasic;
         this.listViewResults = listViewResults;
-        this.pollutionService = pollutionService;
         this.textFieldSaveSummarizationNumber = textFieldSaveSummarizationNumber;
+        this.pollutionService = pollutionService;
+        this.labelService = labelService;
+        this.quantifierService = quantifierService;
     }
 
     public void generateBasicSummarization() {

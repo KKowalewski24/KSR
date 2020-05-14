@@ -4,135 +4,155 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="700.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="pl.jkkk.task2.view.controller.editpanel.EditPanel">
-    <children>
-        <Button mnemonicParsing="false" onAction="#onActionReturn" prefHeight="29.0"
-                prefWidth="85.0" text="Return">
-            <VBox.margin>
-                <Insets bottom="10.0" left="15.0" top="15.0"/>
-            </VBox.margin>
-        </Button>
-        <VBox alignment="CENTER" prefHeight="78.0" prefWidth="500.0">
-            <children>
-                <Label text="Select Edited Object">
-                    <padding>
-                        <Insets bottom="5.0"/>
-                    </padding>
-                </Label>
-                <ComboBox fx:id="comboBoxSelectObject" prefHeight="29.0" prefWidth="229.0"/>
-            </children>
-        </VBox>
-        <VBox prefHeight="474.0" prefWidth="500.0">
-            <children>
-                <HBox fx:id="paneTextField" alignment="CENTER" prefHeight="54.0" prefWidth="500.0">
-                    <children>
-                        <Label text="Name">
-                            <HBox.margin>
-                                <Insets right="100.0"/>
-                            </HBox.margin>
-                        </Label>
-                        <TextField>
-                            <HBox.margin>
-                                <Insets left="100.0"/>
-                            </HBox.margin>
-                        </TextField>
-                    </children>
-                </HBox>
-                <VBox fx:id="paneComboBoxType" alignment="CENTER" prefHeight="84.0"
-                      prefWidth="500.0">
-                    <children>
-                        <Label text="Type">
-                            <VBox.margin>
-                                <Insets bottom="5.0"/>
-                            </VBox.margin>
-                        </Label>
-                        <ComboBox fx:id="comboBoxType" prefWidth="150.0"/>
-                    </children>
-                </VBox>
-                <VBox fx:id="paneFunctionType" prefHeight="335.0" prefWidth="500.0">
-                    <children>
-                        <VBox alignment="CENTER" prefHeight="108.0" prefWidth="500.0">
-                            <children>
-                                <Label text="Function Type">
-                                    <VBox.margin>
-                                        <Insets bottom="5.0"/>
-                                    </VBox.margin>
-                                </Label>
-                                <ComboBox fx:id="comboBoxFunctionType" prefWidth="150.0"/>
-                            </children>
-                        </VBox>
-                        <HBox fx:id="paneFunctionTypePaneParamFirst" alignment="CENTER"
-                              prefHeight="54.0" prefWidth="500.0">
-                            <children>
-                                <Label>
-                                    <HBox.margin>
-                                        <Insets right="100.0"/>
-                                    </HBox.margin>
-                                </Label>
-                                <TextField>
-                                    <HBox.margin>
-                                        <Insets left="100.0"/>
-                                    </HBox.margin>
-                                </TextField>
-                            </children>
-                        </HBox>
-                        <HBox fx:id="paneFunctionTypePaneParamSecond" alignment="CENTER"
-                              layoutX="10.0" layoutY="118.0" prefHeight="54.0" prefWidth="500.0">
-                            <children>
-                                <Label>
-                                    <HBox.margin>
-                                        <Insets right="100.0"/>
-                                    </HBox.margin>
-                                </Label>
-                                <TextField>
-                                    <HBox.margin>
-                                        <Insets left="100.0"/>
-                                    </HBox.margin>
-                                </TextField>
-                            </children>
-                        </HBox>
-                        <HBox fx:id="paneFunctionTypePaneParamThird" alignment="CENTER"
-                              layoutX="10.0" layoutY="172.0" prefHeight="54.0" prefWidth="500.0">
-                            <children>
-                                <Label>
-                                    <HBox.margin>
-                                        <Insets right="100.0"/>
-                                    </HBox.margin>
-                                </Label>
-                                <TextField>
-                                    <HBox.margin>
-                                        <Insets left="100.0"/>
-                                    </HBox.margin>
-                                </TextField>
-                            </children>
-                        </HBox>
-                        <HBox fx:id="paneFunctionTypePaneParamFourth" alignment="CENTER"
-                              layoutX="10.0" layoutY="226.0" prefHeight="54.0" prefWidth="500.0">
-                            <children>
-                                <Label>
-                                    <HBox.margin>
-                                        <Insets right="100.0"/>
-                                    </HBox.margin>
-                                </Label>
-                                <TextField>
-                                    <HBox.margin>
-                                        <Insets left="100.0"/>
-                                    </HBox.margin>
-                                </TextField>
-                            </children>
-                        </HBox>
-                    </children>
-                </VBox>
-            </children>
-        </VBox>
-        <VBox alignment="CENTER" prefHeight="73.0" prefWidth="500.0">
-            <children>
-                <Button mnemonicParsing="false" onAction="#onActionConfirm" prefHeight="28.0"
-                        prefWidth="132.0" text="Confirm"/>
-            </children>
-        </VBox>
-    </children>
-</VBox>
+    <TabPane prefHeight="200.0" prefWidth="300.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab text="Quantifier">
+                <ListView>
+
+                </ListView>
+            </Tab>
+            <Tab text="Summarizer">
+                <ListView>
+
+                </ListView>
+            </Tab>
+        </tabs>
+    </TabPane>
+    <VBox>
+        <children>
+            <Button mnemonicParsing="false" onAction="#onActionReturn" prefHeight="29.0"
+                    prefWidth="85.0" text="Return">
+                <VBox.margin>
+                    <Insets bottom="10.0" left="15.0" top="15.0"/>
+                </VBox.margin>
+            </Button>
+            <VBox alignment="CENTER" prefHeight="78.0" prefWidth="500.0">
+                <children>
+                    <Label text="Select Edited Object">
+                        <padding>
+                            <Insets bottom="5.0"/>
+                        </padding>
+                    </Label>
+                    <ComboBox fx:id="comboBoxSelectObject" prefHeight="29.0" prefWidth="229.0"/>
+                </children>
+            </VBox>
+            <VBox prefHeight="474.0" prefWidth="500.0">
+                <children>
+                    <HBox fx:id="paneTextField" alignment="CENTER" prefHeight="54.0"
+                          prefWidth="500.0">
+                        <children>
+                            <Label text="Name">
+                                <HBox.margin>
+                                    <Insets right="100.0"/>
+                                </HBox.margin>
+                            </Label>
+                            <TextField>
+                                <HBox.margin>
+                                    <Insets left="100.0"/>
+                                </HBox.margin>
+                            </TextField>
+                        </children>
+                    </HBox>
+                    <VBox fx:id="paneComboBoxType" alignment="CENTER" prefHeight="84.0"
+                          prefWidth="500.0">
+                        <children>
+                            <Label text="Type">
+                                <VBox.margin>
+                                    <Insets bottom="5.0"/>
+                                </VBox.margin>
+                            </Label>
+                            <ComboBox fx:id="comboBoxType" prefWidth="150.0"/>
+                        </children>
+                    </VBox>
+                    <VBox fx:id="paneFunctionType" prefHeight="335.0" prefWidth="500.0">
+                        <children>
+                            <VBox alignment="CENTER" prefHeight="108.0" prefWidth="500.0">
+                                <children>
+                                    <Label text="Function Type">
+                                        <VBox.margin>
+                                            <Insets bottom="5.0"/>
+                                        </VBox.margin>
+                                    </Label>
+                                    <ComboBox fx:id="comboBoxFunctionType" prefWidth="150.0"/>
+                                </children>
+                            </VBox>
+                            <HBox fx:id="paneFunctionTypePaneParamFirst" alignment="CENTER"
+                                  prefHeight="54.0" prefWidth="500.0">
+                                <children>
+                                    <Label>
+                                        <HBox.margin>
+                                            <Insets right="100.0"/>
+                                        </HBox.margin>
+                                    </Label>
+                                    <TextField>
+                                        <HBox.margin>
+                                            <Insets left="100.0"/>
+                                        </HBox.margin>
+                                    </TextField>
+                                </children>
+                            </HBox>
+                            <HBox fx:id="paneFunctionTypePaneParamSecond" alignment="CENTER"
+                                  layoutX="10.0" layoutY="118.0" prefHeight="54.0"
+                                  prefWidth="500.0">
+                                <children>
+                                    <Label>
+                                        <HBox.margin>
+                                            <Insets right="100.0"/>
+                                        </HBox.margin>
+                                    </Label>
+                                    <TextField>
+                                        <HBox.margin>
+                                            <Insets left="100.0"/>
+                                        </HBox.margin>
+                                    </TextField>
+                                </children>
+                            </HBox>
+                            <HBox fx:id="paneFunctionTypePaneParamThird" alignment="CENTER"
+                                  layoutX="10.0" layoutY="172.0" prefHeight="54.0"
+                                  prefWidth="500.0">
+                                <children>
+                                    <Label>
+                                        <HBox.margin>
+                                            <Insets right="100.0"/>
+                                        </HBox.margin>
+                                    </Label>
+                                    <TextField>
+                                        <HBox.margin>
+                                            <Insets left="100.0"/>
+                                        </HBox.margin>
+                                    </TextField>
+                                </children>
+                            </HBox>
+                            <HBox fx:id="paneFunctionTypePaneParamFourth" alignment="CENTER"
+                                  layoutX="10.0" layoutY="226.0" prefHeight="54.0"
+                                  prefWidth="500.0">
+                                <children>
+                                    <Label>
+                                        <HBox.margin>
+                                            <Insets right="100.0"/>
+                                        </HBox.margin>
+                                    </Label>
+                                    <TextField>
+                                        <HBox.margin>
+                                            <Insets left="100.0"/>
+                                        </HBox.margin>
+                                    </TextField>
+                                </children>
+                            </HBox>
+                        </children>
+                    </VBox>
+                </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="73.0" prefWidth="500.0">
+                <children>
+                    <Button mnemonicParsing="false" onAction="#onActionConfirm" prefHeight="28.0"
+                            prefWidth="132.0" text="Confirm"/>
+                </children>
+            </VBox>
+        </children>
+    </VBox>
+</HBox>

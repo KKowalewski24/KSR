@@ -34,15 +34,10 @@ import static pl.jkkk.task2.view.fxml.FxHelper.showProgressIndicator;
 public class MainPanel implements Initializable {
 
     /*------------------------ FIELDS REGION ------------------------*/
-    //    TODO CHECK IF COMBOBOXES NAMES' ARE OK
     @FXML
     private ComboBox comboBoxQuantifier;
     @FXML
-    private ComboBox comboBoxSummarizerBasic;
-    @FXML
-    private ComboBox comboBoxConjunction;
-    @FXML
-    private ComboBox comboBoxSummarizeAdvanced;
+    private ComboBox comboBoxSummarizer;
     @FXML
     private ListView listViewResults;
     @FXML
@@ -67,14 +62,12 @@ public class MainPanel implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializer = new Initializer(
-                comboBoxQuantifier, comboBoxSummarizerBasic,
-                comboBoxConjunction, comboBoxSummarizeAdvanced,
+                comboBoxQuantifier, comboBoxSummarizer,
                 textFieldSaveSummarizationNumber
         );
 
         loader = new Loader(
-                comboBoxQuantifier, comboBoxSummarizerBasic,
-                comboBoxConjunction, comboBoxSummarizeAdvanced,
+                comboBoxQuantifier, comboBoxSummarizer,
                 listViewResults, pollutionService,
                 textFieldSaveSummarizationNumber
         );
@@ -85,11 +78,6 @@ public class MainPanel implements Initializable {
     @FXML
     private void onActionButtonGenerateBasicSummarization(ActionEvent actionEvent) {
         showProgressIndicator(() -> loader.generateBasicSummarization(), progressIndicator);
-    }
-
-    @FXML
-    private void onActionButtonGenerateAdvancedSummarization(ActionEvent actionEvent) {
-        showProgressIndicator(() -> loader.generateAdvancedSummarization(), progressIndicator);
     }
 
     @FXML

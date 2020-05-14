@@ -22,8 +22,6 @@ public class Loader {
     /*------------------------ FIELDS REGION ------------------------*/
     private ComboBox comboBoxQualifier;
     private ComboBox comboBoxSummarizerBasic;
-    private ComboBox comboBoxConjunction;
-    private ComboBox comboBoxSummarizeAdvanced;
     private ListView listViewResults;
     private TextField textFieldSaveSummarizationNumber;
 
@@ -35,13 +33,10 @@ public class Loader {
 
     /*------------------------ METHODS REGION ------------------------*/
     public Loader(ComboBox comboBoxQualifier, ComboBox comboBoxSummarizerBasic,
-                  ComboBox comboBoxConjunction, ComboBox comboBoxSummarizeAdvanced,
                   ListView listViewResults, PollutionService pollutionService,
                   TextField textFieldSaveSummarizationNumber) {
         this.comboBoxQualifier = comboBoxQualifier;
         this.comboBoxSummarizerBasic = comboBoxSummarizerBasic;
-        this.comboBoxConjunction = comboBoxConjunction;
-        this.comboBoxSummarizeAdvanced = comboBoxSummarizeAdvanced;
         this.listViewResults = listViewResults;
         this.pollutionService = pollutionService;
         this.textFieldSaveSummarizationNumber = textFieldSaveSummarizationNumber;
@@ -61,8 +56,6 @@ public class Loader {
     public void generateAdvancedSummarization() {
         String selectedQualifier = getValueFromComboBox(comboBoxQualifier);
         String selectedSummarizerBasic = getValueFromComboBox(comboBoxSummarizerBasic);
-        String selectedConjunction = getValueFromComboBox(comboBoxConjunction);
-        String selectedSummarizerAdvanced = getValueFromComboBox(comboBoxSummarizeAdvanced);
 
         //        TODO CHANGE FOR REAL DATA - METHOD FROM LOGIC WHICH WILL BE RETURNING LIST OF
         //         STRINGS

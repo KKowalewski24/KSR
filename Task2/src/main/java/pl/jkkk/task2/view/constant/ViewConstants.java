@@ -12,7 +12,7 @@ public class ViewConstants {
     public static final Integer MAIN_PANEL_WIDTH = 1200;
     public static final Integer MAIN_PANEL_HEIGHT = 700;
 
-    public static final Integer EDIT_PANEL_WIDTH = 500;
+    public static final Integer EDIT_PANEL_WIDTH = 800;
     public static final Integer EDIT_PANEL_HEIGHT = 700;
 
     public static final String PATH_CSS_DARK_STYLING = "/style/DarkStyles.css";

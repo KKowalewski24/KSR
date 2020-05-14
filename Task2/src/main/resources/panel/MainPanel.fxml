@@ -11,12 +11,14 @@
     <ToolBar prefHeight="40.0" prefWidth="1200.0">
         <items>
             <Pane HBox.hgrow="ALWAYS"/>
-            <Label alignment="CENTER" prefHeight="19.0" prefWidth="191.0" text="Quantifier"/>
-            <Label alignment="CENTER" prefWidth="200.0" text="Basic Summarizer"/>
-            <Label alignment="CENTER" prefHeight="19.0" prefWidth="208.0"
+            <Label alignment="CENTER" prefHeight="19.0" prefWidth="123.0" text="Quantifier">
+                <padding>
+                    <Insets left="50.0"/>
+                </padding>
+            </Label>
+            <Label alignment="CENTER" prefHeight="19.0" prefWidth="328.0"
                    text="Number Of Summarization To Save"/>
-            <Label alignment="CENTER" prefWidth="200.0" text="Conjunction"/>
-            <Label alignment="CENTER" prefWidth="200.0" text="Advanced Summarizer"/>
+            <Label alignment="CENTER" prefHeight="19.0" prefWidth="83.0" text="Summarizer"/>
             <Pane HBox.hgrow="ALWAYS"/>
         </items>
     </ToolBar>
@@ -26,14 +28,12 @@
         </StackPane.margin>
         <items>
             <Pane HBox.hgrow="ALWAYS"/>
-            <ProgressIndicator maxHeight="40" fx:id="progressIndicator" visible="false"/>
+            <ProgressIndicator fx:id="progressIndicator" maxHeight="40" visible="false"/>
             <ComboBox fx:id="comboBoxQuantifier" prefWidth="200.0"/>
-            <ComboBox fx:id="comboBoxSummarizerBasic" prefWidth="200.0"/>
             <Separator orientation="VERTICAL" prefHeight="50.0"/>
             <TextField fx:id="textFieldSaveSummarizationNumber"/>
             <Separator orientation="VERTICAL" prefHeight="50.0"/>
-            <ComboBox fx:id="comboBoxConjunction" prefWidth="200.0"/>
-            <ComboBox fx:id="comboBoxSummarizeAdvanced" prefWidth="200.0"/>
+            <ComboBox fx:id="comboBoxSummarizer" prefWidth="200.0"/>
             <Pane HBox.hgrow="ALWAYS"/>
         </items>
     </ToolBar>
@@ -46,9 +46,6 @@
             <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false"
                     onAction="#onActionButtonGenerateBasicSummarization" prefHeight="35.0"
                     prefWidth="161.0" text="Generate Summarization"/>
-            <Button layoutX="10.0" layoutY="10.0" minHeight="35.0" minWidth="100.0"
-                    mnemonicParsing="false" onAction="#onActionButtonGenerateAdvancedSummarization"
-                    prefHeight="35.0" prefWidth="223.0" text="Generate Advanced Summarization"/>
             <Button layoutX="10.0" layoutY="10.0" minHeight="35.0" minWidth="100.0"
                     mnemonicParsing="false" onAction="#onActionButtonOpenEditWindow"
                     prefHeight="35.0" prefWidth="199.0" text="Edit Quantifier and Summarizer"/>

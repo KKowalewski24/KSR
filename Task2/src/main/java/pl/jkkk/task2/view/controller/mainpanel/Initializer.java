@@ -7,34 +7,21 @@ public class Initializer {
 
     /*------------------------ FIELDS REGION ------------------------*/
     private ComboBox comboBoxQualifier;
-    private ComboBox comboBoxSummarizerBasic;
-    private ComboBox comboBoxConjunction;
-    private ComboBox comboBoxSummarizeAdvanced;
+    private ComboBox comboBoxSummarizer;
     private TextField textFieldSaveSummarizationNumber;
 
     /*------------------------ METHODS REGION ------------------------*/
     public Initializer(ComboBox comboBoxQualifier,
-                       ComboBox comboBoxSummarizerBasic,
-                       ComboBox comboBoxConjunction,
-                       ComboBox comboBoxSummarizeAdvanced,
+                       ComboBox comboBoxSummarizer,
                        TextField textFieldSaveSummarizationNumber) {
         this.comboBoxQualifier = comboBoxQualifier;
-        this.comboBoxSummarizerBasic = comboBoxSummarizerBasic;
-        this.comboBoxConjunction = comboBoxConjunction;
-        this.comboBoxSummarizeAdvanced = comboBoxSummarizeAdvanced;
+        this.comboBoxSummarizer = comboBoxSummarizer;
         this.textFieldSaveSummarizationNumber = textFieldSaveSummarizationNumber;
     }
 
     public void fillScene() {
         //        fillComboBox(comboBoxQualifier, QualifierSummarizationType.getNamesList());
         //        fillComboBox(comboBoxSummarizerBasic, QualifierSummarizationType.getNamesList());
-        //        fillComboBox(comboBoxConjunction,
-        //                ConjuctionType.getNamesList()
-        //                        .stream()
-        //                        .map((it) -> it.toUpperCase())
-        //                        .collect(Collectors.toList()));
-        //        fillComboBox(comboBoxSummarizeAdvanced, QualifierSummarizationType.getNamesList
-        //        ());
         textFieldSaveSummarizationNumber.setText("0");
     }
 }

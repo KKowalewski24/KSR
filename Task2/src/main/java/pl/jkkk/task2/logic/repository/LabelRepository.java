@@ -5,4 +5,7 @@ import pl.jkkk.task2.logic.fuzzy.linguistic.Label;
 
 public interface LabelRepository extends CrudRepository<Label, Long> {
 
+    Label findByName(String name);
+
+    void deleteByName(String name);
 }

@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -46,12 +47,30 @@ public class FxHelper {
         return comboBox.getSelectionModel().getSelectedItem().toString();
     }
 
+    public static void switchComboBoxValue(ComboBox comboBox, String value) {
+        comboBox.getSelectionModel().select(value);
+    }
+
     public static void fillListView(ListView listView, List list) {
         listView.getItems().addAll(list);
     }
 
+    public static <T> T getSelectedItemFromListView(ListView<T> listView) {
+        return listView.getSelectionModel().getSelectedItem();
+    }
+
     public static void setPaneVisibility(boolean value, Pane... panes) {
         Arrays.stream(panes).forEach((it) -> it.setVisible(value));
+    }
+
+    public static void getTextFieldFromPaneAndSetValue(Pane pane, int index, String text) {
+        TextField textField = (TextField) pane.getChildren().get(index);
+        textField.setText(text);
+    }
+
+    public static String getTextFieldFromPaneAndGetValue(Pane pane, int index) {
+        TextField textField = (TextField) pane.getChildren().get(index);
+        return textField.getText();
     }
 
     public static void setLabelTextInPane(Pane pane, int childrenNumber, String text) {

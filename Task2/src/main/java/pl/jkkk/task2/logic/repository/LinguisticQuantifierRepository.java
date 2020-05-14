@@ -5,4 +5,7 @@ import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticQuantifier;
 
 public interface LinguisticQuantifierRepository extends CrudRepository<LinguisticQuantifier, Long> {
 
+    LinguisticQuantifier findByName(String name);
+
+    void deleteByName(String name);
 }

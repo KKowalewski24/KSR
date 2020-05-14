@@ -58,5 +58,15 @@ public class LabelServiceImpl implements LabelService {
     public void deleteAll() {
         labelRepository.deleteAll();
     }
+
+    @Override
+    public Label findByName(String name) {
+        return labelRepository.findByName(name);
+    }
+
+    @Override
+    public void deleteByName(String name) {
+        labelRepository.deleteByName(name);
+    }
 }
     

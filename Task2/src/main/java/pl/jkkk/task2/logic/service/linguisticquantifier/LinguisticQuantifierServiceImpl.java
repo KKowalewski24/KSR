@@ -58,5 +58,15 @@ public class LinguisticQuantifierServiceImpl implements LinguisticQuantifierServ
     public void deleteAll() {
         quantifierRepository.deleteAll();
     }
+
+    @Override
+    public LinguisticQuantifier findByName(String name) {
+        return quantifierRepository.findByName(name);
+    }
+
+    @Override
+    public void deleteByName(String name) {
+        quantifierRepository.deleteByName(name);
+    }
 }
     

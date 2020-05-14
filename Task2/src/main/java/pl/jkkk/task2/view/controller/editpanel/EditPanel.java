@@ -3,19 +3,24 @@ package pl.jkkk.task2.view.controller.editpanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.springframework.stereotype.Component;
 import pl.jkkk.task2.Main;
+import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticQuantifier;
 import pl.jkkk.task2.logic.model.enumtype.FunctionType;
 import pl.jkkk.task2.logic.model.enumtype.ObjectType;
 import pl.jkkk.task2.logic.model.enumtype.QuantifierType;
 import pl.jkkk.task2.logic.service.label.LabelService;
 import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierService;
+import pl.jkkk.task2.view.fxml.FxHelper;
 import pl.jkkk.task2.view.fxml.StageController;
 import pl.jkkk.task2.view.fxml.core.WindowDimensions;
 
@@ -30,9 +35,11 @@ import static pl.jkkk.task2.view.constant.ViewConstants.TITLE_MAIN_PANEL;
 import static pl.jkkk.task2.view.fxml.FxHelper.fillComboBox;
 import static pl.jkkk.task2.view.fxml.FxHelper.fillListView;
 import static pl.jkkk.task2.view.fxml.FxHelper.getSelectedTabIndex;
+import static pl.jkkk.task2.view.fxml.FxHelper.getTextFieldFromPaneAndSetValue;
 import static pl.jkkk.task2.view.fxml.FxHelper.getValueFromComboBox;
 import static pl.jkkk.task2.view.fxml.FxHelper.setLabelTextInPane;
 import static pl.jkkk.task2.view.fxml.FxHelper.setPaneVisibility;
+import static pl.jkkk.task2.view.fxml.FxHelper.switchComboBoxValue;
 
 @Component
 public class EditPanel implements Initializable {
@@ -44,6 +51,8 @@ public class EditPanel implements Initializable {
     private ListView listViewQuantifier;
     @FXML
     private ListView listViewSummarizer;
+    @FXML
+    private Button buttonConfirm;
 
     @FXML
     private ComboBox comboBoxSelectObject;
@@ -85,21 +94,22 @@ public class EditPanel implements Initializable {
     }
 
     @FXML
+    private void OnMouseClickedListViewQuantifier(MouseEvent mouseEvent) {
+        String name = FxHelper.<String>getSelectedItemFromListView(listViewQuantifier);
+        LinguisticQuantifier linguisticQuantifier = linguisticQuantifierService.findByName(name);
+        //        updateEditor(ObjectType.QUANTIFIER,paneTextField,linguisticQuantifier.getName());
+    }
+
+    @FXML
+    private void OnMouseClickedListViewSummarizer(MouseEvent mouseEvent) {
+        String name = FxHelper.<String>getSelectedItemFromListView(listViewSummarizer);
+        pl.jkkk.task2.logic.fuzzy.linguistic.Label label = labelService.findByName(name);
+        //        updateEditor();
+    }
+
+    @FXML
     private void onActionButtonAdd(ActionEvent actionEvent) {
-        Integer selectedTab = getSelectedTabIndex(tabPane);
-
-        switch (selectedTab) {
-            // Quantifier
-            case 0: {
-
-                break;
-            }
-            // Summarizer
-            case 1: {
-
-                break;
-            }
-        }
+        buttonConfirm.setDisable(false);
     }
 
     @FXML
@@ -109,15 +119,18 @@ public class EditPanel implements Initializable {
         switch (selectedTab) {
             // Quantifier
             case 0: {
-
+                String name = FxHelper.<String>getSelectedItemFromListView(listViewQuantifier);
+                linguisticQuantifierService.deleteByName(name);
                 break;
             }
             // Summarizer
             case 1: {
-
+                String name = FxHelper.<String>getSelectedItemFromListView(listViewSummarizer);
+                labelService.deleteByName(name);
                 break;
             }
         }
+        prepareTabPane();
     }
 
     @FXML
@@ -132,12 +145,24 @@ public class EditPanel implements Initializable {
     @FXML
     private void onActionConfirm(ActionEvent actionEvent) {
         //        TODO ADD SAVING DATA TO DB
-        prepareStage();
+        //        prepareStage();
+        buttonConfirm.setDisable(true);
     }
 
     /*--------------------------------------------------------------------------------------------*/
-    public void prepareStage() {
-        fillTabPane();
+    private void updateEditor(String selectObjectValue, Pane textFieldPane,
+                              String textFieldNameValue, String typeComboBoxValue,
+                              String comboBoxFunctionTypeValue) {
+        switchComboBoxValue(comboBoxSelectObject, selectObjectValue);
+        getTextFieldFromPaneAndSetValue(textFieldPane, 1, textFieldNameValue);
+        switchComboBoxValue(comboBoxType, typeComboBoxValue);
+        switchComboBoxValue(comboBoxFunctionType, comboBoxFunctionTypeValue);
+        //        TODO TEXTFIELD FILL IN FUNCTION
+    }
+
+    /*--------------------------------------------------------------------------------------------*/
+    private void prepareStage() {
+        prepareTabPane();
         fillComboBoxes();
         prepareTypeComboBox(ObjectType.QUANTIFIER);
 
@@ -163,7 +188,7 @@ public class EditPanel implements Initializable {
         prepareFunctionTypeComboBox();
     }
 
-    private void fillTabPane() {
+    private void prepareTabPane() {
         fillListView(listViewQuantifier, labelService
                 .findAll()
                 .stream()
@@ -240,5 +265,6 @@ public class EditPanel implements Initializable {
 
         }));
     }
+
 }
     

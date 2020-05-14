@@ -14,6 +14,8 @@ import pl.jkkk.task2.Main;
 import pl.jkkk.task2.logic.model.enumtype.FunctionType;
 import pl.jkkk.task2.logic.model.enumtype.ObjectType;
 import pl.jkkk.task2.logic.model.enumtype.QuantifierType;
+import pl.jkkk.task2.logic.service.label.LabelService;
+import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierService;
 import pl.jkkk.task2.view.fxml.StageController;
 import pl.jkkk.task2.view.fxml.core.WindowDimensions;
 
@@ -66,7 +68,16 @@ public class EditPanel implements Initializable {
     @FXML
     private HBox paneFunctionTypePaneParamFourth;
 
+    private final LabelService labelService;
+    private final LinguisticQuantifierService linguisticQuantifierService;
+
     /*------------------------ METHODS REGION ------------------------*/
+    public EditPanel(LabelService labelService,
+                     LinguisticQuantifierService linguisticQuantifierService) {
+        this.labelService = labelService;
+        this.linguisticQuantifierService = linguisticQuantifierService;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         prepareStage();

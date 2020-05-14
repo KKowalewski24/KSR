@@ -11,13 +11,9 @@ import javax.persistence.Id;
 import java.time.LocalDate;
 
 @Entity(name = "POLLUTION")
-public class Pollution {
+public class Pollution extends BaseEntity {
 
     /*------------------------ FIELDS REGION ------------------------*/
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
     private String address;
     private String state;
     private String county;
@@ -75,14 +71,6 @@ public class Pollution {
         this.CO1stMaxValue = CO1stMaxValue;
         this.CO1stMaxHour = CO1stMaxHour;
         this.COAQI = COAQI;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getAddress() {
@@ -266,7 +254,7 @@ public class Pollution {
         Pollution pollution = (Pollution) o;
 
         return new EqualsBuilder()
-                .append(id, pollution.id)
+                .appendSuper(super.equals(o))
                 .append(address, pollution.address)
                 .append(state, pollution.state)
                 .append(county, pollution.county)
@@ -294,7 +282,7 @@ public class Pollution {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(id)
+                .appendSuper(super.hashCode())
                 .append(address)
                 .append(state)
                 .append(county)
@@ -322,7 +310,7 @@ public class Pollution {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("id", id)
+                .appendSuper(super.toString())
                 .append("address", address)
                 .append("state", state)
                 .append("county", county)

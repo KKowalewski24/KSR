@@ -1,17 +1,27 @@
 package pl.jkkk.task2.logic.fuzzy.linguistic;
 
 import pl.jkkk.task2.logic.fuzzy.set.FuzzySet;
+import pl.jkkk.task2.logic.model.BaseEntity;
 
-public class Label<T> {
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+@Entity
+public class Label<T> extends BaseEntity {
 
     private String name;
+    //    TODO REMOVE THIS
+    @Transient
     private FuzzySet fuzzySet;
+    //    TODO REMOVE THIS
+    @Transient
     private LinguisticVariable<T> linguisticVariable;
 
     public Label() {
     }
 
-    public Label(final String name, final FuzzySet fuzzySet, final LinguisticVariable<T> linguisticVariable) {
+    public Label(final String name, final FuzzySet fuzzySet,
+                 final LinguisticVariable<T> linguisticVariable) {
         this.name = name;
         this.fuzzySet = fuzzySet;
         this.linguisticVariable = linguisticVariable;
@@ -46,11 +56,13 @@ public class Label<T> {
     }
 
     public Label<T> and(final Label<T> label) {
-        return new Label<>(name + " and " + label.name, fuzzySet.intersection(label.fuzzySet), linguisticVariable);
+        return new Label<>(name + " and " + label.name, fuzzySet.intersection(label.fuzzySet),
+                linguisticVariable);
     }
 
     public Label<T> or(final Label<T> label) {
-        return new Label<>(name + " or " + label.name, fuzzySet.union(label.fuzzySet), linguisticVariable);
+        return new Label<>(name + " or " + label.name, fuzzySet.union(label.fuzzySet),
+                linguisticVariable);
     }
 
     public Label<T> not() {

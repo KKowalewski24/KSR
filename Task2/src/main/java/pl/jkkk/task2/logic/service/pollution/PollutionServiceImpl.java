@@ -23,7 +23,7 @@ public class PollutionServiceImpl implements PollutionService {
     }
 
     @Override
-    public Pollution findById(Integer id) {
+    public Pollution findById(Long id) {
         Optional<Pollution> pollution = pollutionRepository.findById(id);
 
         if (!pollution.isPresent()) {
@@ -53,7 +53,7 @@ public class PollutionServiceImpl implements PollutionService {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         pollutionRepository.deleteById(id);
     }
 

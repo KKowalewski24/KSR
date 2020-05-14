@@ -2,9 +2,27 @@ package pl.jkkk.task2.logic.fuzzy.linguistic;
 
 import pl.jkkk.task2.logic.fuzzy.set.FuzzySet;
 
-public class LinguisticQuantifier extends LinguisticValue {
+public class LinguisticQuantifier {
 
-    public LinguisticQuantifier(String name, FuzzySet fuzzySet) {
-        super(name, fuzzySet);
+    private String name;
+    private FuzzySet fuzzySet;
+
+    public LinguisticQuantifier() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public FuzzySet getFuzzySet() {
+        return fuzzySet;
+    }
+
+    public void setFuzzySet(final FuzzySet fuzzySet) {
+        this.fuzzySet = fuzzySet;
     }
 }

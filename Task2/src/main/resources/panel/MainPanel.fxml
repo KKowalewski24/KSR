@@ -25,7 +25,7 @@
             <Insets top="40.0"/>
         </StackPane.margin>
         <items>
-            <Pane maxWidth="30" HBox.hgrow="ALWAYS"/>
+            <Pane HBox.hgrow="ALWAYS"/>
             <ProgressIndicator maxHeight="40" fx:id="progressIndicator" visible="false"/>
             <ComboBox fx:id="comboBoxQuantifier" prefWidth="200.0"/>
             <ComboBox fx:id="comboBoxSummarizerBasic" prefWidth="200.0"/>

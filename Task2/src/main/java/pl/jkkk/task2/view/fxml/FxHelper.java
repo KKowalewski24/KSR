@@ -6,6 +6,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.Pane;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -20,6 +21,7 @@ public class FxHelper {
     private FxHelper() {
     }
 
+    /*--------------------------------------------------------------------------------------------*/
     public static void changeTheme(String pathPanel, String title,
                                    String pathCssDarkTheme, String pathCssLightTheme,
                                    ConfigurableApplicationContext applicationContext) {
@@ -32,6 +34,7 @@ public class FxHelper {
         }
     }
 
+    /*--------------------------------------------------------------------------------------------*/
     public static void fillComboBox(ComboBox comboBox, List list) {
         List items = comboBox.getItems();
         items.clear();
@@ -39,12 +42,12 @@ public class FxHelper {
         comboBox.getSelectionModel().selectFirst();
     }
 
-    public static void fillListView(ListView listView, List list) {
-        listView.getItems().addAll(list);
-    }
-
     public static String getValueFromComboBox(ComboBox comboBox) {
         return comboBox.getSelectionModel().getSelectedItem().toString();
+    }
+
+    public static void fillListView(ListView listView, List list) {
+        listView.getItems().addAll(list);
     }
 
     public static void setPaneVisibility(boolean value, Pane... panes) {
@@ -56,6 +59,11 @@ public class FxHelper {
         label.setText(text);
     }
 
+    public static int getSelectedTabIndex(TabPane tabPane) {
+        return tabPane.getSelectionModel().getSelectedIndex();
+    }
+
+    /*--------------------------------------------------------------------------------------------*/
     public static void showProgressIndicator(Runnable runnable,
                                              ProgressIndicator progressIndicator) {
         Task<Void> task = new Task<Void>() {

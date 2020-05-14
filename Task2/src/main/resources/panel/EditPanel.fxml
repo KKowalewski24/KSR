@@ -8,20 +8,44 @@
       prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="pl.jkkk.task2.view.controller.editpanel.EditPanel">
-    <TabPane prefHeight="200.0" prefWidth="300.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-            <Tab text="Quantifier">
-                <ListView>
+    <VBox>
+        <children>
+            <TabPane fx:id="tabPane" prefHeight="615.0" prefWidth="300.0"
+                     tabClosingPolicy="UNAVAILABLE">
+                <tabs>
+                    <Tab text="Quantifier">
+                        <VBox>
+                            <children>
+                                <ListView fx:id="listViewQuantifier" prefHeight="625.0"
+                                          prefWidth="300.0">
 
-                </ListView>
-            </Tab>
-            <Tab text="Summarizer">
-                <ListView>
+                                </ListView>
+                            </children>
+                        </VBox>
+                    </Tab>
+                    <Tab text="Summarizer">
+                        <VBox>
+                            <children>
+                                <ListView fx:id="listViewSummarizer" prefHeight="625.0"
+                                          prefWidth="300.0">
 
-                </ListView>
-            </Tab>
-        </tabs>
-    </TabPane>
+                                </ListView>
+                            </children>
+                        </VBox>
+                    </Tab>
+                </tabs>
+            </TabPane>
+            <ToolBar prefHeight="40.0" prefWidth="200.0">
+                <items>
+                    <Pane HBox.hgrow="ALWAYS"/>
+                    <Button onAction="#onActionButtonAdd" mnemonicParsing="false" text="Add"/>
+                    <Button onAction="#onActionButtonRemove" mnemonicParsing="false" text="Remove"/>
+                    <Pane HBox.hgrow="ALWAYS"/>
+                </items>
+            </ToolBar>
+        </children>
+    </VBox>
+
     <VBox>
         <children>
             <Button mnemonicParsing="false" onAction="#onActionReturn" prefHeight="29.0"

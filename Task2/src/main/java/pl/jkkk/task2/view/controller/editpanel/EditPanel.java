@@ -48,8 +48,13 @@ import static pl.jkkk.task2.view.fxml.FxHelper.switchComboBoxValue;
 @Component
 public class EditPanel implements Initializable {
 
-
     /*------------------------ FIELDS REGION ------------------------*/
+    public static final String FUNCTION_POINT_A = "Point A";
+    public static final String FUNCTION_POINT_B = "Point B";
+    public static final String FUNCTION_POINT_C = "Point C";
+    public static final String FUNCTION_POINT_D = "Point D";
+    public static final String FUNCTION_CENTER = "Center";
+    public static final String FUNCTION_WIDTH = "Width";
 
     /*----- LEFT SIDE -----*/
     @FXML
@@ -346,10 +351,10 @@ public class EditPanel implements Initializable {
         fillComboBoxes();
         prepareTypeComboBox(ObjectType.QUANTIFIER);
 
-        setLabelTextInPane(paneFunctionTypePaneParamFirst, 0, "todo");
-        setLabelTextInPane(paneFunctionTypePaneParamSecond, 0, "todo");
-        setLabelTextInPane(paneFunctionTypePaneParamThird, 0, "todo");
-        setLabelTextInPane(paneFunctionTypePaneParamFourth, 0, "todo");
+        setLabelTextInPane(paneFunctionTypePaneParamFirst, 0, FUNCTION_POINT_A);
+        setLabelTextInPane(paneFunctionTypePaneParamSecond, 0, FUNCTION_POINT_B);
+        setLabelTextInPane(paneFunctionTypePaneParamThird, 0, FUNCTION_POINT_C);
+        setLabelTextInPane(paneFunctionTypePaneParamFourth, 0, FUNCTION_POINT_D);
 
         comboBoxSelectObject.setOnAction((event) -> {
             final String selectedObject = getValueFromComboBox(comboBoxSelectObject);
@@ -413,36 +418,33 @@ public class EditPanel implements Initializable {
                         paneFunctionTypePaneParamThird,
                         paneFunctionTypePaneParamFourth);
 
-                //            TODO SET NAMES
-                setLabelTextInPane(paneFunctionTypePaneParamFirst, 0, "todo");
-                setLabelTextInPane(paneFunctionTypePaneParamSecond, 0, "todo");
-                setLabelTextInPane(paneFunctionTypePaneParamThird, 0, "todo");
-                setLabelTextInPane(paneFunctionTypePaneParamFourth, 0, "todo");
+                setLabelTextInPane(paneFunctionTypePaneParamFirst, 0, FUNCTION_POINT_A);
+                setLabelTextInPane(paneFunctionTypePaneParamSecond, 0, FUNCTION_POINT_B);
+                setLabelTextInPane(paneFunctionTypePaneParamThird, 0, FUNCTION_POINT_C);
+                setLabelTextInPane(paneFunctionTypePaneParamFourth, 0, FUNCTION_POINT_D);
+
             } else if (FunctionType.TRIANGULAR == FunctionType.fromString(selectedFunction)) {
                 setPaneVisibility(true,
                         paneFunctionTypePaneParamFirst,
                         paneFunctionTypePaneParamSecond,
                         paneFunctionTypePaneParamThird);
-
                 setPaneVisibility(false, paneFunctionTypePaneParamFourth);
-                //            TODO SET NAMES
-                setLabelTextInPane(paneFunctionTypePaneParamFirst, 0, "todo");
-                setLabelTextInPane(paneFunctionTypePaneParamSecond, 0, "todo");
-                setLabelTextInPane(paneFunctionTypePaneParamThird, 0, "todo");
+
+                setLabelTextInPane(paneFunctionTypePaneParamFirst, 0, FUNCTION_POINT_A);
+                setLabelTextInPane(paneFunctionTypePaneParamSecond, 0, FUNCTION_POINT_B);
+                setLabelTextInPane(paneFunctionTypePaneParamThird, 0, FUNCTION_POINT_C);
 
             } else if (FunctionType.GAUSSIAN == FunctionType.fromString(selectedFunction)) {
                 setPaneVisibility(true,
                         paneFunctionTypePaneParamFirst,
                         paneFunctionTypePaneParamSecond);
-
                 setPaneVisibility(false,
                         paneFunctionTypePaneParamThird,
                         paneFunctionTypePaneParamFourth);
-                //            TODO SET NAMES
-                setLabelTextInPane(paneFunctionTypePaneParamFirst, 0, "todo");
-                setLabelTextInPane(paneFunctionTypePaneParamSecond, 0, "todo");
-            }
 
+                setLabelTextInPane(paneFunctionTypePaneParamFirst, 0, FUNCTION_CENTER);
+                setLabelTextInPane(paneFunctionTypePaneParamSecond, 0, FUNCTION_WIDTH);
+            }
         }));
     }
 }

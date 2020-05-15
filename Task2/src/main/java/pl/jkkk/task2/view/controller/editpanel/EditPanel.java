@@ -49,13 +49,6 @@ import static pl.jkkk.task2.view.fxml.FxHelper.switchComboBoxValue;
 public class EditPanel implements Initializable {
 
     /*------------------------ FIELDS REGION ------------------------*/
-    public static final String FUNCTION_POINT_A = "Point A";
-    public static final String FUNCTION_POINT_B = "Point B";
-    public static final String FUNCTION_POINT_C = "Point C";
-    public static final String FUNCTION_POINT_D = "Point D";
-    public static final String FUNCTION_CENTER = "Center";
-    public static final String FUNCTION_WIDTH = "Width";
-
     /*----- LEFT SIDE -----*/
     @FXML
     private TabPane tabPane;
@@ -93,8 +86,9 @@ public class EditPanel implements Initializable {
     @FXML
     private HBox paneFunctionTypePaneParamFourth;
 
-    private final LabelService labelService;
     private final LinguisticQuantifierService linguisticQuantifierService;
+    private final LabelService labelService;
+    private Initializer initializer;
 
     /*------------------------ METHODS REGION ------------------------*/
     public EditPanel(LabelService labelService,
@@ -105,7 +99,16 @@ public class EditPanel implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        prepareStage();
+        initializer = new Initializer(
+                tabPane, listViewQuantifier, listViewSummarizer, buttonConfirm,
+                paneRightSide, comboBoxSelectObject, paneTextField, paneComboBoxType,
+                comboBoxType, paneFunctionType, comboBoxFunctionType,
+                paneFunctionTypePaneParamFirst, paneFunctionTypePaneParamSecond,
+                paneFunctionTypePaneParamThird, paneFunctionTypePaneParamFourth,
+                linguisticQuantifierService, labelService
+        );
+
+        initializer.prepareStage();
     }
 
     @FXML
@@ -120,7 +123,7 @@ public class EditPanel implements Initializable {
             TrapezoidalMembershipFunction trapezoidalMembershipFunction
                     = (TrapezoidalMembershipFunction) membershipFunction;
 
-            updateEditor(
+            initializer.updateEditor(
                     ObjectType.QUANTIFIER.getName(),
                     paneTextField,
                     linguisticQuantifier.getName(),
@@ -140,7 +143,7 @@ public class EditPanel implements Initializable {
             TriangularMembershipFunction triangularMembershipFunction
                     = (TriangularMembershipFunction) membershipFunction;
 
-            updateEditor(
+            initializer.updateEditor(
                     ObjectType.QUANTIFIER.getName(),
                     paneTextField,
                     linguisticQuantifier.getName(),
@@ -159,7 +162,7 @@ public class EditPanel implements Initializable {
             GaussianMembershipFunction gaussianMembershipFunction
                     = ((GaussianMembershipFunction) membershipFunction);
 
-            updateEditor(
+            initializer.updateEditor(
                     ObjectType.QUANTIFIER.getName(),
                     paneTextField,
                     linguisticQuantifier.getName(),
@@ -185,7 +188,7 @@ public class EditPanel implements Initializable {
             TrapezoidalMembershipFunction trapezoidalMembershipFunction
                     = (TrapezoidalMembershipFunction) membershipFunction;
 
-            updateEditor(
+            initializer.updateEditor(
                     ObjectType.SUMMARIZER.getName(),
                     paneTextField,
                     label.getName(),
@@ -205,7 +208,7 @@ public class EditPanel implements Initializable {
             TriangularMembershipFunction triangularMembershipFunction
                     = (TriangularMembershipFunction) membershipFunction;
 
-            updateEditor(
+            initializer.updateEditor(
                     ObjectType.SUMMARIZER.getName(),
                     paneTextField,
                     label.getName(),
@@ -224,7 +227,7 @@ public class EditPanel implements Initializable {
             GaussianMembershipFunction gaussianMembershipFunction
                     = ((GaussianMembershipFunction) membershipFunction);
 
-            updateEditor(
+            initializer.updateEditor(
                     ObjectType.SUMMARIZER.getName(),
                     paneTextField,
                     label.getName(),
@@ -247,13 +250,13 @@ public class EditPanel implements Initializable {
     @FXML
     private void onActionButtonEdit(ActionEvent actionEvent) {
         removeQuantifierOrSummarizer();
-        prepareTabPane();
+        initializer.prepareTabPane();
     }
 
     @FXML
     private void onActionButtonRemove(ActionEvent actionEvent) {
         removeQuantifierOrSummarizer();
-        prepareTabPane();
+        initializer.prepareTabPane();
     }
 
     @FXML
@@ -282,7 +285,7 @@ public class EditPanel implements Initializable {
             }
         }
 
-        prepareTabPane();
+        initializer.prepareTabPane();
         paneRightSide.setVisible(false);
     }
 
@@ -294,171 +297,18 @@ public class EditPanel implements Initializable {
             // Quantifier
             case 0: {
                 String name = FxHelper.<String>getSelectedItemFromListView(listViewQuantifier);
+                System.out.println(name);
                 linguisticQuantifierService.deleteByName(name);
                 break;
             }
             // Summarizer
             case 1: {
                 String name = FxHelper.<String>getSelectedItemFromListView(listViewSummarizer);
+                System.out.println(name);
                 labelService.deleteByName(name);
                 break;
             }
         }
-    }
-
-    /*--------------------------------------------------------------------------------------------*/
-    private void updateEditor(String selectObjectValue, Pane textFieldPane,
-                              String textFieldNameValue, String typeComboBoxValue,
-                              String comboBoxFunctionTypeValue,
-                              Pane paneParamFirst, String textFieldParamFirstValue,
-                              Pane paneParamSecond, String textFieldParamSecondValue,
-                              Pane paneParamThird, String textFieldParamThirdValue,
-                              Pane paneParamFourth, String textFieldParamFourthValue) {
-        updateEditorTopPart(selectObjectValue, textFieldPane, textFieldNameValue,
-                typeComboBoxValue, comboBoxFunctionTypeValue);
-
-        getTextFieldFromPaneAndSetValue(paneParamFirst, 1, textFieldParamFirstValue);
-        getTextFieldFromPaneAndSetValue(paneParamSecond, 1, textFieldParamSecondValue);
-        getTextFieldFromPaneAndSetValue(paneParamThird, 1, textFieldParamThirdValue);
-        getTextFieldFromPaneAndSetValue(paneParamFourth, 1, textFieldParamFourthValue);
-    }
-
-    private void updateEditor(String selectObjectValue, Pane textFieldPane,
-                              String textFieldNameValue, String typeComboBoxValue,
-                              String comboBoxFunctionTypeValue,
-                              Pane paneParamFirst, String textFieldParamFirstValue,
-                              Pane paneParamSecond, String textFieldParamSecondValue,
-                              Pane paneParamThird, String textFieldParamThirdValue) {
-        updateEditorTopPart(selectObjectValue, textFieldPane, textFieldNameValue,
-                typeComboBoxValue, comboBoxFunctionTypeValue);
-
-        getTextFieldFromPaneAndSetValue(paneParamFirst, 1, textFieldParamFirstValue);
-        getTextFieldFromPaneAndSetValue(paneParamSecond, 1, textFieldParamSecondValue);
-        getTextFieldFromPaneAndSetValue(paneParamThird, 1, textFieldParamThirdValue);
-    }
-
-    private void updateEditor(String selectObjectValue, Pane textFieldPane,
-                              String textFieldNameValue, String typeComboBoxValue,
-                              String comboBoxFunctionTypeValue,
-                              Pane paneParamFirst, String textFieldParamFirstValue,
-                              Pane paneParamSecond, String textFieldParamSecondValue) {
-        updateEditorTopPart(selectObjectValue, textFieldPane, textFieldNameValue,
-                typeComboBoxValue, comboBoxFunctionTypeValue);
-
-        getTextFieldFromPaneAndSetValue(paneParamFirst, 1, textFieldParamFirstValue);
-        getTextFieldFromPaneAndSetValue(paneParamSecond, 1, textFieldParamSecondValue);
-    }
-
-    private void updateEditorTopPart(String selectObjectValue, Pane textFieldPane,
-                                     String textFieldNameValue, String typeComboBoxValue,
-                                     String comboBoxFunctionTypeValue) {
-        switchComboBoxValue(comboBoxSelectObject, selectObjectValue);
-        getTextFieldFromPaneAndSetValue(textFieldPane, 1, textFieldNameValue);
-        switchComboBoxValue(comboBoxType, typeComboBoxValue);
-        switchComboBoxValue(comboBoxFunctionType, comboBoxFunctionTypeValue);
-    }
-
-    /*--------------------------------------------------------------------------------------------*/
-    private void prepareStage() {
-        prepareTabPane();
-        fillComboBoxes();
-        prepareTypeComboBox(ObjectType.QUANTIFIER);
-
-        setLabelTextInPane(paneFunctionTypePaneParamFirst, 0, FUNCTION_POINT_A);
-        setLabelTextInPane(paneFunctionTypePaneParamSecond, 0, FUNCTION_POINT_B);
-        setLabelTextInPane(paneFunctionTypePaneParamThird, 0, FUNCTION_POINT_C);
-        setLabelTextInPane(paneFunctionTypePaneParamFourth, 0, FUNCTION_POINT_D);
-
-        comboBoxSelectObject.setOnAction((event) -> {
-            final String selectedObject = getValueFromComboBox(comboBoxSelectObject);
-            Label labelTextField = (Label) paneTextField.getChildren().get(0);
-
-            if (ObjectType.QUANTIFIER == ObjectType.fromString(selectedObject)) {
-                labelTextField.setText("Name");
-                prepareTypeComboBox(ObjectType.QUANTIFIER);
-
-            } else if (ObjectType.SUMMARIZER == ObjectType.fromString(selectedObject)) {
-                labelTextField.setText("Label Name");
-                prepareTypeComboBox(ObjectType.SUMMARIZER);
-            }
-        });
-
-        prepareFunctionTypeComboBox();
-    }
-
-    private void prepareTabPane() {
-        fillListView(listViewQuantifier, labelService
-                .findAll()
-                .stream()
-                .map((it) -> it.getName())
-                .collect(Collectors.toList()));
-        fillListView(listViewSummarizer, linguisticQuantifierService
-                .findAll()
-                .stream()
-                .map((it) -> it.getName())
-                .collect(Collectors.toList()));
-    }
-
-    private void fillComboBoxes() {
-        fillComboBox(comboBoxSelectObject, ObjectType.getNamesList());
-        fillComboBox(comboBoxFunctionType, FunctionType.getNamesList());
-    }
-
-    private void prepareTypeComboBox(ObjectType objectType) {
-        Label label = (Label) paneComboBoxType.getChildren().get(0);
-
-        if (ObjectType.QUANTIFIER == objectType) {
-            label.setText("Type");
-            fillComboBox(comboBoxType, QuantifierType.getNamesList());
-        } else if (ObjectType.SUMMARIZER == objectType) {
-            label.setText("Linguistic Variable");
-            fillComboBox(comboBoxType, labelService
-                    .findAll()
-                    .stream()
-                    .map((it) -> it.getLinguisticVariable())
-                    .collect(Collectors.toList()));
-        }
-    }
-
-    private void prepareFunctionTypeComboBox() {
-        comboBoxFunctionType.setOnAction(((event) -> {
-            final String selectedFunction = getValueFromComboBox(comboBoxFunctionType);
-
-            if (FunctionType.TRAPEZOIDAL == FunctionType.fromString(selectedFunction)) {
-                setPaneVisibility(true,
-                        paneFunctionTypePaneParamFirst,
-                        paneFunctionTypePaneParamSecond,
-                        paneFunctionTypePaneParamThird,
-                        paneFunctionTypePaneParamFourth);
-
-                setLabelTextInPane(paneFunctionTypePaneParamFirst, 0, FUNCTION_POINT_A);
-                setLabelTextInPane(paneFunctionTypePaneParamSecond, 0, FUNCTION_POINT_B);
-                setLabelTextInPane(paneFunctionTypePaneParamThird, 0, FUNCTION_POINT_C);
-                setLabelTextInPane(paneFunctionTypePaneParamFourth, 0, FUNCTION_POINT_D);
-
-            } else if (FunctionType.TRIANGULAR == FunctionType.fromString(selectedFunction)) {
-                setPaneVisibility(true,
-                        paneFunctionTypePaneParamFirst,
-                        paneFunctionTypePaneParamSecond,
-                        paneFunctionTypePaneParamThird);
-                setPaneVisibility(false, paneFunctionTypePaneParamFourth);
-
-                setLabelTextInPane(paneFunctionTypePaneParamFirst, 0, FUNCTION_POINT_A);
-                setLabelTextInPane(paneFunctionTypePaneParamSecond, 0, FUNCTION_POINT_B);
-                setLabelTextInPane(paneFunctionTypePaneParamThird, 0, FUNCTION_POINT_C);
-
-            } else if (FunctionType.GAUSSIAN == FunctionType.fromString(selectedFunction)) {
-                setPaneVisibility(true,
-                        paneFunctionTypePaneParamFirst,
-                        paneFunctionTypePaneParamSecond);
-                setPaneVisibility(false,
-                        paneFunctionTypePaneParamThird,
-                        paneFunctionTypePaneParamFourth);
-
-                setLabelTextInPane(paneFunctionTypePaneParamFirst, 0, FUNCTION_CENTER);
-                setLabelTextInPane(paneFunctionTypePaneParamSecond, 0, FUNCTION_WIDTH);
-            }
-        }));
     }
 }
     

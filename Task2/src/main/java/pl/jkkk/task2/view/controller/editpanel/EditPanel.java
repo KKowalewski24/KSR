@@ -172,6 +172,7 @@ public class EditPanel implements Initializable {
                 );
             }
         } catch (LinguisticQuantifierNotFoundException e) {
+            e.printStackTrace();
             PopOutWindow.messageBox("Linguistic Quantifier Not Found",
                     "", Alert.AlertType.WARNING);
         }
@@ -242,6 +243,7 @@ public class EditPanel implements Initializable {
                 );
             }
         } catch (LabelNotFoundException e) {
+            e.printStackTrace();
             PopOutWindow.messageBox("Label Not Found",
                     "", Alert.AlertType.WARNING);
         }

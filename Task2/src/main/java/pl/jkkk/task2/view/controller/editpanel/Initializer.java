@@ -167,12 +167,12 @@ public class Initializer {
     }
 
     public void prepareTabPane() {
-        fillListView(listViewQuantifier, labelService
+        fillListView(listViewQuantifier, linguisticQuantifierService
                 .findAll()
                 .stream()
                 .map((it) -> it.getName())
                 .collect(Collectors.toList()));
-        fillListView(listViewSummarizer, linguisticQuantifierService
+        fillListView(listViewSummarizer, labelService
                 .findAll()
                 .stream()
                 .map((it) -> it.getName())

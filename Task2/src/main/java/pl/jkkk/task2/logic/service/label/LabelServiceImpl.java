@@ -33,6 +33,17 @@ public class LabelServiceImpl implements LabelService {
     }
 
     @Override
+    public Label findByName(String name) {
+        Optional<Label> label = labelRepository.findByName(name);
+
+        if (!label.isPresent()) {
+            throw new LabelNotFoundException();
+        }
+
+        return label.get();
+    }
+
+    @Override
     public List<Label> findAll() {
         return StreamSupport
                 .stream(labelRepository.findAll().spliterator(), false)
@@ -57,11 +68,6 @@ public class LabelServiceImpl implements LabelService {
     @Override
     public void deleteAll() {
         labelRepository.deleteAll();
-    }
-
-    @Override
-    public Label findByName(String name) {
-        return labelRepository.findByName(name);
     }
 
     @Override

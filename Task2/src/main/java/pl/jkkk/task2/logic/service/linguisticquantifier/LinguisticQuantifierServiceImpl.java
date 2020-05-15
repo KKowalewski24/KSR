@@ -33,6 +33,17 @@ public class LinguisticQuantifierServiceImpl implements LinguisticQuantifierServ
     }
 
     @Override
+    public LinguisticQuantifier findByName(String name) {
+        Optional<LinguisticQuantifier> quantifier = quantifierRepository.findByName(name);
+
+        if (!quantifier.isPresent()) {
+            throw new LinguisticQuantifierNotFoundException();
+        }
+
+        return quantifier.get();
+    }
+
+    @Override
     public List<LinguisticQuantifier> findAll() {
         return StreamSupport
                 .stream(quantifierRepository.findAll().spliterator(), false)
@@ -57,11 +68,6 @@ public class LinguisticQuantifierServiceImpl implements LinguisticQuantifierServ
     @Override
     public void deleteAll() {
         quantifierRepository.deleteAll();
-    }
-
-    @Override
-    public LinguisticQuantifier findByName(String name) {
-        return quantifierRepository.findByName(name);
     }
 
     @Override

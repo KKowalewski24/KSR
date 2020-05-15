@@ -3,17 +3,18 @@ package pl.jkkk.task2.view.controller.editpanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.springframework.stereotype.Component;
 import pl.jkkk.task2.Main;
+import pl.jkkk.task2.logic.exception.LabelNotFoundException;
+import pl.jkkk.task2.logic.exception.LinguisticQuantifierNotFoundException;
 import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticQuantifier;
 import pl.jkkk.task2.logic.fuzzy.membershipfunction.GaussianMembershipFunction;
 import pl.jkkk.task2.logic.fuzzy.membershipfunction.MembershipFunction;
@@ -25,25 +26,19 @@ import pl.jkkk.task2.logic.model.enumtype.QuantifierType;
 import pl.jkkk.task2.logic.service.label.LabelService;
 import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierService;
 import pl.jkkk.task2.view.fxml.FxHelper;
+import pl.jkkk.task2.view.fxml.PopOutWindow;
 import pl.jkkk.task2.view.fxml.StageController;
 import pl.jkkk.task2.view.fxml.core.WindowDimensions;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 import static pl.jkkk.task2.view.constant.ViewConstants.MAIN_PANEL_HEIGHT;
 import static pl.jkkk.task2.view.constant.ViewConstants.MAIN_PANEL_WIDTH;
 import static pl.jkkk.task2.view.constant.ViewConstants.PATH_MAIN_PANEL;
 import static pl.jkkk.task2.view.constant.ViewConstants.TITLE_MAIN_PANEL;
-import static pl.jkkk.task2.view.fxml.FxHelper.fillComboBox;
-import static pl.jkkk.task2.view.fxml.FxHelper.fillListView;
 import static pl.jkkk.task2.view.fxml.FxHelper.getSelectedTabIndex;
-import static pl.jkkk.task2.view.fxml.FxHelper.getTextFieldFromPaneAndSetValue;
 import static pl.jkkk.task2.view.fxml.FxHelper.getValueFromComboBox;
-import static pl.jkkk.task2.view.fxml.FxHelper.setLabelTextInPane;
-import static pl.jkkk.task2.view.fxml.FxHelper.setPaneVisibility;
-import static pl.jkkk.task2.view.fxml.FxHelper.switchComboBoxValue;
 
 @Component
 public class EditPanel implements Initializable {
@@ -114,131 +109,141 @@ public class EditPanel implements Initializable {
     @FXML
     private void OnMouseClickedListViewQuantifier(MouseEvent mouseEvent) {
         String name = FxHelper.<String>getSelectedItemFromListView(listViewQuantifier);
-        LinguisticQuantifier linguisticQuantifier = linguisticQuantifierService.findByName(name);
-        linguisticQuantifierService.deleteByName(name);
-        MembershipFunction membershipFunction
-                = linguisticQuantifier.getFuzzySet().getMembershipFunction();
+        try {
+            LinguisticQuantifier linguisticQuantifier =
+                    linguisticQuantifierService.findByName(name);
+            MembershipFunction membershipFunction
+                    = linguisticQuantifier.getFuzzySet().getMembershipFunction();
 
-        if (membershipFunction instanceof TrapezoidalMembershipFunction) {
-            TrapezoidalMembershipFunction trapezoidalMembershipFunction
-                    = (TrapezoidalMembershipFunction) membershipFunction;
+            if (membershipFunction instanceof TrapezoidalMembershipFunction) {
+                TrapezoidalMembershipFunction trapezoidalMembershipFunction
+                        = (TrapezoidalMembershipFunction) membershipFunction;
 
-            initializer.updateEditor(
-                    ObjectType.QUANTIFIER.getName(),
-                    paneTextField,
-                    linguisticQuantifier.getName(),
-                    // TODO CHANGE BELOW PARAM FOR REAL
-                    QuantifierType.ABSOLUTE.getName(),
-                    FunctionType.TRAPEZOIDAL.getName(),
-                    paneFunctionTypePaneParamFirst,
-                    String.valueOf(trapezoidalMembershipFunction.getA()),
-                    paneFunctionTypePaneParamSecond,
-                    String.valueOf(trapezoidalMembershipFunction.getB()),
-                    paneFunctionTypePaneParamThird,
-                    String.valueOf(trapezoidalMembershipFunction.getC()),
-                    paneFunctionTypePaneParamFourth,
-                    String.valueOf(trapezoidalMembershipFunction.getD())
-            );
-        } else if (membershipFunction instanceof TriangularMembershipFunction) {
-            TriangularMembershipFunction triangularMembershipFunction
-                    = (TriangularMembershipFunction) membershipFunction;
+                initializer.updateEditor(
+                        ObjectType.QUANTIFIER.getName(),
+                        paneTextField,
+                        linguisticQuantifier.getName(),
+                        // TODO CHANGE BELOW PARAM FOR REAL
+                        QuantifierType.ABSOLUTE.getName(),
+                        FunctionType.TRAPEZOIDAL.getName(),
+                        paneFunctionTypePaneParamFirst,
+                        String.valueOf(trapezoidalMembershipFunction.getA()),
+                        paneFunctionTypePaneParamSecond,
+                        String.valueOf(trapezoidalMembershipFunction.getB()),
+                        paneFunctionTypePaneParamThird,
+                        String.valueOf(trapezoidalMembershipFunction.getC()),
+                        paneFunctionTypePaneParamFourth,
+                        String.valueOf(trapezoidalMembershipFunction.getD())
+                );
+            } else if (membershipFunction instanceof TriangularMembershipFunction) {
+                TriangularMembershipFunction triangularMembershipFunction
+                        = (TriangularMembershipFunction) membershipFunction;
 
-            initializer.updateEditor(
-                    ObjectType.QUANTIFIER.getName(),
-                    paneTextField,
-                    linguisticQuantifier.getName(),
-                    // TODO CHANGE BELOW PARAM FOR REAL
-                    QuantifierType.ABSOLUTE.getName(),
-                    FunctionType.TRIANGULAR.getName(),
-                    paneFunctionTypePaneParamFirst,
-                    String.valueOf(triangularMembershipFunction.getA()),
-                    paneFunctionTypePaneParamSecond,
-                    String.valueOf(triangularMembershipFunction.getB()),
-                    paneFunctionTypePaneParamThird,
-                    String.valueOf(triangularMembershipFunction.getC())
-            );
+                initializer.updateEditor(
+                        ObjectType.QUANTIFIER.getName(),
+                        paneTextField,
+                        linguisticQuantifier.getName(),
+                        // TODO CHANGE BELOW PARAM FOR REAL
+                        QuantifierType.ABSOLUTE.getName(),
+                        FunctionType.TRIANGULAR.getName(),
+                        paneFunctionTypePaneParamFirst,
+                        String.valueOf(triangularMembershipFunction.getA()),
+                        paneFunctionTypePaneParamSecond,
+                        String.valueOf(triangularMembershipFunction.getB()),
+                        paneFunctionTypePaneParamThird,
+                        String.valueOf(triangularMembershipFunction.getC())
+                );
 
-        } else if (membershipFunction instanceof GaussianMembershipFunction) {
-            GaussianMembershipFunction gaussianMembershipFunction
-                    = ((GaussianMembershipFunction) membershipFunction);
+            } else if (membershipFunction instanceof GaussianMembershipFunction) {
+                GaussianMembershipFunction gaussianMembershipFunction
+                        = ((GaussianMembershipFunction) membershipFunction);
 
-            initializer.updateEditor(
-                    ObjectType.QUANTIFIER.getName(),
-                    paneTextField,
-                    linguisticQuantifier.getName(),
-                    // TODO CHANGE BELOW PARAM FOR REAL
-                    QuantifierType.ABSOLUTE.getName(),
-                    FunctionType.GAUSSIAN.getName(),
-                    paneFunctionTypePaneParamFirst,
-                    String.valueOf(gaussianMembershipFunction.getCenter()),
-                    paneFunctionTypePaneParamSecond,
-                    String.valueOf(gaussianMembershipFunction.getWidth())
-            );
+                initializer.updateEditor(
+                        ObjectType.QUANTIFIER.getName(),
+                        paneTextField,
+                        linguisticQuantifier.getName(),
+                        // TODO CHANGE BELOW PARAM FOR REAL
+                        QuantifierType.ABSOLUTE.getName(),
+                        FunctionType.GAUSSIAN.getName(),
+                        paneFunctionTypePaneParamFirst,
+                        String.valueOf(gaussianMembershipFunction.getCenter()),
+                        paneFunctionTypePaneParamSecond,
+                        String.valueOf(gaussianMembershipFunction.getWidth())
+                );
+            }
+        } catch (LinguisticQuantifierNotFoundException e) {
+            PopOutWindow.messageBox("Linguistic Quantifier Not Found",
+                    "", Alert.AlertType.WARNING);
         }
     }
 
     @FXML
     private void OnMouseClickedListViewSummarizer(MouseEvent mouseEvent) {
         String name = FxHelper.<String>getSelectedItemFromListView(listViewSummarizer);
-        pl.jkkk.task2.logic.fuzzy.linguistic.Label label = labelService.findByName(name);
-        labelService.deleteByName(name);
-        MembershipFunction membershipFunction = label.getFuzzySet().getMembershipFunction();
+        try {
+            pl.jkkk.task2.logic.fuzzy.linguistic.Label label = labelService.findByName(name);
+            labelService.deleteByName(name);
+            MembershipFunction membershipFunction = label.getFuzzySet().getMembershipFunction();
 
-        if (membershipFunction instanceof TrapezoidalMembershipFunction) {
-            TrapezoidalMembershipFunction trapezoidalMembershipFunction
-                    = (TrapezoidalMembershipFunction) membershipFunction;
+            if (membershipFunction instanceof TrapezoidalMembershipFunction) {
+                TrapezoidalMembershipFunction trapezoidalMembershipFunction
+                        = (TrapezoidalMembershipFunction) membershipFunction;
 
-            initializer.updateEditor(
-                    ObjectType.SUMMARIZER.getName(),
-                    paneTextField,
-                    label.getName(),
-                    // TODO CHANGE BELOW PARAM FOR REAL
-                    QuantifierType.ABSOLUTE.getName(),
-                    FunctionType.TRAPEZOIDAL.getName(),
-                    paneFunctionTypePaneParamFirst,
-                    String.valueOf(trapezoidalMembershipFunction.getA()),
-                    paneFunctionTypePaneParamSecond,
-                    String.valueOf(trapezoidalMembershipFunction.getB()),
-                    paneFunctionTypePaneParamThird,
-                    String.valueOf(trapezoidalMembershipFunction.getC()),
-                    paneFunctionTypePaneParamFourth,
-                    String.valueOf(trapezoidalMembershipFunction.getD())
-            );
-        } else if (membershipFunction instanceof TriangularMembershipFunction) {
-            TriangularMembershipFunction triangularMembershipFunction
-                    = (TriangularMembershipFunction) membershipFunction;
+                initializer.updateEditor(
+                        ObjectType.SUMMARIZER.getName(),
+                        paneTextField,
+                        label.getName(),
+                        // TODO CHANGE BELOW PARAM FOR REAL
+                        QuantifierType.ABSOLUTE.getName(),
+                        FunctionType.TRAPEZOIDAL.getName(),
+                        paneFunctionTypePaneParamFirst,
+                        String.valueOf(trapezoidalMembershipFunction.getA()),
+                        paneFunctionTypePaneParamSecond,
+                        String.valueOf(trapezoidalMembershipFunction.getB()),
+                        paneFunctionTypePaneParamThird,
+                        String.valueOf(trapezoidalMembershipFunction.getC()),
+                        paneFunctionTypePaneParamFourth,
+                        String.valueOf(trapezoidalMembershipFunction.getD())
+                );
+            } else if (membershipFunction instanceof TriangularMembershipFunction) {
+                TriangularMembershipFunction triangularMembershipFunction
+                        = (TriangularMembershipFunction) membershipFunction;
 
-            initializer.updateEditor(
-                    ObjectType.SUMMARIZER.getName(),
-                    paneTextField,
-                    label.getName(),
-                    // TODO CHANGE BELOW PARAM FOR REAL
-                    QuantifierType.ABSOLUTE.getName(),
-                    FunctionType.TRIANGULAR.getName(),
-                    paneFunctionTypePaneParamFirst,
-                    String.valueOf(triangularMembershipFunction.getA()),
-                    paneFunctionTypePaneParamSecond,
-                    String.valueOf(triangularMembershipFunction.getB()),
-                    paneFunctionTypePaneParamThird,
-                    String.valueOf(triangularMembershipFunction.getC())
-            );
+                initializer.updateEditor(
+                        ObjectType.SUMMARIZER.getName(),
+                        paneTextField,
+                        label.getName(),
+                        // TODO CHANGE BELOW PARAM FOR REAL
+                        QuantifierType.ABSOLUTE.getName(),
+                        FunctionType.TRIANGULAR.getName(),
+                        paneFunctionTypePaneParamFirst,
+                        String.valueOf(triangularMembershipFunction.getA()),
+                        paneFunctionTypePaneParamSecond,
+                        String.valueOf(triangularMembershipFunction.getB()),
+                        paneFunctionTypePaneParamThird,
+                        String.valueOf(triangularMembershipFunction.getC())
+                );
 
-        } else if (membershipFunction instanceof GaussianMembershipFunction) {
-            GaussianMembershipFunction gaussianMembershipFunction
-                    = ((GaussianMembershipFunction) membershipFunction);
+            } else if (membershipFunction instanceof GaussianMembershipFunction) {
+                GaussianMembershipFunction gaussianMembershipFunction
+                        = ((GaussianMembershipFunction) membershipFunction);
 
-            initializer.updateEditor(
-                    ObjectType.SUMMARIZER.getName(),
-                    paneTextField,
-                    label.getName(),
-                    // TODO CHANGE BELOW PARAM FOR REAL
-                    QuantifierType.ABSOLUTE.getName(),
-                    FunctionType.GAUSSIAN.getName(),
-                    paneFunctionTypePaneParamFirst,
-                    String.valueOf(gaussianMembershipFunction.getCenter()),
-                    paneFunctionTypePaneParamSecond,
-                    String.valueOf(gaussianMembershipFunction.getWidth())
-            );
+                initializer.updateEditor(
+                        ObjectType.SUMMARIZER.getName(),
+                        paneTextField,
+                        label.getName(),
+                        // TODO CHANGE BELOW PARAM FOR REAL
+                        QuantifierType.ABSOLUTE.getName(),
+                        FunctionType.GAUSSIAN.getName(),
+                        paneFunctionTypePaneParamFirst,
+                        String.valueOf(gaussianMembershipFunction.getCenter()),
+                        paneFunctionTypePaneParamSecond,
+                        String.valueOf(gaussianMembershipFunction.getWidth())
+                );
+            }
+        } catch (LabelNotFoundException e) {
+            PopOutWindow.messageBox("Label Not Found",
+                    "", Alert.AlertType.WARNING);
         }
     }
 

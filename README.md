@@ -50,11 +50,11 @@ and save them into ksr_fuzzy database or restore database from `data-dump.sql` f
 or comment out whole application.properties file - h2 database will be used
 
 ##### Call parameters 
-* Single param - `seed` or `-s` to seed database from csv file
+* Single param - `seed_pollution` or `-sp` to seed database from csv file
+* Single param - `seed_linguistic` or `-sl` to seed database with linguistic data
 
 ##### Scipts description
 * `filter_data.py` - filtering csv data - reads first 100000, 
 removes rows with NaN values, removes first column with ID
 * `main_2.py` - script with experiments for report
-* `data-dump.sql`- script with dumped data from database after filtering - restore->custom or tar and filename dump-data
-* `database_util.py` - 
+* `data-dump`- script with dumped data from database after filtering - restore->custom or tar and filename dump-data

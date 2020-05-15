@@ -50,23 +50,12 @@ public class Loader {
     }
 
     public void generateBasicSummarization() {
-        //        String selectedQualifier = getValueFromComboBox(comboBoxQualifier);
-        //        String selectedSummarizerBasic = getValueFromComboBox(comboBoxSummarizerBasic);
-
-        //        TODO CHANGE FOR REAL DATA - METHOD FROM LOGIC WHICH WILL BE RETURNING LIST OF
-        //         STRINGS
-
-        fillListView(listViewResults, results);
-        textFieldSaveSummarizationNumber.setText(String.valueOf(results.size()));
-    }
-
-    public void generateAdvancedSummarization() {
         String selectedQualifier = getValueFromComboBox(comboBoxQualifier);
         String selectedSummarizerBasic = getValueFromComboBox(comboBoxSummarizerBasic);
 
         //        TODO CHANGE FOR REAL DATA - METHOD FROM LOGIC WHICH WILL BE RETURNING LIST OF
         //         STRINGS
-
+        //        results=
         fillListView(listViewResults, results);
         textFieldSaveSummarizationNumber.setText(String.valueOf(results.size()));
     }

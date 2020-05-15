@@ -19,9 +19,7 @@
                                 <ListView fx:id="listViewQuantifier"
                                           onMouseClicked="#OnMouseClickedListViewQuantifier"
                                           prefHeight="625.0"
-                                          prefWidth="300.0">
-
-                                </ListView>
+                                          prefWidth="300.0"/>
                             </children>
                         </VBox>
                     </Tab>
@@ -30,9 +28,7 @@
                             <children>
                                 <ListView fx:id="listViewSummarizer" prefHeight="625.0"
                                           onMouseClicked="#OnMouseClickedListViewSummarizer"
-                                          prefWidth="300.0">
-
-                                </ListView>
+                                          prefWidth="300.0"/>
                             </children>
                         </VBox>
                     </Tab>
@@ -42,6 +38,7 @@
                 <items>
                     <Pane HBox.hgrow="ALWAYS"/>
                     <Button mnemonicParsing="false" onAction="#onActionButtonAdd" text="Add"/>
+                    <Button mnemonicParsing="false" onAction="#onActionButtonEdit" text="Edit"/>
                     <Button mnemonicParsing="false" onAction="#onActionButtonRemove" text="Remove"/>
                     <Pane HBox.hgrow="ALWAYS"/>
                 </items>

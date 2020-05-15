@@ -245,23 +245,14 @@ public class EditPanel implements Initializable {
     }
 
     @FXML
-    private void onActionButtonRemove(ActionEvent actionEvent) {
-        Integer selectedTab = getSelectedTabIndex(tabPane);
+    private void onActionButtonEdit(ActionEvent actionEvent) {
+        removeQuantifierOrSummarizer();
+        prepareTabPane();
+    }
 
-        switch (selectedTab) {
-            // Quantifier
-            case 0: {
-                String name = FxHelper.<String>getSelectedItemFromListView(listViewQuantifier);
-                linguisticQuantifierService.deleteByName(name);
-                break;
-            }
-            // Summarizer
-            case 1: {
-                String name = FxHelper.<String>getSelectedItemFromListView(listViewSummarizer);
-                labelService.deleteByName(name);
-                break;
-            }
-        }
+    @FXML
+    private void onActionButtonRemove(ActionEvent actionEvent) {
+        removeQuantifierOrSummarizer();
         prepareTabPane();
     }
 
@@ -280,17 +271,39 @@ public class EditPanel implements Initializable {
 
         switch (objectType) {
             case QUANTIFIER: {
-
+                // TODO ADD VALUES IN CONSTRUCTOR
+                //  linguisticQuantifierService.save(new LinguisticQuantifier());
                 break;
             }
             case SUMMARIZER: {
-
+                // TODO ADD VALUES IN CONSTRUCTOR
+                //  labelService.save(new pl.jkkk.task2.logic.fuzzy.linguistic.Label());
                 break;
             }
         }
 
         prepareTabPane();
         paneRightSide.setVisible(false);
+    }
+
+    /*--------------------------------------------------------------------------------------------*/
+    private void removeQuantifierOrSummarizer() {
+        Integer selectedTab = getSelectedTabIndex(tabPane);
+
+        switch (selectedTab) {
+            // Quantifier
+            case 0: {
+                String name = FxHelper.<String>getSelectedItemFromListView(listViewQuantifier);
+                linguisticQuantifierService.deleteByName(name);
+                break;
+            }
+            // Summarizer
+            case 1: {
+                String name = FxHelper.<String>getSelectedItemFromListView(listViewSummarizer);
+                labelService.deleteByName(name);
+                break;
+            }
+        }
     }
 
     /*--------------------------------------------------------------------------------------------*/

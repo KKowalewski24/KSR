@@ -2,15 +2,14 @@ package pl.jkkk.task2.mode;
 
 import com.opencsv.exceptions.CsvException;
 import org.springframework.stereotype.Component;
-import pl.jkkk.task2.Main;
-import pl.jkkk.task2.logic.exception.FileOperationException;
 import pl.jkkk.task2.logic.readerwriter.FileReaderCsv;
 import pl.jkkk.task2.logic.readerwriter.FileWriterPlainText;
+import pl.jkkk.task2.logic.service.label.LabelService;
+import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierService;
 import pl.jkkk.task2.logic.service.pollution.PollutionService;
 
 import java.io.IOException;
 
-import static pl.jkkk.task2.Main.IS_LOGGING_DATA;
 import static pl.jkkk.task2.logic.constant.LogicConstants.POLLUTION_DATA_FILENAME;
 
 @Component
@@ -18,65 +17,81 @@ public class CommandMode {
 
     /*------------------------ FIELDS REGION ------------------------*/
     private final PollutionService pollutionService;
+    private final LinguisticQuantifierService linguisticQuantifierService;
+    private final LabelService labelService;
+
     private FileWriterPlainText fileWriterPlainText = new FileWriterPlainText();
 
     /*------------------------ METHODS REGION ------------------------*/
-    public CommandMode(PollutionService pollutionService) {
+    public CommandMode(PollutionService pollutionService,
+                       LinguisticQuantifierService linguisticQuantifierService,
+                       LabelService labelService) {
         this.pollutionService = pollutionService;
+        this.linguisticQuantifierService = linguisticQuantifierService;
+        this.labelService = labelService;
     }
 
     public void main(String[] args) {
-
         try {
-            if (args.length == 1 && (args[0].equals("seed") || args[0].equals("-s"))) {
-                seedDatabase();
-            } else if (args.length > 1) {
-                int argCounter = 0;
-
-                if (args.length == 4) {
-
+            if (args.length == 1) {
+                if ((args[0].equals("seed_pollution") || args[0].equals("-sp"))) {
+                    seedPollutionInDatabase();
+                } else if ((args[0].equals("seed_linguistic") || args[0].equals("-sl"))) {
+                    seedLinguisticFacilitiesInDatabase();
                 }
             }
-        } catch (Exception e) {
+            //            else if (args.length > 1) {
+            //                int argCounter = 0;
+            //
+            //                if (args.length == 4) {
+            //
+            //                }
+            //        }
+        } catch (
+                Exception e) {
             e.printStackTrace();
             System.out.println(e);
-            printUsage();
+            //            printUsage();
         }
 
-        //TODO ADD CALLING METHOD FROM LOGIC
-        //        saveDataLog("");
     }
 
-    private void seedDatabase() throws IOException, CsvException {
+    private void seedPollutionInDatabase() throws IOException, CsvException {
         pollutionService.deleteAll();
         pollutionService.saveAll(new FileReaderCsv().readCsv(POLLUTION_DATA_FILENAME, false));
     }
 
-    private static void printUsage() {
-        System.out.println(""
-                + "------------------------------------------------------------------------\n"
-                + "Required parameters:  \n"
-                + "\t<qualifier>\n"
-                + "\t<basicSummarizer>\n"
-                + "\t<conjuntion>\n"
-                + "\t<advancedSummarizer>\n"
-                + "------------------------------------------------------------------------"
-        );
-        System.exit(0);
+    private void seedLinguisticFacilitiesInDatabase() {
+        //TODO ADD SAVING LINGUISTIC DATA TO DB
+        //        linguisticQuantifierService.save();
+        //        labelService.save();
     }
 
-    private void saveDataLog(String value) {
-        if (IS_LOGGING_DATA) {
-            try {
-                fileWriterPlainText.writePlainText(Main.getMainArgs(), value);
-            } catch (FileOperationException e) {
-                System.out.println(e);
-            }
-        } else {
-            System.out.println("-------------------------------------------------");
-            System.out.println("LOGGING TO FILE DISABLED");
-            System.out.println("-------------------------------------------------");
-        }
-    }
+    //    private static void printUsage() {
+    //        System.out.println(""
+    //                + "------------------------------------------------------------------------\n"
+    //                + "Required parameters:  \n"
+    //                + "\t<qualifier>\n"
+    //                + "\t<basicSummarizer>\n"
+    //                + "\t<conjuntion>\n"
+    //                + "\t<advancedSummarizer>\n"
+    //                + "------------------------------------------------------------------------"
+    //        );
+    //        System.exit(0);
+    //    }
+
+    //    private void saveDataLog(String value) {
+    //        if (IS_LOGGING_DATA) {
+    //            try {
+    //                fileWriterPlainText.writePlainText(Main.getMainArgs(), value);
+    //            } catch (FileOperationException e) {
+    //                System.out.println(e);
+    //            }
+    //        } else {
+    //            System.out.println("-------------------------------------------------");
+    //            System.out.println("LOGGING TO FILE DISABLED");
+    //            System.out.println("-------------------------------------------------");
+    //        }
+    //    }
 }
     

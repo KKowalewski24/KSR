@@ -10,6 +10,14 @@ public class GaussianMembershipFunction implements MembershipFunction {
         this.width = width;
     }
 
+    public double getCenter() {
+        return center;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
     @Override
     public double value(double x) {
         return Math.exp(- (center - x) * (center - x) / (2 * width * width));

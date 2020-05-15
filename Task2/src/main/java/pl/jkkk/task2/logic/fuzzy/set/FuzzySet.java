@@ -14,6 +14,10 @@ public class FuzzySet {
         this.membershipFunction = membershipFunction;
     }
 
+    public MembershipFunction getMembershipFunction() {
+        return membershipFunction;
+    }
+
     /**
      * This method returns degree of membership of an object to the fuzzy set
      * basing directly on membership function result.

@@ -15,6 +15,10 @@ import javafx.scene.layout.VBox;
 import org.springframework.stereotype.Component;
 import pl.jkkk.task2.Main;
 import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticQuantifier;
+import pl.jkkk.task2.logic.fuzzy.membershipfunction.GaussianMembershipFunction;
+import pl.jkkk.task2.logic.fuzzy.membershipfunction.MembershipFunction;
+import pl.jkkk.task2.logic.fuzzy.membershipfunction.TrapezoidalMembershipFunction;
+import pl.jkkk.task2.logic.fuzzy.membershipfunction.TriangularMembershipFunction;
 import pl.jkkk.task2.logic.model.enumtype.FunctionType;
 import pl.jkkk.task2.logic.model.enumtype.ObjectType;
 import pl.jkkk.task2.logic.model.enumtype.QuantifierType;
@@ -44,7 +48,10 @@ import static pl.jkkk.task2.view.fxml.FxHelper.switchComboBoxValue;
 @Component
 public class EditPanel implements Initializable {
 
+
     /*------------------------ FIELDS REGION ------------------------*/
+
+    /*----- LEFT SIDE -----*/
     @FXML
     private TabPane tabPane;
     @FXML
@@ -54,6 +61,9 @@ public class EditPanel implements Initializable {
     @FXML
     private Button buttonConfirm;
 
+    /*----- RIGHT SIDE -----*/
+    @FXML
+    private VBox paneRightSide;
     @FXML
     private ComboBox comboBoxSelectObject;
 
@@ -97,19 +107,136 @@ public class EditPanel implements Initializable {
     private void OnMouseClickedListViewQuantifier(MouseEvent mouseEvent) {
         String name = FxHelper.<String>getSelectedItemFromListView(listViewQuantifier);
         LinguisticQuantifier linguisticQuantifier = linguisticQuantifierService.findByName(name);
-        //        updateEditor(ObjectType.QUANTIFIER,paneTextField,linguisticQuantifier.getName());
+        linguisticQuantifierService.deleteByName(name);
+        MembershipFunction membershipFunction
+                = linguisticQuantifier.getFuzzySet().getMembershipFunction();
+
+        if (membershipFunction instanceof TrapezoidalMembershipFunction) {
+            TrapezoidalMembershipFunction trapezoidalMembershipFunction
+                    = (TrapezoidalMembershipFunction) membershipFunction;
+
+            updateEditor(
+                    ObjectType.QUANTIFIER.getName(),
+                    paneTextField,
+                    linguisticQuantifier.getName(),
+                    // TODO CHANGE BELOW PARAM FOR REAL
+                    QuantifierType.ABSOLUTE.getName(),
+                    FunctionType.TRAPEZOIDAL.getName(),
+                    paneFunctionTypePaneParamFirst,
+                    String.valueOf(trapezoidalMembershipFunction.getA()),
+                    paneFunctionTypePaneParamSecond,
+                    String.valueOf(trapezoidalMembershipFunction.getB()),
+                    paneFunctionTypePaneParamThird,
+                    String.valueOf(trapezoidalMembershipFunction.getC()),
+                    paneFunctionTypePaneParamFourth,
+                    String.valueOf(trapezoidalMembershipFunction.getD())
+            );
+        } else if (membershipFunction instanceof TriangularMembershipFunction) {
+            TriangularMembershipFunction triangularMembershipFunction
+                    = (TriangularMembershipFunction) membershipFunction;
+
+            updateEditor(
+                    ObjectType.QUANTIFIER.getName(),
+                    paneTextField,
+                    linguisticQuantifier.getName(),
+                    // TODO CHANGE BELOW PARAM FOR REAL
+                    QuantifierType.ABSOLUTE.getName(),
+                    FunctionType.TRIANGULAR.getName(),
+                    paneFunctionTypePaneParamFirst,
+                    String.valueOf(triangularMembershipFunction.getA()),
+                    paneFunctionTypePaneParamSecond,
+                    String.valueOf(triangularMembershipFunction.getB()),
+                    paneFunctionTypePaneParamThird,
+                    String.valueOf(triangularMembershipFunction.getC())
+            );
+
+        } else if (membershipFunction instanceof GaussianMembershipFunction) {
+            GaussianMembershipFunction gaussianMembershipFunction
+                    = ((GaussianMembershipFunction) membershipFunction);
+
+            updateEditor(
+                    ObjectType.QUANTIFIER.getName(),
+                    paneTextField,
+                    linguisticQuantifier.getName(),
+                    // TODO CHANGE BELOW PARAM FOR REAL
+                    QuantifierType.ABSOLUTE.getName(),
+                    FunctionType.GAUSSIAN.getName(),
+                    paneFunctionTypePaneParamFirst,
+                    String.valueOf(gaussianMembershipFunction.getCenter()),
+                    paneFunctionTypePaneParamSecond,
+                    String.valueOf(gaussianMembershipFunction.getWidth())
+            );
+        }
     }
 
     @FXML
     private void OnMouseClickedListViewSummarizer(MouseEvent mouseEvent) {
         String name = FxHelper.<String>getSelectedItemFromListView(listViewSummarizer);
         pl.jkkk.task2.logic.fuzzy.linguistic.Label label = labelService.findByName(name);
-        //        updateEditor();
+        labelService.deleteByName(name);
+        MembershipFunction membershipFunction = label.getFuzzySet().getMembershipFunction();
+
+        if (membershipFunction instanceof TrapezoidalMembershipFunction) {
+            TrapezoidalMembershipFunction trapezoidalMembershipFunction
+                    = (TrapezoidalMembershipFunction) membershipFunction;
+
+            updateEditor(
+                    ObjectType.SUMMARIZER.getName(),
+                    paneTextField,
+                    label.getName(),
+                    // TODO CHANGE BELOW PARAM FOR REAL
+                    QuantifierType.ABSOLUTE.getName(),
+                    FunctionType.TRAPEZOIDAL.getName(),
+                    paneFunctionTypePaneParamFirst,
+                    String.valueOf(trapezoidalMembershipFunction.getA()),
+                    paneFunctionTypePaneParamSecond,
+                    String.valueOf(trapezoidalMembershipFunction.getB()),
+                    paneFunctionTypePaneParamThird,
+                    String.valueOf(trapezoidalMembershipFunction.getC()),
+                    paneFunctionTypePaneParamFourth,
+                    String.valueOf(trapezoidalMembershipFunction.getD())
+            );
+        } else if (membershipFunction instanceof TriangularMembershipFunction) {
+            TriangularMembershipFunction triangularMembershipFunction
+                    = (TriangularMembershipFunction) membershipFunction;
+
+            updateEditor(
+                    ObjectType.SUMMARIZER.getName(),
+                    paneTextField,
+                    label.getName(),
+                    // TODO CHANGE BELOW PARAM FOR REAL
+                    QuantifierType.ABSOLUTE.getName(),
+                    FunctionType.TRIANGULAR.getName(),
+                    paneFunctionTypePaneParamFirst,
+                    String.valueOf(triangularMembershipFunction.getA()),
+                    paneFunctionTypePaneParamSecond,
+                    String.valueOf(triangularMembershipFunction.getB()),
+                    paneFunctionTypePaneParamThird,
+                    String.valueOf(triangularMembershipFunction.getC())
+            );
+
+        } else if (membershipFunction instanceof GaussianMembershipFunction) {
+            GaussianMembershipFunction gaussianMembershipFunction
+                    = ((GaussianMembershipFunction) membershipFunction);
+
+            updateEditor(
+                    ObjectType.SUMMARIZER.getName(),
+                    paneTextField,
+                    label.getName(),
+                    // TODO CHANGE BELOW PARAM FOR REAL
+                    QuantifierType.ABSOLUTE.getName(),
+                    FunctionType.GAUSSIAN.getName(),
+                    paneFunctionTypePaneParamFirst,
+                    String.valueOf(gaussianMembershipFunction.getCenter()),
+                    paneFunctionTypePaneParamSecond,
+                    String.valueOf(gaussianMembershipFunction.getWidth())
+            );
+        }
     }
 
     @FXML
     private void onActionButtonAdd(ActionEvent actionEvent) {
-        buttonConfirm.setDisable(false);
+        paneRightSide.setVisible(true);
     }
 
     @FXML
@@ -144,20 +271,73 @@ public class EditPanel implements Initializable {
 
     @FXML
     private void onActionConfirm(ActionEvent actionEvent) {
-        //        TODO ADD SAVING DATA TO DB
-        //        prepareStage();
-        buttonConfirm.setDisable(true);
+        ObjectType objectType = ObjectType.fromString(getValueFromComboBox(comboBoxSelectObject));
+
+        switch (objectType) {
+            case QUANTIFIER: {
+
+                break;
+            }
+            case SUMMARIZER: {
+
+                break;
+            }
+        }
+
+        prepareTabPane();
+        paneRightSide.setVisible(false);
     }
 
     /*--------------------------------------------------------------------------------------------*/
     private void updateEditor(String selectObjectValue, Pane textFieldPane,
                               String textFieldNameValue, String typeComboBoxValue,
-                              String comboBoxFunctionTypeValue) {
+                              String comboBoxFunctionTypeValue,
+                              Pane paneParamFirst, String textFieldParamFirstValue,
+                              Pane paneParamSecond, String textFieldParamSecondValue,
+                              Pane paneParamThird, String textFieldParamThirdValue,
+                              Pane paneParamFourth, String textFieldParamFourthValue) {
+        updateEditorTopPart(selectObjectValue, textFieldPane, textFieldNameValue,
+                typeComboBoxValue, comboBoxFunctionTypeValue);
+
+        getTextFieldFromPaneAndSetValue(paneParamFirst, 1, textFieldParamFirstValue);
+        getTextFieldFromPaneAndSetValue(paneParamSecond, 1, textFieldParamSecondValue);
+        getTextFieldFromPaneAndSetValue(paneParamThird, 1, textFieldParamThirdValue);
+        getTextFieldFromPaneAndSetValue(paneParamFourth, 1, textFieldParamFourthValue);
+    }
+
+    private void updateEditor(String selectObjectValue, Pane textFieldPane,
+                              String textFieldNameValue, String typeComboBoxValue,
+                              String comboBoxFunctionTypeValue,
+                              Pane paneParamFirst, String textFieldParamFirstValue,
+                              Pane paneParamSecond, String textFieldParamSecondValue,
+                              Pane paneParamThird, String textFieldParamThirdValue) {
+        updateEditorTopPart(selectObjectValue, textFieldPane, textFieldNameValue,
+                typeComboBoxValue, comboBoxFunctionTypeValue);
+
+        getTextFieldFromPaneAndSetValue(paneParamFirst, 1, textFieldParamFirstValue);
+        getTextFieldFromPaneAndSetValue(paneParamSecond, 1, textFieldParamSecondValue);
+        getTextFieldFromPaneAndSetValue(paneParamThird, 1, textFieldParamThirdValue);
+    }
+
+    private void updateEditor(String selectObjectValue, Pane textFieldPane,
+                              String textFieldNameValue, String typeComboBoxValue,
+                              String comboBoxFunctionTypeValue,
+                              Pane paneParamFirst, String textFieldParamFirstValue,
+                              Pane paneParamSecond, String textFieldParamSecondValue) {
+        updateEditorTopPart(selectObjectValue, textFieldPane, textFieldNameValue,
+                typeComboBoxValue, comboBoxFunctionTypeValue);
+
+        getTextFieldFromPaneAndSetValue(paneParamFirst, 1, textFieldParamFirstValue);
+        getTextFieldFromPaneAndSetValue(paneParamSecond, 1, textFieldParamSecondValue);
+    }
+
+    private void updateEditorTopPart(String selectObjectValue, Pane textFieldPane,
+                                     String textFieldNameValue, String typeComboBoxValue,
+                                     String comboBoxFunctionTypeValue) {
         switchComboBoxValue(comboBoxSelectObject, selectObjectValue);
         getTextFieldFromPaneAndSetValue(textFieldPane, 1, textFieldNameValue);
         switchComboBoxValue(comboBoxType, typeComboBoxValue);
         switchComboBoxValue(comboBoxFunctionType, comboBoxFunctionTypeValue);
-        //        TODO TEXTFIELD FILL IN FUNCTION
     }
 
     /*--------------------------------------------------------------------------------------------*/
@@ -265,6 +445,5 @@ public class EditPanel implements Initializable {
 
         }));
     }
-
 }
     

@@ -2,16 +2,32 @@ package pl.jkkk.task2.logic.fuzzy.membershipfunction;
 
 public class TrapezoidalMembershipFunction implements MembershipFunction {
 
-    public final double a;
-    public final double b;
-    public final double c;
-    public final double d;
+    private final double a;
+    private final double b;
+    private final double c;
+    private final double d;
 
     public TrapezoidalMembershipFunction(double a, double b, double c, double d) {
         this.a = a;
         this.b = b;
         this.c = c;
         this.d = d;
+    }
+
+    public double getA() {
+        return a;
+    }
+
+    public double getB() {
+        return b;
+    }
+
+    public double getC() {
+        return c;
+    }
+
+    public double getD() {
+        return d;
     }
 
     @Override

@@ -1,6 +1,10 @@
 package pl.jkkk.task2.logic.fuzzy.linguistic;
 
 import pl.jkkk.task2.logic.fuzzy.set.FuzzySet;
+import pl.jkkk.task2.logic.fuzzy.set.UnionFuzzySet;
+import pl.jkkk.task2.logic.fuzzy.set.IntersectionFuzzySet;
+import pl.jkkk.task2.logic.fuzzy.set.ComplementFuzzySet;
+import pl.jkkk.task2.logic.fuzzy.set.ModifiedFuzzySet;
 
 public class Label<T> {
 
@@ -47,22 +51,22 @@ public class Label<T> {
     }
 
     public Label<T> and(final Label<T> label) {
-        return new Label<>(name + " and " + label.name, fuzzySet.intersection(label.fuzzySet),
-                linguisticVariable);
+        return new Label<>(name + " and " + label.name,
+                new IntersectionFuzzySet(fuzzySet, label.fuzzySet), linguisticVariable);
     }
 
     public Label<T> or(final Label<T> label) {
-        return new Label<>(name + " or " + label.name, fuzzySet.union(label.fuzzySet),
-                linguisticVariable);
+        return new Label<>(name + " or " + label.name,
+                new UnionFuzzySet(fuzzySet, label.fuzzySet), linguisticVariable);
     }
 
     public Label<T> not() {
-        return new Label<>("not " + name, fuzzySet.complement(), linguisticVariable);
+        return new Label<>("not " + name,
+                new ComplementFuzzySet(fuzzySet), linguisticVariable);
     }
 
     public Label<T> modify(final Modifier modifier) {
-        return new Label<>(modifier.getText() + " " + name, new FuzzySet((x) -> {
-            return Math.pow(fuzzySet.contains(x), modifier.getR());
-        }), linguisticVariable);
+        return new Label<>(modifier.getText() + " " + name, 
+                new ModifiedFuzzySet(fuzzySet, modifier.getR()), linguisticVariable);
     }
 }

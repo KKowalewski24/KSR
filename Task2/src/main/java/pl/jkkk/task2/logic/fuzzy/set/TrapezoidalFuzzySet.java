@@ -1,37 +1,21 @@
-package pl.jkkk.task2.logic.fuzzy.membershipfunction;
+package pl.jkkk.task2.logic.fuzzy.set;
 
-public class TrapezoidalMembershipFunction implements MembershipFunction {
+public class TrapezoidalFuzzySet implements FuzzySet {
 
     private final double a;
     private final double b;
     private final double c;
     private final double d;
 
-    public TrapezoidalMembershipFunction(double a, double b, double c, double d) {
+    public TrapezoidalFuzzySet(double a, double b, double c, double d) {
         this.a = a;
         this.b = b;
         this.c = c;
         this.d = d;
     }
 
-    public double getA() {
-        return a;
-    }
-
-    public double getB() {
-        return b;
-    }
-
-    public double getC() {
-        return c;
-    }
-
-    public double getD() {
-        return d;
-    }
-
     @Override
-    public double value(double x) {
+    public double contains(double x) {
         if (x > a && x < b) {
             return (x - a) / (b - a);
         } else if (x >= b && x <= c) {

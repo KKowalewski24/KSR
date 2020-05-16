@@ -11,8 +11,8 @@ import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.jkkk.task2.Main;
-import pl.jkkk.task2.logic.service.label.LabelService;
-import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierService;
+import pl.jkkk.task2.logic.service.label.LabelWrapperService;
+import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierWrapperService;
 import pl.jkkk.task2.logic.service.pollution.PollutionService;
 import pl.jkkk.task2.view.fxml.PopOutWindow;
 import pl.jkkk.task2.view.fxml.StageController;
@@ -51,18 +51,18 @@ public class MainPanel implements Initializable {
     private Loader loader;
 
     private PollutionService pollutionService;
-    private LabelService labelService;
-    private LinguisticQuantifierService quantifierService;
+    private LabelWrapperService labelWrapperService;
+    private LinguisticQuantifierWrapperService quantifierService;
 
     /*------------------------ METHODS REGION ------------------------*/
     public MainPanel() {
     }
 
     @Autowired
-    public MainPanel(PollutionService pollutionService, LabelService labelService,
-                     LinguisticQuantifierService quantifierService) {
+    public MainPanel(PollutionService pollutionService, LabelWrapperService labelWrapperService,
+                     LinguisticQuantifierWrapperService quantifierService) {
         this.pollutionService = pollutionService;
-        this.labelService = labelService;
+        this.labelWrapperService = labelWrapperService;
         this.quantifierService = quantifierService;
     }
 
@@ -70,14 +70,14 @@ public class MainPanel implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initializer = new Initializer(
                 comboBoxQuantifier, comboBoxSummarizer,
-                textFieldSaveSummarizationNumber, labelService,
+                textFieldSaveSummarizationNumber, labelWrapperService,
                 quantifierService
         );
 
         loader = new Loader(
                 comboBoxQuantifier, comboBoxSummarizer,
                 listViewResults, textFieldSaveSummarizationNumber,
-                pollutionService, labelService, quantifierService
+                pollutionService, labelWrapperService, quantifierService
         );
 
         initializer.fillScene();

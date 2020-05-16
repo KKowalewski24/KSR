@@ -4,8 +4,8 @@ import com.opencsv.exceptions.CsvException;
 import org.springframework.stereotype.Component;
 import pl.jkkk.task2.logic.readerwriter.FileReaderCsv;
 import pl.jkkk.task2.logic.readerwriter.FileWriterPlainText;
-import pl.jkkk.task2.logic.service.label.LabelService;
-import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierService;
+import pl.jkkk.task2.logic.service.label.LabelWrapperService;
+import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierWrapperService;
 import pl.jkkk.task2.logic.service.pollution.PollutionService;
 
 import java.io.IOException;
@@ -17,18 +17,18 @@ public class CommandMode {
 
     /*------------------------ FIELDS REGION ------------------------*/
     private final PollutionService pollutionService;
-    private final LinguisticQuantifierService linguisticQuantifierService;
-    private final LabelService labelService;
+    private final LinguisticQuantifierWrapperService linguisticQuantifierWrapperService;
+    private final LabelWrapperService labelWrapperService;
 
     private FileWriterPlainText fileWriterPlainText = new FileWriterPlainText();
 
     /*------------------------ METHODS REGION ------------------------*/
     public CommandMode(PollutionService pollutionService,
-                       LinguisticQuantifierService linguisticQuantifierService,
-                       LabelService labelService) {
+                       LinguisticQuantifierWrapperService linguisticQuantifierWrapperService,
+                       LabelWrapperService labelWrapperService) {
         this.pollutionService = pollutionService;
-        this.linguisticQuantifierService = linguisticQuantifierService;
-        this.labelService = labelService;
+        this.linguisticQuantifierWrapperService = linguisticQuantifierWrapperService;
+        this.labelWrapperService = labelWrapperService;
     }
 
     public void main(String[] args) {

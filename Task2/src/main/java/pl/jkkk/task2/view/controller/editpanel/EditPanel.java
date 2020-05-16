@@ -3,7 +3,6 @@ package pl.jkkk.task2.view.controller.editpanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -13,20 +12,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.springframework.stereotype.Component;
 import pl.jkkk.task2.Main;
-import pl.jkkk.task2.logic.exception.LabelNotFoundException;
-import pl.jkkk.task2.logic.exception.LinguisticQuantifierNotFoundException;
-import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticQuantifier;
-import pl.jkkk.task2.logic.fuzzy.membershipfunction.GaussianMembershipFunction;
-import pl.jkkk.task2.logic.fuzzy.membershipfunction.MembershipFunction;
-import pl.jkkk.task2.logic.fuzzy.membershipfunction.TrapezoidalMembershipFunction;
-import pl.jkkk.task2.logic.fuzzy.membershipfunction.TriangularMembershipFunction;
-import pl.jkkk.task2.logic.model.enumtype.FunctionType;
 import pl.jkkk.task2.logic.model.enumtype.ObjectType;
-import pl.jkkk.task2.logic.model.enumtype.QuantifierType;
-import pl.jkkk.task2.logic.service.label.LabelService;
-import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierService;
+import pl.jkkk.task2.logic.service.label.LabelWrapperService;
+import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierWrapperService;
 import pl.jkkk.task2.view.fxml.FxHelper;
-import pl.jkkk.task2.view.fxml.PopOutWindow;
 import pl.jkkk.task2.view.fxml.StageController;
 import pl.jkkk.task2.view.fxml.core.WindowDimensions;
 
@@ -81,15 +70,15 @@ public class EditPanel implements Initializable {
     @FXML
     private HBox paneFunctionTypePaneParamFourth;
 
-    private final LinguisticQuantifierService linguisticQuantifierService;
-    private final LabelService labelService;
+    private final LinguisticQuantifierWrapperService linguisticQuantifierWrapperService;
+    private final LabelWrapperService labelWrapperService;
     private Initializer initializer;
 
     /*------------------------ METHODS REGION ------------------------*/
-    public EditPanel(LabelService labelService,
-                     LinguisticQuantifierService linguisticQuantifierService) {
-        this.labelService = labelService;
-        this.linguisticQuantifierService = linguisticQuantifierService;
+    public EditPanel(LabelWrapperService labelWrapperService,
+                     LinguisticQuantifierWrapperService linguisticQuantifierWrapperService) {
+        this.labelWrapperService = labelWrapperService;
+        this.linguisticQuantifierWrapperService = linguisticQuantifierWrapperService;
     }
 
     @Override
@@ -100,7 +89,7 @@ public class EditPanel implements Initializable {
                 comboBoxType, paneFunctionType, comboBoxFunctionType,
                 paneFunctionTypePaneParamFirst, paneFunctionTypePaneParamSecond,
                 paneFunctionTypePaneParamThird, paneFunctionTypePaneParamFourth,
-                linguisticQuantifierService, labelService
+                linguisticQuantifierWrapperService, labelWrapperService
         );
 
         initializer.prepareStage();
@@ -109,6 +98,7 @@ public class EditPanel implements Initializable {
     @FXML
     private void OnMouseClickedListViewQuantifier(MouseEvent mouseEvent) {
         String name = FxHelper.<String>getSelectedItemFromListView(listViewQuantifier);
+/*
         try {
             LinguisticQuantifier linguisticQuantifier =
                     linguisticQuantifierService.findByName(name);
@@ -176,11 +166,14 @@ public class EditPanel implements Initializable {
             PopOutWindow.messageBox("Linguistic Quantifier Not Found",
                     "", Alert.AlertType.WARNING);
         }
+*/
     }
 
     @FXML
     private void OnMouseClickedListViewSummarizer(MouseEvent mouseEvent) {
         String name = FxHelper.<String>getSelectedItemFromListView(listViewSummarizer);
+        //        TODO UNCOMMENT THIS CODE BELOW
+        /*
         try {
             pl.jkkk.task2.logic.fuzzy.linguistic.Label label = labelService.findByName(name);
             labelService.deleteByName(name);
@@ -247,6 +240,7 @@ public class EditPanel implements Initializable {
             PopOutWindow.messageBox("Label Not Found",
                     "", Alert.AlertType.WARNING);
         }
+*/
     }
 
     @FXML
@@ -305,14 +299,16 @@ public class EditPanel implements Initializable {
             case 0: {
                 String name = FxHelper.<String>getSelectedItemFromListView(listViewQuantifier);
                 System.out.println(name);
-                linguisticQuantifierService.deleteByName(name);
+                //    TODO
+//                linguisticQuantifierService.deleteByName(name);
                 break;
             }
             // Summarizer
             case 1: {
                 String name = FxHelper.<String>getSelectedItemFromListView(listViewSummarizer);
                 System.out.println(name);
-                labelService.deleteByName(name);
+                //    TODO
+//                labelService.deleteByName(name);
                 break;
             }
         }

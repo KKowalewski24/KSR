@@ -7,8 +7,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import pl.jkkk.task2.logic.exception.FileOperationException;
 import pl.jkkk.task2.logic.readerwriter.FileWriterPlainText;
-import pl.jkkk.task2.logic.service.label.LabelService;
-import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierService;
+import pl.jkkk.task2.logic.service.label.LabelWrapperService;
+import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierWrapperService;
 import pl.jkkk.task2.logic.service.pollution.PollutionService;
 import pl.jkkk.task2.view.fxml.PopOutWindow;
 import pl.jkkk.task2.view.fxml.StageController;
@@ -29,8 +29,8 @@ public class Loader {
 
     private FileWriterPlainText fileWriterPlainText = new FileWriterPlainText();
     private final PollutionService pollutionService;
-    private final LabelService labelService;
-    private final LinguisticQuantifierService quantifierService;
+    private final LabelWrapperService labelWrapperService;
+    private final LinguisticQuantifierWrapperService quantifierService;
 
     //    TODO LIST FOR STORING RESULT OF SUMMARIZATION
     private List results;
@@ -38,14 +38,14 @@ public class Loader {
     /*------------------------ METHODS REGION ------------------------*/
     public Loader(ComboBox comboBoxQualifier, ComboBox comboBoxSummarizerBasic,
                   ListView listViewResults, TextField textFieldSaveSummarizationNumber,
-                  PollutionService pollutionService, LabelService labelService,
-                  LinguisticQuantifierService quantifierService) {
+                  PollutionService pollutionService, LabelWrapperService labelWrapperService,
+                  LinguisticQuantifierWrapperService quantifierService) {
         this.comboBoxQualifier = comboBoxQualifier;
         this.comboBoxSummarizerBasic = comboBoxSummarizerBasic;
         this.listViewResults = listViewResults;
         this.textFieldSaveSummarizationNumber = textFieldSaveSummarizationNumber;
         this.pollutionService = pollutionService;
-        this.labelService = labelService;
+        this.labelWrapperService = labelWrapperService;
         this.quantifierService = quantifierService;
     }
 

@@ -11,8 +11,8 @@ import javafx.scene.layout.VBox;
 import pl.jkkk.task2.logic.model.enumtype.FunctionType;
 import pl.jkkk.task2.logic.model.enumtype.ObjectType;
 import pl.jkkk.task2.logic.model.enumtype.QuantifierType;
-import pl.jkkk.task2.logic.service.label.LabelService;
-import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierService;
+import pl.jkkk.task2.logic.service.label.LabelWrapperService;
+import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierWrapperService;
 
 import java.util.stream.Collectors;
 
@@ -56,8 +56,8 @@ public class Initializer {
     private HBox paneFunctionTypePaneParamThird;
     private HBox paneFunctionTypePaneParamFourth;
 
-    private final LinguisticQuantifierService linguisticQuantifierService;
-    private final LabelService labelService;
+    private final LinguisticQuantifierWrapperService linguisticQuantifierWrapperService;
+    private final LabelWrapperService labelWrapperService;
 
     /*------------------------ METHODS REGION ------------------------*/
     public Initializer(TabPane tabPane, ListView listViewQuantifier, ListView listViewSummarizer,
@@ -66,8 +66,8 @@ public class Initializer {
                        VBox paneFunctionType, ComboBox comboBoxFunctionType,
                        HBox paneFunctionTypePaneParamFirst, HBox paneFunctionTypePaneParamSecond,
                        HBox paneFunctionTypePaneParamThird, HBox paneFunctionTypePaneParamFourth,
-                       LinguisticQuantifierService linguisticQuantifierService,
-                       LabelService labelService) {
+                       LinguisticQuantifierWrapperService linguisticQuantifierWrapperService,
+                       LabelWrapperService labelWrapperService) {
         this.tabPane = tabPane;
         this.listViewQuantifier = listViewQuantifier;
         this.listViewSummarizer = listViewSummarizer;
@@ -83,8 +83,8 @@ public class Initializer {
         this.paneFunctionTypePaneParamSecond = paneFunctionTypePaneParamSecond;
         this.paneFunctionTypePaneParamThird = paneFunctionTypePaneParamThird;
         this.paneFunctionTypePaneParamFourth = paneFunctionTypePaneParamFourth;
-        this.linguisticQuantifierService = linguisticQuantifierService;
-        this.labelService = labelService;
+        this.linguisticQuantifierWrapperService = linguisticQuantifierWrapperService;
+        this.labelWrapperService = labelWrapperService;
     }
 
     public void updateEditor(String selectObjectValue, Pane textFieldPane,
@@ -167,15 +167,15 @@ public class Initializer {
     }
 
     public void prepareTabPane() {
-        fillListView(listViewQuantifier, linguisticQuantifierService
+        fillListView(listViewQuantifier, linguisticQuantifierWrapperService
                 .findAll()
                 .stream()
-                .map((it) -> it.getName())
+                .map((it) -> it.deserialize().getName())
                 .collect(Collectors.toList()));
-        fillListView(listViewSummarizer, labelService
+        fillListView(listViewSummarizer, labelWrapperService
                 .findAll()
                 .stream()
-                .map((it) -> it.getName())
+                .map((it) -> it.deserialize().getName())
                 .collect(Collectors.toList()));
     }
 
@@ -192,11 +192,14 @@ public class Initializer {
             fillComboBox(comboBoxType, QuantifierType.getNamesList());
         } else if (ObjectType.SUMMARIZER == objectType) {
             label.setText("Linguistic Variable");
+            // TODO UNCOMMENT
+/*
             fillComboBox(comboBoxType, labelService
                     .findAll()
                     .stream()
                     .map((it) -> it.getLinguisticVariable())
                     .collect(Collectors.toList()));
+*/
         }
     }
 

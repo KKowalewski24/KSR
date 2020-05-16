@@ -1,20 +1,11 @@
 package pl.jkkk.task2.logic.fuzzy.linguistic;
 
 import pl.jkkk.task2.logic.fuzzy.set.FuzzySet;
-import pl.jkkk.task2.logic.model.BaseEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.Transient;
-
-@Entity
-public class Label<T> extends BaseEntity {
+public class Label<T> {
 
     private String name;
-    //    TODO REMOVE THIS
-    @Transient
     private FuzzySet fuzzySet;
-    //    TODO REMOVE THIS
-    @Transient
     private LinguisticVariable<T> linguisticVariable;
 
     public Label() {

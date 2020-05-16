@@ -1,6 +1,6 @@
 package pl.jkkk.task2.logic.fuzzy.set;
 
-public class UnionFuzzySet implements FuzzySet {
+public class UnionFuzzySet extends FuzzySet {
     
     private FuzzySet A;
     private FuzzySet B;

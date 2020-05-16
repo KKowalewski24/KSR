@@ -1,6 +1,6 @@
 package pl.jkkk.task2.logic.fuzzy.set;
 
-public class TrapezoidalFuzzySet implements FuzzySet {
+public class TrapezoidalFuzzySet extends FuzzySet {
 
     private final double a;
     private final double b;

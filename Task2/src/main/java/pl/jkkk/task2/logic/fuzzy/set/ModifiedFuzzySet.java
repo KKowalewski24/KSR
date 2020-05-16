@@ -1,6 +1,6 @@
 package pl.jkkk.task2.logic.fuzzy.set;
 
-public class ModifiedFuzzySet implements FuzzySet {
+public class ModifiedFuzzySet extends FuzzySet {
 
     private final FuzzySet original;
     private final double R;

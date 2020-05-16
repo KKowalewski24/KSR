@@ -1,28 +1,38 @@
 package pl.jkkk.task2.logic.fuzzy.linguistic;
 
 import pl.jkkk.task2.logic.fuzzy.set.FuzzySet;
+import pl.jkkk.task2.logic.fuzzy.set.ModifiedFuzzySet;
 
 public class LinguisticQuantifier {
 
-    private String name;
-    private FuzzySet fuzzySet;
+    public enum Type {
+        ABSOLUTE, RELATIVE
+    };
 
-    public LinguisticQuantifier() {
+    private final String name;
+    private final FuzzySet fuzzySet;
+    private final Type type;
+
+    public LinguisticQuantifier(String name, FuzzySet fuzzySet, Type type) {
+        this.name = name;
+        this.fuzzySet = fuzzySet;
+        this.type = type;
+    }
+
+    public double compatibilityLevel(double x) {
+        return fuzzySet.contains(x);
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(final String name) {
-        this.name = name;
+    public Type getType() {
+        return type;
     }
 
-    public FuzzySet getFuzzySet() {
-        return fuzzySet;
-    }
-
-    public void setFuzzySet(final FuzzySet fuzzySet) {
-        this.fuzzySet = fuzzySet;
+    public LinguisticQuantifier modify(final Modifier modifier) {
+        return new LinguisticQuantifier(modifier.getText() + " " + name, 
+                new ModifiedFuzzySet(fuzzySet, modifier.getR()), type);
     }
 }

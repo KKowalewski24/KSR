@@ -1,21 +1,31 @@
 package pl.jkkk.task2.logic.fuzzy.linguistic;
 
-import java.util.List;
+import java.util.Set;
 
 public class LinguisticSummary<T> {
 
     private final LinguisticQuantifier quantifier;
-    private final Label<T> summarizer;
-    private final List<T> objects;
+    private final Label label;
+    private Set<T> objects;
 
-    public LinguisticSummary(final LinguisticQuantifier quantifier, final Label<T> summarizer, final List<T> objects) {
+    public LinguisticSummary(LinguisticQuantifier quantifier, Label<T> label, Set<T> objects) {
         this.quantifier = quantifier;
-        this.summarizer = summarizer;
+        this.label = label;
         this.objects = objects;
     }
 
     public double degreeOfTruth() {
-        /* the crucial point !!! */
-        return 0.0;
+        Set<Double> universeOfDiscourse = label.getLinguisticVariable().extractAttributes(objects);
+        if (quantifier.getType() == LinguisticQuantifier.Type.ABSOLUTE) {
+            return quantifier.compatibilityLevel(label.getFuzzySet().cardinality(universeOfDiscourse));
+        } else {
+            return quantifier.compatibilityLevel(
+                    label.getFuzzySet().cardinality(universeOfDiscourse) / objects.size());
+        }
+    }
+    
+    @Override
+    public String toString() {
+        return quantifier.getName() + " measurement " + label.getName();
     }
 }

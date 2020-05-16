@@ -14,6 +14,22 @@ public class TrapezoidalFuzzySet extends FuzzySet {
         this.d = d;
     }
 
+    public double getA() {
+        return a;
+    }
+
+    public double getB() {
+        return b;
+    }
+
+    public double getC() {
+        return c;
+    }
+
+    public double getD() {
+        return d;
+    }
+
     @Override
     public double contains(double x) {
         if (x > a && x < b) {

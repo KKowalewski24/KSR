@@ -32,16 +32,18 @@ public class LabelWrapperServiceImpl implements LabelWrapperService {
         return label.get();
     }
 
-//    @Override
-//    public LabelWrapper findByName(String name) {
-//        Optional<LabelWrapper> label = labelWrapperRepository.findByName(name);
-//
-//        if (!label.isPresent()) {
-//            throw new LabelNotFoundException();
-//        }
-//
-//        return label.get();
-//    }
+    @Override
+    public LabelWrapper findByName(String name) {
+        //        TODO
+        //        Optional<LabelWrapper> label = labelWrapperRepository.findByName(name);
+        //
+        //        if (!label.isPresent()) {
+        //            throw new LabelNotFoundException();
+        //        }
+        //
+        //        return label.get();
+        return null;
+    }
 
     @Override
     public List<LabelWrapper> findAll() {
@@ -70,9 +72,10 @@ public class LabelWrapperServiceImpl implements LabelWrapperService {
         labelWrapperRepository.deleteAll();
     }
 
-//    @Override
-//    public void deleteByName(String name) {
-//        labelWrapperRepository.deleteByName(name);
-//    }
+    @Override
+    public void deleteByName(String name) {
+        //        TODO
+        //        labelWrapperRepository.deleteByName(name);
+    }
 }
     

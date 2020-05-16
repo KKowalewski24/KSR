@@ -26,6 +26,10 @@ public class LinguisticQuantifier implements Serializable {
         return name;
     }
 
+    public FuzzySet getFuzzySet() {
+        return fuzzySet;
+    }
+
     public QuantifierType getQuantifierType() {
         return quantifierType;
     }

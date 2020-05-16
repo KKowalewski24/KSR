@@ -3,6 +3,7 @@ package pl.jkkk.task2.view.controller.editpanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -12,8 +13,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.springframework.stereotype.Component;
 import pl.jkkk.task2.Main;
+import pl.jkkk.task2.logic.exception.LabelNotFoundException;
+import pl.jkkk.task2.logic.exception.LinguisticQuantifierNotFoundException;
 import pl.jkkk.task2.logic.fuzzy.linguistic.Label;
 import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticQuantifier;
+import pl.jkkk.task2.logic.fuzzy.set.FuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.GaussianFuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.TrapezoidalFuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.TriangularFuzzySet;
@@ -26,12 +30,12 @@ import pl.jkkk.task2.logic.model.wrapper.LinguisticQuantifierWrapper;
 import pl.jkkk.task2.logic.service.label.LabelWrapperService;
 import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierWrapperService;
 import pl.jkkk.task2.view.fxml.FxHelper;
+import pl.jkkk.task2.view.fxml.PopOutWindow;
 import pl.jkkk.task2.view.fxml.StageController;
 import pl.jkkk.task2.view.fxml.core.WindowDimensions;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 import static pl.jkkk.task2.view.constant.ViewConstants.MAIN_PANEL_HEIGHT;
 import static pl.jkkk.task2.view.constant.ViewConstants.MAIN_PANEL_WIDTH;
@@ -110,43 +114,38 @@ public class EditPanel implements Initializable {
     @FXML
     private void OnMouseClickedListViewQuantifier(MouseEvent mouseEvent) {
         String name = FxHelper.<String>getSelectedItemFromListView(listViewQuantifier);
-/*
         try {
-            LinguisticQuantifier linguisticQuantifier =
-                    linguisticQuantifierService.findByName(name);
-            MembershipFunction membershipFunction
-                    = linguisticQuantifier.getFuzzySet().getMembershipFunction();
+            LinguisticQuantifierWrapper quantifierWrapper
+                    = linguisticQuantifierWrapperService.findByName(name);
+            LinguisticQuantifier quantifier = quantifierWrapper.deserialize();
+            FuzzySet fuzzySet = quantifier.getFuzzySet();
 
-            if (membershipFunction instanceof TrapezoidalMembershipFunction) {
-                TrapezoidalMembershipFunction trapezoidalMembershipFunction
-                        = (TrapezoidalMembershipFunction) membershipFunction;
+            if (fuzzySet instanceof TrapezoidalFuzzySet) {
+                TrapezoidalFuzzySet trapezoidalFuzzySet = (TrapezoidalFuzzySet) fuzzySet;
 
                 initializer.updateEditor(
                         ObjectType.QUANTIFIER.getName(),
                         paneTextField,
-                        linguisticQuantifier.getName(),
-                        // TODO CHANGE BELOW PARAM FOR REAL
-                        QuantifierType.ABSOLUTE.getName(),
+                        quantifier.getName(),
+                        quantifier.getQuantifierType().getName(),
                         FunctionType.TRAPEZOIDAL.getName(),
                         paneFunctionTypePaneParamFirst,
-                        String.valueOf(trapezoidalMembershipFunction.getA()),
+                        String.valueOf(trapezoidalFuzzySet.getA()),
                         paneFunctionTypePaneParamSecond,
-                        String.valueOf(trapezoidalMembershipFunction.getB()),
+                        String.valueOf(trapezoidalFuzzySet.getB()),
                         paneFunctionTypePaneParamThird,
-                        String.valueOf(trapezoidalMembershipFunction.getC()),
+                        String.valueOf(trapezoidalFuzzySet.getC()),
                         paneFunctionTypePaneParamFourth,
-                        String.valueOf(trapezoidalMembershipFunction.getD())
+                        String.valueOf(trapezoidalFuzzySet.getD())
                 );
-            } else if (membershipFunction instanceof TriangularMembershipFunction) {
-                TriangularMembershipFunction triangularMembershipFunction
-                        = (TriangularMembershipFunction) membershipFunction;
+            } else if (fuzzySet instanceof TriangularFuzzySet) {
+                TriangularFuzzySet triangularMembershipFunction = (TriangularFuzzySet) fuzzySet;
 
                 initializer.updateEditor(
                         ObjectType.QUANTIFIER.getName(),
                         paneTextField,
-                        linguisticQuantifier.getName(),
-                        // TODO CHANGE BELOW PARAM FOR REAL
-                        QuantifierType.ABSOLUTE.getName(),
+                        quantifier.getName(),
+                        quantifier.getQuantifierType().getName(),
                         FunctionType.TRIANGULAR.getName(),
                         paneFunctionTypePaneParamFirst,
                         String.valueOf(triangularMembershipFunction.getA()),
@@ -155,17 +154,14 @@ public class EditPanel implements Initializable {
                         paneFunctionTypePaneParamThird,
                         String.valueOf(triangularMembershipFunction.getC())
                 );
-
-            } else if (membershipFunction instanceof GaussianMembershipFunction) {
-                GaussianMembershipFunction gaussianMembershipFunction
-                        = ((GaussianMembershipFunction) membershipFunction);
+            } else if (fuzzySet instanceof GaussianFuzzySet) {
+                GaussianFuzzySet gaussianMembershipFunction = ((GaussianFuzzySet) fuzzySet);
 
                 initializer.updateEditor(
                         ObjectType.QUANTIFIER.getName(),
                         paneTextField,
-                        linguisticQuantifier.getName(),
-                        // TODO CHANGE BELOW PARAM FOR REAL
-                        QuantifierType.ABSOLUTE.getName(),
+                        quantifier.getName(),
+                        quantifier.getQuantifierType().getName(),
                         FunctionType.GAUSSIAN.getName(),
                         paneFunctionTypePaneParamFirst,
                         String.valueOf(gaussianMembershipFunction.getCenter()),
@@ -178,49 +174,43 @@ public class EditPanel implements Initializable {
             PopOutWindow.messageBox("Linguistic Quantifier Not Found",
                     "", Alert.AlertType.WARNING);
         }
-*/
     }
 
     @FXML
     private void OnMouseClickedListViewSummarizer(MouseEvent mouseEvent) {
         String name = FxHelper.<String>getSelectedItemFromListView(listViewSummarizer);
-        //        TODO UNCOMMENT THIS CODE BELOW
-        /*
-        try {
-            pl.jkkk.task2.logic.fuzzy.linguistic.Label label = labelService.findByName(name);
-            labelService.deleteByName(name);
-            MembershipFunction membershipFunction = label.getFuzzySet().getMembershipFunction();
 
-            if (membershipFunction instanceof TrapezoidalMembershipFunction) {
-                TrapezoidalMembershipFunction trapezoidalMembershipFunction
-                        = (TrapezoidalMembershipFunction) membershipFunction;
+        try {
+            LabelWrapper labelWrapper = labelWrapperService.findByName(name);
+            Label label = labelWrapper.deserialize();
+            FuzzySet fuzzySet = label.getFuzzySet();
+
+            if (fuzzySet instanceof TrapezoidalFuzzySet) {
+                TrapezoidalFuzzySet trapezoidalFuzzySet = (TrapezoidalFuzzySet) fuzzySet;
 
                 initializer.updateEditor(
                         ObjectType.SUMMARIZER.getName(),
                         paneTextField,
                         label.getName(),
-                        // TODO CHANGE BELOW PARAM FOR REAL
-                        QuantifierType.ABSOLUTE.getName(),
+                        label.getLinguisticVariable().getName(),
                         FunctionType.TRAPEZOIDAL.getName(),
                         paneFunctionTypePaneParamFirst,
-                        String.valueOf(trapezoidalMembershipFunction.getA()),
+                        String.valueOf(trapezoidalFuzzySet.getA()),
                         paneFunctionTypePaneParamSecond,
-                        String.valueOf(trapezoidalMembershipFunction.getB()),
+                        String.valueOf(trapezoidalFuzzySet.getB()),
                         paneFunctionTypePaneParamThird,
-                        String.valueOf(trapezoidalMembershipFunction.getC()),
+                        String.valueOf(trapezoidalFuzzySet.getC()),
                         paneFunctionTypePaneParamFourth,
-                        String.valueOf(trapezoidalMembershipFunction.getD())
+                        String.valueOf(trapezoidalFuzzySet.getD())
                 );
-            } else if (membershipFunction instanceof TriangularMembershipFunction) {
-                TriangularMembershipFunction triangularMembershipFunction
-                        = (TriangularMembershipFunction) membershipFunction;
+            } else if (fuzzySet instanceof TriangularFuzzySet) {
+                TriangularFuzzySet triangularMembershipFunction = (TriangularFuzzySet) fuzzySet;
 
                 initializer.updateEditor(
                         ObjectType.SUMMARIZER.getName(),
                         paneTextField,
                         label.getName(),
-                        // TODO CHANGE BELOW PARAM FOR REAL
-                        QuantifierType.ABSOLUTE.getName(),
+                        label.getLinguisticVariable().getName(),
                         FunctionType.TRIANGULAR.getName(),
                         paneFunctionTypePaneParamFirst,
                         String.valueOf(triangularMembershipFunction.getA()),
@@ -229,17 +219,14 @@ public class EditPanel implements Initializable {
                         paneFunctionTypePaneParamThird,
                         String.valueOf(triangularMembershipFunction.getC())
                 );
-
-            } else if (membershipFunction instanceof GaussianMembershipFunction) {
-                GaussianMembershipFunction gaussianMembershipFunction
-                        = ((GaussianMembershipFunction) membershipFunction);
+            } else if (fuzzySet instanceof GaussianFuzzySet) {
+                GaussianFuzzySet gaussianMembershipFunction = ((GaussianFuzzySet) fuzzySet);
 
                 initializer.updateEditor(
                         ObjectType.SUMMARIZER.getName(),
                         paneTextField,
                         label.getName(),
-                        // TODO CHANGE BELOW PARAM FOR REAL
-                        QuantifierType.ABSOLUTE.getName(),
+                        label.getLinguisticVariable().getName(),
                         FunctionType.GAUSSIAN.getName(),
                         paneFunctionTypePaneParamFirst,
                         String.valueOf(gaussianMembershipFunction.getCenter()),
@@ -247,12 +234,12 @@ public class EditPanel implements Initializable {
                         String.valueOf(gaussianMembershipFunction.getWidth())
                 );
             }
+
         } catch (LabelNotFoundException e) {
             e.printStackTrace();
             PopOutWindow.messageBox("Label Not Found",
                     "", Alert.AlertType.WARNING);
         }
-*/
     }
 
     @FXML
@@ -317,7 +304,6 @@ public class EditPanel implements Initializable {
                         ),
                         QuantifierType.fromString(getValueFromComboBox(comboBoxType))
                 ));
-
                 break;
             }
             case TRIANGULAR: {
@@ -330,7 +316,6 @@ public class EditPanel implements Initializable {
                         ),
                         QuantifierType.fromString(getValueFromComboBox(comboBoxType))
                 ));
-
                 break;
             }
             case GAUSSIAN: {
@@ -342,7 +327,6 @@ public class EditPanel implements Initializable {
                         ),
                         QuantifierType.fromString(getValueFromComboBox(comboBoxType))
                 ));
-
                 break;
             }
         }

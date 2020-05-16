@@ -10,6 +10,14 @@ public class GaussianFuzzySet extends FuzzySet {
         this.width = width;
     }
 
+    public double getCenter() {
+        return center;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
     @Override
     public double contains(double x) {
         return Math.exp(- (center - x) * (center - x) / (2 * width * width));

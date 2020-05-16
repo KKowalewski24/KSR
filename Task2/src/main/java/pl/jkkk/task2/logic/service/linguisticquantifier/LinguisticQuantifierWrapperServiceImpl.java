@@ -32,17 +32,19 @@ public class LinguisticQuantifierWrapperServiceImpl implements LinguisticQuantif
         return quantifier.get();
     }
 
-    //    @Override
-    //    public LinguisticQuantifierWrapper findByName(String name) {
-    //        Optional<LinguisticQuantifierWrapper> quantifier = quantifierRepository.findByName
-    //        (name);
-    //
-    //        if (!quantifier.isPresent()) {
-    //            throw new LinguisticQuantifierNotFoundException();
-    //        }
-    //
-    //        return quantifier.get();
-    //    }
+    @Override
+    public LinguisticQuantifierWrapper findByName(String name) {
+        //        TODO
+        //        Optional<LinguisticQuantifierWrapper> quantifier = quantifierRepository
+        //        .findByName(name);
+        //
+        //        if (!quantifier.isPresent()) {
+        //            throw new LinguisticQuantifierNotFoundException();
+        //        }
+        //
+        //        return quantifier.get();
+        return null;
+    }
 
     @Override
     public List<LinguisticQuantifierWrapper> findAll() {
@@ -71,9 +73,10 @@ public class LinguisticQuantifierWrapperServiceImpl implements LinguisticQuantif
         quantifierRepository.deleteAll();
     }
 
-    //    @Override
-    //    public void deleteByName(String name) {
-    //        quantifierRepository.deleteByName(name);
-    //    }
+    @Override
+    public void deleteByName(String name) {
+        //        TODO
+        //        quantifierRepository.deleteByName(name);
+    }
 }
     

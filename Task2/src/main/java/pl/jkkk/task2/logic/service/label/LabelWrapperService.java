@@ -7,8 +7,7 @@ public interface LabelWrapperService extends BaseService<LabelWrapper> {
 
     LabelWrapper save(LabelWrapper object);
 
-//    TODO
-//    LabelWrapper findByName(String name);
+    LabelWrapper findByName(String name);
 
-//    void deleteByName(String name);
+    void deleteByName(String name);
 }

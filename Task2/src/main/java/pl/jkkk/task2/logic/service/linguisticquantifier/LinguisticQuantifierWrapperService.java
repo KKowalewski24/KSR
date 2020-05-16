@@ -8,8 +8,7 @@ public interface LinguisticQuantifierWrapperService
 
     LinguisticQuantifierWrapper save(LinguisticQuantifierWrapper linguisticQuantifier);
 
-    //    TODO
-    //    LinguisticQuantifierWrapper findByName(String name);
+    LinguisticQuantifierWrapper findByName(String name);
 
-    //    void deleteByName(String name);
+    void deleteByName(String name);
 }

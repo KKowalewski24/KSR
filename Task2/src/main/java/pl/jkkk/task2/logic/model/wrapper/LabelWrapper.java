@@ -1,5 +1,6 @@
 package pl.jkkk.task2.logic.model.wrapper;
 
+import org.hibernate.annotations.Type;
 import org.hibernate.internal.util.SerializationHelper;
 import pl.jkkk.task2.logic.fuzzy.linguistic.Label;
 import pl.jkkk.task2.logic.model.BaseEntity;
@@ -12,7 +13,9 @@ import javax.persistence.Lob;
 public class LabelWrapper extends BaseEntity implements Wrapper<Label<Pollution>> {
 
     /*------------------------ FIELDS REGION ------------------------*/
+    //    TODO
     @Lob
+    @Type(type = "org.hibernate.type.BinaryType")
     private byte[] label;
 
     /*------------------------ METHODS REGION ------------------------*/

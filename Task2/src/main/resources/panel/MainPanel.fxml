@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+           minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0"
+           xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="pl.jkkk.task2.view.controller.mainpanel.MainPanel">
+    <ToolBar prefHeight="40.0" prefWidth="1200.0">
+        <items>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Label alignment="CENTER" prefHeight="19.0" prefWidth="123.0" text="Quantifier">
+                <padding>
+                    <Insets left="50.0"/>
+                </padding>
+            </Label>
+            <Label alignment="CENTER" prefHeight="19.0" prefWidth="328.0"
+                   text="Number Of Summarization To Save"/>
+            <Label alignment="CENTER" prefHeight="19.0" prefWidth="83.0" text="Summarizer"/>
+            <Pane HBox.hgrow="ALWAYS"/>
+        </items>
+    </ToolBar>
+    <ToolBar prefHeight="50.0" prefWidth="1200.0">
+        <StackPane.margin>
+            <Insets top="40.0"/>
+        </StackPane.margin>
+        <items>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <ProgressIndicator fx:id="progressIndicator" maxHeight="40" visible="false"/>
+            <ComboBox fx:id="comboBoxQuantifier" prefWidth="200.0"/>
+            <Separator orientation="VERTICAL" prefHeight="50.0"/>
+            <TextField fx:id="textFieldSaveSummarizationNumber"/>
+            <Separator orientation="VERTICAL" prefHeight="50.0"/>
+            <ComboBox fx:id="comboBoxSummarizer" prefWidth="200.0"/>
+            <Pane HBox.hgrow="ALWAYS"/>
+        </items>
+    </ToolBar>
+    <ToolBar prefHeight="70.0" prefWidth="1200.0">
+        <StackPane.margin>
+            <Insets top="100.0"/>
+        </StackPane.margin>
+        <items>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false"
+                    onAction="#onActionButtonGenerateBasicSummarization" prefHeight="35.0"
+                    prefWidth="161.0" text="Generate Summarization"/>
+            <Button layoutX="10.0" layoutY="10.0" minHeight="35.0" minWidth="100.0"
+                    mnemonicParsing="false" onAction="#onActionButtonOpenEditWindow"
+                    prefHeight="35.0" prefWidth="199.0" text="Edit Quantifier and Summarizer"/>
+            <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false"
+                    onAction="#onActionSaveSummarization" prefHeight="35.0" prefWidth="136.0"
+                    text="Save Summarization"/>
+            <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false"
+                    onAction="#onActionButtonChangeTheme" prefHeight="35.0" prefWidth="136.0"
+                    text="Dark Mode ON/OFF"/>
+            <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false"
+                    onAction="#onActionButtonReloadStage" text="Refresh Application"/>
+            <Button layoutX="106.0" layoutY="10.0" minHeight="35.0" minWidth="100.0"
+                    mnemonicParsing="false" onAction="#onActionButtonCloseProgram" prefHeight="35.0"
+                    prefWidth="119.0" text="Close Application"/>
+            <Pane HBox.hgrow="ALWAYS"/>
+        </items>
+    </ToolBar>
+    <ListView fx:id="listViewResults" maxHeight="450.0" maxWidth="1000.0">
+        <StackPane.margin>
+            <Insets top="200.0"/>
+        </StackPane.margin>
+    </ListView>
+</StackPane>

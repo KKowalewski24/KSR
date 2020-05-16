@@ -3,7 +3,7 @@ package pl.jkkk.task2.logic.fuzzy.linguistic;
 import pl.jkkk.task2.logic.fuzzy.set.FuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.ModifiedFuzzySet;
 
-public class LinguisticQuantifier {
+public class LinguisticQuantifier implements Serializable {
 
     public enum Type {
         ABSOLUTE, RELATIVE

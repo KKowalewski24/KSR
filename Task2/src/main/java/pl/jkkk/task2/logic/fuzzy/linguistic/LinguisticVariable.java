@@ -1,5 +1,6 @@
 package pl.jkkk.task2.logic.fuzzy.linguistic;
 
+import java.io.Serializable;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -11,7 +12,7 @@ import java.util.stream.Collectors;
  * values of selected attribute of class T instances so child
  * classes have to implement mapping method.
  */
-public abstract class LinguisticVariable<T> {
+public abstract class LinguisticVariable<T> implements Serializable {
 
     private final String name;
 

@@ -1,10 +1,12 @@
 package pl.jkkk.task2.logic.fuzzy.linguistic;
 
-import pl.jkkk.task2.logic.fuzzy.set.FuzzySet;
-import pl.jkkk.task2.logic.fuzzy.set.UnionFuzzySet;
-import pl.jkkk.task2.logic.fuzzy.set.IntersectionFuzzySet;
+import java.io.Serializable;
+
 import pl.jkkk.task2.logic.fuzzy.set.ComplementFuzzySet;
+import pl.jkkk.task2.logic.fuzzy.set.FuzzySet;
+import pl.jkkk.task2.logic.fuzzy.set.IntersectionFuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.ModifiedFuzzySet;
+import pl.jkkk.task2.logic.fuzzy.set.UnionFuzzySet;
 
 /**
  * This class represents label of specific linguistic variable,
@@ -12,7 +14,7 @@ import pl.jkkk.task2.logic.fuzzy.set.ModifiedFuzzySet;
  * calculate compatibility level of some T object's attribute value
  * with this label.
  */
-public class Label<T> {
+public class Label<T> implements Serializable {
 
     private final String name;
     private final FuzzySet fuzzySet;

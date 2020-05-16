@@ -2,6 +2,11 @@ package pl.jkkk.task2.mode;
 
 import com.opencsv.exceptions.CsvException;
 import org.springframework.stereotype.Component;
+import pl.jkkk.task2.logic.fuzzy.linguistic.Label;
+import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticQuantifier;
+import pl.jkkk.task2.logic.model.Pollution;
+import pl.jkkk.task2.logic.model.wrapper.LabelWrapper;
+import pl.jkkk.task2.logic.model.wrapper.LinguisticQuantifierWrapper;
 import pl.jkkk.task2.logic.readerwriter.FileReaderCsv;
 import pl.jkkk.task2.logic.readerwriter.FileWriterPlainText;
 import pl.jkkk.task2.logic.service.label.LabelWrapperService;
@@ -63,8 +68,30 @@ public class CommandMode {
 
     private void seedLinguisticFacilitiesInDatabase() {
         //TODO ADD SAVING LINGUISTIC DATA TO DB
-        //        linguisticQuantifierService.save();
-        //        labelService.save();
+
+        //        savelinguisticQuantifier(new LinguisticQuantifier());
+        //        savelinguisticQuantifier(new LinguisticQuantifier());
+        //        savelinguisticQuantifier(new LinguisticQuantifier());
+        //        savelinguisticQuantifier(new LinguisticQuantifier());
+        //        savelinguisticQuantifier(new LinguisticQuantifier());
+
+        //        savelabel(new Label<>());
+        //        savelabel(new Label<>());
+        //        savelabel(new Label<>());
+        //        savelabel(new Label<>());
+        //        savelabel(new Label<>());
+    }
+
+    private void savelinguisticQuantifier(LinguisticQuantifier linguisticQuantifier) {
+        LinguisticQuantifierWrapper quantifierWrapper = new LinguisticQuantifierWrapper();
+        quantifierWrapper.serialize(linguisticQuantifier);
+        linguisticQuantifierWrapperService.save(quantifierWrapper);
+    }
+
+    private void savelabel(Label<Pollution> label) {
+        LabelWrapper labelWrapper = new LabelWrapper();
+        labelWrapper.serialize(label);
+        labelWrapperService.save(labelWrapper);
     }
 
     //    private static void printUsage() {

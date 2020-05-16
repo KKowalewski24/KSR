@@ -6,6 +6,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import pl.jkkk.task2.logic.exception.FileOperationException;
+import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticSummary;
+import pl.jkkk.task2.logic.model.Pollution;
 import pl.jkkk.task2.logic.readerwriter.FileWriterPlainText;
 import pl.jkkk.task2.logic.service.label.LabelWrapperService;
 import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierWrapperService;
@@ -15,6 +17,8 @@ import pl.jkkk.task2.view.fxml.StageController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static pl.jkkk.task2.view.fxml.FxHelper.fillListView;
 import static pl.jkkk.task2.view.fxml.FxHelper.getValueFromComboBox;
@@ -32,7 +36,6 @@ public class Loader {
     private final LabelWrapperService labelWrapperService;
     private final LinguisticQuantifierWrapperService quantifierService;
 
-    //    TODO LIST FOR STORING RESULT OF SUMMARIZATION
     private List results;
 
     /*------------------------ METHODS REGION ------------------------*/
@@ -51,11 +54,12 @@ public class Loader {
 
     public void generateBasicSummarization() {
         String selectedQualifier = getValueFromComboBox(comboBoxQualifier);
-        String selectedSummarizerBasic = getValueFromComboBox(comboBoxSummarizerBasic);
+        String selectedSummarizer = getValueFromComboBox(comboBoxSummarizerBasic);
 
-        //        TODO CHANGE FOR REAL DATA - METHOD FROM LOGIC WHICH WILL BE RETURNING LIST OF
-        //         STRINGS
-        //        results=
+        //        TODO
+        //        LinguisticSummary<Pollution> linguisticSummary = new LinguisticSummary<>();
+        //        results = Stream.of(linguisticSummary.toString()).collect(Collectors.toList());
+
         fillListView(listViewResults, results);
         textFieldSaveSummarizationNumber.setText(String.valueOf(results.size()));
     }

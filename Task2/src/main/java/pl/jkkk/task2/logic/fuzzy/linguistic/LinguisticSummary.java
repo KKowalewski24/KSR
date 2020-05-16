@@ -15,7 +15,7 @@ public class LinguisticSummary<T> {
     }
 
     public double degreeOfTruth() {
-        Set<Double> universeOfDiscourse = label.getLinguisticVariable().extractAttributes(objects);
+        Set<Double> universeOfDiscourse = label.getLinguisticVariable().universeOfDiscourse(objects);
         if (quantifier.getType() == LinguisticQuantifier.Type.ABSOLUTE) {
             return quantifier.compatibilityLevel(label.getFuzzySet().cardinality(universeOfDiscourse));
         } else {

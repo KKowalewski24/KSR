@@ -2,29 +2,30 @@ package pl.jkkk.task2.logic.fuzzy.linguistic;
 
 import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
- * This class represents linguistic variable, it contains set
- * of labels and provides method to create universe of discourse
- * extracting values of selected attribute of T instances.
+ * This class represents linguistic variable, it has some name
+ * and provides universe of discourse for fuzzy sets stored in
+ * related labels, this universe is computed by extracting
+ * values of selected attribute of class T instances so child
+ * classes have to implement mapping method.
  */
 public abstract class LinguisticVariable<T> {
 
     private final String name;
-    private final Set<Label<T>> labels;
 
-    public LinguisticVariable(final String name, final Set<Label<T>> labels) {
+    public LinguisticVariable(final String name) {
         this.name = name;
-        this.labels = labels;
     }
 
-    public abstract Set<Double> extractAttributes(Set<T> objects);
+    public Set<Double> universeOfDiscourse(Set<T> objects) {
+        return objects.stream().map(object -> extractAttribute(object)).collect(Collectors.toSet());
+    }
+
+    abstract protected Double extractAttribute(T object);
 
     public String getName() {
         return name;
-    }
-
-    public Set<Label<T>> getLabels() {
-        return labels;
     }
 }

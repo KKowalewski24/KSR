@@ -6,6 +6,12 @@ import pl.jkkk.task2.logic.fuzzy.set.IntersectionFuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.ComplementFuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.ModifiedFuzzySet;
 
+/**
+ * This class represents label of specific linguistic variable,
+ * it has some name and store fuzzy set, which can be used to
+ * calculate compatibility level of some T object's attribute value
+ * with this label.
+ */
 public class Label<T> {
 
     private final String name;

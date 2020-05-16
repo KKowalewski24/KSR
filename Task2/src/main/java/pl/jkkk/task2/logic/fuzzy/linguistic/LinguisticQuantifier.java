@@ -1,5 +1,7 @@
 package pl.jkkk.task2.logic.fuzzy.linguistic;
 
+import java.io.Serializable;
+
 import pl.jkkk.task2.logic.fuzzy.set.FuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.ModifiedFuzzySet;
 

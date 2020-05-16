@@ -1,5 +1,7 @@
 package pl.jkkk.task2.logic.fuzzy.linguistic;
 
+import pl.jkkk.task2.logic.model.enumtype.QuantifierType;
+
 import java.util.Set;
 
 public class LinguisticSummary<T> {
@@ -16,14 +18,14 @@ public class LinguisticSummary<T> {
 
     public double degreeOfTruth() {
         Set<Double> universeOfDiscourse = label.getLinguisticVariable().universeOfDiscourse(objects);
-        if (quantifier.getType() == LinguisticQuantifier.Type.ABSOLUTE) {
+        if (quantifier.getQuantifierType() == QuantifierType.ABSOLUTE) {
             return quantifier.compatibilityLevel(label.getFuzzySet().cardinality(universeOfDiscourse));
         } else {
             return quantifier.compatibilityLevel(
                     label.getFuzzySet().cardinality(universeOfDiscourse) / objects.size());
         }
     }
-    
+
     @Override
     public String toString() {
         return quantifier.getName() + " measurement " + label.getName();

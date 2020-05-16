@@ -12,7 +12,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.springframework.stereotype.Component;
 import pl.jkkk.task2.Main;
+import pl.jkkk.task2.logic.fuzzy.linguistic.Label;
+import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticQuantifier;
+import pl.jkkk.task2.logic.fuzzy.set.GaussianFuzzySet;
+import pl.jkkk.task2.logic.fuzzy.set.TrapezoidalFuzzySet;
+import pl.jkkk.task2.logic.fuzzy.set.TriangularFuzzySet;
+import pl.jkkk.task2.logic.model.enumtype.FunctionType;
+import pl.jkkk.task2.logic.model.enumtype.LinguisticVariableType;
 import pl.jkkk.task2.logic.model.enumtype.ObjectType;
+import pl.jkkk.task2.logic.model.enumtype.QuantifierType;
+import pl.jkkk.task2.logic.model.wrapper.LabelWrapper;
+import pl.jkkk.task2.logic.model.wrapper.LinguisticQuantifierWrapper;
 import pl.jkkk.task2.logic.service.label.LabelWrapperService;
 import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierWrapperService;
 import pl.jkkk.task2.view.fxml.FxHelper;
@@ -21,12 +31,14 @@ import pl.jkkk.task2.view.fxml.core.WindowDimensions;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import static pl.jkkk.task2.view.constant.ViewConstants.MAIN_PANEL_HEIGHT;
 import static pl.jkkk.task2.view.constant.ViewConstants.MAIN_PANEL_WIDTH;
 import static pl.jkkk.task2.view.constant.ViewConstants.PATH_MAIN_PANEL;
 import static pl.jkkk.task2.view.constant.ViewConstants.TITLE_MAIN_PANEL;
 import static pl.jkkk.task2.view.fxml.FxHelper.getSelectedTabIndex;
+import static pl.jkkk.task2.view.fxml.FxHelper.getTextFieldFromPaneAndGetValue;
 import static pl.jkkk.task2.view.fxml.FxHelper.getValueFromComboBox;
 
 @Component
@@ -275,19 +287,117 @@ public class EditPanel implements Initializable {
 
         switch (objectType) {
             case QUANTIFIER: {
-                // TODO ADD VALUES IN CONSTRUCTOR
-                //  linguisticQuantifierService.save(new LinguisticQuantifier());
+                onActionConfirmCaseQuantifier();
                 break;
             }
             case SUMMARIZER: {
-                // TODO ADD VALUES IN CONSTRUCTOR
-                //  labelService.save(new pl.jkkk.task2.logic.fuzzy.linguistic.Label());
+                onActionConfirmSummarizer();
                 break;
             }
         }
 
         initializer.prepareTabPane();
         paneRightSide.setVisible(false);
+    }
+
+    private void onActionConfirmCaseQuantifier() {
+        FunctionType functionType = FunctionType
+                .fromString(getValueFromComboBox(comboBoxFunctionType));
+        LinguisticQuantifierWrapper quantifierWrapper = new LinguisticQuantifierWrapper();
+
+        switch (functionType) {
+            case TRAPEZOIDAL: {
+                quantifierWrapper.serialize(new LinguisticQuantifier(
+                        getTextFieldFromPaneAndGetValue(paneTextField, 1),
+                        new TrapezoidalFuzzySet(
+                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
+                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1)),
+                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamThird, 1)),
+                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFourth, 1))
+                        ),
+                        QuantifierType.fromString(getValueFromComboBox(comboBoxType))
+                ));
+
+                break;
+            }
+            case TRIANGULAR: {
+                quantifierWrapper.serialize(new LinguisticQuantifier(
+                        getTextFieldFromPaneAndGetValue(paneTextField, 1),
+                        new TriangularFuzzySet(
+                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
+                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1)),
+                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamThird, 1))
+                        ),
+                        QuantifierType.fromString(getValueFromComboBox(comboBoxType))
+                ));
+
+                break;
+            }
+            case GAUSSIAN: {
+                quantifierWrapper.serialize(new LinguisticQuantifier(
+                        getTextFieldFromPaneAndGetValue(paneTextField, 1),
+                        new GaussianFuzzySet(
+                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
+                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1))
+                        ),
+                        QuantifierType.fromString(getValueFromComboBox(comboBoxType))
+                ));
+
+                break;
+            }
+        }
+
+        linguisticQuantifierWrapperService.save(quantifierWrapper);
+    }
+
+    private void onActionConfirmSummarizer() {
+        FunctionType functionType = FunctionType
+                .fromString(getValueFromComboBox(comboBoxFunctionType));
+        LabelWrapper labelWrapper = new LabelWrapper();
+
+        switch (functionType) {
+            case TRAPEZOIDAL: {
+                labelWrapper.serialize(new Label<>(
+                        getTextFieldFromPaneAndGetValue(paneTextField, 1),
+                        new TrapezoidalFuzzySet(
+                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
+                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1)),
+                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamThird, 1)),
+                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFourth, 1))
+                        ),
+                        LinguisticVariableType.getObjectFromString(getValueFromComboBox(comboBoxType))
+                ));
+
+                break;
+            }
+            case TRIANGULAR: {
+                labelWrapper.serialize(new Label<>(
+                        getTextFieldFromPaneAndGetValue(paneTextField, 1),
+                        new TriangularFuzzySet(
+                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
+                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1)),
+                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamThird, 1))
+                        ),
+                        LinguisticVariableType.getObjectFromString(getValueFromComboBox(comboBoxType))
+                ));
+
+                break;
+            }
+            case GAUSSIAN: {
+                labelWrapper.serialize(new Label<>(
+                        getTextFieldFromPaneAndGetValue(paneTextField, 1),
+                        new GaussianFuzzySet(
+                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
+                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1))
+                        ),
+                        LinguisticVariableType.getObjectFromString(getValueFromComboBox(comboBoxType))
+                ));
+
+                break;
+            }
+        }
+
+        labelWrapperService.save(labelWrapper);
     }
 
     /*--------------------------------------------------------------------------------------------*/
@@ -300,7 +410,7 @@ public class EditPanel implements Initializable {
                 String name = FxHelper.<String>getSelectedItemFromListView(listViewQuantifier);
                 System.out.println(name);
                 //    TODO
-//                linguisticQuantifierService.deleteByName(name);
+                //                linguisticQuantifierService.deleteByName(name);
                 break;
             }
             // Summarizer
@@ -308,7 +418,7 @@ public class EditPanel implements Initializable {
                 String name = FxHelper.<String>getSelectedItemFromListView(listViewSummarizer);
                 System.out.println(name);
                 //    TODO
-//                labelService.deleteByName(name);
+                //                labelService.deleteByName(name);
                 break;
             }
         }

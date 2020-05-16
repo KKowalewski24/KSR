@@ -1,17 +1,18 @@
 package pl.jkkk.task2.logic.model.wrapper;
 
-import javax.persistence.Entity;
-
 import org.hibernate.internal.util.SerializationHelper;
-
 import pl.jkkk.task2.logic.fuzzy.linguistic.Label;
 import pl.jkkk.task2.logic.model.BaseEntity;
 import pl.jkkk.task2.logic.model.Pollution;
+
+import javax.persistence.Entity;
+import javax.persistence.Lob;
 
 @Entity
 public class LabelWrapper extends BaseEntity implements Wrapper<Label<Pollution>> {
 
     /*------------------------ FIELDS REGION ------------------------*/
+    @Lob
     private byte[] label;
 
     /*------------------------ METHODS REGION ------------------------*/

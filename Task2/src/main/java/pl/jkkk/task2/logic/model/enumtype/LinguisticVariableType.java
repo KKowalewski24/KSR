@@ -1,5 +1,7 @@
 package pl.jkkk.task2.logic.model.enumtype;
 
+import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticVariable;
+import pl.jkkk.task2.logic.model.Pollution;
 import pl.jkkk.task2.logic.model.variable.aqi.AQIValueCO;
 import pl.jkkk.task2.logic.model.variable.aqi.AQIValueNO2;
 import pl.jkkk.task2.logic.model.variable.aqi.AQIValueO3;
@@ -35,15 +37,15 @@ public enum LinguisticVariableType {
     MAX_CONCENTRATION_O3(MaxConcentrationO3.NAME),
     MAX_CONCENTRATION_SO2(MaxConcentrationSO2.NAME),
 
-    Mean_Concentration_CO(MeanConcentrationCO.NAME),
-    Mean_Concentration_NO2(MeanConcentrationNO2.NAME),
-    Mean_Concentration_O3(MeanConcentrationO3.NAME),
-    Mean_Concentration_SO2(MeanConcentrationSO2.NAME),
+    MEAN_CONCENTRATION_CO(MeanConcentrationCO.NAME),
+    MEAN_CONCENTRATION_NO2(MeanConcentrationNO2.NAME),
+    MEAN_CONCENTRATION_O3(MeanConcentrationO3.NAME),
+    MEAN_CONCENTRATION_SO2(MeanConcentrationSO2.NAME),
 
-    Max_Hour_CO(MaxHourCO.NAME),
-    Max_Hour_NO2(MaxHourNO2.NAME),
-    Max_Hour_O3(MaxHourO3.NAME),
-    Max_Hour_SO2(MaxHourSO2.NAME),
+    MAX_HOUR_CO(MaxHourCO.NAME),
+    MAX_HOUR_NO2(MaxHourNO2.NAME),
+    MAX_HOUR_O3(MaxHourO3.NAME),
+    MAX_HOUR_SO2(MaxHourSO2.NAME),
 
     MEASUREMENT_SEASON(MeasurementSeason.NAME);
 
@@ -71,5 +73,69 @@ public enum LinguisticVariableType {
                 .stream()
                 .map((it) -> it.getName())
                 .collect(Collectors.toList());
+    }
+
+    public static LinguisticVariable<Pollution> getObjectFromString(final String text) {
+        LinguisticVariableType linguisticVariableType = fromString(text);
+
+        switch (linguisticVariableType) {
+            case AQI_VALUE_CO: {
+                return new AQIValueCO();
+            }
+            case AQI_VALUE_NO2: {
+                return new AQIValueNO2();
+            }
+            case AQI_VALUE_O3: {
+                return new AQIValueO3();
+            }
+            case AQI_VALUE_SO2: {
+                return new AQIValueSO2();
+            }
+
+            case MAX_CONCENTRATION_CO: {
+                return new MaxConcentrationCO();
+            }
+            case MAX_CONCENTRATION_NO2: {
+                return new MaxConcentrationNO2();
+            }
+            case MAX_CONCENTRATION_O3: {
+                return new MaxConcentrationO3();
+            }
+            case MAX_CONCENTRATION_SO2: {
+                return new MaxConcentrationSO2();
+            }
+
+            case MEAN_CONCENTRATION_CO: {
+                return new MeanConcentrationCO();
+            }
+            case MEAN_CONCENTRATION_NO2: {
+                return new MeanConcentrationNO2();
+            }
+            case MEAN_CONCENTRATION_O3: {
+                return new MeanConcentrationO3();
+            }
+            case MEAN_CONCENTRATION_SO2: {
+                return new MeanConcentrationSO2();
+            }
+
+            case MAX_HOUR_CO: {
+                return new MaxHourCO();
+            }
+            case MAX_HOUR_NO2: {
+                return new MaxHourNO2();
+            }
+            case MAX_HOUR_O3: {
+                return new MaxHourO3();
+            }
+            case MAX_HOUR_SO2: {
+                return new MaxHourSO2();
+            }
+
+            case MEASUREMENT_SEASON: {
+                return new MeasurementSeason();
+            }
+        }
+
+        return null;
     }
 }

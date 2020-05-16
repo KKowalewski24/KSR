@@ -5,12 +5,14 @@ import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticQuantifier;
 import pl.jkkk.task2.logic.model.BaseEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 
 @Entity
 public class LinguisticQuantifierWrapper extends BaseEntity
         implements Wrapper<LinguisticQuantifier> {
 
     /*------------------------ FIELDS REGION ------------------------*/
+    @Lob
     private byte[] linguisticQuantifier;
 
     /*------------------------ METHODS REGION ------------------------*/

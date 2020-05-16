@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import pl.jkkk.task2.logic.model.enumtype.FunctionType;
+import pl.jkkk.task2.logic.model.enumtype.LinguisticVariableType;
 import pl.jkkk.task2.logic.model.enumtype.ObjectType;
 import pl.jkkk.task2.logic.model.enumtype.QuantifierType;
 import pl.jkkk.task2.logic.service.label.LabelWrapperService;
@@ -190,16 +191,10 @@ public class Initializer {
         if (ObjectType.QUANTIFIER == objectType) {
             label.setText("Type");
             fillComboBox(comboBoxType, QuantifierType.getNamesList());
+
         } else if (ObjectType.SUMMARIZER == objectType) {
             label.setText("Linguistic Variable");
-            // TODO UNCOMMENT
-/*
-            fillComboBox(comboBoxType, labelService
-                    .findAll()
-                    .stream()
-                    .map((it) -> it.getLinguisticVariable())
-                    .collect(Collectors.toList()));
-*/
+            fillComboBox(comboBoxType, LinguisticVariableType.getNamesList());
         }
     }
 

@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static pl.jkkk.task2.view.fxml.FxHelper.fillListView;
+import static pl.jkkk.task2.view.fxml.FxHelper.clearAndFillListView;
 import static pl.jkkk.task2.view.fxml.FxHelper.getValueFromComboBox;
 
 public class Loader {
@@ -66,7 +66,7 @@ public class Loader {
         results = Stream.of(linguisticSummary.toString() + " " + degreeOfTruth)
                 .collect(Collectors.toList());
 
-        fillListView(listViewResults, results);
+        clearAndFillListView(listViewResults, results);
         textFieldSaveSummarizationNumber.setText(String.valueOf(results.size()));
     }
 

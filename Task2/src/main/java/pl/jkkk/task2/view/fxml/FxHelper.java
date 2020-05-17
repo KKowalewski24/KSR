@@ -51,7 +51,8 @@ public class FxHelper {
         comboBox.getSelectionModel().select(value);
     }
 
-    public static void fillListView(ListView listView, List list) {
+    public static void clearAndFillListView(ListView listView, List list) {
+        listView.getItems().clear();
         listView.getItems().addAll(list);
     }
 

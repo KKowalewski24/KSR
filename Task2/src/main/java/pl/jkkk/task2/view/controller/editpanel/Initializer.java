@@ -18,7 +18,7 @@ import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierWrap
 import java.util.stream.Collectors;
 
 import static pl.jkkk.task2.view.fxml.FxHelper.fillComboBox;
-import static pl.jkkk.task2.view.fxml.FxHelper.fillListView;
+import static pl.jkkk.task2.view.fxml.FxHelper.clearAndFillListView;
 import static pl.jkkk.task2.view.fxml.FxHelper.getTextFieldFromPaneAndSetValue;
 import static pl.jkkk.task2.view.fxml.FxHelper.getValueFromComboBox;
 import static pl.jkkk.task2.view.fxml.FxHelper.setLabelTextInPane;
@@ -168,12 +168,12 @@ public class Initializer {
     }
 
     public void prepareTabPane() {
-        fillListView(listViewQuantifier, linguisticQuantifierWrapperService
+        clearAndFillListView(listViewQuantifier, linguisticQuantifierWrapperService
                 .findAll()
                 .stream()
                 .map((it) -> it.deserialize().getName())
                 .collect(Collectors.toList()));
-        fillListView(listViewSummarizer, labelWrapperService
+        clearAndFillListView(listViewSummarizer, labelWrapperService
                 .findAll()
                 .stream()
                 .map((it) -> it.deserialize().getName())

@@ -1,21 +1,16 @@
 package pl.jkkk.task2.logic.model.wrapper;
 
-import org.hibernate.annotations.Type;
 import org.hibernate.internal.util.SerializationHelper;
 import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticQuantifier;
 import pl.jkkk.task2.logic.model.BaseEntity;
 
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 
 @Entity
 public class LinguisticQuantifierWrapper extends BaseEntity
         implements Wrapper<LinguisticQuantifier> {
 
     /*------------------------ FIELDS REGION ------------------------*/
-    //    TODO
-    @Lob
-    @Type(type = "org.hibernate.type.BinaryType")
     private byte[] linguisticQuantifier;
 
     /*------------------------ METHODS REGION ------------------------*/
@@ -32,7 +27,7 @@ public class LinguisticQuantifierWrapper extends BaseEntity
 
     @Override
     public void serialize(LinguisticQuantifier object) {
-        this.linguisticQuantifier = SerializationHelper.serialize(linguisticQuantifier);
+        linguisticQuantifier = SerializationHelper.serialize(object);
     }
 
     @Override

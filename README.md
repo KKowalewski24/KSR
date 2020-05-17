@@ -42,8 +42,9 @@ The rest of information is stored in script
 ###### Database usage
 * Install PostgreSQL with JDBC Driver
 * Create database `ksr_fuzzy` manually or by using python script in sql-script directory
-* Build JAR - `mvn clean package` and the run `java -jar $JAR_NAME$ -s` to read data from csv file 
-and save them into ksr_fuzzy database or restore database from `data-dump.sql` file
+* Build JAR - `mvn clean package` and the run `java -jar $JAR_NAME$ -sp` to read data from csv file 
+and save them into ksr_fuzzy database or restore database from `data-dump.sql` file 
+after that run `java -jar $JAR_NAME$ -sl` to create and seed tables for labelWrapper and LinguisticQuantifierWrapper
 
 ###### Protip
 * Install and create database `ksr_fuzzy` otherwise application with fail to start 

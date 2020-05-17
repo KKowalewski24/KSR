@@ -68,6 +68,8 @@ public class CommandMode {
 
     private void seedLinguisticFacilitiesInDatabase() {
         //TODO ADD SAVING LINGUISTIC DATA TO DB
+        linguisticQuantifierWrapperService.deleteAll();
+        labelWrapperService.deleteAll();
 
         //        savelinguisticQuantifier(new LinguisticQuantifier());
         //        savelinguisticQuantifier(new LinguisticQuantifier());

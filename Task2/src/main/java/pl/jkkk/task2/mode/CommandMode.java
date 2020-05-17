@@ -36,11 +36,11 @@ import static pl.jkkk.task2.logic.constant.LogicConstants.POLLUTION_DATA_FILENAM
 public class CommandMode {
 
     /*------------------------ FIELDS REGION ------------------------*/
-    public static final String ALMOST_NONE = "Almost None";
-    public static final String SOME = "Some";
-    public static final String ABOUT_HALF = "About Half";
-    public static final String MANY = "Many";
-    public static final String ALMOST_ALL = "Almost All";
+    public static final String ALMOST_NONE = "In almost none of";
+    public static final String SOME = "In some of";
+    public static final String ABOUT_HALF = "In about half of";
+    public static final String MANY = "In many";
+    public static final String ALMOST_ALL = "In almost all";
     public static final String SPRING = "Spring";
     public static final String SUMMER = "Summer";
     public static final String AUTUMN = "Autumn";
@@ -88,7 +88,7 @@ public class CommandMode {
 
                 double degreeOfTruth = linguisticSummary.degreeOfTruth();
                 saveDataLog(linguisticSummary.toString()
-                        + " | degree of truth: " + degreeOfTruth);
+                        + " [" + degreeOfTruth + "]");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -107,28 +107,29 @@ public class CommandMode {
         linguisticQuantifierWrapperService.deleteAll();
         labelWrapperService.deleteAll();
 
+        // Kwantyfikatory
         saveLinguisticQuantifier(new LinguisticQuantifier(
-                ALMOST_NONE,
+                "In almost none",
                 new TrapezoidalFuzzySet(0.00, 0.00, 0.04, 0.16),
                 QuantifierType.RELATIVE)
         );
         saveLinguisticQuantifier(new LinguisticQuantifier(
-                SOME,
+                "In some",
                 new TrapezoidalFuzzySet(0.12, 0.16, 0.32, 0.4),
                 QuantifierType.RELATIVE)
         );
         saveLinguisticQuantifier(new LinguisticQuantifier(
-                ABOUT_HALF,
+                "In about half of all",
                 new TrapezoidalFuzzySet(0.32, 0.44, 0.56, 0.68),
                 QuantifierType.RELATIVE)
         );
         saveLinguisticQuantifier(new LinguisticQuantifier(
-                MANY,
+                "In many",
                 new TrapezoidalFuzzySet(0.6, 0.68, 0.84, 0.88),
                 QuantifierType.RELATIVE)
         );
         saveLinguisticQuantifier(new LinguisticQuantifier(
-                ALMOST_ALL,
+                "In all",
                 new TrapezoidalFuzzySet(0.84, 0.96, 1, 1),
                 QuantifierType.RELATIVE)
         );
@@ -136,22 +137,22 @@ public class CommandMode {
         /*----------------------------------------------------------------------------------------*/
         // Sezon wykonania pomiaru
         saveLabel(new Label<>(
-                SPRING,
+                "were taken in spring.",
                 new TrapezoidalFuzzySet(32, 92, 122, 183),
                 new MeasurementSeason())
         );
         saveLabel(new Label<>(
-                SUMMER,
+                "were taken in sammer.",
                 new TrapezoidalFuzzySet(122, 183, 214, 275),
                 new MeasurementSeason())
         );
         saveLabel(new Label<>(
-                AUTUMN,
+                "were taken in autumn.",
                 new TrapezoidalFuzzySet(214, 275, 306, 336),
                 new MeasurementSeason())
         );
         saveLabel(new Label<>(
-                WINTER,
+                "were taken in winter.",
                 new TrapezoidalFuzzySet(275, 336, 32, 92),
                 new MeasurementSeason())
         );
@@ -159,88 +160,88 @@ public class CommandMode {
         /*----------------------------------------------------------------------------------------*/
         // Godzina maksymalnego stężenia
         saveLabel(new Label<>(
-                MORNING_HOUR,
+                "maximum CO concentration is in the morning.",
                 new TrapezoidalFuzzySet(3, 6, 10, 13),
                 new MaxHourCO())
         );
         saveLabel(new Label<>(
-                AFTERNOON_HOUR,
+                "maximum CO concentration is in the afternoon.",
                 new TrapezoidalFuzzySet(12, 13, 17, 19),
                 new MaxHourCO())
         );
         saveLabel(new Label<>(
-                EVENING_HOUR,
+                "maximum CO concentration is in the evening.",
                 new TrapezoidalFuzzySet(18, 20, 21, 22),
                 new MaxHourCO())
         );
         saveLabel(new Label<>(
-                NIGHT_HOUR,
+                "maximum CO concentration is in the night.",
                 new TrapezoidalFuzzySet(21, 23, 4, 5),
                 new MaxHourCO())
         );
 
         // Godzina maksymalnego stężenia
         saveLabel(new Label<>(
-                MORNING_HOUR,
+                "maximum NO2 concentration is in the morning.",
                 new TrapezoidalFuzzySet(3, 6, 10, 13),
                 new MaxHourNO2())
         );
         saveLabel(new Label<>(
-                AFTERNOON_HOUR,
+                "maximum NO2 concentration is in the afternoon.",
                 new TrapezoidalFuzzySet(12, 13, 17, 19),
                 new MaxHourNO2())
         );
         saveLabel(new Label<>(
-                EVENING_HOUR,
+                "maximum NO2 concentration is in the evening.",
                 new TrapezoidalFuzzySet(18, 20, 21, 22),
                 new MaxHourNO2())
         );
         saveLabel(new Label<>(
-                NIGHT_HOUR,
+                "maximum NO2 concentration is in the night.",
                 new TrapezoidalFuzzySet(21, 23, 4, 5),
                 new MaxHourNO2())
         );
 
         // Godzina maksymalnego stężenia
         saveLabel(new Label<>(
-                MORNING_HOUR,
+                "maximum O3 concentration is in the morning.",
                 new TrapezoidalFuzzySet(3, 6, 10, 13),
                 new MaxHourO3())
         );
         saveLabel(new Label<>(
-                AFTERNOON_HOUR,
+                "maximum O3 concentration is in the afternoon.",
                 new TrapezoidalFuzzySet(12, 13, 17, 19),
                 new MaxHourO3())
         );
         saveLabel(new Label<>(
-                EVENING_HOUR,
+                "maximum O3 concentration is in the evening.",
                 new TrapezoidalFuzzySet(18, 20, 21, 22),
                 new MaxHourO3())
         );
         saveLabel(new Label<>(
-                NIGHT_HOUR,
+                "maximum O3 concentration is in the night.",
                 new TrapezoidalFuzzySet(21, 23, 4, 5),
                 new MaxHourO3())
         );
 
         // Godzina maksymalnego stężenia
         saveLabel(new Label<>(
-                MORNING_HOUR,
+                "maximum SO2 concentration is in the morning.",
                 new TrapezoidalFuzzySet(3, 6, 10, 13),
                 new MaxHourSO2())
         );
         saveLabel(new Label<>(
-                AFTERNOON_HOUR,
+                "maximum SO2 concentration is in the afternoon.",
                 new TrapezoidalFuzzySet(12, 13, 17, 19),
                 new MaxHourSO2())
         );
         saveLabel(new Label<>(
-                EVENING_HOUR,
+                "maximum SO2 concentration is in the evening.",
                 new TrapezoidalFuzzySet(18, 20, 21, 22),
                 new MaxHourSO2())
         );
         saveLabel(new Label<>(
-                NIGHT_HOUR,
+                "maximum SO2 concentration is in the night.",
                 new TrapezoidalFuzzySet(21, 23, 4, 5),
                 new MaxHourSO2())
         );
@@ -248,68 +249,68 @@ public class CommandMode {
         /*----------------------------------------------------------------------------------------*/
         // Średnie stężenie
         saveLabel(new Label<>(
-                LOW_CONCENTRATION,
+                "mean CO concentration is low.",
                 new TrapezoidalFuzzySet(0, 4, 9, 12),
                 new MeanConcentrationCO())
         );
         saveLabel(new Label<>(
-                MIDDLE_CONCENTRATION,
+                "mean CO concentration is middle.",
                 new TrapezoidalFuzzySet(9, 12, 15, 30),
                 new MeanConcentrationCO())
         );
         saveLabel(new Label<>(
-                HIGH_CONCENTRATION,
+                "mean CO concentration is high.",
                 new TrapezoidalFuzzySet(15, 30, 40, 50),
                 new MeanConcentrationCO())
         );
 
         // Średnie stężenie
         saveLabel(new Label<>(
-                LOW_CONCENTRATION,
+                "mean NO2 concentration is low.",
                 new TrapezoidalFuzzySet(0, 0.05, 0.1, 0.36),
                 new MeanConcentrationNO2())
         );
         saveLabel(new Label<>(
-                MIDDLE_CONCENTRATION,
+                "mean NO2 concentration is middle.",
                 new TrapezoidalFuzzySet(0.1, 0.36, 0.65, 1.25),
                 new MeanConcentrationNO2())
         );
         saveLabel(new Label<>(
-                HIGH_CONCENTRATION,
+                "mean NO2 concentration is high.",
                 new TrapezoidalFuzzySet(0.65, 1.25, 1.65, 2.04),
                 new MeanConcentrationNO2())
         );
 
         // Średnie stężenie
         saveLabel(new Label<>(
-                LOW_CONCENTRATION,
+                "mean O3 concentration is low.",
                 new TrapezoidalFuzzySet(0, 0.03, 0.6, 0.75),
                 new MeanConcentrationO3())
         );
         saveLabel(new Label<>(
-                MIDDLE_CONCENTRATION,
+                "mean O3 concentration is middle.",
                 new TrapezoidalFuzzySet(0.03, 0.06, 0.075, 0.095),
                 new MeanConcentrationO3())
         );
         saveLabel(new Label<>(
-                HIGH_CONCENTRATION,
+                "mean O3 concentration is high.",
                 new TrapezoidalFuzzySet(0.075, 0.095, 0.115, 0.375),
                 new MeanConcentrationO3())
         );
 
         // Średnie stężenie
         saveLabel(new Label<>(
-                LOW_CONCENTRATION,
+                "mean SO2 concentration is low.",
                 new TrapezoidalFuzzySet(0, 0, 75, 300),
                 new MeanConcentrationSO2())
         );
         saveLabel(new Label<>(
-                MIDDLE_CONCENTRATION,
+                "mean SO2 concentration is middle.",
                 new TrapezoidalFuzzySet(150, 450, 600, 800),
                 new MeanConcentrationSO2())
         );
         saveLabel(new Label<>(
-                HIGH_CONCENTRATION,
+                "mean SO2 concentration is high.",
                 new TrapezoidalFuzzySet(600, 1000, 1000, 1000),
                 new MeanConcentrationSO2())
         );

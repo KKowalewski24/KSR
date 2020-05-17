@@ -63,7 +63,7 @@ public class Loader {
         );
 
         double degreeOfTruth = linguisticSummary.degreeOfTruth();
-        results = Stream.of(linguisticSummary.toString() + " | degree of truth: " + degreeOfTruth)
+        results = Stream.of(linguisticSummary.toString() + " [" + degreeOfTruth + "]")
                 .collect(Collectors.toList());
 
         clearAndFillListView(listViewResults, results);

@@ -42,6 +42,6 @@ public class LinguisticSummary<T> {
 
     @Override
     public String toString() {
-        return quantifier.getName() + " measurement " + label.getName();
+        return quantifier.getName() + " measurements " + label.getName();
     }
 }

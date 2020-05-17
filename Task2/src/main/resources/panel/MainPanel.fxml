@@ -63,7 +63,7 @@
             <Pane HBox.hgrow="ALWAYS"/>
         </items>
     </ToolBar>
-    <ListView fx:id="listViewResults" maxHeight="450.0" maxWidth="1000.0">
+    <ListView fx:id="listViewResults" maxHeight="450.0" maxWidth="1100.0">
         <StackPane.margin>
             <Insets top="200.0"/>
         </StackPane.margin>

@@ -8,6 +8,7 @@ import pl.jkkk.task2.logic.repository.PollutionRepository;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -34,10 +35,10 @@ public class PollutionServiceImpl implements PollutionService {
     }
 
     @Override
-    public List<Pollution> findAll() {
+    public Set<Pollution> findAll() {
         return StreamSupport
                 .stream(pollutionRepository.findAll().spliterator(), false)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     @Override

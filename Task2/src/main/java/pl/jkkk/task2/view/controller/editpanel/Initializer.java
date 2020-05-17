@@ -17,8 +17,8 @@ import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierWrap
 
 import java.util.stream.Collectors;
 
-import static pl.jkkk.task2.view.fxml.FxHelper.fillComboBox;
 import static pl.jkkk.task2.view.fxml.FxHelper.clearAndFillListView;
+import static pl.jkkk.task2.view.fxml.FxHelper.fillComboBox;
 import static pl.jkkk.task2.view.fxml.FxHelper.getTextFieldFromPaneAndSetValue;
 import static pl.jkkk.task2.view.fxml.FxHelper.getValueFromComboBox;
 import static pl.jkkk.task2.view.fxml.FxHelper.setLabelTextInPane;
@@ -39,7 +39,6 @@ public class Initializer {
     private TabPane tabPane;
     private ListView listViewQuantifier;
     private ListView listViewSummarizer;
-    private Button buttonConfirm;
 
     /*----- RIGHT SIDE -----*/
     private VBox paneRightSide;
@@ -56,6 +55,7 @@ public class Initializer {
     private HBox paneFunctionTypePaneParamSecond;
     private HBox paneFunctionTypePaneParamThird;
     private HBox paneFunctionTypePaneParamFourth;
+    private Button buttonConfirm;
 
     private final LinguisticQuantifierWrapperService linguisticQuantifierWrapperService;
     private final LabelWrapperService labelWrapperService;

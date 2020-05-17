@@ -56,10 +56,10 @@ public class EditPanel implements Initializable {
     private ListView listViewQuantifier;
     @FXML
     private ListView listViewSummarizer;
-    @FXML
-    private Button buttonConfirm;
 
     /*----- RIGHT SIDE -----*/
+    @FXML
+    private Button buttonHideDetails;
     @FXML
     private VBox paneRightSide;
     @FXML
@@ -85,6 +85,9 @@ public class EditPanel implements Initializable {
     private HBox paneFunctionTypePaneParamThird;
     @FXML
     private HBox paneFunctionTypePaneParamFourth;
+
+    @FXML
+    private Button buttonConfirm;
 
     private final LinguisticQuantifierWrapperService linguisticQuantifierWrapperService;
     private final LabelWrapperService labelWrapperService;
@@ -242,19 +245,35 @@ public class EditPanel implements Initializable {
     @FXML
     private void onActionButtonAdd(ActionEvent actionEvent) {
         paneRightSide.setVisible(true);
+        buttonConfirm.setVisible(true);
+    }
+
+    @FXML
+    private void onActionButtonShowDetails(ActionEvent actionEvent) {
+        paneRightSide.setVisible(true);
+        buttonConfirm.setVisible(false);
+        buttonHideDetails.setVisible(true);
     }
 
     @FXML
     private void onActionButtonEdit(ActionEvent actionEvent) {
         removeQuantifierOrSummarizer();
         paneRightSide.setVisible(true);
+        buttonConfirm.setVisible(true);
         initializer.prepareTabPane();
     }
 
     @FXML
     private void onActionButtonRemove(ActionEvent actionEvent) {
         removeQuantifierOrSummarizer();
+        buttonConfirm.setVisible(true);
         initializer.prepareTabPane();
+    }
+
+    @FXML
+    private void onActionHideDetails(ActionEvent actionEvent) {
+        paneRightSide.setVisible(false);
+        buttonHideDetails.setVisible(false);
     }
 
     @FXML
@@ -285,6 +304,7 @@ public class EditPanel implements Initializable {
         paneRightSide.setVisible(false);
     }
 
+    /*--------------------------------------------------------------------------------------------*/
     private void onActionConfirmCaseQuantifier() {
         FunctionType functionType = FunctionType
                 .fromString(getValueFromComboBox(comboBoxFunctionType));

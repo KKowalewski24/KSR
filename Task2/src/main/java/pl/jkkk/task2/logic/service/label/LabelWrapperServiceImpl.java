@@ -79,9 +79,7 @@ public class LabelWrapperServiceImpl implements LabelWrapperService {
     @Override
     public void deleteByName(String name) {
         Label<Pollution> label = this.findByName(name);
-        LabelWrapper labelWrapper = new LabelWrapper();
-        labelWrapper.serialize(label);
-        this.delete(labelWrapper);
+        this.deleteById(label.getId());
     }
 }
     

@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 public class LinguisticQuantifier implements Serializable {
 
+    private Long id;
     private final String name;
     private final FuzzySet fuzzySet;
     private final QuantifierType quantifierType;
@@ -20,6 +21,14 @@ public class LinguisticQuantifier implements Serializable {
 
     public double compatibilityLevel(double x) {
         return fuzzySet.contains(x);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

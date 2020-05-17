@@ -42,7 +42,6 @@ public class StageController extends FxmlStageSetup {
         try {
             FxmlStageSetup.buildStage(stage, filePath, title, dimensions, cssFilePath, context);
         } catch (IOException | IllegalStateException e) {
-            e.printStackTrace();
             PopOutWindow.messageBox("Stage Building Error",
                     "Stage cannot be properly built", Alert.AlertType.ERROR);
         }
@@ -53,7 +52,6 @@ public class StageController extends FxmlStageSetup {
         try {
             FxmlStageSetup.loadStage(filePath, title, context);
         } catch (IOException | IllegalStateException e) {
-            e.printStackTrace();
             PopOutWindow.messageBox("Stage Loading Error",
                     "Stage cannot be properly loaded", Alert.AlertType.ERROR);
         }
@@ -64,7 +62,6 @@ public class StageController extends FxmlStageSetup {
         try {
             FxmlStageSetup.reloadStage(filePath, title, context);
         } catch (IOException | IllegalStateException e) {
-            e.printStackTrace();
             PopOutWindow.messageBox("Stage Reloading Error",
                     "Stage cannot be properly reloaded", Alert.AlertType.ERROR);
         }

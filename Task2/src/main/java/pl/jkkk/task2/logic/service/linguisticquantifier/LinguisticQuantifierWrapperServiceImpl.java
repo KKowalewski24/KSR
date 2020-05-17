@@ -80,9 +80,7 @@ public class LinguisticQuantifierWrapperServiceImpl implements LinguisticQuantif
     @Override
     public void deleteByName(String name) {
         LinguisticQuantifier linguisticQuantifier = this.findByName(name);
-        LinguisticQuantifierWrapper linguisticQuantifierWrapper = new LinguisticQuantifierWrapper();
-        linguisticQuantifierWrapper.serialize(linguisticQuantifier);
-        this.delete(linguisticQuantifierWrapper);
+        this.deleteById(linguisticQuantifier.getId());
     }
 }
     

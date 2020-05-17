@@ -35,7 +35,11 @@ public class LabelWrapper extends BaseEntity implements Wrapper<Label<Pollution>
 
     @Override
     public Label<Pollution> deserialize() {
-        return (Label<Pollution>) SerializationHelper.deserialize(label);
+        Label<Pollution> labelDeserialized = (Label<Pollution>)
+                SerializationHelper.deserialize(label);
+        labelDeserialized.setId(getId());
+
+        return labelDeserialized;
     }
 
     @Override

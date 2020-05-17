@@ -35,7 +35,11 @@ public class LinguisticQuantifierWrapper extends BaseEntity
 
     @Override
     public LinguisticQuantifier deserialize() {
-        return (LinguisticQuantifier) SerializationHelper.deserialize(linguisticQuantifier);
+        LinguisticQuantifier linguisticQuantifierDeserialized = (LinguisticQuantifier)
+                SerializationHelper.deserialize(linguisticQuantifier);
+        linguisticQuantifierDeserialized.setId(getId());
+
+        return linguisticQuantifierDeserialized;
     }
 
     @Override

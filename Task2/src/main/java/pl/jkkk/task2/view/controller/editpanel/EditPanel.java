@@ -247,6 +247,7 @@ public class EditPanel implements Initializable {
     @FXML
     private void onActionButtonEdit(ActionEvent actionEvent) {
         removeQuantifierOrSummarizer();
+        paneRightSide.setVisible(true);
         initializer.prepareTabPane();
     }
 
@@ -389,17 +390,13 @@ public class EditPanel implements Initializable {
             // Quantifier
             case 0: {
                 String name = FxHelper.<String>getSelectedItemFromListView(listViewQuantifier);
-                System.out.println(name);
-                //    TODO
-                //                linguisticQuantifierService.deleteByName(name);
+                linguisticQuantifierWrapperService.deleteByName(name);
                 break;
             }
             // Summarizer
             case 1: {
                 String name = FxHelper.<String>getSelectedItemFromListView(listViewSummarizer);
-                System.out.println(name);
-                //    TODO
-                //                labelService.deleteByName(name);
+                labelWrapperService.deleteByName(name);
                 break;
             }
         }

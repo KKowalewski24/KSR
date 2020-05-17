@@ -10,6 +10,14 @@ public class UnionFuzzySet extends FuzzySet {
         this.B = B;
     }
 
+    public FuzzySet getA() {
+        return A;
+    }
+
+    public FuzzySet getB() {
+        return B;
+    }
+
     @Override
     public double contains(double x) {
         return Math.max(A.contains(x), B.contains(x));

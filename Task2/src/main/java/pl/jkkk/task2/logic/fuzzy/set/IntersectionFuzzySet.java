@@ -10,6 +10,14 @@ public class IntersectionFuzzySet extends FuzzySet {
         this.B = B;
     }
 
+    public FuzzySet getA() {
+        return A;
+    }
+
+    public FuzzySet getB() {
+        return B;
+    }
+
     @Override
     public double contains(double x) {
         return Math.min(A.contains(x), B.contains(x));

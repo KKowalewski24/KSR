@@ -16,6 +16,18 @@ public class LinguisticSummary<T> {
         this.objects = objects;
     }
 
+    public LinguisticQuantifier getQuantifier() {
+        return quantifier;
+    }
+
+    public Label getLabel() {
+        return label;
+    }
+
+    public Set<T> getObjects() {
+        return objects;
+    }
+
     public double degreeOfTruth() {
         Set<Double> universeOfDiscourse = label.getLinguisticVariable()
                 .universeOfDiscourse(objects);

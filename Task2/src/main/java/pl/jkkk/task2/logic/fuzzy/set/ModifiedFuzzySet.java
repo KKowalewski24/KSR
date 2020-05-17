@@ -10,6 +10,14 @@ public class ModifiedFuzzySet extends FuzzySet {
         this.R = R;
     }
 
+    public FuzzySet getOriginal() {
+        return original;
+    }
+
+    public double getR() {
+        return R;
+    }
+
     @Override
     public double contains(double x) {
         return Math.pow(original.contains(x), R);

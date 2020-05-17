@@ -1,9 +1,9 @@
+import glob
 import os
 import pathlib
 import platform
 import subprocess
 import sys
-import glob
 
 '''
 How to use
@@ -47,8 +47,23 @@ def clean_project_directories(remove_jar: bool) -> None:
     pass
 
 
-def run_jar(args) -> None:
+def print_finish():
+    print("------------------------------------------------------------------------")
+    print("FINISHED")
+    print("------------------------------------------------------------------------")
+    pass
+
+
+def run_jar(args: []) -> None:
     subprocess.call(["java", "-jar", JAR_NAME] + args)
+
+
+def seed_database():
+    # Seed pollution
+    # TODO UNCOMMENT
+    # run_jar(["-sp"])
+    # Seed linguistic
+    run_jar(["-sl"])
 
 
 # TASK ------------------------------------------------------------------------ #
@@ -66,13 +81,13 @@ def main():
             clean_project_directories(True)
         else:
             clean_project_directories(False)
+    elif len(sys.argv) == 2 and (sys.argv[1] == "seed" or sys.argv[1] == "-s"):
+        seed_database()
     elif len(sys.argv) == 2 and (sys.argv[1] == "run" or sys.argv[1] == "-r"):
         run_experiments()
-        pass
 
-    print("------------------------------------------------------------------------")
-    print("FINISHED SUCCESSFULLY")
-    print("------------------------------------------------------------------------")
+    print_finish()
+    pass
 
 
 if __name__ == "__main__":

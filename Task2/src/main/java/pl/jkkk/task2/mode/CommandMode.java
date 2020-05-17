@@ -38,22 +38,6 @@ import static pl.jkkk.task2.logic.constant.LogicConstants.POLLUTION_DATA_FILENAM
 public class CommandMode {
 
     /*------------------------ FIELDS REGION ------------------------*/
-    public static final String ALMOST_NONE = "In almost none of";
-    public static final String SOME = "In some of";
-    public static final String ABOUT_HALF = "In about half of";
-    public static final String MANY = "In many";
-    public static final String ALMOST_ALL = "In almost all";
-    public static final String SPRING = "Spring";
-    public static final String SUMMER = "Summer";
-    public static final String AUTUMN = "Autumn";
-    public static final String WINTER = "Winter";
-    public static final String MORNING_HOUR = "Morning Hour";
-    public static final String AFTERNOON_HOUR = "Afternoon Hour";
-    public static final String EVENING_HOUR = "Evening Hour";
-    public static final String NIGHT_HOUR = "Night Hour";
-    public static final String LOW_CONCENTRATION = "Low Concentration";
-    public static final String MIDDLE_CONCENTRATION = "Middle Concentration";
-    public static final String HIGH_CONCENTRATION = "High Concentration";
 
     private final PollutionService pollutionService;
     private final LinguisticQuantifierWrapperService linguisticQuantifierWrapperService;
@@ -161,22 +145,22 @@ public class CommandMode {
         /*----------------------------------------------------------------------------------------*/
         // Sezon wykonania pomiaru
         saveLabel(new Label<>(
-                "were taken in spring.",
+                "season is spring.",
                 new TrapezoidalFuzzySet(32, 92, 122, 183),
                 new MeasurementSeason())
         );
         saveLabel(new Label<>(
-                "were taken in sammer.",
+                "season is summer.",
                 new TrapezoidalFuzzySet(122, 183, 214, 275),
                 new MeasurementSeason())
         );
         saveLabel(new Label<>(
-                "were taken in autumn.",
+                "season is autumn.",
                 new TrapezoidalFuzzySet(214, 275, 306, 336),
                 new MeasurementSeason())
         );
         saveLabel(new Label<>(
-                "were taken in winter.",
+                "season is winter.",
                 new TrapezoidalFuzzySet(275, 336, 32, 92),
                 new MeasurementSeason())
         );

@@ -310,96 +310,103 @@ public class EditPanel implements Initializable {
                 .fromString(getValueFromComboBox(comboBoxFunctionType));
         LinguisticQuantifierWrapper quantifierWrapper = new LinguisticQuantifierWrapper();
 
-        switch (functionType) {
-            case TRAPEZOIDAL: {
-                quantifierWrapper.serialize(new LinguisticQuantifier(
-                        getTextFieldFromPaneAndGetValue(paneTextField, 1),
-                        new TrapezoidalFuzzySet(
-                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
-                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1)),
-                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamThird, 1)),
-                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFourth, 1))
-                        ),
-                        QuantifierType.fromString(getValueFromComboBox(comboBoxType))
-                ));
-                break;
+        try {
+            switch (functionType) {
+                case TRAPEZOIDAL: {
+                    quantifierWrapper.serialize(new LinguisticQuantifier(
+                            getTextFieldFromPaneAndGetValue(paneTextField, 1),
+                            new TrapezoidalFuzzySet(
+                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
+                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1)),
+                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamThird, 1)),
+                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFourth, 1))
+                            ),
+                            QuantifierType.fromString(getValueFromComboBox(comboBoxType))
+                    ));
+                    break;
+                }
+                case TRIANGULAR: {
+                    quantifierWrapper.serialize(new LinguisticQuantifier(
+                            getTextFieldFromPaneAndGetValue(paneTextField, 1),
+                            new TriangularFuzzySet(
+                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
+                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1)),
+                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamThird, 1))
+                            ),
+                            QuantifierType.fromString(getValueFromComboBox(comboBoxType))
+                    ));
+                    break;
+                }
+                case GAUSSIAN: {
+                    quantifierWrapper.serialize(new LinguisticQuantifier(
+                            getTextFieldFromPaneAndGetValue(paneTextField, 1),
+                            new GaussianFuzzySet(
+                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
+                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1))
+                            ),
+                            QuantifierType.fromString(getValueFromComboBox(comboBoxType))
+                    ));
+                    break;
+                }
             }
-            case TRIANGULAR: {
-                quantifierWrapper.serialize(new LinguisticQuantifier(
-                        getTextFieldFromPaneAndGetValue(paneTextField, 1),
-                        new TriangularFuzzySet(
-                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
-                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1)),
-                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamThird, 1))
-                        ),
-                        QuantifierType.fromString(getValueFromComboBox(comboBoxType))
-                ));
-                break;
-            }
-            case GAUSSIAN: {
-                quantifierWrapper.serialize(new LinguisticQuantifier(
-                        getTextFieldFromPaneAndGetValue(paneTextField, 1),
-                        new GaussianFuzzySet(
-                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
-                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1))
-                        ),
-                        QuantifierType.fromString(getValueFromComboBox(comboBoxType))
-                ));
-                break;
-            }
-        }
 
-        linguisticQuantifierWrapperService.save(quantifierWrapper);
+            linguisticQuantifierWrapperService.save(quantifierWrapper);
+        } catch (NumberFormatException e) {
+            PopOutWindow.messageBox("", "Wrong type of data", Alert.AlertType.WARNING);
+        }
     }
 
     private void onActionConfirmSummarizer() {
         FunctionType functionType = FunctionType
                 .fromString(getValueFromComboBox(comboBoxFunctionType));
         LabelWrapper labelWrapper = new LabelWrapper();
+        try {
+            switch (functionType) {
+                case TRAPEZOIDAL: {
+                    labelWrapper.serialize(new Label<>(
+                            getTextFieldFromPaneAndGetValue(paneTextField, 1),
+                            new TrapezoidalFuzzySet(
+                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
+                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1)),
+                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamThird, 1)),
+                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFourth, 1))
+                            ),
+                            LinguisticVariableType.getObjectFromString(getValueFromComboBox(comboBoxType))
+                    ));
 
-        switch (functionType) {
-            case TRAPEZOIDAL: {
-                labelWrapper.serialize(new Label<>(
-                        getTextFieldFromPaneAndGetValue(paneTextField, 1),
-                        new TrapezoidalFuzzySet(
-                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
-                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1)),
-                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamThird, 1)),
-                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFourth, 1))
-                        ),
-                        LinguisticVariableType.getObjectFromString(getValueFromComboBox(comboBoxType))
-                ));
+                    break;
+                }
+                case TRIANGULAR: {
+                    labelWrapper.serialize(new Label<>(
+                            getTextFieldFromPaneAndGetValue(paneTextField, 1),
+                            new TriangularFuzzySet(
+                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
+                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1)),
+                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamThird, 1))
+                            ),
+                            LinguisticVariableType.getObjectFromString(getValueFromComboBox(comboBoxType))
+                    ));
 
-                break;
+                    break;
+                }
+                case GAUSSIAN: {
+                    labelWrapper.serialize(new Label<>(
+                            getTextFieldFromPaneAndGetValue(paneTextField, 1),
+                            new GaussianFuzzySet(
+                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
+                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1))
+                            ),
+                            LinguisticVariableType.getObjectFromString(getValueFromComboBox(comboBoxType))
+                    ));
+
+                    break;
+                }
             }
-            case TRIANGULAR: {
-                labelWrapper.serialize(new Label<>(
-                        getTextFieldFromPaneAndGetValue(paneTextField, 1),
-                        new TriangularFuzzySet(
-                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
-                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1)),
-                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamThird, 1))
-                        ),
-                        LinguisticVariableType.getObjectFromString(getValueFromComboBox(comboBoxType))
-                ));
 
-                break;
-            }
-            case GAUSSIAN: {
-                labelWrapper.serialize(new Label<>(
-                        getTextFieldFromPaneAndGetValue(paneTextField, 1),
-                        new GaussianFuzzySet(
-                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
-                                Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1))
-                        ),
-                        LinguisticVariableType.getObjectFromString(getValueFromComboBox(comboBoxType))
-                ));
-
-                break;
-            }
+            labelWrapperService.save(labelWrapper);
+        } catch (NumberFormatException e) {
+            PopOutWindow.messageBox("", "Wrong type of data", Alert.AlertType.WARNING);
         }
-
-        labelWrapperService.save(labelWrapper);
     }
 
     /*--------------------------------------------------------------------------------------------*/

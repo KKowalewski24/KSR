@@ -53,7 +53,7 @@
                 <children>
                     <Button fx:id="buttonHideDetails" mnemonicParsing="false"
                             onAction="#onActionHideDetails"
-                            prefHeight="29.0" prefWidth="88.0" text="Hide Details">
+                            prefHeight="29.0" prefWidth="88.0" text="Hide Details" visible="false">
 
                     </Button>
                     <Button mnemonicParsing="false" onAction="#onActionReturn" prefHeight="29.0"

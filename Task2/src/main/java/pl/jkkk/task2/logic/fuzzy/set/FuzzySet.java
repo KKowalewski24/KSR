@@ -6,12 +6,12 @@ import java.util.stream.Collectors;
 
 /**
  * This class represents fuzzy set with a specific membership function,
- * universe of discourse is 'undefined' (all real numbers), it can be 
- * defined (discrete, finite subset of R) when computing cardinality, 
+ * universe of discourse is 'undefined' (all real numbers), it can be
+ * defined (discrete, finite subset of R) when computing cardinality,
  * support and alpha-cut.
  */
 public abstract class FuzzySet implements Serializable {
-    
+
     /**
      * This method returns degree of membership of an object to the fuzzy set,
      * this is just specific memership function implementation

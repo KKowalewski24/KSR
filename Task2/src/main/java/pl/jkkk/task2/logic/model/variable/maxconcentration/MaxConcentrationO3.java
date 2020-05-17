@@ -6,7 +6,7 @@ import pl.jkkk.task2.logic.model.Pollution;
 public class MaxConcentrationO3 extends LinguisticVariable<Pollution> {
 
     /*------------------------ FIELDS REGION ------------------------*/
-    public static final String NAME ="Max Concentration O3" ;
+    public static final String NAME = "Max Concentration O3";
 
     /*------------------------ METHODS REGION ------------------------*/
     public MaxConcentrationO3() {

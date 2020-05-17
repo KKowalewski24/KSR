@@ -6,7 +6,7 @@ import pl.jkkk.task2.logic.model.Pollution;
 public class MeanConcentrationNO2 extends LinguisticVariable<Pollution> {
 
     /*------------------------ FIELDS REGION ------------------------*/
-    public static final String NAME ="Mean Concentration NO2" ;
+    public static final String NAME = "Mean Concentration NO2";
 
     /*------------------------ METHODS REGION ------------------------*/
     public MeanConcentrationNO2() {

@@ -1,12 +1,12 @@
 package pl.jkkk.task2.logic.fuzzy.linguistic;
 
-import java.io.Serializable;
-
 import pl.jkkk.task2.logic.fuzzy.set.ComplementFuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.FuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.IntersectionFuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.ModifiedFuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.UnionFuzzySet;
+
+import java.io.Serializable;
 
 /**
  * This class represents label of specific linguistic variable,
@@ -55,7 +55,7 @@ public class Label<T> implements Serializable {
     }
 
     public Label<T> modify(final Modifier modifier) {
-        return new Label<>(modifier.getText() + " " + name, 
+        return new Label<>(modifier.getText() + " " + name,
                 new ModifiedFuzzySet(fuzzySet, modifier.getR()), linguisticVariable);
     }
 }

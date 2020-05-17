@@ -1,10 +1,10 @@
 package pl.jkkk.task2.logic.fuzzy.linguistic;
 
-import java.io.Serializable;
-
 import pl.jkkk.task2.logic.fuzzy.set.FuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.ModifiedFuzzySet;
 import pl.jkkk.task2.logic.model.enumtype.QuantifierType;
+
+import java.io.Serializable;
 
 public class LinguisticQuantifier implements Serializable {
 

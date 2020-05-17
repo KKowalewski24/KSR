@@ -20,6 +20,6 @@ public class GaussianFuzzySet extends FuzzySet {
 
     @Override
     public double contains(double x) {
-        return Math.exp(- (center - x) * (center - x) / (2 * width * width));
+        return Math.exp(-(center - x) * (center - x) / (2 * width * width));
     }
 }

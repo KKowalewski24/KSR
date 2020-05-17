@@ -6,8 +6,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import pl.jkkk.task2.logic.exception.FileOperationException;
-import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticSummary;
-import pl.jkkk.task2.logic.model.Pollution;
 import pl.jkkk.task2.logic.readerwriter.FileWriterPlainText;
 import pl.jkkk.task2.logic.service.label.LabelWrapperService;
 import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierWrapperService;
@@ -17,8 +15,6 @@ import pl.jkkk.task2.view.fxml.StageController;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static pl.jkkk.task2.view.fxml.FxHelper.fillListView;
 import static pl.jkkk.task2.view.fxml.FxHelper.getValueFromComboBox;

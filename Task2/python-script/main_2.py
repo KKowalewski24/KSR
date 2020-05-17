@@ -47,7 +47,7 @@ def clean_project_directories(remove_jar: bool) -> None:
     pass
 
 
-def print_finish():
+def print_finish() -> None:
     print("------------------------------------------------------------------------")
     print("FINISHED")
     print("------------------------------------------------------------------------")
@@ -58,22 +58,22 @@ def run_jar(args: []) -> None:
     subprocess.call(["java", "-jar", JAR_NAME] + args)
 
 
-def seed_database():
-    # Seed pollution
-    # TODO UNCOMMENT
-    # run_jar(["-sp"])
-    # Seed linguistic
+def seed_pollution_database() -> None:
+    run_jar(["-sp"])
+
+
+def seed_linguistic_database() -> None:
     run_jar(["-sl"])
 
 
 # TASK ------------------------------------------------------------------------ #
-def run_experiments():
+def run_experiments() -> None:
     run_jar([])
     pass
 
 
 # ----------------------------------------------------------------------------- #
-def main():
+def main() -> None:
     if len(sys.argv) == 2 and (sys.argv[1] == "build" or sys.argv[1] == "-b"):
         build_jar()
     elif len(sys.argv) >= 2 and (sys.argv[1] == "clean" or sys.argv[1] == "-c"):
@@ -81,8 +81,10 @@ def main():
             clean_project_directories(True)
         else:
             clean_project_directories(False)
-    elif len(sys.argv) == 2 and (sys.argv[1] == "seed" or sys.argv[1] == "-s"):
-        seed_database()
+    elif len(sys.argv) == 2 and (sys.argv[1] == "seed_pollution" or sys.argv[1] == "-sp"):
+        seed_pollution_database()
+    elif len(sys.argv) == 2 and (sys.argv[1] == "seed_linguistic" or sys.argv[1] == "-sl"):
+        seed_linguistic_database()
     elif len(sys.argv) == 2 and (sys.argv[1] == "run" or sys.argv[1] == "-r"):
         run_experiments()
 

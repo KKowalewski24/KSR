@@ -1,16 +1,15 @@
 package pl.jkkk.task2.logic.service.pollution;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import org.springframework.stereotype.Service;
 import pl.jkkk.task2.logic.exception.PollutionNotFoundException;
 import pl.jkkk.task2.logic.model.Pollution;
 import pl.jkkk.task2.logic.repository.PollutionRepository;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class PollutionServiceImpl implements PollutionService {
@@ -35,10 +34,10 @@ public class PollutionServiceImpl implements PollutionService {
     }
 
     @Override
-    public Set<Pollution> findAll() {
+    public List<Pollution> findAll() {
         return StreamSupport
                 .stream(pollutionRepository.findAll().spliterator(), false)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     @Override

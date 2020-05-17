@@ -1,16 +1,16 @@
 package pl.jkkk.task2.logic.fuzzy.linguistic;
 
-import pl.jkkk.task2.logic.model.enumtype.QuantifierType;
+import java.util.List;
 
-import java.util.Set;
+import pl.jkkk.task2.logic.model.enumtype.QuantifierType;
 
 public class LinguisticSummary<T> {
 
     private final LinguisticQuantifier quantifier;
     private final Label label;
-    private Set<T> objects;
+    private List<T> objects;
 
-    public LinguisticSummary(LinguisticQuantifier quantifier, Label<T> label, Set<T> objects) {
+    public LinguisticSummary(LinguisticQuantifier quantifier, Label<T> label, List<T> objects) {
         this.quantifier = quantifier;
         this.label = label;
         this.objects = objects;
@@ -24,12 +24,12 @@ public class LinguisticSummary<T> {
         return label;
     }
 
-    public Set<T> getObjects() {
+    public List<T> getObjects() {
         return objects;
     }
 
     public double degreeOfTruth() {
-        Set<Double> universeOfDiscourse = label.getLinguisticVariable()
+        List<Double> universeOfDiscourse = label.getLinguisticVariable()
                 .universeOfDiscourse(objects);
         if (quantifier.getQuantifierType() == QuantifierType.ABSOLUTE) {
             return quantifier.compatibilityLevel(label.getFuzzySet()

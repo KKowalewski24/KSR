@@ -1,7 +1,7 @@
 package pl.jkkk.task2.logic.fuzzy.linguistic;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -19,8 +19,8 @@ public abstract class LinguisticVariable<T> implements Serializable {
         this.name = name;
     }
 
-    public Set<Double> universeOfDiscourse(Set<T> objects) {
-        return objects.stream().map(object -> extractAttribute(object)).collect(Collectors.toSet());
+    public List<Double> universeOfDiscourse(List<T> objects) {
+        return objects.stream().map(object -> extractAttribute(object)).collect(Collectors.toList());
     }
 
     abstract protected Double extractAttribute(T object);

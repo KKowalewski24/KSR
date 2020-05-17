@@ -15,6 +15,9 @@ import pl.jkkk.task2.logic.model.variable.maxhour.MaxHourNO2;
 import pl.jkkk.task2.logic.model.variable.maxhour.MaxHourO3;
 import pl.jkkk.task2.logic.model.variable.maxhour.MaxHourSO2;
 import pl.jkkk.task2.logic.model.variable.meanconcentration.MeanConcentrationCO;
+import pl.jkkk.task2.logic.model.variable.meanconcentration.MeanConcentrationNO2;
+import pl.jkkk.task2.logic.model.variable.meanconcentration.MeanConcentrationO3;
+import pl.jkkk.task2.logic.model.variable.meanconcentration.MeanConcentrationSO2;
 import pl.jkkk.task2.logic.model.variable.season.MeasurementSeason;
 import pl.jkkk.task2.logic.model.wrapper.LabelWrapper;
 import pl.jkkk.task2.logic.model.wrapper.LinguisticQuantifierWrapper;
@@ -244,82 +247,84 @@ public class CommandMode {
 
         /*----------------------------------------------------------------------------------------*/
         // Średnie stężenie
-//        saveLabel(new Label<>(
-//                LOW_CONCENTRATION,
-//                new TrapezoidalFuzzySet(),
-//                new MeanConcentrationCO())
-//        );
-//        saveLabel(new Label<>(
-//                MIDDLE_CONCENTRATION,
-//                new TrapezoidalFuzzySet(),
-//                new MeanConcentrationCO())
-//        );
-//        saveLabel(new Label<>(
-//                HIGH_CONCENTRATION,
-//                new TrapezoidalFuzzySet(),
-//                new MeanConcentrationCO())
-//        );
+        saveLabel(new Label<>(
+                LOW_CONCENTRATION,
+                new TrapezoidalFuzzySet(0, 4, 9, 12),
+                new MeanConcentrationCO())
+        );
+        saveLabel(new Label<>(
+                MIDDLE_CONCENTRATION,
+                new TrapezoidalFuzzySet(9, 12, 15, 30),
+                new MeanConcentrationCO())
+        );
+        saveLabel(new Label<>(
+                HIGH_CONCENTRATION,
+                new TrapezoidalFuzzySet(15, 30, 40, 50),
+                new MeanConcentrationCO())
+        );
 
         // Średnie stężenie
-//        saveLabel(new Label<>(
-//                LOW_CONCENTRATION,
-//                new TrapezoidalFuzzySet(),
-//                new MeanConcentrationCO())
-//        );
-//        saveLabel(new Label<>(
-//                MIDDLE_CONCENTRATION,
-//                new TrapezoidalFuzzySet(),
-//                new MeanConcentrationCO())
-//        );
-//        saveLabel(new Label<>(
-//                HIGH_CONCENTRATION,
-//                new TrapezoidalFuzzySet(),
-//                new MeanConcentrationCO())
-//        );
+        saveLabel(new Label<>(
+                LOW_CONCENTRATION,
+                new TrapezoidalFuzzySet(0, 0.05, 0.1, 0.36),
+                new MeanConcentrationNO2())
+        );
+        saveLabel(new Label<>(
+                MIDDLE_CONCENTRATION,
+                new TrapezoidalFuzzySet(0.1, 0.36, 0.65, 1.25),
+                new MeanConcentrationNO2())
+        );
+        saveLabel(new Label<>(
+                HIGH_CONCENTRATION,
+                new TrapezoidalFuzzySet(0.65, 1.25, 1.65, 2.04),
+                new MeanConcentrationNO2())
+        );
 
         // Średnie stężenie
-//        saveLabel(new Label<>(
-//                LOW_CONCENTRATION,
-//                new TrapezoidalFuzzySet(),
-//                new MeanConcentrationCO())
-//        );
-//        saveLabel(new Label<>(
-//                MIDDLE_CONCENTRATION,
-//                new TrapezoidalFuzzySet(),
-//                new MeanConcentrationCO())
-//        );
-//        saveLabel(new Label<>(
-//                HIGH_CONCENTRATION,
-//                new TrapezoidalFuzzySet(),
-//                new MeanConcentrationCO())
-//        );
+        saveLabel(new Label<>(
+                LOW_CONCENTRATION,
+                new TrapezoidalFuzzySet(0, 0.03, 0.6, 0.75),
+                new MeanConcentrationO3())
+        );
+        saveLabel(new Label<>(
+                MIDDLE_CONCENTRATION,
+                new TrapezoidalFuzzySet(0.03, 0.06, 0.075, 0.095),
+                new MeanConcentrationO3())
+        );
+        saveLabel(new Label<>(
+                HIGH_CONCENTRATION,
+                new TrapezoidalFuzzySet(0.075, 0.095, 0.115, 0.375),
+                new MeanConcentrationO3())
+        );
 
         // Średnie stężenie
-//        saveLabel(new Label<>(LOW_CONCENTRATION,
-//                new TrapezoidalFuzzySet(),
-//                new MeanConcentrationCO())
-//        );
-//        saveLabel(new Label<>(MIDDLE_CONCENTRATION,
-//                new TrapezoidalFuzzySet(),
-//                new MeanConcentrationCO())
-//        );
-//        saveLabel(new Label<>(
-//                HIGH_CONCENTRATION,
-//                new TrapezoidalFuzzySet(),
-//                new MeanConcentrationCO())
-//        );
+        saveLabel(new Label<>(
+                LOW_CONCENTRATION,
+                new TrapezoidalFuzzySet(0, 0, 75, 300),
+                new MeanConcentrationSO2())
+        );
+        saveLabel(new Label<>(
+                MIDDLE_CONCENTRATION,
+                new TrapezoidalFuzzySet(150, 450, 600, 800),
+                new MeanConcentrationSO2())
+        );
+        saveLabel(new Label<>(
+                HIGH_CONCENTRATION,
+                new TrapezoidalFuzzySet(600, 1000, 1000, 1000),
+                new MeanConcentrationSO2())
+        );
 
         /*----------------------------------------------------------------------------------------*/
         // Maksymalne stężenie
-//        saveLabel(new Label<>("", new TrapezoidalFuzzySet(), new ()));
-//        saveLabel(new Label<>("", new TrapezoidalFuzzySet(), new ()));
-//        saveLabel(new Label<>("", new TrapezoidalFuzzySet(), new ()));
+        //        saveLabel(new Label<>("", new TrapezoidalFuzzySet(), new ()));
+        //        saveLabel(new Label<>("", new TrapezoidalFuzzySet(), new ()));
+        //        saveLabel(new Label<>("", new TrapezoidalFuzzySet(), new ()));
 
         /*----------------------------------------------------------------------------------------*/
         // Wartosc AQI
-//        saveLabel(new Label<>("", new TrapezoidalFuzzySet(), new ()));
-//        saveLabel(new Label<>("", new TrapezoidalFuzzySet(), new ()));
-//        saveLabel(new Label<>("", new TrapezoidalFuzzySet(), new ()));
+        //        saveLabel(new Label<>("", new TrapezoidalFuzzySet(), new ()));
+        //        saveLabel(new Label<>("", new TrapezoidalFuzzySet(), new ()));
+        //        saveLabel(new Label<>("", new TrapezoidalFuzzySet(), new ()));
 
         /*----------------------------------------------------------------------------------------*/
     }

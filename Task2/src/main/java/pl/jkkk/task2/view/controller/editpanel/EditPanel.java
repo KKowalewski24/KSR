@@ -115,9 +115,7 @@ public class EditPanel implements Initializable {
     private void OnMouseClickedListViewQuantifier(MouseEvent mouseEvent) {
         String name = FxHelper.<String>getSelectedItemFromListView(listViewQuantifier);
         try {
-            LinguisticQuantifierWrapper quantifierWrapper
-                    = linguisticQuantifierWrapperService.findByName(name);
-            LinguisticQuantifier quantifier = quantifierWrapper.deserialize();
+            LinguisticQuantifier quantifier = linguisticQuantifierWrapperService.findByName(name);
             FuzzySet fuzzySet = quantifier.getFuzzySet();
 
             if (fuzzySet instanceof TrapezoidalFuzzySet) {
@@ -181,8 +179,7 @@ public class EditPanel implements Initializable {
         String name = FxHelper.<String>getSelectedItemFromListView(listViewSummarizer);
 
         try {
-            LabelWrapper labelWrapper = labelWrapperService.findByName(name);
-            Label label = labelWrapper.deserialize();
+            Label label = labelWrapperService.findByName(name);
             FuzzySet fuzzySet = label.getFuzzySet();
 
             if (fuzzySet instanceof TrapezoidalFuzzySet) {

@@ -2,6 +2,7 @@ package pl.jkkk.task2.logic.service.linguisticquantifier;
 
 import org.springframework.stereotype.Service;
 import pl.jkkk.task2.logic.exception.LinguisticQuantifierNotFoundException;
+import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticQuantifier;
 import pl.jkkk.task2.logic.model.wrapper.LinguisticQuantifierWrapper;
 import pl.jkkk.task2.logic.repository.LinguisticQuantifierWrapperRepository;
 
@@ -14,16 +15,18 @@ import java.util.stream.StreamSupport;
 public class LinguisticQuantifierWrapperServiceImpl implements LinguisticQuantifierWrapperService {
 
     /*------------------------ FIELDS REGION ------------------------*/
-    private final LinguisticQuantifierWrapperRepository quantifierRepository;
+    private final LinguisticQuantifierWrapperRepository linguisticQuantifierWrapperRepository;
 
     /*------------------------ METHODS REGION ------------------------*/
-    public LinguisticQuantifierWrapperServiceImpl(LinguisticQuantifierWrapperRepository quantifierRepository) {
-        this.quantifierRepository = quantifierRepository;
+    public LinguisticQuantifierWrapperServiceImpl(
+            LinguisticQuantifierWrapperRepository linguisticQuantifierWrapperRepository) {
+        this.linguisticQuantifierWrapperRepository = linguisticQuantifierWrapperRepository;
     }
 
     @Override
     public LinguisticQuantifierWrapper findById(Long id) {
-        Optional<LinguisticQuantifierWrapper> quantifier = quantifierRepository.findById(id);
+        Optional<LinguisticQuantifierWrapper> quantifier =
+                linguisticQuantifierWrapperRepository.findById(id);
 
         if (!quantifier.isPresent()) {
             throw new LinguisticQuantifierNotFoundException();
@@ -33,50 +36,53 @@ public class LinguisticQuantifierWrapperServiceImpl implements LinguisticQuantif
     }
 
     @Override
-    public LinguisticQuantifierWrapper findByName(String name) {
-        //        TODO
-        //        Optional<LinguisticQuantifierWrapper> quantifier = quantifierRepository
-        //        .findByName(name);
-        //
-        //        if (!quantifier.isPresent()) {
-        //            throw new LinguisticQuantifierNotFoundException();
-        //        }
-        //
-        //        return quantifier.get();
-        return null;
+    public LinguisticQuantifier findByName(String name) {
+        List<LinguisticQuantifierWrapper> linguisticQuantifierWrappers = this.findAll();
+        List<LinguisticQuantifier> linguisticQuantifiers = linguisticQuantifierWrappers
+                .stream()
+                .map((it) -> it.deserialize())
+                .collect(Collectors.toList());
+
+        return linguisticQuantifiers
+                .stream()
+                .filter((it) -> it.getName().equals(name))
+                .findFirst()
+                .orElseThrow(LinguisticQuantifierNotFoundException::new);
     }
 
     @Override
     public List<LinguisticQuantifierWrapper> findAll() {
         return StreamSupport
-                .stream(quantifierRepository.findAll().spliterator(), false)
+                .stream(linguisticQuantifierWrapperRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
 
     @Override
     public LinguisticQuantifierWrapper save(LinguisticQuantifierWrapper linguisticQuantifier) {
-        return quantifierRepository.save(linguisticQuantifier);
+        return linguisticQuantifierWrapperRepository.save(linguisticQuantifier);
     }
 
     @Override
     public void deleteById(Long id) {
-        quantifierRepository.deleteById(id);
+        linguisticQuantifierWrapperRepository.deleteById(id);
     }
 
     @Override
     public void delete(LinguisticQuantifierWrapper object) {
-        quantifierRepository.delete(object);
+        linguisticQuantifierWrapperRepository.delete(object);
     }
 
     @Override
     public void deleteAll() {
-        quantifierRepository.deleteAll();
+        linguisticQuantifierWrapperRepository.deleteAll();
     }
 
     @Override
     public void deleteByName(String name) {
-        //        TODO
-        //        quantifierRepository.deleteByName(name);
+        LinguisticQuantifier linguisticQuantifier = this.findByName(name);
+        LinguisticQuantifierWrapper linguisticQuantifierWrapper = new LinguisticQuantifierWrapper();
+        linguisticQuantifierWrapper.serialize(linguisticQuantifier);
+        this.delete(linguisticQuantifierWrapper);
     }
 }
     

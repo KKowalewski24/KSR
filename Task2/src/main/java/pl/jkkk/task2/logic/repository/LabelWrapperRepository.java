@@ -5,8 +5,4 @@ import pl.jkkk.task2.logic.model.wrapper.LabelWrapper;
 
 public interface LabelWrapperRepository extends CrudRepository<LabelWrapper, Long> {
 
-    //    TODO
-    //    Optional<LabelWrapper> findByName(String name);
-
-    //    void deleteByName(String name);
 }

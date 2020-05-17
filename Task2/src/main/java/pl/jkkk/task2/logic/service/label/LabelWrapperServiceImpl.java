@@ -2,6 +2,8 @@ package pl.jkkk.task2.logic.service.label;
 
 import org.springframework.stereotype.Service;
 import pl.jkkk.task2.logic.exception.LabelNotFoundException;
+import pl.jkkk.task2.logic.fuzzy.linguistic.Label;
+import pl.jkkk.task2.logic.model.Pollution;
 import pl.jkkk.task2.logic.model.wrapper.LabelWrapper;
 import pl.jkkk.task2.logic.repository.LabelWrapperRepository;
 
@@ -33,16 +35,18 @@ public class LabelWrapperServiceImpl implements LabelWrapperService {
     }
 
     @Override
-    public LabelWrapper findByName(String name) {
-        //        TODO
-        //        Optional<LabelWrapper> label = labelWrapperRepository.findByName(name);
-        //
-        //        if (!label.isPresent()) {
-        //            throw new LabelNotFoundException();
-        //        }
-        //
-        //        return label.get();
-        return null;
+    public Label<Pollution> findByName(String name) {
+        List<LabelWrapper> labelWrappers = this.findAll();
+        List<Label<Pollution>> labels = labelWrappers
+                .stream()
+                .map((it) -> it.deserialize())
+                .collect(Collectors.toList());
+
+        return labels
+                .stream()
+                .filter((it) -> it.getName().equals(name))
+                .findFirst()
+                .orElseThrow(LabelNotFoundException::new);
     }
 
     @Override
@@ -74,8 +78,10 @@ public class LabelWrapperServiceImpl implements LabelWrapperService {
 
     @Override
     public void deleteByName(String name) {
-        //        TODO
-        //        labelWrapperRepository.deleteByName(name);
+        Label<Pollution> label = this.findByName(name);
+        LabelWrapper labelWrapper = new LabelWrapper();
+        labelWrapper.serialize(label);
+        this.delete(labelWrapper);
     }
 }
     

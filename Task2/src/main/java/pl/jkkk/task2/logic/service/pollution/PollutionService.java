@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 public interface PollutionService extends BaseService<Pollution> {
+
     Pollution save(Pollution object);
 
     List<Pollution> saveAll(Collection<Pollution> collection);

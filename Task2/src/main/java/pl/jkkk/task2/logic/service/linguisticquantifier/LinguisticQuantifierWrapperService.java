@@ -1,5 +1,6 @@
 package pl.jkkk.task2.logic.service.linguisticquantifier;
 
+import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticQuantifier;
 import pl.jkkk.task2.logic.model.wrapper.LinguisticQuantifierWrapper;
 import pl.jkkk.task2.logic.service.BaseService;
 
@@ -8,7 +9,7 @@ public interface LinguisticQuantifierWrapperService
 
     LinguisticQuantifierWrapper save(LinguisticQuantifierWrapper linguisticQuantifier);
 
-    LinguisticQuantifierWrapper findByName(String name);
+    LinguisticQuantifier findByName(String name);
 
     void deleteByName(String name);
 }

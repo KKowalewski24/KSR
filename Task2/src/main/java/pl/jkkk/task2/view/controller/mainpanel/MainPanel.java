@@ -98,6 +98,11 @@ public class MainPanel implements Initializable {
     }
 
     @FXML
+    private void onActionClearSummarization(ActionEvent actionEvent) {
+        loader.clearSummarization();
+    }
+
+    @FXML
     private void onActionSaveSummarization(ActionEvent actionEvent) {
         try {
             loader.saveSummarization(Integer.valueOf(textFieldSaveSummarizationNumber.getText()));

@@ -1,5 +1,6 @@
 package pl.jkkk.task2.view.controller.mainpanel;
 
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -21,6 +22,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static pl.jkkk.task2.view.fxml.FxHelper.clearAndFillListView;
+import static pl.jkkk.task2.view.fxml.FxHelper.clearListView;
+import static pl.jkkk.task2.view.fxml.FxHelper.fillListView;
 import static pl.jkkk.task2.view.fxml.FxHelper.getValueFromComboBox;
 
 public class Loader {
@@ -36,7 +39,7 @@ public class Loader {
     private final LabelWrapperService labelWrapperService;
     private final LinguisticQuantifierWrapperService quantifierWrapperService;
 
-    private List results;
+    private List<String> results = new ArrayList<>();
 
     /*------------------------ METHODS REGION ------------------------*/
     public Loader(ComboBox comboBoxQualifier, ComboBox comboBoxSummarizerBasic,
@@ -63,11 +66,21 @@ public class Loader {
         );
 
         double degreeOfTruth = linguisticSummary.degreeOfTruth();
-        results = Stream.of(linguisticSummary.toString() + " [" + degreeOfTruth + "]")
-                .collect(Collectors.toList());
+        String generateResult = linguisticSummary.toString() + " [" + degreeOfTruth + "]";
+        results.add(generateResult);
 
-        clearAndFillListView(listViewResults, results);
-        textFieldSaveSummarizationNumber.setText(String.valueOf(results.size()));
+        Platform.runLater(() -> {
+            fillListView(listViewResults, generateResult);
+            textFieldSaveSummarizationNumber.setText(String.valueOf(results.size()));
+        });
+    }
+
+    public void clearSummarization() {
+        Platform.runLater(() -> {
+            results.clear();
+            clearListView(listViewResults);
+            textFieldSaveSummarizationNumber.setText(String.valueOf(results.size()));
+        });
     }
 
     public void saveSummarization(Integer summarizationNumber) {

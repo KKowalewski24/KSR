@@ -53,6 +53,9 @@
                     onAction="#onActionSaveSummarization" prefHeight="35.0" prefWidth="136.0"
                     text="Save Summarization"/>
             <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false"
+                    onAction="#onActionClearSummarization" prefHeight="35.0" prefWidth="139.0"
+                    text="Clear Summarization"/>
+            <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false"
                     onAction="#onActionButtonChangeTheme" prefHeight="35.0" prefWidth="136.0"
                     text="Dark Mode ON/OFF"/>
             <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false"

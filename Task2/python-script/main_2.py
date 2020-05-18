@@ -16,23 +16,6 @@ JAR_NAME = "task2-0.0.1.jar"
 TXT = "*.txt"
 JAR = "*.jar"
 
-ALMOST_NONE = "Almost None"
-SOME = "Some"
-ABOUT_HALF = "About Half"
-MANY = "Many"
-ALMOST_ALL = "Almost All"
-SPRING = "Spring"
-SUMMER = "Summer"
-AUTUMN = "Autumn"
-WINTER = "Winter"
-MORNING_HOUR = "Morning Hour"
-AFTERNOON_HOUR = "Afternoon Hour"
-EVENING_HOUR = "Evening Hour"
-NIGHT_HOUR = "Night Hour"
-LOW_CONCENTRATION = "Low Concentration"
-MIDDLE_CONCENTRATION = "Middle Concentration"
-HIGH_CONCENTRATION = "High Concentration"
-
 
 # UTIL ------------------------------------------------------------------------ #
 def build_jar() -> None:

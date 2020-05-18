@@ -2,6 +2,7 @@ package pl.jkkk.task2.view.fxml;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -85,6 +86,14 @@ public class FxHelper {
     public static void setLabelTextInPane(Pane pane, int childrenNumber, String text) {
         Label label = (Label) pane.getChildren().get(childrenNumber);
         label.setText(text);
+    }
+
+    public static void addNodeToPane(Pane pane, Node node) {
+        pane.getChildren().add(node);
+    }
+
+    public static Node getNodeFromPane(Pane pane, int index) {
+        return pane.getChildren().get(index);
     }
 
     public static int getSelectedTabIndex(TabPane tabPane) {

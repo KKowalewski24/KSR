@@ -7,7 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.jkkk.task2.Main;
@@ -35,17 +35,18 @@ import static pl.jkkk.task2.view.fxml.FxHelper.showProgressIndicator;
 @Component
 public class MainPanel implements Initializable {
 
+
     /*------------------------ FIELDS REGION ------------------------*/
     @FXML
     private ComboBox comboBoxQuantifier;
     @FXML
-    private ComboBox comboBoxSummarizer;
+    private VBox paneQualifier;
+    @FXML
+    private VBox paneSummarizer;
     @FXML
     private ListView listViewResults;
     @FXML
     private ProgressIndicator progressIndicator;
-    @FXML
-    private TextField textFieldSaveSummarizationNumber;
 
     private Initializer initializer;
     private Loader loader;
@@ -69,15 +70,14 @@ public class MainPanel implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializer = new Initializer(
-                comboBoxQuantifier, comboBoxSummarizer,
-                textFieldSaveSummarizationNumber, labelWrapperService,
-                quantifierService
+                comboBoxQuantifier, paneQualifier, paneSummarizer,
+                labelWrapperService, quantifierService
         );
 
         loader = new Loader(
-                comboBoxQuantifier, comboBoxSummarizer,
-                listViewResults, textFieldSaveSummarizationNumber,
-                pollutionService, labelWrapperService, quantifierService
+                comboBoxQuantifier,paneQualifier, paneSummarizer,
+                listViewResults, pollutionService, labelWrapperService,
+                quantifierService
         );
 
         initializer.fillScene();
@@ -105,7 +105,7 @@ public class MainPanel implements Initializable {
     @FXML
     private void onActionSaveSummarization(ActionEvent actionEvent) {
         try {
-            loader.saveSummarization(Integer.valueOf(textFieldSaveSummarizationNumber.getText()));
+            loader.saveSummarization();
         } catch (NumberFormatException e) {
             PopOutWindow.messageBox("Wrong Value",
                     "Wrong value - must be a number", Alert.AlertType.WARNING);

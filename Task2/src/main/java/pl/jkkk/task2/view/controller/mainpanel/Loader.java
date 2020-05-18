@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import pl.jkkk.task2.logic.exception.FileOperationException;
 import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticSummary;
@@ -25,8 +26,9 @@ import static pl.jkkk.task2.view.fxml.FxHelper.getValueFromComboBox;
 public class Loader {
 
     /*------------------------ FIELDS REGION ------------------------*/
-    private ComboBox comboBoxQualifier;
-    private ComboBox comboBoxSummarizerBasic;
+    private ComboBox comboBoxQuantifier;
+    private Pane paneQualifier;
+    private Pane paneSummarizer;
     private ListView listViewResults;
 
     private FileWriterPlainText fileWriterPlainText = new FileWriterPlainText();
@@ -37,12 +39,13 @@ public class Loader {
     private List<String> results = new ArrayList<>();
 
     /*------------------------ METHODS REGION ------------------------*/
-    public Loader(ComboBox comboBoxQualifier, ComboBox comboBoxSummarizerBasic,
+    public Loader(ComboBox comboBoxQuantifier, Pane paneQualifier, Pane paneSummarizer,
                   ListView listViewResults, PollutionService pollutionService,
                   LabelWrapperService labelWrapperService,
                   LinguisticQuantifierWrapperService quantifierWrapperService) {
-        this.comboBoxQualifier = comboBoxQualifier;
-        this.comboBoxSummarizerBasic = comboBoxSummarizerBasic;
+        this.comboBoxQuantifier = comboBoxQuantifier;
+        this.paneQualifier = paneQualifier;
+        this.paneSummarizer = paneSummarizer;
         this.listViewResults = listViewResults;
         this.pollutionService = pollutionService;
         this.labelWrapperService = labelWrapperService;
@@ -50,15 +53,20 @@ public class Loader {
     }
 
     public void generateBasicSummarization() {
-        String selectedQualifier = getValueFromComboBox(comboBoxQualifier);
-        String selectedSummarizer = getValueFromComboBox(comboBoxSummarizerBasic);
+//        String selectedQuantifier = getValueFromComboBox(comboBoxQuantifier);
+//        String selectedQualifier = getValueFromComboBox(comboBoxQualifier);
+//        String selectedSummarizer = getValueFromComboBox(comboBoxSummarizerBasic);
+//
+//        LinguisticSummary<Pollution> linguisticSummary = new LinguisticSummary<>(
+//                quantifierWrapperService.findByName(selectedQuantifier),
+//                labelWrapperService.findByName(selectedSummarizer),
+//                pollutionService.findAll()
+//        );
 
-        LinguisticSummary<Pollution> linguisticSummary = new LinguisticSummary<>(
-                quantifierWrapperService.findByName(selectedQualifier),
-                labelWrapperService.findByName(selectedSummarizer),
-                pollutionService.findAll()
-        );
+//        generateAndFill(linguisticSummary);
+    }
 
+    private void generateAndFill(LinguisticSummary<Pollution> linguisticSummary) {
         double degreeOfTruth = linguisticSummary.degreeOfTruth();
         String generateResult = linguisticSummary.toString() + " [" + degreeOfTruth + "]";
         results.add(generateResult);

@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.jkkk.task2.Main;
@@ -34,13 +35,14 @@ import static pl.jkkk.task2.view.fxml.FxHelper.showProgressIndicator;
 @Component
 public class MainPanel implements Initializable {
 
+
     /*------------------------ FIELDS REGION ------------------------*/
     @FXML
     private ComboBox comboBoxQuantifier;
     @FXML
-    private ComboBox comboBoxQualifier;
+    private VBox paneQualifier;
     @FXML
-    private ComboBox comboBoxSummarizer;
+    private VBox paneSummarizer;
     @FXML
     private ListView listViewResults;
     @FXML
@@ -68,12 +70,12 @@ public class MainPanel implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializer = new Initializer(
-                comboBoxQuantifier, comboBoxQualifier, comboBoxSummarizer,
+                comboBoxQuantifier, paneQualifier, paneSummarizer,
                 labelWrapperService, quantifierService
         );
 
         loader = new Loader(
-                comboBoxQuantifier, comboBoxSummarizer,
+                comboBoxQuantifier,paneQualifier, paneSummarizer,
                 listViewResults, pollutionService, labelWrapperService,
                 quantifierService
         );

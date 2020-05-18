@@ -18,6 +18,9 @@ public class ViewConstants {
     public static final String PATH_CSS_DARK_STYLING = "/style/DarkStyles.css";
     public static final String PATH_CSS_LIGHT_STYLING = "/style/LightStyles.css";
 
+    public static final String DEACTIVATED = "Deactivated";
+    public static final String SELECT_ITEM = "Select";
+
     /*------------------------ METHODS REGION ------------------------*/
     private ViewConstants() {
     }

@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import static pl.jkkk.task2.view.constant.ViewConstants.DEACTIVATED;
 import static pl.jkkk.task2.view.constant.ViewConstants.SELECT_ITEM;
+import static pl.jkkk.task2.view.fxml.FxHelper.addNodeToPane;
 import static pl.jkkk.task2.view.fxml.FxHelper.fillComboBox;
 
 public class Initializer {
@@ -61,7 +62,7 @@ public class Initializer {
         CustomComboBox customComboBox = new CustomComboBox();
         customComboBox.setPrefWidth(250);
         fillComboBox(customComboBox, addItemToLabelList(prompt));
-        pane.getChildren().add(customComboBox);
+        addNodeToPane(pane, customComboBox);
 
         customComboBox.setOnAction((event) -> {
             if (customComboBox.getCounter() == 0) {

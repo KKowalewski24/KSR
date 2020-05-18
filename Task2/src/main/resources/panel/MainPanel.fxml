@@ -36,67 +36,70 @@
                 <Pane HBox.hgrow="ALWAYS"/>
             </items>
         </ToolBar>
-        <HBox alignment="TOP_CENTER">
-            <children>
-                <ProgressIndicator fx:id="progressIndicator" maxHeight="40" visible="false">
-                    <HBox.margin>
-                        <Insets top="20.0"/>
-                    </HBox.margin>
-                </ProgressIndicator>
-                <VBox alignment="CENTER">
-                    <children>
-                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="80.0"
-                               text="Quantifier">
-                            <VBox.margin>
-                                <Insets bottom="5.0"/>
-                            </VBox.margin>
-                            <font>
-                                <Font size="15.0"/>
-                            </font>
-                        </Label>
-                        <ComboBox fx:id="comboBoxQuantifier" prefWidth="250.0"/>
-                    </children>
-                    <HBox.margin>
-                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
-                    </HBox.margin>
-                </VBox>
-                <VBox fx:id="paneQualifier" alignment="CENTER">
-                    <children>
-                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="71.0"
-                               text="Qualifier">
-                            <VBox.margin>
-                                <Insets bottom="5.0"/>
-                            </VBox.margin>
-                            <font>
-                                <Font size="15.0"/>
-                            </font>
-                        </Label>
-                    </children>
-                    <HBox.margin>
-                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
-                    </HBox.margin>
-                </VBox>
-                <VBox fx:id="paneSummarizer" alignment="CENTER">
-                    <children>
-                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="92.0"
-                               text="Summarizer">
-                            <VBox.margin>
-                                <Insets bottom="5.0"/>
-                            </VBox.margin>
-                            <font>
-                                <Font size="15.0"/>
-                            </font>
-                        </Label>
-                    </children>
-                    <HBox.margin>
-                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
-                    </HBox.margin>
-                </VBox>
-            </children>
+        <ScrollPane hbarPolicy="NEVER">
+            <HBox alignment="TOP_CENTER" prefHeight="111.0" prefWidth="1200">
+                <children>
+                    <ProgressIndicator fx:id="progressIndicator" maxHeight="40" visible="false">
+                        <HBox.margin>
+                            <Insets top="20.0"/>
+                        </HBox.margin>
+                    </ProgressIndicator>
+                    <VBox alignment="CENTER">
+                        <children>
+                            <Label alignment="CENTER" prefHeight="19.0" prefWidth="80.0"
+                                   text="Quantifier">
+                                <VBox.margin>
+                                    <Insets bottom="5.0"/>
+                                </VBox.margin>
+                                <font>
+                                    <Font size="15.0"/>
+                                </font>
+                            </Label>
+                            <ComboBox fx:id="comboBoxQuantifier" prefWidth="250.0"/>
+                        </children>
+                        <HBox.margin>
+                            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
+                        </HBox.margin>
+                    </VBox>
+                    <VBox fx:id="paneQualifier" alignment="CENTER">
+                        <children>
+                            <Label alignment="CENTER" prefHeight="19.0" prefWidth="71.0"
+                                   text="Qualifier">
+                                <VBox.margin>
+                                    <Insets bottom="5.0"/>
+                                </VBox.margin>
+                                <font>
+                                    <Font size="15.0"/>
+                                </font>
+                            </Label>
+                        </children>
+                        <HBox.margin>
+                            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
+                        </HBox.margin>
+                    </VBox>
+                    <VBox fx:id="paneSummarizer" alignment="CENTER">
+                        <children>
+                            <Label alignment="CENTER" prefHeight="21.0" prefWidth="92.0"
+                                   text="Summarizer">
+                                <VBox.margin>
+                                    <Insets bottom="5.0"/>
+                                </VBox.margin>
+                                <font>
+                                    <Font size="15.0"/>
+                                </font>
+                            </Label>
+                        </children>
+                        <HBox.margin>
+                            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
+                        </HBox.margin>
+                    </VBox>
+                </children>
+            </HBox>
+        </ScrollPane>
+        <ListView fx:id="listViewResults" maxHeight="450.0" maxWidth="1100.0">
             <VBox.margin>
-                <Insets bottom="10.0"/>
+                <Insets top="20.0"/>
             </VBox.margin>
-        </HBox>
-        <ListView fx:id="listViewResults" maxHeight="450.0" maxWidth="1100.0"/>
+        </ListView>
     </children>
 </VBox>

@@ -88,6 +88,16 @@ public class Loader {
         generateAndFill(linguisticSummary);
     }
 
+    private void generateBasicSummary(String selectedQuantifier, String firstSelectedSummarizer) {
+        LinguisticSummary<Pollution> linguisticSummary = new LinguisticSummary<>(
+                quantifierWrapperService.findByName(selectedQuantifier),
+                getCompoundLabelNameFromPane(paneSummarizer),
+                pollutionService.findAll()
+        );
+
+        generateAndFill(linguisticSummary);
+    }
+
     private Label<Pollution> getCompoundLabelNameFromPane(Pane pane) {
         List<Label<Pollution>> labels = new ArrayList<>();
 
@@ -102,16 +112,6 @@ public class Loader {
         }
 
         return finalLabel;
-    }
-
-    private void generateBasicSummary(String selectedQuantifier, String firstSelectedSummarizer) {
-        LinguisticSummary<Pollution> linguisticSummary = new LinguisticSummary<>(
-                quantifierWrapperService.findByName(selectedQuantifier),
-                labelWrapperService.findByName(firstSelectedSummarizer),
-                pollutionService.findAll()
-        );
-
-        generateAndFill(linguisticSummary);
     }
 
     private void generateAndFill(LinguisticSummary<Pollution> linguisticSummary) {

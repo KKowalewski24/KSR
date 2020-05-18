@@ -351,71 +351,75 @@ public class CommandMode {
 
         /*----------------------------------------------------------------------------------------*/
         // Wartosc AQI
+        final AQIValueCO aqiValueCO = new AQIValueCO();
         saveLabel(new Label<>(
                 "CO AQI value is correct.",
-                new TrapezoidalFuzzySet(0, 25, 50, 75),
-                new AQIValueCO())
+                new TrapezoidalFuzzySet<Pollution>(aqiValueCO::extractAttribute, 0, 25, 50, 75),
+                aqiValueCO)
         );
         saveLabel(new Label<>(
                 "CO AQI value is unhealthy.",
-                new TrapezoidalFuzzySet(50, 75, 150, 250),
-                new AQIValueCO())
+                new TrapezoidalFuzzySet<Pollution>(aqiValueCO::extractAttribute, 50, 75, 150, 250),
+                aqiValueCO)
         );
         saveLabel(new Label<>(
                 "CO AQI value is hazardous.",
-                new TrapezoidalFuzzySet(150, 250, 400, 500),
-                new AQIValueCO())
+                new TrapezoidalFuzzySet<Pollution>(aqiValueCO::extractAttribute, 150, 250, 400, 500),
+                aqiValueCO)
         );
 
         // Wartosc AQI
+        final AQIValueNO2 aqiValueNO2 = new AQIValueNO2();
         saveLabel(new Label<>(
                 "NO2 AQI value is correct.",
-                new TrapezoidalFuzzySet(0, 25, 50, 75),
-                new AQIValueNO2())
+                new TrapezoidalFuzzySet<Pollution>(aqiValueNO2::extractAttribute, 0, 25, 50, 75),
+                aqiValueNO2)
         );
         saveLabel(new Label<>(
                 "NO2 AQI value is unhealthy.",
-                new TrapezoidalFuzzySet(50, 75, 150, 250),
-                new AQIValueNO2())
+                new TrapezoidalFuzzySet<Pollution>(aqiValueNO2::extractAttribute, 50, 75, 150, 250),
+                aqiValueNO2)
         );
         saveLabel(new Label<>(
                 "NO2 AQI value is hazardous.",
-                new TrapezoidalFuzzySet(150, 250, 400, 500),
-                new AQIValueNO2())
+                new TrapezoidalFuzzySet<Pollution>(aqiValueNO2::extractAttribute, 150, 250, 400, 500),
+                aqiValueNO2)
         );
 
         // Wartosc AQI
+        final AQIValueO3 aqiValueO3 = new AQIValueO3();
         saveLabel(new Label<>(
                 "O3 AQI value is correct.",
-                new TrapezoidalFuzzySet(0, 25, 50, 75),
-                new AQIValueO3())
+                new TrapezoidalFuzzySet<Pollution>(aqiValueO3::extractAttribute, 0, 25, 50, 75),
+                aqiValueO3)
         );
         saveLabel(new Label<>(
                 "O3 AQI value is unhealthy.",
-                new TrapezoidalFuzzySet(50, 75, 150, 250),
-                new AQIValueO3())
+                new TrapezoidalFuzzySet<Pollution>(aqiValueO3::extractAttribute, 50, 75, 150, 250),
+                aqiValueO3)
         );
         saveLabel(new Label<>(
                 "O3 AQI value is hazardous.",
-                new TrapezoidalFuzzySet(150, 250, 400, 500),
-                new AQIValueO3())
+                new TrapezoidalFuzzySet<Pollution>(aqiValueO3::extractAttribute, 150, 250, 400, 500),
+                aqiValueO3)
         );
 
         // Wartosc AQI
+        final AQIValueSO2 aqiValueSO2 = new AQIValueSO2();
         saveLabel(new Label<>(
                 "SO2 AQI value is correct.",
-                new TrapezoidalFuzzySet(0, 25, 50, 75),
-                new AQIValueSO2())
+                new TrapezoidalFuzzySet<Pollution>(aqiValueSO2::extractAttribute, 0, 25, 50, 75),
+                aqiValueSO2)
         );
         saveLabel(new Label<>(
                 "SO2 AQI value is unhealthy.",
-                new TrapezoidalFuzzySet(50, 75, 150, 250),
-                new AQIValueSO2())
+                new TrapezoidalFuzzySet<Pollution>(aqiValueSO2::extractAttribute, 50, 75, 150, 250),
+                aqiValueSO2)
         );
         saveLabel(new Label<>(
                 "SO2 AQI value is hazardous.",
-                new TrapezoidalFuzzySet(150, 250, 400, 500),
-                new AQIValueSO2())
+                new TrapezoidalFuzzySet<Pollution>(aqiValueSO2::extractAttribute, 150, 250, 400, 500),
+                aqiValueSO2)
         );
 
         /*----------------------------------------------------------------------------------------*/

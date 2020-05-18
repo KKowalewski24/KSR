@@ -60,7 +60,8 @@ public class Initializer {
 
     private void addComboBox(Pane pane, String prompt) {
         CustomComboBox customComboBox = new CustomComboBox();
-        customComboBox.setPrefWidth(250);
+        customComboBox.setMinWidth(250);
+        customComboBox.setMaxWidth(250);
         fillComboBox(customComboBox, addItemToLabelList(prompt));
         addNodeToPane(pane, customComboBox);
 

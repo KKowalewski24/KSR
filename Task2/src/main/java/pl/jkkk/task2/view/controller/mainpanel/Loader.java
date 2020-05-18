@@ -7,6 +7,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import pl.jkkk.task2.logic.exception.FileOperationException;
+import pl.jkkk.task2.logic.fuzzy.linguistic.Label;
 import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticSummary;
 import pl.jkkk.task2.logic.model.Pollution;
 import pl.jkkk.task2.logic.readerwriter.FileWriterPlainText;
@@ -19,8 +20,11 @@ import pl.jkkk.task2.view.fxml.StageController;
 import java.util.ArrayList;
 import java.util.List;
 
+import static pl.jkkk.task2.view.constant.ViewConstants.DEACTIVATED;
+import static pl.jkkk.task2.view.constant.ViewConstants.SELECT_ITEM;
 import static pl.jkkk.task2.view.fxml.FxHelper.clearListView;
 import static pl.jkkk.task2.view.fxml.FxHelper.fillListView;
+import static pl.jkkk.task2.view.fxml.FxHelper.getNodeFromPane;
 import static pl.jkkk.task2.view.fxml.FxHelper.getValueFromComboBox;
 
 public class Loader {
@@ -53,17 +57,61 @@ public class Loader {
     }
 
     public void generateBasicSummarization() {
-//        String selectedQuantifier = getValueFromComboBox(comboBoxQuantifier);
-//        String selectedQualifier = getValueFromComboBox(comboBoxQualifier);
-//        String selectedSummarizer = getValueFromComboBox(comboBoxSummarizerBasic);
-//
-//        LinguisticSummary<Pollution> linguisticSummary = new LinguisticSummary<>(
-//                quantifierWrapperService.findByName(selectedQuantifier),
-//                labelWrapperService.findByName(selectedSummarizer),
-//                pollutionService.findAll()
-//        );
+        String selectedQuantifier = getValueFromComboBox(comboBoxQuantifier);
+        String firstSelectedQualifier
+                = getValueFromComboBox((ComboBox) getNodeFromPane(paneQualifier, 1));
+        String firstSelectedSummarizer
+                = getValueFromComboBox((ComboBox) getNodeFromPane(paneSummarizer, 1));
 
-//        generateAndFill(linguisticSummary);
+        if (firstSelectedQualifier.equals(DEACTIVATED)) {
+            if (!firstSelectedSummarizer.equals(SELECT_ITEM)) {
+                generateBasicSummary(selectedQuantifier, firstSelectedSummarizer);
+            } else {
+                PopOutWindow.messageBox("Summarizer Not Selected",
+                        "", Alert.AlertType.WARNING);
+            }
+        } else {
+            if (!firstSelectedSummarizer.equals(SELECT_ITEM)) {
+                generateAdvancedSummary(selectedQuantifier);
+            }
+        }
+    }
+
+    private void generateAdvancedSummary(String selectedQuantifier) {
+        LinguisticSummary<Pollution> linguisticSummary = new LinguisticSummary<>(
+                quantifierWrapperService.findByName(selectedQuantifier),
+                getCompoundLabelNameFromPane(paneQualifier),
+                getCompoundLabelNameFromPane(paneSummarizer),
+                pollutionService.findAll()
+        );
+
+        generateAndFill(linguisticSummary);
+    }
+
+    private Label<Pollution> getCompoundLabelNameFromPane(Pane pane) {
+        List<Label<Pollution>> labels = new ArrayList<>();
+
+        for (int i = 1; i < pane.getChildren().size() - 1; i++) {
+            labels.add(labelWrapperService
+                    .findByName(getValueFromComboBox((ComboBox) getNodeFromPane(pane, i))));
+        }
+
+        Label<Pollution> finalLabel = labels.get(0);
+        for (int i = 1; i < labels.size(); i++) {
+            finalLabel = finalLabel.and(labels.get(i));
+        }
+
+        return finalLabel;
+    }
+
+    private void generateBasicSummary(String selectedQuantifier, String firstSelectedSummarizer) {
+        LinguisticSummary<Pollution> linguisticSummary = new LinguisticSummary<>(
+                quantifierWrapperService.findByName(selectedQuantifier),
+                labelWrapperService.findByName(firstSelectedSummarizer),
+                pollutionService.findAll()
+        );
+
+        generateAndFill(linguisticSummary);
     }
 
     private void generateAndFill(LinguisticSummary<Pollution> linguisticSummary) {

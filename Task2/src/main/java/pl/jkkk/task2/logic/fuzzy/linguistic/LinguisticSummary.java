@@ -2,6 +2,7 @@ package pl.jkkk.task2.logic.fuzzy.linguistic;
 
 import java.util.List;
 
+import pl.jkkk.task2.logic.fuzzy.set.IntersectionFuzzySet;
 import pl.jkkk.task2.logic.model.enumtype.QuantifierType;
 
 public class LinguisticSummary<T> {
@@ -11,23 +12,38 @@ public class LinguisticSummary<T> {
     private final Label<T> summarizer;
     private List<T> objects;
 
-    public LinguisticSummary(LinguisticQuantifier quantifier, Label<T> summarizer, List<T> objects) {
+    public LinguisticSummary(LinguisticQuantifier quantifier, Label<T> qualifier, Label<T> summarizer,
+            List<T> objects) {
         this.quantifier = quantifier;
-        this.qualifier = null;
+        this.qualifier = qualifier;
         this.summarizer = summarizer;
         this.objects = objects;
     }
 
+    public LinguisticSummary(LinguisticQuantifier quantifier, Label<T> summarizer, List<T> objects) {
+        this(quantifier, null, summarizer, objects);
+    }
+
     public double degreeOfTruth() {
-        if (quantifier.getQuantifierType() == QuantifierType.ABSOLUTE) {
-            return quantifier.compatibilityLevel(summarizer.getFuzzySet().cardinality(objects));
+        if (qualifier == null) {
+            if (quantifier.getQuantifierType() == QuantifierType.ABSOLUTE) {
+                return quantifier.compatibilityLevel(summarizer.getFuzzySet().cardinality(objects));
+            } else {
+                return quantifier.compatibilityLevel(summarizer.getFuzzySet().cardinality(objects) / objects.size());
+            }
         } else {
-            return quantifier.compatibilityLevel(summarizer.getFuzzySet().cardinality(objects) / objects.size());
+            return quantifier.compatibilityLevel(
+                    new IntersectionFuzzySet<T>(summarizer.getFuzzySet(), qualifier.getFuzzySet()).cardinality(objects)
+                            / qualifier.getFuzzySet().cardinality(objects));
         }
     }
 
     @Override
     public String toString() {
-        return quantifier.getName() + " measurements " + summarizer.getName();
+        if (qualifier == null) {
+            return quantifier.getName() + " measurements " + summarizer.getName();
+        } else {
+            return quantifier.getName() + " measurements, where " + qualifier.getName() + ", " + summarizer.getName();
+        }
     }
 }

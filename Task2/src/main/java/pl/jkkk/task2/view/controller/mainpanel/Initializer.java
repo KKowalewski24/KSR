@@ -12,27 +12,31 @@ import static pl.jkkk.task2.view.fxml.FxHelper.fillComboBox;
 public class Initializer {
 
     /*------------------------ FIELDS REGION ------------------------*/
+    private ComboBox comboBoxQuantifier;
     private ComboBox comboBoxQualifier;
     private ComboBox comboBoxSummarizer;
-    private TextField textFieldSaveSummarizationNumber;
 
     private final LabelWrapperService labelWrapperService;
     private final LinguisticQuantifierWrapperService quantifierWrapperService;
 
     /*------------------------ METHODS REGION ------------------------*/
-    public Initializer(ComboBox comboBoxQualifier, ComboBox comboBoxSummarizer,
-                       TextField textFieldSaveSummarizationNumber,
-                       LabelWrapperService labelWrapperService,
+    public Initializer(ComboBox comboBoxQuantifier, ComboBox comboBoxQualifier,
+                       ComboBox comboBoxSummarizer, LabelWrapperService labelWrapperService,
                        LinguisticQuantifierWrapperService quantifierWrapperService) {
+        this.comboBoxQuantifier = comboBoxQuantifier;
         this.comboBoxQualifier = comboBoxQualifier;
         this.comboBoxSummarizer = comboBoxSummarizer;
-        this.textFieldSaveSummarizationNumber = textFieldSaveSummarizationNumber;
         this.labelWrapperService = labelWrapperService;
         this.quantifierWrapperService = quantifierWrapperService;
     }
 
     public void fillScene() {
-        fillComboBox(comboBoxQualifier, quantifierWrapperService.findAll()
+        fillComboBox(comboBoxQuantifier, quantifierWrapperService.findAll()
+                .stream()
+                .map((it) -> it.deserialize().getName())
+                .collect(Collectors.toList()));
+
+        fillComboBox(comboBoxQualifier, labelWrapperService.findAll()
                 .stream()
                 .map((it) -> it.deserialize().getName())
                 .collect(Collectors.toList()));
@@ -41,8 +45,6 @@ public class Initializer {
                 .stream()
                 .map((it) -> it.deserialize().getName())
                 .collect(Collectors.toList()));
-
-        textFieldSaveSummarizationNumber.setText("0");
     }
 }
     

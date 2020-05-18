@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import pl.jkkk.task2.logic.exception.FileOperationException;
 import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticSummary;
@@ -18,10 +17,7 @@ import pl.jkkk.task2.view.fxml.StageController;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static pl.jkkk.task2.view.fxml.FxHelper.clearAndFillListView;
 import static pl.jkkk.task2.view.fxml.FxHelper.clearListView;
 import static pl.jkkk.task2.view.fxml.FxHelper.fillListView;
 import static pl.jkkk.task2.view.fxml.FxHelper.getValueFromComboBox;
@@ -32,7 +28,6 @@ public class Loader {
     private ComboBox comboBoxQualifier;
     private ComboBox comboBoxSummarizerBasic;
     private ListView listViewResults;
-    private TextField textFieldSaveSummarizationNumber;
 
     private FileWriterPlainText fileWriterPlainText = new FileWriterPlainText();
     private final PollutionService pollutionService;
@@ -43,13 +38,12 @@ public class Loader {
 
     /*------------------------ METHODS REGION ------------------------*/
     public Loader(ComboBox comboBoxQualifier, ComboBox comboBoxSummarizerBasic,
-                  ListView listViewResults, TextField textFieldSaveSummarizationNumber,
-                  PollutionService pollutionService, LabelWrapperService labelWrapperService,
+                  ListView listViewResults, PollutionService pollutionService,
+                  LabelWrapperService labelWrapperService,
                   LinguisticQuantifierWrapperService quantifierWrapperService) {
         this.comboBoxQualifier = comboBoxQualifier;
         this.comboBoxSummarizerBasic = comboBoxSummarizerBasic;
         this.listViewResults = listViewResults;
-        this.textFieldSaveSummarizationNumber = textFieldSaveSummarizationNumber;
         this.pollutionService = pollutionService;
         this.labelWrapperService = labelWrapperService;
         this.quantifierWrapperService = quantifierWrapperService;
@@ -69,28 +63,23 @@ public class Loader {
         String generateResult = linguisticSummary.toString() + " [" + degreeOfTruth + "]";
         results.add(generateResult);
 
-        Platform.runLater(() -> {
-            fillListView(listViewResults, generateResult);
-            textFieldSaveSummarizationNumber.setText(String.valueOf(results.size()));
-        });
+        Platform.runLater(() -> fillListView(listViewResults, generateResult));
     }
 
     public void clearSummarization() {
         Platform.runLater(() -> {
             results.clear();
             clearListView(listViewResults);
-            textFieldSaveSummarizationNumber.setText(String.valueOf(results.size()));
         });
     }
 
-    public void saveSummarization(Integer summarizationNumber) {
+    public void saveSummarization() {
         try {
             if (results != null) {
                 String filename = new FileChooser()
                         .showSaveDialog(StageController.getApplicationStage())
                         .getName();
-                fileWriterPlainText.writePlainText(filename, new ArrayList<>(results)
-                        .subList(0, summarizationNumber));
+                fileWriterPlainText.writePlainText(filename, results);
             } else {
                 PopOutWindow.messageBox("File Write Error",
                         "Summarization has not been generated yet",

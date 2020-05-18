@@ -39,6 +39,8 @@ public class MainPanel implements Initializable {
     @FXML
     private ComboBox comboBoxQuantifier;
     @FXML
+    private ComboBox comboBoxQualifier;
+    @FXML
     private ComboBox comboBoxSummarizer;
     @FXML
     private ListView listViewResults;

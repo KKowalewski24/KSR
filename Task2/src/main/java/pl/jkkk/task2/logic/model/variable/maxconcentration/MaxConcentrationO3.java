@@ -14,7 +14,7 @@ public class MaxConcentrationO3 extends LinguisticVariable<Pollution> {
     }
 
     @Override
-    protected Double extractAttribute(Pollution object) {
+    public Double extractAttribute(Pollution object) {
         return new Double(object.getO31stMaxValue());
     }
 }

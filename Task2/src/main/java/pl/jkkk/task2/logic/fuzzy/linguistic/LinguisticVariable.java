@@ -6,10 +6,7 @@ import java.util.stream.Collectors;
 
 /**
  * This class represents linguistic variable, it has some name
- * and provides universe of discourse for fuzzy sets stored in
- * related labels, this universe is computed by extracting
- * values of selected attribute of class T instances so child
- * classes have to implement mapping method.
+ * and provides method for retrieving some attribute's value from object.
  */
 public abstract class LinguisticVariable<T> implements Serializable {
 
@@ -19,11 +16,7 @@ public abstract class LinguisticVariable<T> implements Serializable {
         this.name = name;
     }
 
-    public List<Double> universeOfDiscourse(List<T> objects) {
-        return objects.stream().map(object -> extractAttribute(object)).collect(Collectors.toList());
-    }
-
-    abstract protected Double extractAttribute(T object);
+    public abstract Double extractAttribute(T object);
 
     public String getName() {
         return name;

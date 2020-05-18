@@ -1,25 +1,25 @@
 package pl.jkkk.task2.logic.fuzzy.set;
 
-public class UnionFuzzySet extends FuzzySet {
+public class UnionFuzzySet<T> extends FuzzySet<T> {
 
-    private FuzzySet A;
-    private FuzzySet B;
+    private final FuzzySet<T> A;
+    private final FuzzySet<T> B;
 
-    public UnionFuzzySet(FuzzySet A, FuzzySet B) {
+    public UnionFuzzySet(FuzzySet<T> A, FuzzySet<T> B) {
         this.A = A;
         this.B = B;
     }
 
-    public FuzzySet getA() {
+    public FuzzySet<T> getA() {
         return A;
     }
 
-    public FuzzySet getB() {
+    public FuzzySet<T> getB() {
         return B;
     }
 
     @Override
-    public double contains(double x) {
+    public double contains(T x) {
         return Math.max(A.contains(x), B.contains(x));
     }
 }

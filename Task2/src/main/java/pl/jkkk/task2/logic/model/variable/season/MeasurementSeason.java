@@ -14,7 +14,7 @@ public class MeasurementSeason extends LinguisticVariable<Pollution> {
     }
 
     @Override
-    protected Double extractAttribute(Pollution pollution) {
+    public Double extractAttribute(Pollution pollution) {
         return new Double(pollution.getDateLocal().getDayOfYear());
     }
 }

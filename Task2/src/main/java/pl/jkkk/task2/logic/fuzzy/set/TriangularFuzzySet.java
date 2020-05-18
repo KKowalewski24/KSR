@@ -1,8 +1,8 @@
 package pl.jkkk.task2.logic.fuzzy.set;
 
-public class TriangularFuzzySet extends TrapezoidalFuzzySet {
+public class TriangularFuzzySet<T> extends TrapezoidalFuzzySet<T> {
 
-    public TriangularFuzzySet(double a, double b, double c) {
-        super(a, b, b, c);
+    public TriangularFuzzySet(DoubleValueExtractor<T> doubleValueExtractor, double a, double b, double c) {
+        super(doubleValueExtractor, a, b, b, c);
     }
 }

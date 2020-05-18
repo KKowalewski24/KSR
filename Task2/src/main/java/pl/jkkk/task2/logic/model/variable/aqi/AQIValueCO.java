@@ -14,7 +14,7 @@ public class AQIValueCO extends LinguisticVariable<Pollution> {
     }
 
     @Override
-    protected Double extractAttribute(Pollution object) {
+    public Double extractAttribute(Pollution object) {
         return new Double(object.getCOAQI());
     }
 }

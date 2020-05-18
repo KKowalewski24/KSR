@@ -7,41 +7,27 @@ import pl.jkkk.task2.logic.model.enumtype.QuantifierType;
 public class LinguisticSummary<T> {
 
     private final LinguisticQuantifier quantifier;
-    private final Label label;
+    private final Label<T> qualifier;
+    private final Label<T> summarizer;
     private List<T> objects;
 
-    public LinguisticSummary(LinguisticQuantifier quantifier, Label<T> label, List<T> objects) {
+    public LinguisticSummary(LinguisticQuantifier quantifier, Label<T> summarizer, List<T> objects) {
         this.quantifier = quantifier;
-        this.label = label;
+        this.qualifier = null;
+        this.summarizer = summarizer;
         this.objects = objects;
     }
 
-    public LinguisticQuantifier getQuantifier() {
-        return quantifier;
-    }
-
-    public Label getLabel() {
-        return label;
-    }
-
-    public List<T> getObjects() {
-        return objects;
-    }
-
     public double degreeOfTruth() {
-        List<Double> universeOfDiscourse = label.getLinguisticVariable()
-                .universeOfDiscourse(objects);
         if (quantifier.getQuantifierType() == QuantifierType.ABSOLUTE) {
-            return quantifier.compatibilityLevel(label.getFuzzySet()
-                    .cardinality(universeOfDiscourse));
+            return quantifier.compatibilityLevel(summarizer.getFuzzySet().cardinality(objects));
         } else {
-            return quantifier.compatibilityLevel(
-                    label.getFuzzySet().cardinality(universeOfDiscourse) / objects.size());
+            return quantifier.compatibilityLevel(summarizer.getFuzzySet().cardinality(objects) / objects.size());
         }
     }
 
     @Override
     public String toString() {
-        return quantifier.getName() + " measurements " + label.getName();
+        return quantifier.getName() + " measurements " + summarizer.getName();
     }
 }

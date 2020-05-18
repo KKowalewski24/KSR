@@ -1,19 +1,19 @@
 package pl.jkkk.task2.logic.fuzzy.linguistic;
 
+import java.io.Serializable;
+
 import pl.jkkk.task2.logic.fuzzy.set.FuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.ModifiedFuzzySet;
 import pl.jkkk.task2.logic.model.enumtype.QuantifierType;
-
-import java.io.Serializable;
 
 public class LinguisticQuantifier implements Serializable {
 
     private Long id;
     private final String name;
-    private final FuzzySet fuzzySet;
+    private final FuzzySet<Double> fuzzySet;
     private final QuantifierType quantifierType;
 
-    public LinguisticQuantifier(String name, FuzzySet fuzzySet, QuantifierType quantifierType) {
+    public LinguisticQuantifier(String name, FuzzySet<Double> fuzzySet, QuantifierType quantifierType) {
         this.name = name;
         this.fuzzySet = fuzzySet;
         this.quantifierType = quantifierType;
@@ -35,7 +35,7 @@ public class LinguisticQuantifier implements Serializable {
         return name;
     }
 
-    public FuzzySet getFuzzySet() {
+    public FuzzySet<Double> getFuzzySet() {
         return fuzzySet;
     }
 
@@ -45,6 +45,6 @@ public class LinguisticQuantifier implements Serializable {
 
     public LinguisticQuantifier modify(final Modifier modifier) {
         return new LinguisticQuantifier(modifier.getText() + " " + name,
-                new ModifiedFuzzySet(fuzzySet, modifier.getR()), quantifierType);
+                new ModifiedFuzzySet<>(fuzzySet, modifier.getR()), quantifierType);
     }
 }

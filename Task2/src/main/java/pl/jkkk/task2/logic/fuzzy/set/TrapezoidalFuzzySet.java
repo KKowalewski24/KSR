@@ -1,13 +1,15 @@
 package pl.jkkk.task2.logic.fuzzy.set;
 
-public class TrapezoidalFuzzySet extends FuzzySet {
+public class TrapezoidalFuzzySet<T> extends FuzzySet<T> {
 
+    private final DoubleValueExtractor<T> doubleValueExtractor;
     private final double a;
     private final double b;
     private final double c;
     private final double d;
 
-    public TrapezoidalFuzzySet(double a, double b, double c, double d) {
+    public TrapezoidalFuzzySet(DoubleValueExtractor<T> doubleValueExtractor, double a, double b, double c, double d) {
+        this.doubleValueExtractor = doubleValueExtractor;
         this.a = a;
         this.b = b;
         this.c = c;
@@ -31,7 +33,8 @@ public class TrapezoidalFuzzySet extends FuzzySet {
     }
 
     @Override
-    public double contains(double x) {
+    public double contains(T object) {
+        double x = doubleValueExtractor.apply(object);
         if (x > a && x < b) {
             return (x - a) / (b - a);
         } else if (x >= b && x <= c) {

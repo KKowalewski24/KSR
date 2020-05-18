@@ -17,10 +17,12 @@ import pl.jkkk.task2.logic.exception.LabelNotFoundException;
 import pl.jkkk.task2.logic.exception.LinguisticQuantifierNotFoundException;
 import pl.jkkk.task2.logic.fuzzy.linguistic.Label;
 import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticQuantifier;
+import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticVariable;
 import pl.jkkk.task2.logic.fuzzy.set.FuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.GaussianFuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.TrapezoidalFuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.TriangularFuzzySet;
+import pl.jkkk.task2.logic.model.Pollution;
 import pl.jkkk.task2.logic.model.enumtype.FunctionType;
 import pl.jkkk.task2.logic.model.enumtype.LinguisticVariableType;
 import pl.jkkk.task2.logic.model.enumtype.ObjectType;
@@ -315,11 +317,12 @@ public class EditPanel implements Initializable {
                 case TRAPEZOIDAL: {
                     quantifierWrapper.serialize(new LinguisticQuantifier(
                             getTextFieldFromPaneAndGetValue(paneTextField, 1),
-                            new TrapezoidalFuzzySet(
-                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
-                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1)),
-                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamThird, 1)),
-                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFourth, 1))
+                            new TrapezoidalFuzzySet<Double>(
+                                    x -> x,
+                                    Double.parseDouble(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
+                                    Double.parseDouble(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1)),
+                                    Double.parseDouble(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamThird, 1)),
+                                    Double.parseDouble(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFourth, 1))
                             ),
                             QuantifierType.fromString(getValueFromComboBox(comboBoxType))
                     ));
@@ -328,10 +331,11 @@ public class EditPanel implements Initializable {
                 case TRIANGULAR: {
                     quantifierWrapper.serialize(new LinguisticQuantifier(
                             getTextFieldFromPaneAndGetValue(paneTextField, 1),
-                            new TriangularFuzzySet(
-                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
-                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1)),
-                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamThird, 1))
+                            new TriangularFuzzySet<Double>(
+                                    x -> x,
+                                    Double.parseDouble(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
+                                    Double.parseDouble(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1)),
+                                    Double.parseDouble(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamThird, 1))
                             ),
                             QuantifierType.fromString(getValueFromComboBox(comboBoxType))
                     ));
@@ -340,9 +344,10 @@ public class EditPanel implements Initializable {
                 case GAUSSIAN: {
                     quantifierWrapper.serialize(new LinguisticQuantifier(
                             getTextFieldFromPaneAndGetValue(paneTextField, 1),
-                            new GaussianFuzzySet(
-                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
-                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1))
+                            new GaussianFuzzySet<Double>(
+                                    x -> x,
+                                    Double.parseDouble(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
+                                    Double.parseDouble(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1))
                             ),
                             QuantifierType.fromString(getValueFromComboBox(comboBoxType))
                     ));
@@ -361,17 +366,20 @@ public class EditPanel implements Initializable {
                 .fromString(getValueFromComboBox(comboBoxFunctionType));
         LabelWrapper labelWrapper = new LabelWrapper();
         try {
+            final LinguisticVariable<Pollution> linguisticVariable =
+                    LinguisticVariableType.getObjectFromString(getValueFromComboBox(comboBoxType));
             switch (functionType) {
                 case TRAPEZOIDAL: {
                     labelWrapper.serialize(new Label<>(
                             getTextFieldFromPaneAndGetValue(paneTextField, 1),
-                            new TrapezoidalFuzzySet(
-                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
-                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1)),
-                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamThird, 1)),
-                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFourth, 1))
+                            new TrapezoidalFuzzySet<Pollution>(
+                                    linguisticVariable::extractAttribute,
+                                    Double.parseDouble(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
+                                    Double.parseDouble(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1)),
+                                    Double.parseDouble(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamThird, 1)),
+                                    Double.parseDouble(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFourth, 1))
                             ),
-                            LinguisticVariableType.getObjectFromString(getValueFromComboBox(comboBoxType))
+                            linguisticVariable
                     ));
 
                     break;
@@ -379,12 +387,13 @@ public class EditPanel implements Initializable {
                 case TRIANGULAR: {
                     labelWrapper.serialize(new Label<>(
                             getTextFieldFromPaneAndGetValue(paneTextField, 1),
-                            new TriangularFuzzySet(
-                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
-                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1)),
-                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamThird, 1))
+                            new TriangularFuzzySet<Pollution>(
+                                    linguisticVariable::extractAttribute,
+                                    Double.parseDouble(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
+                                    Double.parseDouble(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1)),
+                                    Double.parseDouble(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamThird, 1))
                             ),
-                            LinguisticVariableType.getObjectFromString(getValueFromComboBox(comboBoxType))
+                            linguisticVariable
                     ));
 
                     break;
@@ -392,11 +401,12 @@ public class EditPanel implements Initializable {
                 case GAUSSIAN: {
                     labelWrapper.serialize(new Label<>(
                             getTextFieldFromPaneAndGetValue(paneTextField, 1),
-                            new GaussianFuzzySet(
-                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
-                                    Double.valueOf(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1))
+                            new GaussianFuzzySet<Pollution>(
+                                    linguisticVariable::extractAttribute,
+                                    Double.parseDouble(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamFirst, 1)),
+                                    Double.parseDouble(getTextFieldFromPaneAndGetValue(paneFunctionTypePaneParamSecond, 1))
                             ),
-                            LinguisticVariableType.getObjectFromString(getValueFromComboBox(comboBoxType))
+                            linguisticVariable
                     ));
 
                     break;

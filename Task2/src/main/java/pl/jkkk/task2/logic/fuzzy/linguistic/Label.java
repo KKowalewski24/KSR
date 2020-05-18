@@ -18,10 +18,10 @@ public class Label<T> implements Serializable {
 
     private Long id;
     private final String name;
-    private final FuzzySet fuzzySet;
+    private final FuzzySet<T> fuzzySet;
     private final LinguisticVariable<T> linguisticVariable;
 
-    public Label(final String name, final FuzzySet fuzzySet,
+    public Label(final String name, final FuzzySet<T> fuzzySet,
                  final LinguisticVariable<T> linguisticVariable) {
         this.name = name;
         this.fuzzySet = fuzzySet;
@@ -40,7 +40,7 @@ public class Label<T> implements Serializable {
         return name;
     }
 
-    public FuzzySet getFuzzySet() {
+    public FuzzySet<T> getFuzzySet() {
         return fuzzySet;
     }
 
@@ -50,21 +50,21 @@ public class Label<T> implements Serializable {
 
     public Label<T> and(final Label<T> label) {
         return new Label<>(name + " and " + label.name,
-                new IntersectionFuzzySet(fuzzySet, label.fuzzySet), linguisticVariable);
+                new IntersectionFuzzySet<>(fuzzySet, label.fuzzySet), linguisticVariable);
     }
 
     public Label<T> or(final Label<T> label) {
         return new Label<>(name + " or " + label.name,
-                new UnionFuzzySet(fuzzySet, label.fuzzySet), linguisticVariable);
+                new UnionFuzzySet<>(fuzzySet, label.fuzzySet), linguisticVariable);
     }
 
     public Label<T> not() {
         return new Label<>("not " + name,
-                new ComplementFuzzySet(fuzzySet), linguisticVariable);
+                new ComplementFuzzySet<>(fuzzySet), linguisticVariable);
     }
 
     public Label<T> modify(final Modifier modifier) {
         return new Label<>(modifier.getText() + " " + name,
-                new ModifiedFuzzySet(fuzzySet, modifier.getR()), linguisticVariable);
+                new ModifiedFuzzySet<>(fuzzySet, modifier.getR()), linguisticVariable);
     }
 }

@@ -1,11 +1,13 @@
 package pl.jkkk.task2.logic.fuzzy.set;
 
-public class GaussianFuzzySet extends FuzzySet {
+public class GaussianFuzzySet<T> extends FuzzySet<T> {
 
+    private final DoubleValueExtractor<T> doubleValueExtractor;
     private final double center;
     private final double width;
 
-    public GaussianFuzzySet(double center, double width) {
+    public GaussianFuzzySet(DoubleValueExtractor<T> doubleValueExtractor, double center, double width) {
+        this.doubleValueExtractor = doubleValueExtractor;
         this.center = center;
         this.width = width;
     }
@@ -19,7 +21,8 @@ public class GaussianFuzzySet extends FuzzySet {
     }
 
     @Override
-    public double contains(double x) {
-        return Math.exp(-(center - x) * (center - x) / (2 * width * width));
+    public double contains(T x) {
+        double value = doubleValueExtractor.apply(x);
+        return Math.exp(-(center - value) * (center - value) / (2 * width * width));
     }
 }

@@ -7,8 +7,7 @@ public class TrapezoidalFuzzySetTest {
 
     @Test
     public void contains() {
-        TrapezoidalFuzzySet set = 
-            new TrapezoidalFuzzySet(0.0, 1.0, 2.0, 3.0);
+        TrapezoidalFuzzySet<Double> set = new TrapezoidalFuzzySet<>(x -> x, 0.0, 1.0, 2.0, 3.0);
         Assertions.assertEquals(0.00, set.contains(-0.5), 0.0000001);
         Assertions.assertEquals(0.00, set.contains(0.00), 0.0000001);
         Assertions.assertEquals(0.25, set.contains(0.25), 0.0000001);

@@ -10,6 +10,10 @@ import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticSummary;
 import pl.jkkk.task2.logic.fuzzy.set.TrapezoidalFuzzySet;
 import pl.jkkk.task2.logic.model.Pollution;
 import pl.jkkk.task2.logic.model.enumtype.QuantifierType;
+import pl.jkkk.task2.logic.model.variable.aqi.AQIValueCO;
+import pl.jkkk.task2.logic.model.variable.aqi.AQIValueNO2;
+import pl.jkkk.task2.logic.model.variable.aqi.AQIValueO3;
+import pl.jkkk.task2.logic.model.variable.aqi.AQIValueSO2;
 import pl.jkkk.task2.logic.model.variable.maxhour.MaxHourCO;
 import pl.jkkk.task2.logic.model.variable.maxhour.MaxHourNO2;
 import pl.jkkk.task2.logic.model.variable.maxhour.MaxHourO3;
@@ -59,15 +63,20 @@ public class CommandMode {
             if (args.length == 1) {
                 if ((args[0].equals("seed_pollution") || args[0].equals("-sp"))) {
                     seedPollutionInDatabase();
+
                 } else if ((args[0].equals("seed_linguistic") || args[0].equals("-sl"))) {
                     seedLinguisticFacilitiesInDatabase();
-                } else if(args[0].equals("all")) {
+
+                } else if (args[0].equals("all")) {
                     System.out.println("Trying all quantifier/label combinations...\n");
+
                     List<Label<Pollution>> labels = labelWrapperService.findAll()
                             .stream()
                             .map(wrapper -> wrapper.deserialize())
                             .collect(Collectors.toList());
-                    List<LinguisticQuantifier> quantifiers = linguisticQuantifierWrapperService.findAll()
+
+                    List<LinguisticQuantifier> quantifiers = linguisticQuantifierWrapperService
+                            .findAll()
                             .stream()
                             .map(wrapper -> wrapper.deserialize())
                             .collect(Collectors.toList());
@@ -75,11 +84,13 @@ public class CommandMode {
 
                     labels.forEach(label -> {
                         quantifiers.forEach(quantifier -> {
-                            LinguisticSummary<Pollution> summary =
-                                    new LinguisticSummary<>(quantifier, label, measurements);
+                            LinguisticSummary<Pollution> summary
+                                    = new LinguisticSummary<>(quantifier, label, measurements);
                             double degreeOfTruth = summary.degreeOfTruth();
-                            if(degreeOfTruth > 0.0) {
+
+                            if (degreeOfTruth > 0.0) {
                                 System.out.println(summary.toString() + " [" + degreeOfTruth + "]");
+                                saveDataLog(summary.toString() + " [" + degreeOfTruth + "]");
                             }
                         });
                     });
@@ -111,7 +122,6 @@ public class CommandMode {
     }
 
     private void seedLinguisticFacilitiesInDatabase() {
-        //TODO ADD SAVING LINGUISTIC DATA TO DB
         linguisticQuantifierWrapperService.deleteAll();
         labelWrapperService.deleteAll();
 
@@ -324,6 +334,7 @@ public class CommandMode {
         );
 
         /*----------------------------------------------------------------------------------------*/
+        //TODO ADD SAVING LINGUISTIC DATA TO DB
         // Maksymalne stężenie
         //        saveLabel(new Label<>("", new TrapezoidalFuzzySet(), new ()));
         //        saveLabel(new Label<>("", new TrapezoidalFuzzySet(), new ()));
@@ -331,9 +342,72 @@ public class CommandMode {
 
         /*----------------------------------------------------------------------------------------*/
         // Wartosc AQI
-        //        saveLabel(new Label<>("", new TrapezoidalFuzzySet(), new ()));
-        //        saveLabel(new Label<>("", new TrapezoidalFuzzySet(), new ()));
-        //        saveLabel(new Label<>("", new TrapezoidalFuzzySet(), new ()));
+        saveLabel(new Label<>(
+                "CO AQI value is correct.",
+                new TrapezoidalFuzzySet(0, 25, 50, 75),
+                new AQIValueCO())
+        );
+        saveLabel(new Label<>(
+                "CO AQI value is unhealthy.",
+                new TrapezoidalFuzzySet(50, 75, 150, 250),
+                new AQIValueCO())
+        );
+        saveLabel(new Label<>(
+                "CO AQI value is hazardous.",
+                new TrapezoidalFuzzySet(150, 250, 400, 500),
+                new AQIValueCO())
+        );
+
+        // Wartosc AQI
+        saveLabel(new Label<>(
+                "NO2 AQI value is correct.",
+                new TrapezoidalFuzzySet(0, 25, 50, 75),
+                new AQIValueNO2())
+        );
+        saveLabel(new Label<>(
+                "NO2 AQI value is unhealthy.",
+                new TrapezoidalFuzzySet(50, 75, 150, 250),
+                new AQIValueNO2())
+        );
+        saveLabel(new Label<>(
+                "NO2 AQI value is hazardous.",
+                new TrapezoidalFuzzySet(150, 250, 400, 500),
+                new AQIValueNO2())
+        );
+
+        // Wartosc AQI
+        saveLabel(new Label<>(
+                "O3 AQI value is correct.",
+                new TrapezoidalFuzzySet(0, 25, 50, 75),
+                new AQIValueO3())
+        );
+        saveLabel(new Label<>(
+                "O3 AQI value is unhealthy.",
+                new TrapezoidalFuzzySet(50, 75, 150, 250),
+                new AQIValueO3())
+        );
+        saveLabel(new Label<>(
+                "O3 AQI value is hazardous.",
+                new TrapezoidalFuzzySet(150, 250, 400, 500),
+                new AQIValueO3())
+        );
+
+        // Wartosc AQI
+        saveLabel(new Label<>(
+                "SO2 AQI value is correct.",
+                new TrapezoidalFuzzySet(0, 25, 50, 75),
+                new AQIValueSO2())
+        );
+        saveLabel(new Label<>(
+                "SO2 AQI value is unhealthy.",
+                new TrapezoidalFuzzySet(50, 75, 150, 250),
+                new AQIValueSO2())
+        );
+        saveLabel(new Label<>(
+                "SO2 AQI value is hazardous.",
+                new TrapezoidalFuzzySet(150, 250, 400, 500),
+                new AQIValueSO2())
+        );
 
         /*----------------------------------------------------------------------------------------*/
     }

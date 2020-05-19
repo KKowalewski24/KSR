@@ -14,6 +14,10 @@ import pl.jkkk.task2.logic.model.variable.aqi.AQIValueCO;
 import pl.jkkk.task2.logic.model.variable.aqi.AQIValueNO2;
 import pl.jkkk.task2.logic.model.variable.aqi.AQIValueO3;
 import pl.jkkk.task2.logic.model.variable.aqi.AQIValueSO2;
+import pl.jkkk.task2.logic.model.variable.maxconcentration.MaxConcentrationCO;
+import pl.jkkk.task2.logic.model.variable.maxconcentration.MaxConcentrationNO2;
+import pl.jkkk.task2.logic.model.variable.maxconcentration.MaxConcentrationO3;
+import pl.jkkk.task2.logic.model.variable.maxconcentration.MaxConcentrationSO2;
 import pl.jkkk.task2.logic.model.variable.maxhour.MaxHourCO;
 import pl.jkkk.task2.logic.model.variable.maxhour.MaxHourNO2;
 import pl.jkkk.task2.logic.model.variable.maxhour.MaxHourO3;
@@ -116,7 +120,7 @@ public class CommandMode {
         }
     }
 
-    private void seedPollutionInDatabase() throws IOException, CsvException {
+    private void seedPollutionInDatabase() throws IOException {
         pollutionService.deleteAll();
         pollutionService.saveAll(new FileReaderCsv().readCsv(POLLUTION_DATA_FILENAME, false));
     }
@@ -157,22 +161,26 @@ public class CommandMode {
         final MeasurementSeason measurementSeason = new MeasurementSeason();
         saveLabel(new Label<>(
                 "season is spring.",
-                new TrapezoidalFuzzySet<Pollution>(measurementSeason::extractAttribute, 32, 92, 122, 183),
+                new TrapezoidalFuzzySet<Pollution>(measurementSeason::extractAttribute,
+                        32, 92, 122, 183),
                 measurementSeason)
         );
         saveLabel(new Label<>(
                 "season is summer.",
-                new TrapezoidalFuzzySet<Pollution>(measurementSeason::extractAttribute, 122, 183, 214, 275),
+                new TrapezoidalFuzzySet<Pollution>(measurementSeason::extractAttribute,
+                        122, 183, 214, 275),
                 measurementSeason)
         );
         saveLabel(new Label<>(
                 "season is autumn.",
-                new TrapezoidalFuzzySet<Pollution>(measurementSeason::extractAttribute, 214, 275, 306, 336),
+                new TrapezoidalFuzzySet<Pollution>(measurementSeason::extractAttribute,
+                        214, 275, 306, 336),
                 measurementSeason)
         );
         saveLabel(new Label<>(
                 "season is winter.",
-                new TrapezoidalFuzzySet<Pollution>(measurementSeason::extractAttribute, 275, 336, 32, 92),
+                new TrapezoidalFuzzySet<Pollution>(measurementSeason::extractAttribute,
+                        275, 336, 32, 92),
                 measurementSeason)
         );
 
@@ -181,22 +189,26 @@ public class CommandMode {
         final MaxHourCO maxHourCO = new MaxHourCO();
         saveLabel(new Label<>(
                 "maximum CO concentration is in the morning.",
-                new TrapezoidalFuzzySet<Pollution>(maxHourCO::extractAttribute, 3, 6, 10, 13),
+                new TrapezoidalFuzzySet<Pollution>(maxHourCO::extractAttribute,
+                        3, 6, 10, 13),
                 maxHourCO)
         );
         saveLabel(new Label<>(
                 "maximum CO concentration is in the afternoon.",
-                new TrapezoidalFuzzySet<Pollution>(maxHourCO::extractAttribute, 12, 13, 17, 19),
+                new TrapezoidalFuzzySet<Pollution>(maxHourCO::extractAttribute,
+                        12, 13, 17, 19),
                 maxHourCO)
         );
         saveLabel(new Label<>(
                 "maximum CO concentration is in the evening.",
-                new TrapezoidalFuzzySet<Pollution>(maxHourCO::extractAttribute, 18, 20, 21, 22),
+                new TrapezoidalFuzzySet<Pollution>(maxHourCO::extractAttribute,
+                        18, 20, 21, 22),
                 maxHourCO)
         );
         saveLabel(new Label<>(
                 "maximum CO concentration is in the night.",
-                new TrapezoidalFuzzySet<Pollution>(maxHourCO::extractAttribute, 21, 23, 4, 5),
+                new TrapezoidalFuzzySet<Pollution>(maxHourCO::extractAttribute,
+                        21, 23, 4, 5),
                 maxHourCO)
         );
 
@@ -204,22 +216,26 @@ public class CommandMode {
         final MaxHourNO2 maxHourNO2 = new MaxHourNO2();
         saveLabel(new Label<>(
                 "maximum NO2 concentration is in the morning.",
-                new TrapezoidalFuzzySet<Pollution>(maxHourNO2::extractAttribute, 3, 6, 10, 13),
+                new TrapezoidalFuzzySet<Pollution>(maxHourNO2::extractAttribute,
+                        3, 6, 10, 13),
                 maxHourNO2)
         );
         saveLabel(new Label<>(
                 "maximum NO2 concentration is in the afternoon.",
-                new TrapezoidalFuzzySet<Pollution>(maxHourNO2::extractAttribute, 12, 13, 17, 19),
+                new TrapezoidalFuzzySet<Pollution>(maxHourNO2::extractAttribute,
+                        12, 13, 17, 19),
                 maxHourNO2)
         );
         saveLabel(new Label<>(
                 "maximum NO2 concentration is in the evening.",
-                new TrapezoidalFuzzySet<Pollution>(maxHourNO2::extractAttribute, 18, 20, 21, 22),
+                new TrapezoidalFuzzySet<Pollution>(maxHourNO2::extractAttribute,
+                        18, 20, 21, 22),
                 maxHourNO2)
         );
         saveLabel(new Label<>(
                 "maximum NO2 concentration is in the night.",
-                new TrapezoidalFuzzySet<Pollution>(maxHourNO2::extractAttribute, 21, 23, 4, 5),
+                new TrapezoidalFuzzySet<Pollution>(maxHourNO2::extractAttribute,
+                        21, 23, 4, 5),
                 maxHourNO2)
         );
 
@@ -227,22 +243,26 @@ public class CommandMode {
         final MaxHourO3 maxHourO3 = new MaxHourO3();
         saveLabel(new Label<>(
                 "maximum O3 concentration is in the morning.",
-                new TrapezoidalFuzzySet<Pollution>(maxHourO3::extractAttribute, 3, 6, 10, 13),
+                new TrapezoidalFuzzySet<Pollution>(maxHourO3::extractAttribute,
+                        3, 6, 10, 13),
                 maxHourO3)
         );
         saveLabel(new Label<>(
                 "maximum O3 concentration is in the afternoon.",
-                new TrapezoidalFuzzySet<Pollution>(maxHourO3::extractAttribute, 12, 13, 17, 19),
+                new TrapezoidalFuzzySet<Pollution>(maxHourO3::extractAttribute,
+                        12, 13, 17, 19),
                 maxHourO3)
         );
         saveLabel(new Label<>(
                 "maximum O3 concentration is in the evening.",
-                new TrapezoidalFuzzySet<Pollution>(maxHourO3::extractAttribute, 18, 20, 21, 22),
+                new TrapezoidalFuzzySet<Pollution>(maxHourO3::extractAttribute,
+                        18, 20, 21, 22),
                 maxHourO3)
         );
         saveLabel(new Label<>(
                 "maximum O3 concentration is in the night.",
-                new TrapezoidalFuzzySet<Pollution>(maxHourO3::extractAttribute, 21, 23, 4, 5),
+                new TrapezoidalFuzzySet<Pollution>(maxHourO3::extractAttribute,
+                        21, 23, 4, 5),
                 maxHourO3)
         );
 
@@ -250,22 +270,26 @@ public class CommandMode {
         final MaxHourSO2 maxHoursSO2 = new MaxHourSO2();
         saveLabel(new Label<>(
                 "maximum SO2 concentration is in the morning.",
-                new TrapezoidalFuzzySet<Pollution>(maxHoursSO2::extractAttribute, 3, 6, 10, 13),
+                new TrapezoidalFuzzySet<Pollution>(maxHoursSO2::extractAttribute,
+                        3, 6, 10, 13),
                 maxHoursSO2)
         );
         saveLabel(new Label<>(
                 "maximum SO2 concentration is in the afternoon.",
-                new TrapezoidalFuzzySet<Pollution>(maxHoursSO2::extractAttribute, 12, 13, 17, 19),
+                new TrapezoidalFuzzySet<Pollution>(maxHoursSO2::extractAttribute,
+                        12, 13, 17, 19),
                 maxHoursSO2)
         );
         saveLabel(new Label<>(
                 "maximum SO2 concentration is in the evening.",
-                new TrapezoidalFuzzySet<Pollution>(maxHoursSO2::extractAttribute, 18, 20, 21, 22),
+                new TrapezoidalFuzzySet<Pollution>(maxHoursSO2::extractAttribute,
+                        18, 20, 21, 22),
                 maxHoursSO2)
         );
         saveLabel(new Label<>(
                 "maximum SO2 concentration is in the night.",
-                new TrapezoidalFuzzySet<Pollution>(maxHoursSO2::extractAttribute, 21, 23, 4, 5),
+                new TrapezoidalFuzzySet<Pollution>(maxHoursSO2::extractAttribute,
+                        21, 23, 4, 5),
                 maxHoursSO2)
         );
 
@@ -274,17 +298,20 @@ public class CommandMode {
         final MeanConcentrationCO meanConcentrationCO = new MeanConcentrationCO();
         saveLabel(new Label<>(
                 "mean CO concentration is low.",
-                new TrapezoidalFuzzySet<Pollution>(meanConcentrationCO::extractAttribute, 0, 4, 9, 12),
+                new TrapezoidalFuzzySet<Pollution>(meanConcentrationCO::extractAttribute,
+                        0, 4, 9, 12),
                 meanConcentrationCO)
         );
         saveLabel(new Label<>(
                 "mean CO concentration is middle.",
-                new TrapezoidalFuzzySet<Pollution>(meanConcentrationCO::extractAttribute, 9, 12, 15, 30),
+                new TrapezoidalFuzzySet<Pollution>(meanConcentrationCO::extractAttribute,
+                        9, 12, 15, 30),
                 meanConcentrationCO)
         );
         saveLabel(new Label<>(
                 "mean CO concentration is high.",
-                new TrapezoidalFuzzySet<Pollution>(meanConcentrationCO::extractAttribute, 15, 30, 40, 50),
+                new TrapezoidalFuzzySet<Pollution>(meanConcentrationCO::extractAttribute,
+                        15, 30, 40, 50),
                 meanConcentrationCO)
         );
 
@@ -292,17 +319,20 @@ public class CommandMode {
         final MeanConcentrationNO2 meanConcentrationNO2 = new MeanConcentrationNO2();
         saveLabel(new Label<>(
                 "mean NO2 concentration is low.",
-                new TrapezoidalFuzzySet<Pollution>(meanConcentrationNO2::extractAttribute, 0, 0.05, 0.1, 0.36),
+                new TrapezoidalFuzzySet<Pollution>(meanConcentrationNO2::extractAttribute,
+                        0, 0.05, 0.1, 0.36),
                 meanConcentrationNO2)
         );
         saveLabel(new Label<>(
                 "mean NO2 concentration is middle.",
-                new TrapezoidalFuzzySet<Pollution>(meanConcentrationNO2::extractAttribute, 0.1, 0.36, 0.65, 1.25),
+                new TrapezoidalFuzzySet<Pollution>(meanConcentrationNO2::extractAttribute,
+                        0.1, 0.36, 0.65, 1.25),
                 meanConcentrationNO2)
         );
         saveLabel(new Label<>(
                 "mean NO2 concentration is high.",
-                new TrapezoidalFuzzySet<Pollution>(meanConcentrationNO2::extractAttribute, 0.65, 1.25, 1.65, 2.04),
+                new TrapezoidalFuzzySet<Pollution>(meanConcentrationNO2::extractAttribute,
+                        0.65, 1.25, 1.65, 2.04),
                 meanConcentrationNO2)
         );
 
@@ -310,17 +340,20 @@ public class CommandMode {
         final MeanConcentrationO3 meanConcentrationO3 = new MeanConcentrationO3();
         saveLabel(new Label<>(
                 "mean O3 concentration is low.",
-                new TrapezoidalFuzzySet<Pollution>(meanConcentrationO3::extractAttribute, 0, 0.03, 0.6, 0.75),
+                new TrapezoidalFuzzySet<Pollution>(meanConcentrationO3::extractAttribute,
+                        0, 0.03, 0.6, 0.75),
                 meanConcentrationO3)
         );
         saveLabel(new Label<>(
                 "mean O3 concentration is middle.",
-                new TrapezoidalFuzzySet<Pollution>(meanConcentrationO3::extractAttribute, 0.03, 0.06, 0.075, 0.095),
+                new TrapezoidalFuzzySet<Pollution>(meanConcentrationO3::extractAttribute,
+                        0.03, 0.06, 0.075, 0.095),
                 meanConcentrationO3)
         );
         saveLabel(new Label<>(
                 "mean O3 concentration is high.",
-                new TrapezoidalFuzzySet<Pollution>(meanConcentrationO3::extractAttribute, 0.075, 0.095, 0.115, 0.375),
+                new TrapezoidalFuzzySet<Pollution>(meanConcentrationO3::extractAttribute,
+                        0.075, 0.095, 0.115, 0.375),
                 meanConcentrationO3)
         );
 
@@ -328,26 +361,92 @@ public class CommandMode {
         final MeanConcentrationSO2 meanConcentrationSO2 = new MeanConcentrationSO2();
         saveLabel(new Label<>(
                 "mean SO2 concentration is low.",
-                new TrapezoidalFuzzySet<Pollution>(meanConcentrationSO2::extractAttribute, 0, 0, 75, 300),
+                new TrapezoidalFuzzySet<Pollution>(meanConcentrationSO2::extractAttribute,
+                        0, 0, 75, 300),
                 meanConcentrationSO2)
         );
         saveLabel(new Label<>(
                 "mean SO2 concentration is middle.",
-                new TrapezoidalFuzzySet<Pollution>(meanConcentrationSO2::extractAttribute, 150, 450, 600, 800),
+                new TrapezoidalFuzzySet<Pollution>(meanConcentrationSO2::extractAttribute,
+                        150, 450, 600, 800),
                 meanConcentrationSO2)
         );
         saveLabel(new Label<>(
                 "mean SO2 concentration is high.",
-                new TrapezoidalFuzzySet<Pollution>(meanConcentrationSO2::extractAttribute, 600, 1000, 1000, 1000),
+                new TrapezoidalFuzzySet<Pollution>(meanConcentrationSO2::extractAttribute,
+                        600, 1000, 1000, 1000),
                 meanConcentrationSO2)
         );
 
         /*----------------------------------------------------------------------------------------*/
-        //TODO ADD SAVING LINGUISTIC DATA TO DB
         // Maksymalne stężenie
-        //        saveLabel(new Label<>("", new TrapezoidalFuzzySet(), new ()));
-        //        saveLabel(new Label<>("", new TrapezoidalFuzzySet(), new ()));
-        //        saveLabel(new Label<>("", new TrapezoidalFuzzySet(), new ()));
+        final MaxConcentrationCO maxConcentrationCO = new MaxConcentrationCO();
+        saveLabel(new Label<>(
+                "max CO concentration is low.",
+                new TrapezoidalFuzzySet<Pollution>(maxConcentrationCO::extractAttribute,
+                        0, 4, 9, 12),
+                maxConcentrationCO));
+        saveLabel(new Label<>(
+                "max CO concentration is middle.",
+                new TrapezoidalFuzzySet<Pollution>(maxConcentrationCO::extractAttribute,
+                        9, 12, 15, 30),
+                maxConcentrationCO));
+        saveLabel(new Label<>(
+                "max CO concentration is high.",
+                new TrapezoidalFuzzySet<Pollution>(maxConcentrationCO::extractAttribute,
+                        15, 30, 40, 50),
+                maxConcentrationCO));
+
+        final MaxConcentrationNO2 maxConcentrationNO2 = new MaxConcentrationNO2();
+        saveLabel(new Label<>(
+                "max NO2 concentration is low.",
+                new TrapezoidalFuzzySet<Pollution>(maxConcentrationNO2::extractAttribute,
+                        0, 0.05, 0.1, 0.36),
+                maxConcentrationNO2));
+        saveLabel(new Label<>(
+                "max NO2 concentration is middle.",
+                new TrapezoidalFuzzySet<Pollution>(maxConcentrationNO2::extractAttribute,
+                        0.1, 0.36, 0.65, 1.25),
+                maxConcentrationNO2));
+        saveLabel(new Label<>(
+                "max NO2 concentration is high.",
+                new TrapezoidalFuzzySet<Pollution>(maxConcentrationNO2::extractAttribute,
+                        0.65, 1.25, 1.65, 2.04),
+                maxConcentrationNO2));
+
+        final MaxConcentrationO3 maxConcentrationO3 = new MaxConcentrationO3();
+        saveLabel(new Label<>(
+                "max O3 concentration is low.",
+                new TrapezoidalFuzzySet<Pollution>(maxConcentrationO3::extractAttribute,
+                        0, 0.03, 0.6, 0.75),
+                maxConcentrationO3));
+        saveLabel(new Label<>(
+                "max O3 concentration is middle.",
+                new TrapezoidalFuzzySet<Pollution>(maxConcentrationO3::extractAttribute,
+                        0.03, 0.06, 0.075, 0.095),
+                maxConcentrationO3));
+        saveLabel(new Label<>(
+                "max O3 concentration is high.",
+                new TrapezoidalFuzzySet<Pollution>(maxConcentrationO3::extractAttribute,
+                        0.075, 0.095, 0.115, 0.375),
+                maxConcentrationO3));
+
+        final MaxConcentrationSO2 maxConcentrationSO2 = new MaxConcentrationSO2();
+        saveLabel(new Label<>(
+                "max SO2 concentration is low.",
+                new TrapezoidalFuzzySet<Pollution>(maxConcentrationSO2::extractAttribute,
+                        0, 0, 75, 300),
+                maxConcentrationSO2));
+        saveLabel(new Label<>(
+                "max SO2 concentration is middle.",
+                new TrapezoidalFuzzySet<Pollution>(maxConcentrationSO2::extractAttribute,
+                        150, 450, 600, 800),
+                maxConcentrationSO2));
+        saveLabel(new Label<>(
+                "max SO2 concentration is high.",
+                new TrapezoidalFuzzySet<Pollution>(maxConcentrationSO2::extractAttribute,
+                        600, 1000, 1000, 1000),
+                maxConcentrationSO2));
 
         /*----------------------------------------------------------------------------------------*/
         // Wartosc AQI
@@ -364,7 +463,8 @@ public class CommandMode {
         );
         saveLabel(new Label<>(
                 "CO AQI value is hazardous.",
-                new TrapezoidalFuzzySet<Pollution>(aqiValueCO::extractAttribute, 150, 250, 400, 500),
+                new TrapezoidalFuzzySet<Pollution>(aqiValueCO::extractAttribute, 150, 250, 400,
+                        500),
                 aqiValueCO)
         );
 
@@ -382,7 +482,8 @@ public class CommandMode {
         );
         saveLabel(new Label<>(
                 "NO2 AQI value is hazardous.",
-                new TrapezoidalFuzzySet<Pollution>(aqiValueNO2::extractAttribute, 150, 250, 400, 500),
+                new TrapezoidalFuzzySet<Pollution>(aqiValueNO2::extractAttribute, 150, 250, 400,
+                        500),
                 aqiValueNO2)
         );
 
@@ -400,7 +501,8 @@ public class CommandMode {
         );
         saveLabel(new Label<>(
                 "O3 AQI value is hazardous.",
-                new TrapezoidalFuzzySet<Pollution>(aqiValueO3::extractAttribute, 150, 250, 400, 500),
+                new TrapezoidalFuzzySet<Pollution>(aqiValueO3::extractAttribute, 150, 250, 400,
+                        500),
                 aqiValueO3)
         );
 
@@ -418,7 +520,8 @@ public class CommandMode {
         );
         saveLabel(new Label<>(
                 "SO2 AQI value is hazardous.",
-                new TrapezoidalFuzzySet<Pollution>(aqiValueSO2::extractAttribute, 150, 250, 400, 500),
+                new TrapezoidalFuzzySet<Pollution>(aqiValueSO2::extractAttribute, 150, 250, 400,
+                        500),
                 aqiValueSO2)
         );
 

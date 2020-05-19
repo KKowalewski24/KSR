@@ -1,3 +1,6 @@
+import sys
+
+
 def generate_linear_function_equation(a, b, last=False):
     range_text = r" & \textrm{dla $x \in [" + a[0] + r", " + b[0]
     if last:
@@ -31,7 +34,10 @@ def generate_equation(coordinates):
     return equation
 
 
-if __name__ == "__main__":
-    import sys
+def main():
+    with open(sys.argv[1] + ".txt", "w") as file:
+        file.write(generate_equation(sys.argv[2:]))
 
-    print(generate_equation(sys.argv[1:]))
+
+if __name__ == "__main__":
+    main()

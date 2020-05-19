@@ -1,11 +1,12 @@
 import sys
+
 import pandas
 
 # VAR ------------------------------------------------------------------------ #
 FILTERED_FILE_PATH = "../src/main/resources/filtered_pollution_data.csv"
 
 
-# ----------------------------------------------------------------------------- #
+# DEF ------------------------------------------------------------------------ #
 def print_statistics():
     data = pandas.read_csv(FILTERED_FILE_PATH)
     print(data.min())
@@ -23,23 +24,22 @@ def filter_and_remove(initial_file_path):
     print(data)
 
 
-def print_finish():
-    print("------------------------------------------------------------------------")
-    print("FINISHED")
-    print("------------------------------------------------------------------------")
-    pass
-
-
-# ----------------------------------------------------------------------------- #
-def main():
+# MAIN ----------------------------------------------------------------------- #
+def main() -> None:
     if len(sys.argv) == 2:
         if sys.argv[1] == "stat":
             print_statistics()
         else:
             filter_and_remove(sys.argv[1])
     print_finish()
-    pass
 
 
-if __name__ == '__main__':
+# UTIL ----------------------------------------------------------------------- #
+def print_finish() -> None:
+    print("------------------------------------------------------------------------")
+    print("FINISHED")
+    print("------------------------------------------------------------------------")
+
+
+if __name__ == "__main__":
     main()

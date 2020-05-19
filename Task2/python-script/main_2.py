@@ -12,12 +12,51 @@ then run program without args to run experiments
 
 '''
 
+# VAR ------------------------------------------------------------------------ #
 JAR_NAME = "task2-0.0.1.jar"
 TXT = "*.txt"
 JAR = "*.jar"
 
 
-# UTIL ------------------------------------------------------------------------ #
+# DEF ------------------------------------------------------------------------ #
+def seed_pollution_database() -> None:
+    run_jar(["-sp"])
+
+
+def seed_linguistic_database() -> None:
+    run_jar(["-sl"])
+
+
+def run_experiments() -> None:
+    run_jar([])
+
+
+# MAIN ----------------------------------------------------------------------- #
+def main() -> None:
+    if len(sys.argv) == 2:
+        if sys.argv[1] == "build" or sys.argv[1] == "-b":
+            build_jar()
+        elif sys.argv[1] == "seed_pollution" or sys.argv[1] == "-sp":
+            seed_pollution_database()
+        elif sys.argv[1] == "seed_linguistic" or sys.argv[1] == "-sl":
+            seed_linguistic_database()
+        elif sys.argv[1] == "run" or sys.argv[1] == "-r":
+            run_experiments()
+
+    if len(sys.argv) >= 2 and (sys.argv[1] == "clean" or sys.argv[1] == "-c"):
+        if len(sys.argv) == 3 and (sys.argv[2] == "jar" or sys.argv[2] == "-j"):
+            clean_project_directories(True)
+        else:
+            clean_project_directories(False)
+
+    print_finish()
+
+
+# UTIL ----------------------------------------------------------------------- #
+def run_jar(args: []) -> None:
+    subprocess.call(["java", "-jar", JAR_NAME] + args)
+
+
 def build_jar() -> None:
     script_directory = pathlib.Path(os.getcwd())
     os.chdir(script_directory.parent)
@@ -27,11 +66,6 @@ def build_jar() -> None:
     elif platform.system().lower() == "linux":
         subprocess.call("./mvnw clean package", shell=True)
         subprocess.call("cp target/" + JAR_NAME + " " + str(script_directory), shell=True)
-
-
-def remove_files(filenames: []) -> None:
-    for it in filenames:
-        os.remove(it)
 
 
 def clean_project_directories(remove_jar: bool) -> None:
@@ -47,48 +81,15 @@ def clean_project_directories(remove_jar: bool) -> None:
     pass
 
 
+def remove_files(filenames: []) -> None:
+    for it in filenames:
+        os.remove(it)
+
+
 def print_finish() -> None:
     print("------------------------------------------------------------------------")
     print("FINISHED")
     print("------------------------------------------------------------------------")
-    pass
-
-
-def run_jar(args: []) -> None:
-    subprocess.call(["java", "-jar", JAR_NAME] + args)
-
-
-def seed_pollution_database() -> None:
-    run_jar(["-sp"])
-
-
-def seed_linguistic_database() -> None:
-    run_jar(["-sl"])
-
-
-# TASK ------------------------------------------------------------------------ #
-def run_experiments() -> None:
-    run_jar([])
-    pass
-
-
-# ----------------------------------------------------------------------------- #
-def main() -> None:
-    if len(sys.argv) == 2 and (sys.argv[1] == "build" or sys.argv[1] == "-b"):
-        build_jar()
-    elif len(sys.argv) >= 2 and (sys.argv[1] == "clean" or sys.argv[1] == "-c"):
-        if len(sys.argv) == 3 and (sys.argv[2] == "jar" or sys.argv[2] == "-j"):
-            clean_project_directories(True)
-        else:
-            clean_project_directories(False)
-    elif len(sys.argv) == 2 and (sys.argv[1] == "seed_pollution" or sys.argv[1] == "-sp"):
-        seed_pollution_database()
-    elif len(sys.argv) == 2 and (sys.argv[1] == "seed_linguistic" or sys.argv[1] == "-sl"):
-        seed_linguistic_database()
-    elif len(sys.argv) == 2 and (sys.argv[1] == "run" or sys.argv[1] == "-r"):
-        run_experiments()
-
-    print_finish()
     pass
 
 

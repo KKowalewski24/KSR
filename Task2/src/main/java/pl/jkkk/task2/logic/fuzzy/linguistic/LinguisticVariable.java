@@ -1,8 +1,6 @@
 package pl.jkkk.task2.logic.fuzzy.linguistic;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * This class represents linguistic variable, it has some name

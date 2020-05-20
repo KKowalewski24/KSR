@@ -92,6 +92,7 @@ def main() -> None:
     run_script(MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_EVENING, [18, 20, 21, 22], [0, 1, 1, 0])
     run_script(MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_NIGHT, [21, 23, 4, 5], [0, 1, 1, 0])
 
+    # TODO FIX ERROR WITH DIVIDING BY ZERO
     # Mean Concentration SO2
     run_script(MEAN_SO_2_CONCENTRATION_IS_LOW, [0, 0, 75, 300], [0, 1, 1, 0])
     run_script(MEAN_SO_2_CONCENTRATION_IS_MIDDLE, [150, 450, 600, 800], [0, 1, 1, 0])
@@ -117,8 +118,13 @@ def display_finish() -> None:
     print("------------------------------------------------------------------------")
 
 
+def checkstyle() -> None:
+    subprocess.call(["mypy", "generate_function_to_file.py"])
+
+
 if __name__ == "__main__":
     if len(sys.argv) == 2 and sys.argv[1] == "-ct":
-        subprocess.call(["mypy", "generate_function_to_file.py"])
+        checkstyle()
     else:
+        checkstyle()
         main()

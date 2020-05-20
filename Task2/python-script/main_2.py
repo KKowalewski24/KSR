@@ -95,7 +95,7 @@ def seed_linguistic_database() -> None:
 
 
 def run_experiments() -> None:
-    run_jar([])
+    run_jar([IN_ALMOST_NONE, MAX_CO_CONCENTRATION_IS_HIGH])
 
 
 # MAIN ----------------------------------------------------------------------- #
@@ -139,6 +139,8 @@ def clean_project_directories(remove_jar: bool) -> None:
     script_directory = pathlib.Path(os.getcwd())
     if remove_jar:
         remove_files(glob.glob(JAR))
+
+    remove_files(glob.glob(TXT))
 
     os.chdir(script_directory.parent)
     remove_files(glob.glob(TXT))

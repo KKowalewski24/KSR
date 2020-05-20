@@ -1,4 +1,6 @@
 import subprocess
+import sys
+from typing import List
 
 # VAR ------------------------------------------------------------------------ #
 SEASON_IS_SPRING = "season is spring."
@@ -64,24 +66,59 @@ SO_2_AQI_VALUE_IS_HAZARDOUS = "SO2 AQI value is hazardous."
 
 
 # DEF ------------------------------------------------------------------------ #
-def run_script(filename: str, axis_x: [], axis_y: []) -> None:
-    args = [filename] + [str(it) for it in axis_x] + [str(it) for it in axis_y]
-    subprocess.call(["python", "generate_function.py"] + args)
+def run_script(filename: str, axis_x: List, axis_y: List) -> None:
+    args: List = [filename]
+
+    if len(axis_x) == len(axis_y):
+        for i in range(len(axis_x)):
+            args.append(str(axis_x[i]))
+            args.append(str(axis_y[i]))
+
+        print(args)
+        subprocess.call(["python", "generate_function.py"] + args)
 
 
 # MAIN ----------------------------------------------------------------------- #
 def main() -> None:
-    # run_script(SEASON_IS_SPRING, [32, 92, 122, 183], [0, 1, 1, 0])
+    # Measurement Season
+    run_script(SEASON_IS_SPRING, [32, 92, 122, 183], [0, 1, 1, 0])
+    run_script(SEASON_IS_SUMMER, [122, 183, 214, 275], [0, 1, 1, 0])
+    run_script(SEASON_IS_AUTUMN, [214, 275, 306, 336], [0, 1, 1, 0])
+    run_script(SEASON_IS_WINTER, [275, 336, 32, 92], [0, 1, 1, 0])
 
-    print_finish()
+    # Max Hour Concentration
+    run_script(MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_MORNING, [3, 6, 10, 13], [0, 1, 1, 0])
+    run_script(MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_AFTERNOON, [12, 13, 17, 19], [0, 1, 1, 0])
+    run_script(MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_EVENING, [18, 20, 21, 22], [0, 1, 1, 0])
+    run_script(MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_NIGHT, [21, 23, 4, 5], [0, 1, 1, 0])
+
+    # Mean Concentration SO2
+    run_script(MEAN_SO_2_CONCENTRATION_IS_LOW, [0, 0, 75, 300], [0, 1, 1, 0])
+    run_script(MEAN_SO_2_CONCENTRATION_IS_MIDDLE, [150, 450, 600, 800], [0, 1, 1, 0])
+    run_script(MEAN_SO_2_CONCENTRATION_IS_HIGH, [600, 1000, 1000, 1000], [0, 1, 1, 0])
+
+    # Max Concentration SO2
+    run_script(MAX_SO_2_CONCENTRATION_IS_LOW, [0, 0, 75, 300], [0, 1, 1, 0])
+    run_script(MAX_SO_2_CONCENTRATION_IS_MIDDLE, [150, 450, 600, 800], [0, 1, 1, 0])
+    run_script(MAX_SO_2_CONCENTRATION_IS_HIGH, [600, 1000, 1000, 1000], [0, 1, 1, 0])
+
+    # AQI Value SO2
+    run_script(SO_2_AQI_VALUE_IS_CORRECT, [0, 25, 50, 75], [0, 1, 1, 0])
+    run_script(SO_2_AQI_VALUE_IS_UNHEALTHY, [50, 75, 150, 250], [0, 1, 1, 0])
+    run_script(SO_2_AQI_VALUE_IS_HAZARDOUS, [150, 250, 400, 500], [0, 1, 1, 0])
+
+    display_finish()
 
 
 # UTIL ----------------------------------------------------------------------- #
-def print_finish() -> None:
+def display_finish() -> None:
     print("------------------------------------------------------------------------")
     print("FINISHED")
     print("------------------------------------------------------------------------")
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) == 2 and sys.argv[1] == "-ct":
+        subprocess.call(["mypy", "generate_function_to_file.py"])
+    else:
+        main()

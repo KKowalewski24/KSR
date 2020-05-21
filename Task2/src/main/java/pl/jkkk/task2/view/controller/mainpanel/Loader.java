@@ -67,12 +67,19 @@ public class Loader {
             if (!firstSelectedSummarizer.equals(SELECT_ITEM)) {
                 generateBasicSummary(selectedQuantifier, firstSelectedSummarizer);
             } else {
-                PopOutWindow.messageBox("Summarizer Not Selected",
-                        "", Alert.AlertType.WARNING);
+                Platform.runLater(() -> {
+                    PopOutWindow.messageBox("", "Summarizer Not Selected",
+                            Alert.AlertType.WARNING);
+                });
             }
         } else {
             if (!firstSelectedSummarizer.equals(SELECT_ITEM)) {
                 generateAdvancedSummary(selectedQuantifier);
+            } else {
+                Platform.runLater(() -> {
+                    PopOutWindow.messageBox("", "Summarizer Not Selected",
+                            Alert.AlertType.WARNING);
+                });
             }
         }
     }

@@ -94,16 +94,16 @@ def main() -> None:
 
     # TODO FIX ERROR WITH DIVIDING BY ZERO
     # Mean Concentration SO2
-    run_script(MEAN_SO_2_CONCENTRATION_IS_LOW, [0, 0, 75, 300], [0, 1, 1, 0])
+    # run_script(MEAN_SO_2_CONCENTRATION_IS_LOW, [0, 0, 75, 300], [0, 1, 1, 0])
     run_script(MEAN_SO_2_CONCENTRATION_IS_MIDDLE, [150, 450, 600, 800], [0, 1, 1, 0])
-    run_script(MEAN_SO_2_CONCENTRATION_IS_HIGH, [600, 1000, 1000, 1000], [0, 1, 1, 0])
+    # run_script(MEAN_SO_2_CONCENTRATION_IS_HIGH, [600, 1000, 1000, 1000], [0, 1, 1, 0])
 
-    # Max Concentration SO2
-    run_script(MAX_SO_2_CONCENTRATION_IS_LOW, [0, 0, 75, 300], [0, 1, 1, 0])
+    # # Max Concentration SO2
+    # run_script(MAX_SO_2_CONCENTRATION_IS_LOW, [0, 0, 75, 300], [0, 1, 1, 0])
     run_script(MAX_SO_2_CONCENTRATION_IS_MIDDLE, [150, 450, 600, 800], [0, 1, 1, 0])
-    run_script(MAX_SO_2_CONCENTRATION_IS_HIGH, [600, 1000, 1000, 1000], [0, 1, 1, 0])
+    # run_script(MAX_SO_2_CONCENTRATION_IS_HIGH, [600, 1000, 1000, 1000], [0, 1, 1, 0])
 
-    # AQI Value SO2
+    # # AQI Value SO2
     run_script(SO_2_AQI_VALUE_IS_CORRECT, [0, 25, 50, 75], [0, 1, 1, 0])
     run_script(SO_2_AQI_VALUE_IS_UNHEALTHY, [50, 75, 150, 250], [0, 1, 1, 0])
     run_script(SO_2_AQI_VALUE_IS_HAZARDOUS, [150, 250, 400, 500], [0, 1, 1, 0])

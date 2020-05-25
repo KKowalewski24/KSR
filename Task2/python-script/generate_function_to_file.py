@@ -82,47 +82,47 @@ def run_script(filename: str, axis_x: List, axis_y: List) -> None:
 def main() -> None:
     # Measurement Season
     run_script(SEASON_IS_SPRING,
-               [0, 32, 92, 122, 183, 365], [0, 0, 1, 1, 0, 0])
+               [32, 92, 122, 183], [0, 1, 1, 0])
     run_script(SEASON_IS_SUMMER,
-               [0, 122, 183, 214, 275, 365], [0, 0, 1, 1, 0, 0])
+               [122, 183, 214, 275], [0, 1, 1, 0])
     run_script(SEASON_IS_AUTUMN,
-               [0, 214, 275, 306, 336, 365], [0, 0, 1, 1, 0, 0])
+               [214, 275, 306, 336], [0, 1, 1, 0])
     run_script(SEASON_IS_WINTER,
                [0, 32, 92, 275, 365], [1, 1, 0, 0, 1])
 
     # Max Hour Concentration
     run_script(MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_MORNING,
-               [0, 3, 6, 10, 13, 23], [0, 0, 1, 1, 0, 0])
+               [3, 6, 10, 13], [0, 1, 1, 0])
     run_script(MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_AFTERNOON,
-               [0, 12, 13, 17, 19, 23], [0, 0, 1, 1, 0, 0])
+               [12, 13, 17, 19], [0, 1, 1, 0])
     run_script(MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_EVENING,
-               [0, 18, 20, 21, 22, 23], [0, 0, 1, 1, 0, 0])
+               [18, 20, 21, 22], [0, 1, 1, 0])
     run_script(MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_NIGHT,
                [0, 4, 5, 21, 23], [1, 1, 0, 0, 1])
 
     # Mean Concentration SO2
     run_script(MEAN_SO_2_CONCENTRATION_IS_LOW,
-               [0, 75, 300, 1000], [1, 1, 0, 0])
+               [0, 75, 300], [1, 1, 0])
     run_script(MEAN_SO_2_CONCENTRATION_IS_MIDDLE,
-               [0, 150, 450, 600, 800, 1000], [0, 0, 1, 1, 0, 0])
+               [150, 450, 600, 800], [0, 1, 1, 0])
     run_script(MEAN_SO_2_CONCENTRATION_IS_HIGH,
-               [0, 600, 1000], [0, 0, 1])
+               [600, 1000], [0, 1])
 
     # # Max Concentration SO2
     run_script(MAX_SO_2_CONCENTRATION_IS_LOW,
-               [0, 75, 300, 1000], [1, 1, 0, 0])
+               [0, 75, 300], [1, 1, 0])
     run_script(MAX_SO_2_CONCENTRATION_IS_MIDDLE,
-               [0, 150, 450, 600, 800, 1000], [0, 0, 1, 1, 0, 0])
+               [150, 450, 600, 800], [0, 1, 1, 0])
     run_script(MAX_SO_2_CONCENTRATION_IS_HIGH,
-               [0, 600, 950, 1000], [0, 0, 1, 1])
+               [600, 950, 1000], [0, 1, 1])
 
     # # AQI Value SO2
     run_script(SO_2_AQI_VALUE_IS_CORRECT,
-               [0, 50, 75, 500], [1, 1, 0, 0])
+               [0, 50, 75], [1, 1, 0])
     run_script(SO_2_AQI_VALUE_IS_UNHEALTHY,
-               [0, 50, 75, 150, 250, 500], [0, 0, 1, 1, 0, 0])
+               [50, 75, 150, 250], [0, 1, 1, 0])
     run_script(SO_2_AQI_VALUE_IS_HAZARDOUS,
-               [0, 150, 250, 500], [0, 0, 1, 1])
+               [150, 250, 500], [0, 1, 1])
 
     display_finish()
 

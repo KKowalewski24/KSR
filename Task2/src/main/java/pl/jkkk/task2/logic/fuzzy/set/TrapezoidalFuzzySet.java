@@ -10,8 +10,9 @@ public class TrapezoidalFuzzySet<T> implements FuzzySet<T> {
     private final double universeBegin;
     private final double universeEnd;
 
-    public TrapezoidalFuzzySet(DoubleValueExtractor<T> doubleValueExtractor, double a, double b, double c, double d,
-            double universeBegin, double universeEnd) {
+    public TrapezoidalFuzzySet(DoubleValueExtractor<T> doubleValueExtractor,
+                               double a, double b, double c, double d,
+                               double universeBegin, double universeEnd) {
 
         /* This trapez can be wrapped (from the end to the beginning) in any place,
         so firstly we have to normalize it basing on universe range */
@@ -36,7 +37,8 @@ public class TrapezoidalFuzzySet<T> implements FuzzySet<T> {
         this.universeEnd = universeEnd;
     }
 
-    public TrapezoidalFuzzySet(DoubleValueExtractor<T> doubleValueExtractor, double a, double b, double c, double d) {
+    public TrapezoidalFuzzySet(DoubleValueExtractor<T> doubleValueExtractor,
+                               double a, double b, double c, double d) {
         this(doubleValueExtractor, a, b, c, d, 0.0, 0.0);
     }
 

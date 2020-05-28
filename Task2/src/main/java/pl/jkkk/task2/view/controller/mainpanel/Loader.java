@@ -113,7 +113,9 @@ public class Loader {
             labels.add(labelWrapperService
                     .findByName(getValueFromComboBox((ComboBox) getNodeFromPane(pane, i))));
         }
+
         Label<Pollution>[] labelsArray = new Label[labels.size()];
+
         return labels.toArray(labelsArray);
     }
 

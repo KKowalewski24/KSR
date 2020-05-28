@@ -1,11 +1,11 @@
 package pl.jkkk.task2.logic.fuzzy.linguistic;
 
-import java.util.Arrays;
-import java.util.List;
-
 import pl.jkkk.task2.logic.fuzzy.set.FuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.TrapezoidalFuzzySet;
 import pl.jkkk.task2.logic.model.enumtype.QuantifierType;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class LinguisticSummary<T> {
 

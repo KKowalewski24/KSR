@@ -6,7 +6,8 @@ public class GaussianFuzzySet<T> implements FuzzySet<T> {
     private final double center;
     private final double width;
 
-    public GaussianFuzzySet(DoubleValueExtractor<T> doubleValueExtractor, double center, double width) {
+    public GaussianFuzzySet(DoubleValueExtractor<T> doubleValueExtractor,
+                            double center, double width) {
         this.doubleValueExtractor = doubleValueExtractor;
         this.center = center;
         this.width = width;

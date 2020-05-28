@@ -1,8 +1,8 @@
 package pl.jkkk.task2.logic.fuzzy.linguistic;
 
-import java.io.Serializable;
-
 import pl.jkkk.task2.logic.fuzzy.set.FuzzySet;
+
+import java.io.Serializable;
 
 /**
  * This class represents label of specific linguistic variable,
@@ -17,7 +17,8 @@ public class Label<T> implements Serializable {
     private final FuzzySet<T> fuzzySet;
     private final LinguisticVariable<T> linguisticVariable;
 
-    public Label(final String name, final FuzzySet<T> fuzzySet, final LinguisticVariable<T> linguisticVariable) {
+    public Label(final String name, final FuzzySet<T> fuzzySet,
+                 final LinguisticVariable<T> linguisticVariable) {
         this.name = name;
         this.fuzzySet = fuzzySet;
         this.linguisticVariable = linguisticVariable;

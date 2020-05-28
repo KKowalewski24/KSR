@@ -22,17 +22,15 @@ public enum QuantifierType {
     }
 
     public static QuantifierType fromString(final String text) {
-        return Arrays.asList(QuantifierType.values())
-                .stream()
+        return Arrays.stream(QuantifierType.values())
                 .filter((it) -> it.getName().equals(text))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
 
     public static List<String> getNamesList() {
-        return Arrays.asList(QuantifierType.values())
-                .stream()
-                .map((it) -> it.getName())
+        return Arrays.stream(QuantifierType.values())
+                .map(QuantifierType::getName)
                 .collect(Collectors.toList());
     }
 }

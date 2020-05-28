@@ -7,6 +7,7 @@ import pl.jkkk.task2.logic.model.Pollution;
 import pl.jkkk.task2.logic.model.wrapper.LabelWrapper;
 import pl.jkkk.task2.logic.repository.LabelWrapperRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,6 +51,15 @@ public class LabelWrapperServiceImpl implements LabelWrapperService {
     }
 
     @Override
+    public Label<Pollution>[] findByNames(List<String> names) {
+        List<Label<Pollution>> labels = new ArrayList<>();
+        names.forEach((it) -> labels.add(findByName(it)));
+        Label<Pollution>[] labelsArray = new Label[labels.size()];
+
+        return labels.toArray(labelsArray);
+    }
+
+    @Override
     public List<LabelWrapper> findAll() {
         return StreamSupport
                 .stream(labelWrapperRepository.findAll().spliterator(), false)
@@ -82,4 +92,3 @@ public class LabelWrapperServiceImpl implements LabelWrapperService {
         this.deleteById(label.getId());
     }
 }
-    

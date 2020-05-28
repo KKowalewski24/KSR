@@ -74,7 +74,7 @@ public class Loader {
             }
         } else {
             if (!firstSelectedSummarizer.equals(SELECT_ITEM)) {
-                generateAdvancedSummary(selectedQuantifier);
+                generateAdvancedSummary(selectedQuantifier, firstSelectedQualifier);
             } else {
                 Platform.runLater(() -> {
                     PopOutWindow.messageBox("", "Summarizer Not Selected",
@@ -84,12 +84,12 @@ public class Loader {
         }
     }
 
-    private void generateAdvancedSummary(String selectedQuantifier) {
+    private void generateAdvancedSummary(String selectedQuantifier, String selectedQualifier) {
         LinguisticSummary<Pollution> linguisticSummary = new LinguisticSummary<>(
                 quantifierWrapperService.findByName(selectedQuantifier),
-                getCompoundLabelNameFromPane(paneQualifier),
-                getCompoundLabelNameFromPane(paneSummarizer),
-                pollutionService.findAll()
+                labelWrapperService.findByName(selectedQualifier),
+                pollutionService.findAll(),
+                getCompoundLabelNameFromPane(paneSummarizer)
         );
 
         generateAndFill(linguisticSummary);
@@ -98,27 +98,22 @@ public class Loader {
     private void generateBasicSummary(String selectedQuantifier, String firstSelectedSummarizer) {
         LinguisticSummary<Pollution> linguisticSummary = new LinguisticSummary<>(
                 quantifierWrapperService.findByName(selectedQuantifier),
-                getCompoundLabelNameFromPane(paneSummarizer),
-                pollutionService.findAll()
+                pollutionService.findAll(),
+                labelWrapperService.findByName(firstSelectedSummarizer)
         );
 
         generateAndFill(linguisticSummary);
     }
 
-    private Label<Pollution> getCompoundLabelNameFromPane(Pane pane) {
+    private Label<Pollution>[] getCompoundLabelNameFromPane(Pane pane) {
         List<Label<Pollution>> labels = new ArrayList<>();
 
         for (int i = 1; i < pane.getChildren().size() - 1; i++) {
             labels.add(labelWrapperService
                     .findByName(getValueFromComboBox((ComboBox) getNodeFromPane(pane, i))));
         }
-
-        Label<Pollution> finalLabel = labels.get(0);
-        for (int i = 1; i < labels.size(); i++) {
-            finalLabel = finalLabel.and(labels.get(i));
-        }
-
-        return finalLabel;
+        Label<Pollution>[] labelsArray = new Label[labels.size()];
+        return labels.toArray(labelsArray);
     }
 
     private void generateAndFill(LinguisticSummary<Pollution> linguisticSummary) {
@@ -154,4 +149,3 @@ public class Loader {
         }
     }
 }
-    

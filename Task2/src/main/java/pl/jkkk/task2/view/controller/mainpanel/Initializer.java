@@ -51,7 +51,14 @@ public class Initializer {
     }
 
     private void fillPaneQualifier() {
-        addComboBox(paneQualifier, DEACTIVATED);
+        CustomComboBox customComboBox = createCustomComboBox(250);
+
+        fillComboBox(customComboBox, addItemToLabelList(DEACTIVATED));
+
+        addNodeToPane(paneQualifier, customComboBox);
+
+        //        TODO OLD APPROACH WITH RECURSIVE COMBOBOX FOR QUALIFIER
+        //        addComboBox(paneQualifier, DEACTIVATED);
     }
 
     private void fillPaneSummarizer() {
@@ -59,9 +66,7 @@ public class Initializer {
     }
 
     private void addComboBox(Pane pane, String prompt) {
-        CustomComboBox customComboBox = new CustomComboBox();
-        customComboBox.setMinWidth(250);
-        customComboBox.setMaxWidth(250);
+        CustomComboBox customComboBox = createCustomComboBox(250);
         fillComboBox(customComboBox, addItemToLabelList(prompt));
         addNodeToPane(pane, customComboBox);
 
@@ -71,6 +76,14 @@ public class Initializer {
                 customComboBox.setCounter(customComboBox.getCounter() + 1);
             }
         });
+    }
+
+    private CustomComboBox createCustomComboBox(double width) {
+        CustomComboBox customComboBox = new CustomComboBox();
+        customComboBox.setMinWidth(width);
+        customComboBox.setMaxWidth(width);
+
+        return customComboBox;
     }
 
     private List<String> addItemToLabelList(String item) {
@@ -86,4 +99,3 @@ public class Initializer {
         return list;
     }
 }
-    

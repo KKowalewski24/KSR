@@ -67,4 +67,3 @@ public class StageController extends FxmlStageSetup {
         }
     }
 }
-    

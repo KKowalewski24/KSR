@@ -35,8 +35,8 @@ import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierWrap
 import pl.jkkk.task2.logic.service.pollution.PollutionService;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static pl.jkkk.task2.Main.IS_LOGGING_DATA;
 import static pl.jkkk.task2.logic.constant.LogicConstants.POLLUTION_DATA_FILENAME;
@@ -45,7 +45,7 @@ import static pl.jkkk.task2.logic.constant.LogicConstants.POLLUTION_DATA_FILENAM
 public class CommandMode {
 
     /*------------------------ FIELDS REGION ------------------------*/
-    public static final String IN_ALMOST_NONE = "In almost none";
+    public static final String ALMOST_NONE = "Almost none";
     public static final String IN_SOME = "In some";
     public static final String IN_ABOUT_HALF_OF_ALL = "In about half of all";
     public static final String IN_MANY = "In many";
@@ -152,44 +152,56 @@ public class CommandMode {
                 } else if ((args[0].equals("seed_linguistic") || args[0].equals("-sl"))) {
                     seedLinguisticFacilitiesInDatabase();
 
-                } else if (args[0].equals("all")) {
-                    System.out.println("Trying all quantifier/label combinations...\n");
-
-                    List<Label<Pollution>> labels = labelWrapperService.findAll()
-                            .stream()
-                            .map(wrapper -> wrapper.deserialize())
-                            .collect(Collectors.toList());
-
-                    List<LinguisticQuantifier> quantifiers = linguisticQuantifierWrapperService
-                            .findAll()
-                            .stream()
-                            .map(wrapper -> wrapper.deserialize())
-                            .collect(Collectors.toList());
-                    List<Pollution> measurements = pollutionService.findAll();
-
-                    labels.forEach(label -> {
-                        quantifiers.forEach(quantifier -> {
-                            LinguisticSummary<Pollution> summary
-                                    = new LinguisticSummary<>(quantifier, label, measurements);
-                            double degreeOfTruth = summary.degreeOfTruth();
-
-                            if (degreeOfTruth > 0.0) {
-                                System.out.println(summary.toString() + " [" + degreeOfTruth + "]");
-                                saveDataLog(summary.toString() + " [" + degreeOfTruth + "]");
-                            }
-                        });
-                    });
                 }
+                //                TODO UNCOMMENT IF NEEDED
+                //                else if (args[0].equals("all")) {
+                //                    System.out.println("Trying all quantifier/label
+                //                    combinations...\n");
+                //
+                //                    List<Label<Pollution>> labels = labelWrapperService.findAll()
+                //                            .stream()
+                //                            .map(wrapper -> wrapper.deserialize())
+                //                            .collect(Collectors.toList());
+                //
+                //                    List<LinguisticQuantifier> quantifiers =
+                //                    linguisticQuantifierWrapperService
+                //                            .findAll()
+                //                            .stream()
+                //                            .map(wrapper -> wrapper.deserialize())
+                //                            .collect(Collectors.toList());
+                //                    List<Pollution> measurements = pollutionService.findAll();
+                //
+                //                    labels.forEach(label -> {
+                //                        quantifiers.forEach(quantifier -> {
+                //                            LinguisticSummary<Pollution> summary
+                //                                    = new LinguisticSummary<>(
+                //                                    );
+                //                            double degreeOfTruth = summary.degreeOfTruth();
+                //
+                //                            if (degreeOfTruth > 0.0) {
+                //                                System.out.println(summary.toString() + " [" +
+                //                                degreeOfTruth + "]");
+                //                                saveDataLog(summary.toString() + " [" +
+                //                                degreeOfTruth + "]");
+                //                            }
+                //                        });
+                //                    });
+                //                }
             } else if (args.length == 2) {
-                String selectedQualifier = args[0];
-                String selectedSummarizer = args[1];
+                String selectedQuantifier = args[0];
+                String selectedQualifier = args[1];
+                List<String> selectedSummarizers = new ArrayList<>();
+
+                for (int i = 2; i < args.length; i++) {
+                    selectedSummarizers.add(args[i]);
+                }
 
                 LinguisticSummary<Pollution> linguisticSummary = new LinguisticSummary<>(
-                        linguisticQuantifierWrapperService.findByName(selectedQualifier),
-                        labelWrapperService.findByName(selectedSummarizer),
-                        pollutionService.findAll()
+                        linguisticQuantifierWrapperService.findByName(selectedQuantifier),
+                        labelWrapperService.findByName(selectedQualifier),
+                        pollutionService.findAll(),
+                        labelWrapperService.findByNames(selectedSummarizers)
                 );
-
                 double degreeOfTruth = linguisticSummary.degreeOfTruth();
                 saveDataLog(linguisticSummary.toString()
                         + " [" + degreeOfTruth + "]");
@@ -211,7 +223,7 @@ public class CommandMode {
 
         // Kwantyfikatory
         saveLinguisticQuantifier(new LinguisticQuantifier(
-                IN_ALMOST_NONE,
+                ALMOST_NONE,
                 new TrapezoidalFuzzySet<Double>(x -> x, 0.00, 0.00, 0.04, 0.16),
                 QuantifierType.RELATIVE)
         );
@@ -657,4 +669,3 @@ public class CommandMode {
         }
     }
 }
-    

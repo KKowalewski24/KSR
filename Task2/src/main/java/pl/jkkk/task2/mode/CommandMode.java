@@ -242,25 +242,25 @@ public class CommandMode {
         saveLabel(new Label<>(
                 SEASON_IS_SPRING,
                 new TrapezoidalFuzzySet<Pollution>(measurementSeason::extractAttribute,
-                        32, 92, 122, 183),
+                        32, 92, 122, 183, 0, 366),
                 measurementSeason)
         );
         saveLabel(new Label<>(
                 SEASON_IS_SUMMER,
                 new TrapezoidalFuzzySet<Pollution>(measurementSeason::extractAttribute,
-                        122, 183, 214, 275),
+                        122, 183, 214, 275, 0, 366),
                 measurementSeason)
         );
         saveLabel(new Label<>(
                 SEASON_IS_AUTUMN,
                 new TrapezoidalFuzzySet<Pollution>(measurementSeason::extractAttribute,
-                        214, 275, 306, 336),
+                        214, 275, 306, 336, 0, 366),
                 measurementSeason)
         );
         saveLabel(new Label<>(
                 SEASON_IS_WINTER,
                 new TrapezoidalFuzzySet<Pollution>(measurementSeason::extractAttribute,
-                        275, 336, 32, 92),
+                        275, 336, 32, 92, 0, 366),
                 measurementSeason)
         );
 
@@ -270,25 +270,25 @@ public class CommandMode {
         saveLabel(new Label<>(
                 MAXIMUM_CO_CONCENTRATION_IS_IN_THE_MORNING,
                 new TrapezoidalFuzzySet<Pollution>(maxHourCO::extractAttribute,
-                        3, 6, 10, 13),
+                        3, 6, 10, 13, 0, 24),
                 maxHourCO)
         );
         saveLabel(new Label<>(
                 MAXIMUM_CO_CONCENTRATION_IS_IN_THE_AFTERNOON,
                 new TrapezoidalFuzzySet<Pollution>(maxHourCO::extractAttribute,
-                        12, 13, 17, 19),
+                        12, 13, 17, 19, 0, 24),
                 maxHourCO)
         );
         saveLabel(new Label<>(
                 MAXIMUM_CO_CONCENTRATION_IS_IN_THE_EVENING,
                 new TrapezoidalFuzzySet<Pollution>(maxHourCO::extractAttribute,
-                        18, 20, 21, 22),
+                        18, 20, 21, 22, 0, 24),
                 maxHourCO)
         );
         saveLabel(new Label<>(
                 MAXIMUM_CO_CONCENTRATION_IS_IN_THE_NIGHT,
                 new TrapezoidalFuzzySet<Pollution>(maxHourCO::extractAttribute,
-                        21, 23, 4, 5),
+                        21, 23, 4, 5, 0, 24),
                 maxHourCO)
         );
 
@@ -297,25 +297,25 @@ public class CommandMode {
         saveLabel(new Label<>(
                 MAXIMUM_NO_2_CONCENTRATION_IS_IN_THE_MORNING,
                 new TrapezoidalFuzzySet<Pollution>(maxHourNO2::extractAttribute,
-                        3, 6, 10, 13),
+                        3, 6, 10, 13, 0, 24),
                 maxHourNO2)
         );
         saveLabel(new Label<>(
                 MAXIMUM_NO_2_CONCENTRATION_IS_IN_THE_AFTERNOON,
                 new TrapezoidalFuzzySet<Pollution>(maxHourNO2::extractAttribute,
-                        12, 13, 17, 19),
+                        12, 13, 17, 19, 0, 24),
                 maxHourNO2)
         );
         saveLabel(new Label<>(
                 MAXIMUM_NO_2_CONCENTRATION_IS_IN_THE_EVENING,
                 new TrapezoidalFuzzySet<Pollution>(maxHourNO2::extractAttribute,
-                        18, 20, 21, 22),
+                        18, 20, 21, 22, 0, 24),
                 maxHourNO2)
         );
         saveLabel(new Label<>(
                 MAXIMUM_NO_2_CONCENTRATION_IS_IN_THE_NIGHT,
                 new TrapezoidalFuzzySet<Pollution>(maxHourNO2::extractAttribute,
-                        21, 23, 4, 5),
+                        21, 23, 4, 5, 0, 24),
                 maxHourNO2)
         );
 
@@ -324,25 +324,25 @@ public class CommandMode {
         saveLabel(new Label<>(
                 MAXIMUM_O_3_CONCENTRATION_IS_IN_THE_MORNING,
                 new TrapezoidalFuzzySet<Pollution>(maxHourO3::extractAttribute,
-                        3, 6, 10, 13),
+                        3, 6, 10, 13, 0, 24),
                 maxHourO3)
         );
         saveLabel(new Label<>(
                 MAXIMUM_O_3_CONCENTRATION_IS_IN_THE_AFTERNOON,
                 new TrapezoidalFuzzySet<Pollution>(maxHourO3::extractAttribute,
-                        12, 13, 17, 19),
+                        12, 13, 17, 19, 0, 24),
                 maxHourO3)
         );
         saveLabel(new Label<>(
                 MAXIMUM_O_3_CONCENTRATION_IS_IN_THE_EVENING,
                 new TrapezoidalFuzzySet<Pollution>(maxHourO3::extractAttribute,
-                        18, 20, 21, 22),
+                        18, 20, 21, 22, 0, 24),
                 maxHourO3)
         );
         saveLabel(new Label<>(
                 MAXIMUM_O_3_CONCENTRATION_IS_IN_THE_NIGHT,
                 new TrapezoidalFuzzySet<Pollution>(maxHourO3::extractAttribute,
-                        21, 23, 4, 5),
+                        21, 23, 4, 5, 0, 24),
                 maxHourO3)
         );
 
@@ -351,25 +351,25 @@ public class CommandMode {
         saveLabel(new Label<>(
                 MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_MORNING,
                 new TrapezoidalFuzzySet<Pollution>(maxHoursSO2::extractAttribute,
-                        3, 6, 10, 13),
+                        3, 6, 10, 13, 0, 24),
                 maxHoursSO2)
         );
         saveLabel(new Label<>(
                 MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_AFTERNOON,
                 new TrapezoidalFuzzySet<Pollution>(maxHoursSO2::extractAttribute,
-                        12, 13, 17, 19),
+                        12, 13, 17, 19, 0, 24),
                 maxHoursSO2)
         );
         saveLabel(new Label<>(
                 MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_EVENING,
                 new TrapezoidalFuzzySet<Pollution>(maxHoursSO2::extractAttribute,
-                        18, 20, 21, 22),
+                        18, 20, 21, 22, 0, 24),
                 maxHoursSO2)
         );
         saveLabel(new Label<>(
                 MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_NIGHT,
                 new TrapezoidalFuzzySet<Pollution>(maxHoursSO2::extractAttribute,
-                        21, 23, 4, 5),
+                        21, 23, 4, 5, 0, 24),
                 maxHoursSO2)
         );
 

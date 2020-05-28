@@ -1,6 +1,6 @@
 package pl.jkkk.task2.logic.fuzzy.set;
 
-public class GaussianFuzzySet<T> extends FuzzySet<T> {
+public class GaussianFuzzySet<T> implements FuzzySet<T> {
 
     private final DoubleValueExtractor<T> doubleValueExtractor;
     private final double center;

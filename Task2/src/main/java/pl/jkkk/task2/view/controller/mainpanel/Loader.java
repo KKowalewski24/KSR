@@ -17,6 +17,7 @@ import pl.jkkk.task2.logic.service.pollution.PollutionService;
 import pl.jkkk.task2.view.fxml.PopOutWindow;
 import pl.jkkk.task2.view.fxml.StageController;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,11 +118,58 @@ public class Loader {
     }
 
     private void generateAndFill(LinguisticSummary<Pollution> linguisticSummary) {
-        double degreeOfTruth = linguisticSummary.degreeOfTruth();
-        String generateResult = linguisticSummary.toString() + " [" + degreeOfTruth + "]";
-        results.add(generateResult);
+        DecimalFormat df = new DecimalFormat("#.00");
 
-        Platform.runLater(() -> fillListView(listViewResults, generateResult));
+        String degreeOfTruth = df.format(
+                linguisticSummary.degreeOfTruth());
+        String degreeOfImprecision = df.format(
+                linguisticSummary.degreeOfImprecision());
+        String degreeOfCovering = df.format(
+                linguisticSummary.degreeOfCovering());
+        String degreeOfAppropriateness = df.format(
+                linguisticSummary.degreeOfAppropriateness());
+        String lengthOfSummary = df.format(
+                linguisticSummary.lengthOfSummary());
+        String degreeOfQuantifierImprecision = df.format(
+                linguisticSummary.degreeOfQuantifierImprecision());
+        String degreeOfQuantifierCardinality = df.format(
+                linguisticSummary.degreeOfQuantifierCardinality());
+        String degreeOfSummarizerCardinality = df.format(
+                linguisticSummary.degreeOfSummarizerCardinality());
+        String degreeOfQualifierImprecision = df.format(
+                linguisticSummary.degreeOfQualifierImprecision());
+        String degreeOfQualifierCardinality = df.format(
+                linguisticSummary.degreeOfQualifierCardinality());
+
+        StringBuilder generatedResult = new StringBuilder();
+        generatedResult
+                .append(linguisticSummary.toString())
+                .append(" [")
+                .append(degreeOfTruth)
+                .append(", ")
+                .append(degreeOfImprecision)
+                .append(", ")
+                .append(degreeOfCovering)
+                .append(", ")
+                .append(degreeOfAppropriateness)
+                .append(", ")
+                .append(lengthOfSummary)
+                .append(", ")
+                .append(degreeOfQuantifierImprecision)
+                .append(", ")
+                .append(degreeOfQuantifierCardinality)
+                .append(", ")
+                .append(degreeOfQuantifierCardinality)
+                .append(", ")
+                .append(degreeOfSummarizerCardinality)
+                .append(", ")
+                .append(degreeOfQualifierImprecision)
+                .append(", ")
+                .append(degreeOfQualifierCardinality)
+                .append("]");
+
+        results.add(generatedResult.toString());
+        Platform.runLater(() -> fillListView(listViewResults, generatedResult.toString()));
     }
 
     public void clearSummarization() {

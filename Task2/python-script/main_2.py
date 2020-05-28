@@ -17,7 +17,7 @@ JAR_NAME = "task2-0.0.1.jar"
 TXT = "*.txt"
 JAR = "*.jar"
 
-IN_ALMOST_NONE = "In almost none"
+IN_ALMOST_NONE = "Almost none"
 IN_SOME = "In some"
 IN_ABOUT_HALF_OF_ALL = "In about half of all"
 IN_MANY = "In many"
@@ -96,6 +96,9 @@ def seed_linguistic_database() -> None:
 
 def run_experiments() -> None:
     run_jar([IN_ALMOST_NONE, MAX_CO_CONCENTRATION_IS_HIGH])
+    run_jar([IN_ALMOST_NONE, MAX_CO_CONCENTRATION_IS_HIGH, CO_AQI_VALUE_IS_CORRECT])
+    run_jar([IN_ALMOST_NONE, MAX_CO_CONCENTRATION_IS_HIGH,
+             CO_AQI_VALUE_IS_CORRECT, MAX_CO_CONCENTRATION_IS_LOW])
 
 
 # MAIN ----------------------------------------------------------------------- #

@@ -35,6 +35,7 @@ import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierWrap
 import pl.jkkk.task2.logic.service.pollution.PollutionService;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -187,29 +188,96 @@ public class CommandMode {
                 //                        });
                 //                    });
                 //                }
-            } else if (args.length == 2) {
-                String selectedQuantifier = args[0];
-                String selectedQualifier = args[1];
-                List<String> selectedSummarizers = new ArrayList<>();
+            } else if (args.length > 1) {
 
-                for (int i = 2; i < args.length; i++) {
-                    selectedSummarizers.add(args[i]);
+                LinguisticSummary<Pollution> linguisticSummary = null;
+
+                if (args.length == 2) {
+                    String selectedQuantifier = args[0];
+                    String selectedSummarizer = args[1];
+
+                    linguisticSummary = new LinguisticSummary<>(
+                            linguisticQuantifierWrapperService.findByName(selectedQuantifier),
+                            pollutionService.findAll(),
+                            labelWrapperService.findByName(selectedSummarizer)
+                    );
+                } else {
+                    String selectedQuantifier = args[0];
+                    String selectedQualifier = args[1];
+                    List<String> selectedSummarizers = new ArrayList<>();
+
+                    for (int i = 2; i < args.length; i++) {
+                        selectedSummarizers.add(args[i]);
+                    }
+
+                    linguisticSummary = new LinguisticSummary<>(
+                            linguisticQuantifierWrapperService.findByName(selectedQuantifier),
+                            labelWrapperService.findByName(selectedQualifier),
+                            pollutionService.findAll(),
+                            labelWrapperService.findByNames(selectedSummarizers)
+                    );
                 }
 
-                LinguisticSummary<Pollution> linguisticSummary = new LinguisticSummary<>(
-                        linguisticQuantifierWrapperService.findByName(selectedQuantifier),
-                        labelWrapperService.findByName(selectedQualifier),
-                        pollutionService.findAll(),
-                        labelWrapperService.findByNames(selectedSummarizers)
-                );
-                double degreeOfTruth = linguisticSummary.degreeOfTruth();
-                saveDataLog(linguisticSummary.toString()
-                        + " [" + degreeOfTruth + "]");
+                saveDataLog(generateSummaryToString(linguisticSummary));
             }
         } catch (Exception e) {
             e.printStackTrace();
             printUsage();
         }
+    }
+
+    private String generateSummaryToString(LinguisticSummary linguisticSummary) {
+        DecimalFormat df = new DecimalFormat("#.00");
+
+        String degreeOfTruth = df.format(
+                linguisticSummary.degreeOfTruth());
+        String degreeOfImprecision = df.format(
+                linguisticSummary.degreeOfImprecision());
+        String degreeOfCovering = df.format(
+                linguisticSummary.degreeOfCovering());
+        String degreeOfAppropriateness = df.format(
+                linguisticSummary.degreeOfAppropriateness());
+        String lengthOfSummary = df.format(
+                linguisticSummary.lengthOfSummary());
+        String degreeOfQuantifierImprecision = df.format(
+                linguisticSummary.degreeOfQuantifierImprecision());
+        String degreeOfQuantifierCardinality = df.format(
+                linguisticSummary.degreeOfQuantifierCardinality());
+        String degreeOfSummarizerCardinality = df.format(
+                linguisticSummary.degreeOfSummarizerCardinality());
+        String degreeOfQualifierImprecision = df.format(
+                linguisticSummary.degreeOfQualifierImprecision());
+        String degreeOfQualifierCardinality = df.format(
+                linguisticSummary.degreeOfQualifierCardinality());
+
+        StringBuilder generatedResult = new StringBuilder();
+        generatedResult
+                .append(linguisticSummary.toString())
+                .append(" [")
+                .append(degreeOfTruth)
+                .append(", ")
+                .append(degreeOfImprecision)
+                .append(", ")
+                .append(degreeOfCovering)
+                .append(", ")
+                .append(degreeOfAppropriateness)
+                .append(", ")
+                .append(lengthOfSummary)
+                .append(", ")
+                .append(degreeOfQuantifierImprecision)
+                .append(", ")
+                .append(degreeOfQuantifierCardinality)
+                .append(", ")
+                .append(degreeOfQuantifierCardinality)
+                .append(", ")
+                .append(degreeOfSummarizerCardinality)
+                .append(", ")
+                .append(degreeOfQualifierImprecision)
+                .append(", ")
+                .append(degreeOfQualifierCardinality)
+                .append("]");
+
+        return generatedResult.toString();
     }
 
     private void seedPollutionInDatabase() throws IOException {

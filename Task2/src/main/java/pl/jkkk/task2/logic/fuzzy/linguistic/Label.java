@@ -3,7 +3,6 @@ package pl.jkkk.task2.logic.fuzzy.linguistic;
 import java.io.Serializable;
 
 import pl.jkkk.task2.logic.fuzzy.set.FuzzySet;
-import pl.jkkk.task2.logic.fuzzy.set.IntersectionFuzzySet;
 
 /**
  * This class represents label of specific linguistic variable,
@@ -42,10 +41,5 @@ public class Label<T> implements Serializable {
 
     public LinguisticVariable<T> getLinguisticVariable() {
         return linguisticVariable;
-    }
-
-    public Label<T> and(final Label<T> label) {
-        return new Label<>(name + " and " + label.name, new IntersectionFuzzySet<>(fuzzySet, label.fuzzySet),
-                linguisticVariable);
     }
 }

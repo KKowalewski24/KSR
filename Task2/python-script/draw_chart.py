@@ -10,7 +10,7 @@ Run `python draw_chart.py first_param second_param etc `
 first_param - center
 second_param - width
 
-python draw_chart.py 0.05 0.05 0.28 0.07 0.5 0.08 0.72 0.07 0.95 0.04
+python draw_chart.py 0.05 0.05 "Almost none" 0.28 0.07 "Some" 0.5 0.08 "About half of all" 0.72 0.07 "Many" 0.95 0.04 "All"
 
 """
 
@@ -18,9 +18,10 @@ python draw_chart.py 0.05 0.05 0.28 0.07 0.5 0.08 0.72 0.07 0.95 0.04
 # VAR ------------------------------------------------------------------------ #
 class ChartData:
 
-    def __init__(self, center: float, width: float) -> None:
+    def __init__(self, center: float, width: float, legend_name: str) -> None:
         self.center = center
         self.width = width
+        self.legend_name = legend_name
 
 
 # DEF ------------------------------------------------------------------------ #
@@ -29,15 +30,24 @@ def calculate_gaussian(value: float, center: float, width: float) -> float:
 
 
 def draw_multiple() -> None:
-    if len(sys.argv) >= 3 and len(sys.argv) % 2 == 1:
+    if len(sys.argv) >= 4 and len(sys.argv) % 3 == 1:
         axis_x = numpy.linspace(0, 1, 200)
         points: List[ChartData] = []
 
-        for i in range(1, len(sys.argv) - 1, 2):
-            points.append(ChartData(float(sys.argv[i]), float(sys.argv[i + 1])))
+        for i in range(1, len(sys.argv) - 2, 3):
+            points.append(ChartData(float(sys.argv[i]),
+                                    float(sys.argv[i + 1]),
+                                    sys.argv[i + 2]))
 
         for it in points:
-            plt.plot(axis_x, [calculate_gaussian(jt, it.center, it.width) for jt in axis_x])
+            plt.plot(
+                axis_x,
+                [calculate_gaussian(jt, it.center, it.width) for jt in axis_x],
+                label=it.legend_name
+            )
+
+        plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),
+                   shadow=True, ncol=len(points))
         plt.show()
         pass
 

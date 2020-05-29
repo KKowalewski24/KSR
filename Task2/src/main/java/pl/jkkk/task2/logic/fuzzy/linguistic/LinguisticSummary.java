@@ -133,13 +133,13 @@ public class LinguisticSummary<T> {
     public String toString() {
         final StringBuilder compoundSummarizerName = new StringBuilder(summarizers[0].getName());
         for (int i = 1; i < summarizers.length; i++) {
-            compoundSummarizerName.append(" and ").append(summarizers[i].getName());
+            compoundSummarizerName.append(" and have ").append(summarizers[i].getName());
         }
         //        todo
         if (qualifier instanceof AlwaysMatch) {
-            return quantifier.getName() + " measurement have " + compoundSummarizerName;
+            return quantifier.getName() + " measurements have " + compoundSummarizerName;
         } else {
-            return quantifier.getName() + " measurement, which have "
+            return quantifier.getName() + " measurements, which have "
                     + qualifier.getName() + ", have " + compoundSummarizerName;
         }
     }

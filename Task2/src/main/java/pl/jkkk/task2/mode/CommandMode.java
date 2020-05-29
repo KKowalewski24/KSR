@@ -47,87 +47,92 @@ public class CommandMode {
 
     /*------------------------ FIELDS REGION ------------------------*/
     public static final String ALMOST_NONE = "Almost none";
-    public static final String IN_SOME = "In some";
-    public static final String IN_ABOUT_HALF_OF_ALL = "In about half of all";
-    public static final String IN_MANY = "In many";
-    public static final String IN_ALL = "In all";
-    public static final String SEASON_IS_SPRING = "season is spring.";
-    public static final String SEASON_IS_SUMMER = "season is summer.";
-    public static final String SEASON_IS_AUTUMN = "season is autumn.";
-    public static final String SEASON_IS_WINTER = "season is winter.";
-    public static final String MAXIMUM_CO_CONCENTRATION_IS_IN_THE_MORNING =
-            "maximum CO concentration is in the morning.";
-    public static final String MAXIMUM_CO_CONCENTRATION_IS_IN_THE_AFTERNOON =
-            "maximum CO concentration is in the afternoon.";
-    public static final String MAXIMUM_CO_CONCENTRATION_IS_IN_THE_EVENING =
-            "maximum CO concentration is in the evening.";
-    public static final String MAXIMUM_CO_CONCENTRATION_IS_IN_THE_NIGHT =
-            "maximum CO concentration is in the night.";
-    public static final String MAXIMUM_NO_2_CONCENTRATION_IS_IN_THE_MORNING =
-            "maximum NO2 concentration is in the morning.";
-    public static final String MAXIMUM_NO_2_CONCENTRATION_IS_IN_THE_AFTERNOON =
-            "maximum NO2 concentration is in the afternoon.";
-    public static final String MAXIMUM_NO_2_CONCENTRATION_IS_IN_THE_EVENING =
-            "maximum NO2 concentration is in the evening.";
-    public static final String MAXIMUM_NO_2_CONCENTRATION_IS_IN_THE_NIGHT =
-            "maximum NO2 concentration is in the night.";
-    public static final String MAXIMUM_O_3_CONCENTRATION_IS_IN_THE_MORNING =
-            "maximum O3 concentration is in the morning.";
-    public static final String MAXIMUM_O_3_CONCENTRATION_IS_IN_THE_AFTERNOON =
-            "maximum O3 concentration is in the afternoon.";
-    public static final String MAXIMUM_O_3_CONCENTRATION_IS_IN_THE_EVENING =
-            "maximum O3 concentration is in the evening.";
-    public static final String MAXIMUM_O_3_CONCENTRATION_IS_IN_THE_NIGHT =
-            "maximum O3 concentration is in the night.";
-    public static final String MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_MORNING =
-            "maximum SO2 concentration is in the morning.";
-    public static final String MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_AFTERNOON =
-            "maximum SO2 concentration is in the afternoon.";
-    public static final String MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_EVENING =
-            "maximum SO2 concentration is in the evening.";
-    public static final String MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_NIGHT =
-            "maximum SO2 concentration is in the night.";
-    public static final String MEAN_CO_CONCENTRATION_IS_LOW = "mean CO concentration is low.";
-    public static final String MEAN_CO_CONCENTRATION_IS_MIDDLE = "mean CO concentration is middle.";
-    public static final String MEAN_CO_CONCENTRATION_IS_HIGH = "mean CO concentration is high.";
-    public static final String MEAN_NO_2_CONCENTRATION_IS_LOW = "mean NO2 concentration is low.";
-    public static final String MEAN_NO_2_CONCENTRATION_IS_MIDDLE =
-            "mean NO2 concentration is middle.";
-    public static final String MEAN_NO_2_CONCENTRATION_IS_HIGH = "mean NO2 concentration is high.";
-    public static final String MEAN_O_3_CONCENTRATION_IS_LOW = "mean O3 concentration is low.";
-    public static final String MEAN_O_3_CONCENTRATION_IS_MIDDLE =
-            "mean O3 concentration is middle.";
-    public static final String MEAN_O_3_CONCENTRATION_IS_HIGH = "mean O3 concentration is high.";
-    public static final String MEAN_SO_2_CONCENTRATION_IS_LOW = "mean SO2 concentration is low.";
-    public static final String MEAN_SO_2_CONCENTRATION_IS_MIDDLE =
-            "mean SO2 concentration is middle.";
-    public static final String MEAN_SO_2_CONCENTRATION_IS_HIGH = "mean SO2 concentration is high.";
-    public static final String MAX_CO_CONCENTRATION_IS_LOW = "max CO concentration is low.";
-    public static final String MAX_CO_CONCENTRATION_IS_MIDDLE = "max CO concentration is middle.";
-    public static final String MAX_CO_CONCENTRATION_IS_HIGH = "max CO concentration is high.";
-    public static final String MAX_NO_2_CONCENTRATION_IS_LOW = "max NO2 concentration is low.";
-    public static final String MAX_NO_2_CONCENTRATION_IS_MIDDLE =
-            "max NO2 concentration is middle.";
-    public static final String MAX_NO_2_CONCENTRATION_IS_HIGH = "max NO2 concentration is high.";
-    public static final String MAX_O_3_CONCENTRATION_IS_LOW = "max O3 concentration is low.";
-    public static final String MAX_O_3_CONCENTRATION_IS_MIDDLE = "max O3 concentration is middle.";
-    public static final String MAX_O_3_CONCENTRATION_IS_HIGH = "max O3 concentration is high.";
-    public static final String MAX_SO_2_CONCENTRATION_IS_LOW = "max SO2 concentration is low.";
-    public static final String MAX_SO_2_CONCENTRATION_IS_MIDDLE =
-            "max SO2 concentration is middle.";
-    public static final String MAX_SO_2_CONCENTRATION_IS_HIGH = "max SO2 concentration is high.";
-    public static final String CO_AQI_VALUE_IS_CORRECT = "CO AQI value is correct.";
-    public static final String CO_AQI_VALUE_IS_UNHEALTHY = "CO AQI value is unhealthy.";
-    public static final String CO_AQI_VALUE_IS_HAZARDOUS = "CO AQI value is hazardous.";
-    public static final String NO_2_AQI_VALUE_IS_CORRECT = "NO2 AQI value is correct.";
-    public static final String NO_2_AQI_VALUE_IS_UNHEALTHY = "NO2 AQI value is unhealthy.";
-    public static final String NO_2_AQI_VALUE_IS_HAZARDOUS = "NO2 AQI value is hazardous.";
-    public static final String O_3_AQI_VALUE_IS_CORRECT = "O3 AQI value is correct.";
-    public static final String O_3_AQI_VALUE_IS_UNHEALTHY = "O3 AQI value is unhealthy.";
-    public static final String O_3_AQI_VALUE_IS_HAZARDOUS = "O3 AQI value is hazardous.";
-    public static final String SO_2_AQI_VALUE_IS_CORRECT = "SO2 AQI value is correct.";
-    public static final String SO_2_AQI_VALUE_IS_UNHEALTHY = "SO2 AQI value is unhealthy.";
-    public static final String SO_2_AQI_VALUE_IS_HAZARDOUS = "SO2 AQI value is hazardous.";
+    public static final String SOME = "Some";
+    public static final String ABOUT_HALF_OF_ALL = "About half of all";
+    public static final String MANY = "Many";
+    public static final String ALL = "All";
+
+    public static final String BEEN_DONE_IN_SPRING = "been done in spring";
+    public static final String BEEN_DONE_IN_SUMMER = "been done in summer";
+    public static final String BEEN_DONE_IN_AUTUMN = "been done in autumn";
+    public static final String BEEN_DONE_IN_WINTER = "been done in winter";
+
+    public static final String MAXIMUM_CO_CONCENTRATION_IN_THE_MORNING =
+            "maximum CO concentration in the morning";
+    public static final String MAXIMUM_CO_CONCENTRATION_IN_THE_AFTERNOON =
+            "maximum CO concentration in the afternoon";
+    public static final String MAXIMUM_CO_CONCENTRATION_IN_THE_EVENING =
+            "maximum CO concentration in the evening";
+    public static final String MAXIMUM_CO_CONCENTRATION_IN_THE_NIGHT =
+            "maximum CO concentration in the night";
+    public static final String MAXIMUM_NO_2_CONCENTRATION_IN_THE_MORNING =
+            "maximum NO2 concentration in the morning";
+    public static final String MAXIMUM_NO_2_CONCENTRATION_IN_THE_AFTERNOON =
+            "maximum NO2 concentration in the afternoon";
+    public static final String MAXIMUM_NO_2_CONCENTRATION_IN_THE_EVENING =
+            "maximum NO2 concentration in the evening";
+    public static final String MAXIMUM_NO_2_CONCENTRATION_IN_THE_NIGHT =
+            "maximum NO2 concentration in the night";
+    public static final String MAXIMUM_O_3_CONCENTRATION_IN_THE_MORNING =
+            "maximum O3 concentration in the morning";
+    public static final String MAXIMUM_O_3_CONCENTRATION_IN_THE_AFTERNOON =
+            "maximum O3 concentration in the afternoon";
+    public static final String MAXIMUM_O_3_CONCENTRATION_IN_THE_EVENING =
+            "maximum O3 concentration in the evening";
+    public static final String MAXIMUM_O_3_CONCENTRATION_IN_THE_NIGHT =
+            "maximum O3 concentration in the night";
+    public static final String MAXIMUM_SO_2_CONCENTRATION_IN_THE_MORNING =
+            "maximum SO2 concentration in the morning";
+    public static final String MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON =
+            "maximum SO2 concentration in the afternoon";
+    public static final String MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING =
+            "maximum SO2 concentration in the evening";
+    public static final String MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT =
+            "maximum SO2 concentration in the night";
+
+    public static final String LOW_MEAN_CO_CONCENTRATION = "low mean CO concentration";
+    public static final String MIDDLE_MEAN_CO_CONCENTRATION = "middle mean CO concentration";
+    public static final String HIGH_MEAN_CO_CONCENTRATION = "high mean CO concentration";
+    public static final String LOW_MEAN_NO_2_CONCENTRATION = "low mean NO2 concentration";
+    public static final String MIDDLE_MEAN_NO_2_CONCENTRATION =
+            "middle mean NO2 concentration";
+    public static final String HIGH_MEAN_NO_2_CONCENTRATION = "high mean NO2 concentration";
+    public static final String LOW_MEAN_O_3_CONCENTRATION = "low mean O3 concentration";
+    public static final String MIDDLE_MEAN_O_3_CONCENTRATION =
+            "middle mean O3 concentration";
+    public static final String HIGH_MEAN_O_3_CONCENTRATION = "high mean O3 concentration";
+    public static final String LOW_MEAN_SO_2_CONCENTRATION = "low mean SO2 concentration";
+    public static final String MIDDLE_MEAN_SO_2_CONCENTRATION =
+            "middle mean SO2 concentration";
+    public static final String HIGH_MEAN_SO_2_CONCENTRATION = "high mean SO2 concentration";
+
+    public static final String LOW_MAXIMUM_CO_CONCENTRATION = "low maximum CO concentration";
+    public static final String MIDDLE_MAXIMUM_CO_CONCENTRATION = "middle maximum CO concentration";
+    public static final String HIGH_MAXIMUM_CO_CONCENTRATION = "high maximum CO concentration";
+    public static final String LOW_MAXIMUM_NO_2_CONCENTRATION = "low maximum NO2 concentration";
+    public static final String MIDDLE_MAXIMUM_NO_2_CONCENTRATION =
+            "middle maximum NO2 concentration";
+    public static final String HIGH_MAXIMUM_NO_2_CONCENTRATION = "high maximum NO2 concentration";
+    public static final String LOW_MAXIMUM_O_3_CONCENTRATION = "low maximum O3 concentration";
+    public static final String MIDDLE_MAXIMUM_O_3_CONCENTRATION = "middle maximum O3 concentration";
+    public static final String HIGH_MAXIMUM_O_3_CONCENTRATION = "high maximum O3 concentration";
+    public static final String LOW_MAXIMUM_SO_2_CONCENTRATION = "low maximum SO2 concentration";
+    public static final String MIDDLE_MAXIMUM_SO_2_CONCENTRATION =
+            "middle maximum SO2 concentration";
+    public static final String HIGH_MAXIMUM_SO_2_CONCENTRATION = "high maximum SO2 concentration";
+
+    public static final String CORRECT_CO_AQI_VALUE = "correct CO AQI value";
+    public static final String UNHEALTHY_CO_AQI_VALUE = "unhealthy CO AQI value";
+    public static final String HAZARDOUS_CO_AQI_VALUE = "hazardous CO AQI value";
+    public static final String CORRECT_NO_2_AQI_VALUE = "correct NO2 AQI value";
+    public static final String UNHEALTHY_NO_2_AQI_VALUE = "unhealthy NO2 AQI value";
+    public static final String HAZARDOUS_NO_2_AQI_VALUE = "hazardous NO2 AQI value";
+    public static final String CORRECT_O_3_AQI_VALUE = "correct O3 AQI value";
+    public static final String UNHEALTHY_O_3_AQI_VALUE = "unhealthy O3 AQI value";
+    public static final String HAZARDOUS_O_3_AQI_VALUE = "hazardous O3 AQI value";
+    public static final String CORRECT_SO_2_AQI_VALUE = "correct SO2 AQI value";
+    public static final String UNHEALTHY_SO_2_AQI_VALUE = "unhealthy SO2 AQI value";
+    public static final String HAZARDOUS_SO_2_AQI_VALUE = "hazardous SO2 AQI value";
 
     private final PollutionService pollutionService;
     private final LinguisticQuantifierWrapperService linguisticQuantifierWrapperService;
@@ -227,7 +232,7 @@ public class CommandMode {
     }
 
     private String generateSummaryToString(LinguisticSummary linguisticSummary) {
-        DecimalFormat df = new DecimalFormat("#.00");
+        DecimalFormat df = new DecimalFormat("0.00");
 
         String degreeOfTruth = df.format(
                 linguisticSummary.degreeOfTruth());
@@ -253,7 +258,7 @@ public class CommandMode {
         StringBuilder generatedResult = new StringBuilder();
         generatedResult
                 .append(linguisticSummary.toString())
-                .append(" [")
+                .append(". [")
                 .append(degreeOfTruth)
                 .append(", ")
                 .append(degreeOfImprecision)
@@ -289,6 +294,7 @@ public class CommandMode {
         linguisticQuantifierWrapperService.deleteAll();
         labelWrapperService.deleteAll();
 
+        //        TODO CHANGE FOR GAUSSIAN SET
         // Kwantyfikatory
         saveLinguisticQuantifier(new LinguisticQuantifier(
                 ALMOST_NONE,
@@ -296,22 +302,22 @@ public class CommandMode {
                 QuantifierType.RELATIVE)
         );
         saveLinguisticQuantifier(new LinguisticQuantifier(
-                IN_SOME,
+                SOME,
                 new TrapezoidalFuzzySet<Double>(x -> x, 0.12, 0.16, 0.32, 0.4),
                 QuantifierType.RELATIVE)
         );
         saveLinguisticQuantifier(new LinguisticQuantifier(
-                IN_ABOUT_HALF_OF_ALL,
+                ABOUT_HALF_OF_ALL,
                 new TrapezoidalFuzzySet<Double>(x -> x, 0.32, 0.44, 0.56, 0.68),
                 QuantifierType.RELATIVE)
         );
         saveLinguisticQuantifier(new LinguisticQuantifier(
-                IN_MANY,
+                MANY,
                 new TrapezoidalFuzzySet<Double>(x -> x, 0.6, 0.68, 0.84, 0.88),
                 QuantifierType.RELATIVE)
         );
         saveLinguisticQuantifier(new LinguisticQuantifier(
-                IN_ALL,
+                ALL,
                 new TrapezoidalFuzzySet<Double>(x -> x, 0.84, 0.96, 1, 1),
                 QuantifierType.RELATIVE)
         );
@@ -320,25 +326,25 @@ public class CommandMode {
         // Sezon wykonania pomiaru
         final MeasurementSeason measurementSeason = new MeasurementSeason();
         saveLabel(new Label<>(
-                SEASON_IS_SPRING,
+                BEEN_DONE_IN_SPRING,
                 new TrapezoidalFuzzySet<Pollution>(measurementSeason::extractAttribute,
                         32, 92, 122, 183, 0, 366),
                 measurementSeason)
         );
         saveLabel(new Label<>(
-                SEASON_IS_SUMMER,
+                BEEN_DONE_IN_SUMMER,
                 new TrapezoidalFuzzySet<Pollution>(measurementSeason::extractAttribute,
                         122, 183, 214, 275, 0, 366),
                 measurementSeason)
         );
         saveLabel(new Label<>(
-                SEASON_IS_AUTUMN,
+                BEEN_DONE_IN_AUTUMN,
                 new TrapezoidalFuzzySet<Pollution>(measurementSeason::extractAttribute,
                         214, 275, 306, 336, 0, 366),
                 measurementSeason)
         );
         saveLabel(new Label<>(
-                SEASON_IS_WINTER,
+                BEEN_DONE_IN_WINTER,
                 new TrapezoidalFuzzySet<Pollution>(measurementSeason::extractAttribute,
                         275, 336, 32, 92, 0, 366),
                 measurementSeason)
@@ -348,25 +354,25 @@ public class CommandMode {
         // Godzina maksymalnego stężenia
         final MaxHourCO maxHourCO = new MaxHourCO();
         saveLabel(new Label<>(
-                MAXIMUM_CO_CONCENTRATION_IS_IN_THE_MORNING,
+                MAXIMUM_CO_CONCENTRATION_IN_THE_MORNING,
                 new TrapezoidalFuzzySet<Pollution>(maxHourCO::extractAttribute,
                         3, 6, 10, 13, 0, 24),
                 maxHourCO)
         );
         saveLabel(new Label<>(
-                MAXIMUM_CO_CONCENTRATION_IS_IN_THE_AFTERNOON,
+                MAXIMUM_CO_CONCENTRATION_IN_THE_AFTERNOON,
                 new TrapezoidalFuzzySet<Pollution>(maxHourCO::extractAttribute,
                         12, 13, 17, 19, 0, 24),
                 maxHourCO)
         );
         saveLabel(new Label<>(
-                MAXIMUM_CO_CONCENTRATION_IS_IN_THE_EVENING,
+                MAXIMUM_CO_CONCENTRATION_IN_THE_EVENING,
                 new TrapezoidalFuzzySet<Pollution>(maxHourCO::extractAttribute,
                         18, 20, 21, 22, 0, 24),
                 maxHourCO)
         );
         saveLabel(new Label<>(
-                MAXIMUM_CO_CONCENTRATION_IS_IN_THE_NIGHT,
+                MAXIMUM_CO_CONCENTRATION_IN_THE_NIGHT,
                 new TrapezoidalFuzzySet<Pollution>(maxHourCO::extractAttribute,
                         21, 23, 4, 5, 0, 24),
                 maxHourCO)
@@ -375,25 +381,25 @@ public class CommandMode {
         // Godzina maksymalnego stężenia
         final MaxHourNO2 maxHourNO2 = new MaxHourNO2();
         saveLabel(new Label<>(
-                MAXIMUM_NO_2_CONCENTRATION_IS_IN_THE_MORNING,
+                MAXIMUM_NO_2_CONCENTRATION_IN_THE_MORNING,
                 new TrapezoidalFuzzySet<Pollution>(maxHourNO2::extractAttribute,
                         3, 6, 10, 13, 0, 24),
                 maxHourNO2)
         );
         saveLabel(new Label<>(
-                MAXIMUM_NO_2_CONCENTRATION_IS_IN_THE_AFTERNOON,
+                MAXIMUM_NO_2_CONCENTRATION_IN_THE_AFTERNOON,
                 new TrapezoidalFuzzySet<Pollution>(maxHourNO2::extractAttribute,
                         12, 13, 17, 19, 0, 24),
                 maxHourNO2)
         );
         saveLabel(new Label<>(
-                MAXIMUM_NO_2_CONCENTRATION_IS_IN_THE_EVENING,
+                MAXIMUM_NO_2_CONCENTRATION_IN_THE_EVENING,
                 new TrapezoidalFuzzySet<Pollution>(maxHourNO2::extractAttribute,
                         18, 20, 21, 22, 0, 24),
                 maxHourNO2)
         );
         saveLabel(new Label<>(
-                MAXIMUM_NO_2_CONCENTRATION_IS_IN_THE_NIGHT,
+                MAXIMUM_NO_2_CONCENTRATION_IN_THE_NIGHT,
                 new TrapezoidalFuzzySet<Pollution>(maxHourNO2::extractAttribute,
                         21, 23, 4, 5, 0, 24),
                 maxHourNO2)
@@ -402,25 +408,25 @@ public class CommandMode {
         // Godzina maksymalnego stężenia
         final MaxHourO3 maxHourO3 = new MaxHourO3();
         saveLabel(new Label<>(
-                MAXIMUM_O_3_CONCENTRATION_IS_IN_THE_MORNING,
+                MAXIMUM_O_3_CONCENTRATION_IN_THE_MORNING,
                 new TrapezoidalFuzzySet<Pollution>(maxHourO3::extractAttribute,
                         3, 6, 10, 13, 0, 24),
                 maxHourO3)
         );
         saveLabel(new Label<>(
-                MAXIMUM_O_3_CONCENTRATION_IS_IN_THE_AFTERNOON,
+                MAXIMUM_O_3_CONCENTRATION_IN_THE_AFTERNOON,
                 new TrapezoidalFuzzySet<Pollution>(maxHourO3::extractAttribute,
                         12, 13, 17, 19, 0, 24),
                 maxHourO3)
         );
         saveLabel(new Label<>(
-                MAXIMUM_O_3_CONCENTRATION_IS_IN_THE_EVENING,
+                MAXIMUM_O_3_CONCENTRATION_IN_THE_EVENING,
                 new TrapezoidalFuzzySet<Pollution>(maxHourO3::extractAttribute,
                         18, 20, 21, 22, 0, 24),
                 maxHourO3)
         );
         saveLabel(new Label<>(
-                MAXIMUM_O_3_CONCENTRATION_IS_IN_THE_NIGHT,
+                MAXIMUM_O_3_CONCENTRATION_IN_THE_NIGHT,
                 new TrapezoidalFuzzySet<Pollution>(maxHourO3::extractAttribute,
                         21, 23, 4, 5, 0, 24),
                 maxHourO3)
@@ -429,25 +435,25 @@ public class CommandMode {
         // Godzina maksymalnego stężenia
         final MaxHourSO2 maxHoursSO2 = new MaxHourSO2();
         saveLabel(new Label<>(
-                MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_MORNING,
+                MAXIMUM_SO_2_CONCENTRATION_IN_THE_MORNING,
                 new TrapezoidalFuzzySet<Pollution>(maxHoursSO2::extractAttribute,
                         3, 6, 10, 13, 0, 24),
                 maxHoursSO2)
         );
         saveLabel(new Label<>(
-                MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_AFTERNOON,
+                MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON,
                 new TrapezoidalFuzzySet<Pollution>(maxHoursSO2::extractAttribute,
                         12, 13, 17, 19, 0, 24),
                 maxHoursSO2)
         );
         saveLabel(new Label<>(
-                MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_EVENING,
+                MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING,
                 new TrapezoidalFuzzySet<Pollution>(maxHoursSO2::extractAttribute,
                         18, 20, 21, 22, 0, 24),
                 maxHoursSO2)
         );
         saveLabel(new Label<>(
-                MAXIMUM_SO_2_CONCENTRATION_IS_IN_THE_NIGHT,
+                MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT,
                 new TrapezoidalFuzzySet<Pollution>(maxHoursSO2::extractAttribute,
                         21, 23, 4, 5, 0, 24),
                 maxHoursSO2)
@@ -457,19 +463,19 @@ public class CommandMode {
         // Średnie stężenie
         final MeanConcentrationCO meanConcentrationCO = new MeanConcentrationCO();
         saveLabel(new Label<>(
-                MEAN_CO_CONCENTRATION_IS_LOW,
+                LOW_MEAN_CO_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(meanConcentrationCO::extractAttribute,
                         0, 4, 9, 12),
                 meanConcentrationCO)
         );
         saveLabel(new Label<>(
-                MEAN_CO_CONCENTRATION_IS_MIDDLE,
+                MIDDLE_MEAN_CO_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(meanConcentrationCO::extractAttribute,
                         9, 12, 15, 30),
                 meanConcentrationCO)
         );
         saveLabel(new Label<>(
-                MEAN_CO_CONCENTRATION_IS_HIGH,
+                HIGH_MEAN_CO_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(meanConcentrationCO::extractAttribute,
                         15, 30, 40, 50),
                 meanConcentrationCO)
@@ -478,19 +484,19 @@ public class CommandMode {
         // Średnie stężenie
         final MeanConcentrationNO2 meanConcentrationNO2 = new MeanConcentrationNO2();
         saveLabel(new Label<>(
-                MEAN_NO_2_CONCENTRATION_IS_LOW,
+                LOW_MEAN_NO_2_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(meanConcentrationNO2::extractAttribute,
                         0, 0.05, 0.1, 0.36),
                 meanConcentrationNO2)
         );
         saveLabel(new Label<>(
-                MEAN_NO_2_CONCENTRATION_IS_MIDDLE,
+                MIDDLE_MEAN_NO_2_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(meanConcentrationNO2::extractAttribute,
                         0.1, 0.36, 0.65, 1.25),
                 meanConcentrationNO2)
         );
         saveLabel(new Label<>(
-                MEAN_NO_2_CONCENTRATION_IS_HIGH,
+                HIGH_MEAN_NO_2_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(meanConcentrationNO2::extractAttribute,
                         0.65, 1.25, 1.65, 2.04),
                 meanConcentrationNO2)
@@ -499,19 +505,19 @@ public class CommandMode {
         // Średnie stężenie
         final MeanConcentrationO3 meanConcentrationO3 = new MeanConcentrationO3();
         saveLabel(new Label<>(
-                MEAN_O_3_CONCENTRATION_IS_LOW,
+                LOW_MEAN_O_3_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(meanConcentrationO3::extractAttribute,
                         0, 0.03, 0.6, 0.75),
                 meanConcentrationO3)
         );
         saveLabel(new Label<>(
-                MEAN_O_3_CONCENTRATION_IS_MIDDLE,
+                MIDDLE_MEAN_O_3_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(meanConcentrationO3::extractAttribute,
                         0.03, 0.06, 0.075, 0.095),
                 meanConcentrationO3)
         );
         saveLabel(new Label<>(
-                MEAN_O_3_CONCENTRATION_IS_HIGH,
+                HIGH_MEAN_O_3_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(meanConcentrationO3::extractAttribute,
                         0.075, 0.095, 0.115, 0.375),
                 meanConcentrationO3)
@@ -520,19 +526,19 @@ public class CommandMode {
         // Średnie stężenie
         final MeanConcentrationSO2 meanConcentrationSO2 = new MeanConcentrationSO2();
         saveLabel(new Label<>(
-                MEAN_SO_2_CONCENTRATION_IS_LOW,
+                LOW_MEAN_SO_2_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(meanConcentrationSO2::extractAttribute,
                         0, 0, 75, 300),
                 meanConcentrationSO2)
         );
         saveLabel(new Label<>(
-                MEAN_SO_2_CONCENTRATION_IS_MIDDLE,
+                MIDDLE_MEAN_SO_2_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(meanConcentrationSO2::extractAttribute,
                         150, 450, 600, 800),
                 meanConcentrationSO2)
         );
         saveLabel(new Label<>(
-                MEAN_SO_2_CONCENTRATION_IS_HIGH,
+                HIGH_MEAN_SO_2_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(meanConcentrationSO2::extractAttribute,
                         600, 1000, 1000, 1000),
                 meanConcentrationSO2)
@@ -542,68 +548,68 @@ public class CommandMode {
         // Maksymalne stężenie
         final MaxConcentrationCO maxConcentrationCO = new MaxConcentrationCO();
         saveLabel(new Label<>(
-                MAX_CO_CONCENTRATION_IS_LOW,
+                LOW_MAXIMUM_CO_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(maxConcentrationCO::extractAttribute,
                         0, 4, 9, 12),
                 maxConcentrationCO));
         saveLabel(new Label<>(
-                MAX_CO_CONCENTRATION_IS_MIDDLE,
+                MIDDLE_MAXIMUM_CO_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(maxConcentrationCO::extractAttribute,
                         9, 12, 15, 30),
                 maxConcentrationCO));
         saveLabel(new Label<>(
-                MAX_CO_CONCENTRATION_IS_HIGH,
+                HIGH_MAXIMUM_CO_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(maxConcentrationCO::extractAttribute,
                         15, 30, 40, 50),
                 maxConcentrationCO));
 
         final MaxConcentrationNO2 maxConcentrationNO2 = new MaxConcentrationNO2();
         saveLabel(new Label<>(
-                MAX_NO_2_CONCENTRATION_IS_LOW,
+                LOW_MAXIMUM_NO_2_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(maxConcentrationNO2::extractAttribute,
                         0, 0.05, 0.1, 0.36),
                 maxConcentrationNO2));
         saveLabel(new Label<>(
-                MAX_NO_2_CONCENTRATION_IS_MIDDLE,
+                MIDDLE_MAXIMUM_NO_2_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(maxConcentrationNO2::extractAttribute,
                         0.1, 0.36, 0.65, 1.25),
                 maxConcentrationNO2));
         saveLabel(new Label<>(
-                MAX_NO_2_CONCENTRATION_IS_HIGH,
+                HIGH_MAXIMUM_NO_2_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(maxConcentrationNO2::extractAttribute,
                         0.65, 1.25, 1.65, 2.04),
                 maxConcentrationNO2));
 
         final MaxConcentrationO3 maxConcentrationO3 = new MaxConcentrationO3();
         saveLabel(new Label<>(
-                MAX_O_3_CONCENTRATION_IS_LOW,
+                LOW_MAXIMUM_O_3_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(maxConcentrationO3::extractAttribute,
                         0, 0.03, 0.6, 0.75),
                 maxConcentrationO3));
         saveLabel(new Label<>(
-                MAX_O_3_CONCENTRATION_IS_MIDDLE,
+                MIDDLE_MAXIMUM_O_3_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(maxConcentrationO3::extractAttribute,
                         0.03, 0.06, 0.075, 0.095),
                 maxConcentrationO3));
         saveLabel(new Label<>(
-                MAX_O_3_CONCENTRATION_IS_HIGH,
+                HIGH_MAXIMUM_O_3_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(maxConcentrationO3::extractAttribute,
                         0.075, 0.095, 0.115, 0.375),
                 maxConcentrationO3));
 
         final MaxConcentrationSO2 maxConcentrationSO2 = new MaxConcentrationSO2();
         saveLabel(new Label<>(
-                MAX_SO_2_CONCENTRATION_IS_LOW,
+                LOW_MAXIMUM_SO_2_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(maxConcentrationSO2::extractAttribute,
                         0, 0, 75, 300),
                 maxConcentrationSO2));
         saveLabel(new Label<>(
-                MAX_SO_2_CONCENTRATION_IS_MIDDLE,
+                MIDDLE_MAXIMUM_SO_2_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(maxConcentrationSO2::extractAttribute,
                         150, 450, 600, 800),
                 maxConcentrationSO2));
         saveLabel(new Label<>(
-                MAX_SO_2_CONCENTRATION_IS_HIGH,
+                HIGH_MAXIMUM_SO_2_CONCENTRATION,
                 new TrapezoidalFuzzySet<Pollution>(maxConcentrationSO2::extractAttribute,
                         600, 1000, 1000, 1000),
                 maxConcentrationSO2));
@@ -612,19 +618,19 @@ public class CommandMode {
         // Wartosc AQI
         final AQIValueCO aqiValueCO = new AQIValueCO();
         saveLabel(new Label<>(
-                CO_AQI_VALUE_IS_CORRECT,
+                CORRECT_CO_AQI_VALUE,
                 new TrapezoidalFuzzySet<Pollution>(aqiValueCO::extractAttribute,
                         0, 25, 50, 75),
                 aqiValueCO)
         );
         saveLabel(new Label<>(
-                CO_AQI_VALUE_IS_UNHEALTHY,
+                UNHEALTHY_CO_AQI_VALUE,
                 new TrapezoidalFuzzySet<Pollution>(aqiValueCO::extractAttribute,
                         50, 75, 150, 250),
                 aqiValueCO)
         );
         saveLabel(new Label<>(
-                CO_AQI_VALUE_IS_HAZARDOUS,
+                HAZARDOUS_CO_AQI_VALUE,
                 new TrapezoidalFuzzySet<Pollution>(aqiValueCO::extractAttribute,
                         150, 250, 400, 500),
                 aqiValueCO)
@@ -633,19 +639,19 @@ public class CommandMode {
         // Wartosc AQI
         final AQIValueNO2 aqiValueNO2 = new AQIValueNO2();
         saveLabel(new Label<>(
-                NO_2_AQI_VALUE_IS_CORRECT,
+                CORRECT_NO_2_AQI_VALUE,
                 new TrapezoidalFuzzySet<Pollution>(aqiValueNO2::extractAttribute,
                         0, 25, 50, 75),
                 aqiValueNO2)
         );
         saveLabel(new Label<>(
-                NO_2_AQI_VALUE_IS_UNHEALTHY,
+                UNHEALTHY_NO_2_AQI_VALUE,
                 new TrapezoidalFuzzySet<Pollution>(aqiValueNO2::extractAttribute,
                         50, 75, 150, 250),
                 aqiValueNO2)
         );
         saveLabel(new Label<>(
-                NO_2_AQI_VALUE_IS_HAZARDOUS,
+                HAZARDOUS_NO_2_AQI_VALUE,
                 new TrapezoidalFuzzySet<Pollution>(aqiValueNO2::extractAttribute,
                         150, 250, 400, 500),
                 aqiValueNO2)
@@ -654,19 +660,19 @@ public class CommandMode {
         // Wartosc AQI
         final AQIValueO3 aqiValueO3 = new AQIValueO3();
         saveLabel(new Label<>(
-                O_3_AQI_VALUE_IS_CORRECT,
+                CORRECT_O_3_AQI_VALUE,
                 new TrapezoidalFuzzySet<Pollution>(aqiValueO3::extractAttribute,
                         0, 25, 50, 75),
                 aqiValueO3)
         );
         saveLabel(new Label<>(
-                O_3_AQI_VALUE_IS_UNHEALTHY,
+                UNHEALTHY_O_3_AQI_VALUE,
                 new TrapezoidalFuzzySet<Pollution>(aqiValueO3::extractAttribute,
                         50, 75, 150, 250),
                 aqiValueO3)
         );
         saveLabel(new Label<>(
-                O_3_AQI_VALUE_IS_HAZARDOUS,
+                HAZARDOUS_O_3_AQI_VALUE,
                 new TrapezoidalFuzzySet<Pollution>(aqiValueO3::extractAttribute,
                         150, 250, 400, 500),
                 aqiValueO3)
@@ -675,19 +681,19 @@ public class CommandMode {
         // Wartosc AQI
         final AQIValueSO2 aqiValueSO2 = new AQIValueSO2();
         saveLabel(new Label<>(
-                SO_2_AQI_VALUE_IS_CORRECT,
+                CORRECT_SO_2_AQI_VALUE,
                 new TrapezoidalFuzzySet<Pollution>(aqiValueSO2::extractAttribute,
                         0, 25, 50, 75),
                 aqiValueSO2)
         );
         saveLabel(new Label<>(
-                SO_2_AQI_VALUE_IS_UNHEALTHY,
+                UNHEALTHY_SO_2_AQI_VALUE,
                 new TrapezoidalFuzzySet<Pollution>(aqiValueSO2::extractAttribute,
                         50, 75, 150, 250),
                 aqiValueSO2)
         );
         saveLabel(new Label<>(
-                SO_2_AQI_VALUE_IS_HAZARDOUS,
+                HAZARDOUS_SO_2_AQI_VALUE,
                 new TrapezoidalFuzzySet<Pollution>(aqiValueSO2::extractAttribute,
                         150, 250, 400, 500),
                 aqiValueSO2)

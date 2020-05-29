@@ -120,7 +120,7 @@ public class Loader {
     }
 
     private void generateAndFill(LinguisticSummary<Pollution> linguisticSummary) {
-        DecimalFormat df = new DecimalFormat("#.00");
+        DecimalFormat df = new DecimalFormat("0.00");
 
         String degreeOfTruth = df.format(
                 linguisticSummary.degreeOfTruth());
@@ -146,7 +146,7 @@ public class Loader {
         StringBuilder generatedResult = new StringBuilder();
         generatedResult
                 .append(linguisticSummary.toString())
-                .append(" [")
+                .append(". [")
                 .append(degreeOfTruth)
                 .append(", ")
                 .append(degreeOfImprecision)

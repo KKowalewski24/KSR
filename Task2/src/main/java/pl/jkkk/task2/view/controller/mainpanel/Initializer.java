@@ -52,9 +52,7 @@ public class Initializer {
 
     private void fillPaneQualifier() {
         CustomComboBox customComboBox = createCustomComboBox(250);
-
         fillComboBox(customComboBox, addItemToLabelList(DEACTIVATED));
-
         addNodeToPane(paneQualifier, customComboBox);
 
         //        TODO OLD APPROACH WITH RECURSIVE COMBOBOX FOR QUALIFIER

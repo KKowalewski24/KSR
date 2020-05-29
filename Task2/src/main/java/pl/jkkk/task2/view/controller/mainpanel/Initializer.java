@@ -1,9 +1,11 @@
 package pl.jkkk.task2.view.controller.mainpanel;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
 import pl.jkkk.task2.logic.service.label.LabelWrapperService;
 import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierWrapperService;
+import pl.jkkk.task2.view.fxml.PopOutWindow;
 import pl.jkkk.task2.view.model.CustomComboBox;
 
 import java.util.ArrayList;
@@ -14,6 +16,8 @@ import static pl.jkkk.task2.view.constant.ViewConstants.DEACTIVATED;
 import static pl.jkkk.task2.view.constant.ViewConstants.SELECT_ITEM;
 import static pl.jkkk.task2.view.fxml.FxHelper.addNodeToPane;
 import static pl.jkkk.task2.view.fxml.FxHelper.fillComboBox;
+import static pl.jkkk.task2.view.fxml.FxHelper.getNodeFromPane;
+import static pl.jkkk.task2.view.fxml.FxHelper.getValueFromComboBox;
 
 public class Initializer {
 
@@ -72,6 +76,15 @@ public class Initializer {
             if (customComboBox.getCounter() == 0) {
                 addComboBox(pane, prompt);
                 customComboBox.setCounter(customComboBox.getCounter() + 1);
+
+                if (pane.getChildren().size() == 3 && getValueFromComboBox(
+                        (ComboBox) getNodeFromPane(paneQualifier, 1)).equals(DEACTIVATED)) {
+                    PopOutWindow.messageBox("",
+                            "Remember that if you do not choose qualifier only the "
+                                    + "first summarizer will be taken into account "
+                                    + "when creating the summary",
+                            Alert.AlertType.WARNING);
+                }
             }
         });
     }

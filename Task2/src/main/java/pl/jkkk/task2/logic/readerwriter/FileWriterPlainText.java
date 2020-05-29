@@ -21,14 +21,16 @@ public class FileWriterPlainText {
         StringBuilder stringBuilderValues = new StringBuilder();
         values.forEach((it) -> stringBuilderValues.append(it).append("\n"));
 
-        write(filename, stringBuilderValues.toString());
+        write(filename.replaceAll(" ", "_"), stringBuilderValues.toString());
     }
 
     public void writePlainText(List<String> filenames, String value) throws FileOperationException {
         StringBuilder stringBuilder = new StringBuilder();
-        filenames.forEach((it) -> stringBuilder.append(it));
+        filenames.forEach((it) -> {
+            stringBuilder.append(it);
+        });
 
-        write(stringBuilder.toString(), value);
+        write(stringBuilder.toString().replaceAll(" ", "_"), value);
     }
 
     public void writePlainText(List<String> filenames, List<String> values)
@@ -39,7 +41,8 @@ public class FileWriterPlainText {
         StringBuilder stringBuilderValues = new StringBuilder();
         values.forEach((it) -> stringBuilderValues.append(it).append("\n"));
 
-        write(stringBuilderFilenames.toString(), stringBuilderValues.toString());
+        write(stringBuilderFilenames.toString().replaceAll(" ", "_"),
+                stringBuilderValues.toString());
     }
 
     private void write(String filename, String value) throws FileOperationException {
@@ -61,4 +64,3 @@ public class FileWriterPlainText {
                 .toString();
     }
 }
-    

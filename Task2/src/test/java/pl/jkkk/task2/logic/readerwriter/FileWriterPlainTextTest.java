@@ -1,6 +1,7 @@
 package pl.jkkk.task2.logic.readerwriter;
 
 import org.junit.jupiter.api.Test;
+import pl.jkkk.task2.logic.exception.FileOperationException;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -48,5 +49,16 @@ class FileWriterPlainTextTest {
         List listTrimmed = new ArrayList<>(Stream.of("abc", "cde")
                 .collect(Collectors.toList())).subList(0, 2);
         fileWriterPlainText.writePlainText(testFilename, listTrimmed);
+    }
+
+    @Test
+    void writePlainTextTest() throws FileOperationException {
+        FileWriterPlainText fileWriterPlainText = new FileWriterPlainText();
+        fileWriterPlainText.writePlainText(
+                Stream.of(
+                        "napis spracja",
+                        "aaa ccc"
+                ).collect(Collectors.toList()),
+                "abcde");
     }
 }

@@ -161,19 +161,22 @@ public class CommandMode {
 
                 }
             } else if (args.length > 1) {
-
                 LinguisticSummary<Pollution> linguisticSummary = null;
 
                 if (args.length == 2) {
                     String selectedQuantifier = args[0];
-                    String selectedSummarizer = args[1];
+                    List<String> selectedSummarizers = new ArrayList<>();
+
+                    for (int i = 1; i < args.length; i++) {
+                        selectedSummarizers.add(args[i]);
+                    }
 
                     linguisticSummary = new LinguisticSummary<>(
                             linguisticQuantifierWrapperService.findByName(selectedQuantifier),
                             pollutionService.findAll(),
-                            labelWrapperService.findByName(selectedSummarizer)
+                            labelWrapperService.findByNames(selectedSummarizers)
                     );
-                } else {
+                } else if (args.length > 2) {
                     String selectedQuantifier = args[0];
                     String selectedQualifier = args[1];
                     List<String> selectedSummarizers = new ArrayList<>();

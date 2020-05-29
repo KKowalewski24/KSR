@@ -32,7 +32,7 @@
     * "6,50-100,tfcitfoc",
 
 #### Script
-Uncomment selected function in main function in `main_1.py` and run by `python main_1.py`\
+Uncomment selected function in main function in `main.py` and run by `python main.py`\
 The rest of information is stored in script
 
 ## Task 2
@@ -57,5 +57,5 @@ or comment out whole application.properties file - h2 database will be used
 ##### Scipts description
 * `filter_data.py` - filtering csv data - reads first 100000, 
 removes rows with NaN values, removes first column with ID
-* `main_2.py` - script with experiments for report
+* `main.py` - script with experiments for report
 * `data-dump`- script with dumped data from database after filtering - restore->custom or tar and filename dump-data

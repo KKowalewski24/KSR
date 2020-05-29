@@ -10,6 +10,8 @@ Run `python draw_chart.py first_param second_param etc `
 first_param - center
 second_param - width
 
+python draw_chart.py 0.05 0.05 0.28 0.07 0.5 0.08 0.72 0.07 0.95 0.04
+
 """
 
 
@@ -31,8 +33,8 @@ def draw_multiple() -> None:
         axis_x = numpy.linspace(0, 1, 200)
         points: List[ChartData] = []
 
-        for i in range(2, len(sys.argv)):
-            points.append(ChartData(float(sys.argv[i - 1]), float(sys.argv[i])))
+        for i in range(1, len(sys.argv) - 1, 2):
+            points.append(ChartData(float(sys.argv[i]), float(sys.argv[i + 1])))
 
         for it in points:
             plt.plot(axis_x, [calculate_gaussian(jt, it.center, it.width) for jt in axis_x])

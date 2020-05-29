@@ -222,6 +222,8 @@ public class CommandMode {
         String degreeOfQualifierCardinality = df.format(
                 linguisticSummary.degreeOfQualifierCardinality());
 
+        //        TODO ADD T11
+
         StringBuilder generatedResult = new StringBuilder();
         generatedResult
                 .append(linguisticSummary.toString())

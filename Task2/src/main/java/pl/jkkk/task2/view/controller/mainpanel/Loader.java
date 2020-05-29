@@ -100,7 +100,7 @@ public class Loader {
         LinguisticSummary<Pollution> linguisticSummary = new LinguisticSummary<>(
                 quantifierWrapperService.findByName(selectedQuantifier),
                 pollutionService.findAll(),
-                labelWrapperService.findByName(firstSelectedSummarizer)
+                getCompoundLabelNameFromPane(paneSummarizer)
         );
 
         generateAndFill(linguisticSummary);
@@ -142,6 +142,8 @@ public class Loader {
                 linguisticSummary.degreeOfQualifierImprecision());
         String degreeOfQualifierCardinality = df.format(
                 linguisticSummary.degreeOfQualifierCardinality());
+
+        //        TODO ADD T11
 
         StringBuilder generatedResult = new StringBuilder();
         generatedResult

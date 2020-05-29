@@ -135,7 +135,6 @@ public class LinguisticSummary<T> {
         for (int i = 1; i < summarizers.length; i++) {
             compoundSummarizerName.append(" and have ").append(summarizers[i].getName());
         }
-        //        todo
         if (qualifier instanceof AlwaysMatch) {
             return quantifier.getName() + " measurements have " + compoundSummarizerName;
         } else {

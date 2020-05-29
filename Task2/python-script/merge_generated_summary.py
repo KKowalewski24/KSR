@@ -1,16 +1,17 @@
 from datetime import datetime
 import glob
 import os
+import pathlib
 
 """
-Script merge all .txt files in to_merge directory 
+Script merge all .txt files in current directory 
 
 """
 
 # VAR ------------------------------------------------------------------------ #
 TXT = "*.txt"
-TO_MERGE = "./to_merge"
-LOCATION_FILE_NAMES = glob.glob(os.path.join("%s" % TO_MERGE, TXT))
+
+LOCATION_FILE_NAMES = glob.glob(os.path.join(pathlib.Path(os.getcwd()), TXT))
 
 
 # DEF ------------------------------------------------------------------------ #

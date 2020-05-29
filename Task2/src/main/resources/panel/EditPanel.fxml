@@ -17,7 +17,7 @@
                         <VBox>
                             <children>
                                 <ListView fx:id="listViewQuantifier"
-                                          onMouseClicked="#OnMouseClickedListViewQuantifier"
+                                          onMouseClicked="#onMouseClickedListViewQuantifier"
                                           prefHeight="625.0" prefWidth="300.0"/>
                             </children>
                         </VBox>
@@ -26,7 +26,7 @@
                         <VBox>
                             <children>
                                 <ListView fx:id="listViewSummarizer"
-                                          onMouseClicked="#OnMouseClickedListViewSummarizer"
+                                          onMouseClicked="#onMouseClickedListViewSummarizer"
                                           prefHeight="625.0" prefWidth="300.0"/>
                             </children>
                         </VBox>

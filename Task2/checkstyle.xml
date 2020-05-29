@@ -32,7 +32,7 @@
         </module>
 
         <module name="LineLength">
-            <property name="max" value="105"/>
+            <property name="max" value="130"/>
             <property name="ignorePattern"
                       value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
         </module>
@@ -50,12 +50,12 @@
         <module name="NeedBraces"/>
         <module name="LeftCurly"/>
 
-        <module name="RightCurly">
-            <property name="id" value="RightCurlySame"/>
-            <property name="tokens"
-                      value="LITERAL_TRY, LITERAL_CATCH, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE,
-                    LITERAL_DO"/>
-        </module>
+        <!--        <module name="RightCurly">-->
+        <!--            <property name="id" value="RightCurlySame"/>-->
+        <!--            <property name="tokens"-->
+        <!--                      value="LITERAL_TRY, LITERAL_CATCH, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE,-->
+        <!--                    LITERAL_DO"/>-->
+        <!--        </module>-->
 
         <module name="RightCurly">
             <property name="id" value="RightCurlyAlone"/>
@@ -78,9 +78,9 @@
         </module>
 
         <module name="OneStatementPerLine"/>
-        <module name="MultipleVariableDeclarations"/>
+        <!--        <module name="MultipleVariableDeclarations"/>-->
         <module name="ArrayTypeStyle"/>
-        <module name="MissingSwitchDefault"/>
+        <!--        <module name="MissingSwitchDefault"/>-->
         <module name="FallThrough"/>
         <module name="UpperEll"/>
         <module name="ModifierOrder"/>

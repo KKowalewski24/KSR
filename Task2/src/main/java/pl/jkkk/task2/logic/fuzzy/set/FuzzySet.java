@@ -22,35 +22,35 @@ public interface FuzzySet<T> extends Serializable {
     double contains(T x);
 
     /**
-     * Compute cardinality in discrete, finite universe of discourse X
+     * Compute cardinality in discrete, finite universe of discourse X.
      */
     default double cardinality(List<T> X) {
         return X.stream().mapToDouble(this::contains).sum();
     }
 
     /**
-     * Compute support in discrete, finite universe of discourse X
+     * Compute support in discrete, finite universe of discourse X.
      */
     default List<T> support(List<T> X) {
         return X.stream().filter(x -> contains(x) > 0.0).collect(Collectors.toList());
     }
 
     /**
-     * Compute alpha-cut in discrete, finite universe of discourse X
+     * Compute alpha-cut in discrete, finite universe of discourse X.
      */
     default List<T> alphacut(List<T> X, double a) {
         return X.stream().filter(x -> contains(x) >= a).collect(Collectors.toList());
     }
 
     /**
-     * Compute degree of fuzziness in discrete, finite universe of discourse X
+     * Compute degree of fuzziness in discrete, finite universe of discourse X.
      */
     default double degreeOfFuzziness(List<T> X) {
         return support(X).size() / (double) X.size();
     }
 
     /**
-     * Return fuzzy set as a result of intersection of this object and another one
+     * Return fuzzy set as a result of intersection of this object and another one.
      */
     default FuzzySet<T> and(FuzzySet<T> anotherOne) {
         return x -> Math.min(this.contains(x), anotherOne.contains(x));

@@ -117,7 +117,7 @@ public class EditPanel implements Initializable {
     }
 
     @FXML
-    private void OnMouseClickedListViewQuantifier(MouseEvent mouseEvent) {
+    private void onMouseClickedListViewQuantifier(MouseEvent mouseEvent) {
         String name = FxHelper.<String>getSelectedItemFromListView(listViewQuantifier);
         try {
             LinguisticQuantifier quantifier = linguisticQuantifierWrapperService.findByName(name);
@@ -180,7 +180,7 @@ public class EditPanel implements Initializable {
     }
 
     @FXML
-    private void OnMouseClickedListViewSummarizer(MouseEvent mouseEvent) {
+    private void onMouseClickedListViewSummarizer(MouseEvent mouseEvent) {
         String name = FxHelper.<String>getSelectedItemFromListView(listViewSummarizer);
 
         try {
@@ -440,4 +440,3 @@ public class EditPanel implements Initializable {
         }
     }
 }
-    

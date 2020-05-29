@@ -163,34 +163,36 @@ public class CommandMode {
             } else if (args.length > 1) {
                 LinguisticSummary<Pollution> linguisticSummary = null;
 
-                if (args.length == 2) {
-                    String selectedQuantifier = args[0];
-                    List<String> selectedSummarizers = new ArrayList<>();
+                if (args.length > 2) {
+                    if (!Boolean.parseBoolean(args[0])) {
+                        String selectedQuantifier = args[1];
+                        List<String> selectedSummarizers = new ArrayList<>();
 
-                    for (int i = 1; i < args.length; i++) {
-                        selectedSummarizers.add(args[i]);
+                        for (int i = 2; i < args.length; i++) {
+                            selectedSummarizers.add(args[i]);
+                        }
+
+                        linguisticSummary = new LinguisticSummary<>(
+                                linguisticQuantifierWrapperService.findByName(selectedQuantifier),
+                                pollutionService.findAll(),
+                                labelWrapperService.findByNames(selectedSummarizers)
+                        );
+                    } else {
+                        String selectedQuantifier = args[1];
+                        String selectedQualifier = args[2];
+                        List<String> selectedSummarizers = new ArrayList<>();
+
+                        for (int i = 3; i < args.length; i++) {
+                            selectedSummarizers.add(args[i]);
+                        }
+
+                        linguisticSummary = new LinguisticSummary<>(
+                                linguisticQuantifierWrapperService.findByName(selectedQuantifier),
+                                labelWrapperService.findByName(selectedQualifier),
+                                pollutionService.findAll(),
+                                labelWrapperService.findByNames(selectedSummarizers)
+                        );
                     }
-
-                    linguisticSummary = new LinguisticSummary<>(
-                            linguisticQuantifierWrapperService.findByName(selectedQuantifier),
-                            pollutionService.findAll(),
-                            labelWrapperService.findByNames(selectedSummarizers)
-                    );
-                } else if (args.length > 2) {
-                    String selectedQuantifier = args[0];
-                    String selectedQualifier = args[1];
-                    List<String> selectedSummarizers = new ArrayList<>();
-
-                    for (int i = 2; i < args.length; i++) {
-                        selectedSummarizers.add(args[i]);
-                    }
-
-                    linguisticSummary = new LinguisticSummary<>(
-                            linguisticQuantifierWrapperService.findByName(selectedQuantifier),
-                            labelWrapperService.findByName(selectedQualifier),
-                            pollutionService.findAll(),
-                            labelWrapperService.findByNames(selectedSummarizers)
-                    );
                 }
 
                 saveDataLog(generateSummaryToString(linguisticSummary));

@@ -6,6 +6,7 @@ import pl.jkkk.task2.logic.exception.FileOperationException;
 import pl.jkkk.task2.logic.fuzzy.linguistic.Label;
 import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticQuantifier;
 import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticSummary;
+import pl.jkkk.task2.logic.fuzzy.set.GaussianFuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.TrapezoidalFuzzySet;
 import pl.jkkk.task2.logic.model.Pollution;
 import pl.jkkk.task2.logic.model.enumtype.QuantifierType;
@@ -159,40 +160,6 @@ public class CommandMode {
                     seedLinguisticFacilitiesInDatabase();
 
                 }
-                //                TODO UNCOMMENT IF NEEDED
-                //                else if (args[0].equals("all")) {
-                //                    System.out.println("Trying all quantifier/label
-                //                    combinations...\n");
-                //
-                //                    List<Label<Pollution>> labels = labelWrapperService.findAll()
-                //                            .stream()
-                //                            .map(wrapper -> wrapper.deserialize())
-                //                            .collect(Collectors.toList());
-                //
-                //                    List<LinguisticQuantifier> quantifiers =
-                //                    linguisticQuantifierWrapperService
-                //                            .findAll()
-                //                            .stream()
-                //                            .map(wrapper -> wrapper.deserialize())
-                //                            .collect(Collectors.toList());
-                //                    List<Pollution> measurements = pollutionService.findAll();
-                //
-                //                    labels.forEach(label -> {
-                //                        quantifiers.forEach(quantifier -> {
-                //                            LinguisticSummary<Pollution> summary
-                //                                    = new LinguisticSummary<>(
-                //                                    );
-                //                            double degreeOfTruth = summary.degreeOfTruth();
-                //
-                //                            if (degreeOfTruth > 0.0) {
-                //                                System.out.println(summary.toString() + " [" +
-                //                                degreeOfTruth + "]");
-                //                                saveDataLog(summary.toString() + " [" +
-                //                                degreeOfTruth + "]");
-                //                            }
-                //                        });
-                //                    });
-                //                }
             } else if (args.length > 1) {
 
                 LinguisticSummary<Pollution> linguisticSummary = null;
@@ -294,31 +261,30 @@ public class CommandMode {
         linguisticQuantifierWrapperService.deleteAll();
         labelWrapperService.deleteAll();
 
-        //        TODO CHANGE FOR GAUSSIAN SET
         // Kwantyfikatory
         saveLinguisticQuantifier(new LinguisticQuantifier(
                 ALMOST_NONE,
-                new TrapezoidalFuzzySet<Double>(x -> x, 0.00, 0.00, 0.04, 0.16),
+                new GaussianFuzzySet<Double>(x -> x, 0.05, 0.05),
                 QuantifierType.RELATIVE)
         );
         saveLinguisticQuantifier(new LinguisticQuantifier(
                 SOME,
-                new TrapezoidalFuzzySet<Double>(x -> x, 0.12, 0.16, 0.32, 0.4),
+                new GaussianFuzzySet<Double>(x -> x, 0.28, 0.07),
                 QuantifierType.RELATIVE)
         );
         saveLinguisticQuantifier(new LinguisticQuantifier(
                 ABOUT_HALF_OF_ALL,
-                new TrapezoidalFuzzySet<Double>(x -> x, 0.32, 0.44, 0.56, 0.68),
+                new GaussianFuzzySet<Double>(x -> x, 0.5, 0.08),
                 QuantifierType.RELATIVE)
         );
         saveLinguisticQuantifier(new LinguisticQuantifier(
                 MANY,
-                new TrapezoidalFuzzySet<Double>(x -> x, 0.6, 0.68, 0.84, 0.88),
+                new GaussianFuzzySet<Double>(x -> x, 0.72, 0.07),
                 QuantifierType.RELATIVE)
         );
         saveLinguisticQuantifier(new LinguisticQuantifier(
                 ALL,
-                new TrapezoidalFuzzySet<Double>(x -> x, 0.84, 0.96, 1, 1),
+                new GaussianFuzzySet<Double>(x -> x, 0.95, 0.04),
                 QuantifierType.RELATIVE)
         );
 

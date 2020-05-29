@@ -83,7 +83,7 @@ public class Initializer {
                             "Remember that if you do not choose qualifier only the "
                                     + "first summarizer will be taken into account "
                                     + "when creating the summary",
-                            Alert.AlertType.WARNING);
+                            Alert.AlertType.INFORMATION);
                 }
             }
         });

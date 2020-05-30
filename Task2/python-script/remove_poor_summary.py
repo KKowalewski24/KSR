@@ -2,6 +2,7 @@ import sys
 from typing import List
 
 """
+First param filename, second param is value that below it the summary will be removed 
 """
 
 

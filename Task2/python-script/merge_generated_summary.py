@@ -26,7 +26,6 @@ def merge() -> None:
             result += "\n"
             result += "\item "
             result += file.read()
-            result += "\n"
     result += end
 
     current_time = datetime.now().strftime("%H%M%S")

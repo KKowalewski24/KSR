@@ -62,3 +62,11 @@ or comment out whole application.properties file - h2 database will be used
 * `generate_function.py` - generating membership function formulas
 * `generate_function_to_file.py` - usage of `generate_function.py` with selected params
 * `data-dump`- script with dumped data from database after filtering - restore->custom or tar and filename dump-data
+
+```
+select no2aqi, date_local
+from pollution 
+where date_part('month', date_local)>=6
+and date_part('month', date_local)<=9
+order by no2aqi desc
+```

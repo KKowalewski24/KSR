@@ -19,7 +19,7 @@ LOCATION_FILE_NAMES = glob.glob(os.path.join(pathlib.Path(os.getcwd()), TRUE + T
 # DEF ------------------------------------------------------------------------ #
 def merge() -> None:
     begin = "\\begin{enumerate}"
-    end = "\end{enumerate}"
+    end = "\n\end{enumerate}"
     result = begin
     for it in LOCATION_FILE_NAMES:
         with open(it, "r") as file:

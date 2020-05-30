@@ -43,6 +43,7 @@ public class Loader {
     private final LabelWrapperService labelWrapperService;
     private final LinguisticQuantifierWrapperService quantifierWrapperService;
 
+    private List<Pollution> pollutionData;
     private List<String> results = new ArrayList<>();
 
     /*------------------------ METHODS REGION ------------------------*/
@@ -57,6 +58,7 @@ public class Loader {
         this.pollutionService = pollutionService;
         this.labelWrapperService = labelWrapperService;
         this.quantifierWrapperService = quantifierWrapperService;
+        this.pollutionData = pollutionService.findAll();
     }
 
     public void generateBasicSummarization() {
@@ -91,7 +93,7 @@ public class Loader {
         LinguisticSummary<Pollution> linguisticSummary = new LinguisticSummary<>(
                 quantifierWrapperService.findByName(selectedQuantifier),
                 labelWrapperService.findByName(selectedQualifier),
-                pollutionService.findAll(),
+                pollutionData,
                 getCompoundLabelNameFromPane(paneSummarizer)
         );
 
@@ -101,7 +103,7 @@ public class Loader {
     private void generateBasicSummary(String selectedQuantifier, String firstSelectedSummarizer) {
         LinguisticSummary<Pollution> linguisticSummary = new LinguisticSummary<>(
                 quantifierWrapperService.findByName(selectedQuantifier),
-                pollutionService.findAll(),
+                pollutionData,
                 getCompoundLabelNameFromPane(paneSummarizer)
         );
 

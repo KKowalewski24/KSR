@@ -166,7 +166,6 @@ public class CommandMode {
                 }
             } else if (args.length > 1) {
                 List<List<String>> callArguments = convertStreamOfArgsToList(args);
-                System.out.println(callArguments);
                 List<Pollution> pollutionData = pollutionService.findAll();
 
                 callArguments.forEach((it) -> {
@@ -222,7 +221,7 @@ public class CommandMode {
                 separatorIndexes.add(i);
             }
         }
-        System.out.println(separatorIndexes);
+
         processedArgs.add(Arrays.asList(
                 Arrays.copyOfRange(args, 0, separatorIndexes.get(0))));
 

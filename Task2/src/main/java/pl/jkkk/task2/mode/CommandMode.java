@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -137,6 +138,8 @@ public class CommandMode {
     public static final String UNHEALTHY_SO_2_AQI_VALUE = "unhealthy SO2 AQI value";
     public static final String HAZARDOUS_SO_2_AQI_VALUE = "hazardous SO2 AQI value";
 
+    public static final String SUMMARY_SEPARATOR_CMD = ",";
+
     private final PollutionService pollutionService;
     private final LinguisticQuantifierWrapperService linguisticQuantifierWrapperService;
     private final LabelWrapperService labelWrapperService;
@@ -163,46 +166,74 @@ public class CommandMode {
 
                 }
             } else if (args.length > 1) {
-                LinguisticSummary<Pollution> linguisticSummary = null;
+                List<List<String>> callArguments = convertStreamOfArgsToList(args);
+                List<Pollution> pollutionData = pollutionService.findAll();
 
-                if (args.length > 2) {
-                    if (!Boolean.parseBoolean(args[0])) {
-                        String selectedQuantifier = args[1];
-                        List<String> selectedSummarizers = new ArrayList<>();
+                callArguments.forEach((it) -> {
+                    LinguisticSummary<Pollution> linguisticSummary = null;
 
-                        for (int i = 2; i < args.length; i++) {
-                            selectedSummarizers.add(args[i]);
+                    if (it.size() > 2) {
+                        if (!Boolean.parseBoolean(it.get(0))) {
+                            String selectedQuantifier = it.get(1);
+                            List<String> selectedSummarizers = new ArrayList<>();
+
+                            for (int i = 2; i < it.size(); i++) {
+                                selectedSummarizers.add(it.get(i));
+                            }
+
+                            linguisticSummary = new LinguisticSummary<>(
+                                    linguisticQuantifierWrapperService.findByName(selectedQuantifier),
+                                    pollutionData,
+                                    labelWrapperService.findByNames(selectedSummarizers)
+                            );
+                        } else {
+                            String selectedQuantifier = it.get(1);
+                            String selectedQualifier = it.get(2);
+                            List<String> selectedSummarizers = new ArrayList<>();
+
+                            for (int i = 3; i < it.size(); i++) {
+                                selectedSummarizers.add(it.get(i));
+                            }
+
+                            linguisticSummary = new LinguisticSummary<>(
+                                    linguisticQuantifierWrapperService.findByName(selectedQuantifier),
+                                    labelWrapperService.findByName(selectedQualifier),
+                                    pollutionData,
+                                    labelWrapperService.findByNames(selectedSummarizers)
+                            );
                         }
-
-                        linguisticSummary = new LinguisticSummary<>(
-                                linguisticQuantifierWrapperService.findByName(selectedQuantifier),
-                                pollutionService.findAll(),
-                                labelWrapperService.findByNames(selectedSummarizers)
-                        );
-                    } else {
-                        String selectedQuantifier = args[1];
-                        String selectedQualifier = args[2];
-                        List<String> selectedSummarizers = new ArrayList<>();
-
-                        for (int i = 3; i < args.length; i++) {
-                            selectedSummarizers.add(args[i]);
-                        }
-
-                        linguisticSummary = new LinguisticSummary<>(
-                                linguisticQuantifierWrapperService.findByName(selectedQuantifier),
-                                labelWrapperService.findByName(selectedQualifier),
-                                pollutionService.findAll(),
-                                labelWrapperService.findByNames(selectedSummarizers)
-                        );
                     }
-                }
 
-                saveDataLog(generateSummaryToString(linguisticSummary));
+                    saveDataLog(generateSummaryToString(linguisticSummary));
+                });
             }
         } catch (Exception e) {
             e.printStackTrace();
             printUsage();
         }
+    }
+
+    private List<List<String>> convertStreamOfArgsToList(String[] args) {
+        List<List<String>> processedArgs = new ArrayList<>();
+        List<Integer> separatorIndexes = new ArrayList<>();
+
+        for (int i = 0; i < args.length; i++) {
+            if (args[i].equals(SUMMARY_SEPARATOR_CMD)) {
+                separatorIndexes.add(i);
+            }
+        }
+        System.out.println(separatorIndexes);
+        processedArgs.add(Arrays.asList(
+                Arrays.copyOfRange(args, 0, separatorIndexes.get(0))));
+
+        for (int i = 0; i < separatorIndexes.size() - 1; i++) {
+            processedArgs.add(Arrays.asList(Arrays.copyOfRange(
+                    args, separatorIndexes.get(i) + 1,
+                    separatorIndexes.get(i + 1))
+            ));
+        }
+
+        return processedArgs;
     }
 
     private String generateSummaryToString(LinguisticSummary linguisticSummary) {

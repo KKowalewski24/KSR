@@ -96,8 +96,19 @@ HAZARDOUS_SO_2_AQI_VALUE = "hazardous SO2 AQI value"
 TRUE = "true"
 FALSE = "false"
 
+args_to_call: List[str] = []
+
 
 # DEF ------------------------------------------------------------------------ #
+def add_args_to_run(args: List[str]) -> None:
+    args_to_call.append(args)
+    print(args_to_call)
+
+
+def run_selected_args() -> None:
+    run_jar(args_to_call)
+
+
 def seed_pollution_database() -> None:
     run_jar(["-sp"])
 
@@ -108,12 +119,11 @@ def seed_linguistic_database() -> None:
 
 # BASIC - FIRST STEP FOR EVERY EXPERIMENT
 def quantifier_series(args: List[str]) -> None:
-    run_jar([TRUE, ALMOST_NONE] + args)
-    run_jar([TRUE, SOME] + args)
-    run_jar([TRUE, ABOUT_HALF_OF_ALL] + args)
-    run_jar([TRUE, MANY] + args)
-    run_jar([TRUE, ALL] + args)
-    pass
+    add_args_to_run([TRUE, ALMOST_NONE] + args)
+    add_args_to_run([TRUE, SOME] + args)
+    add_args_to_run([TRUE, ABOUT_HALF_OF_ALL] + args)
+    add_args_to_run([TRUE, MANY] + args)
+    add_args_to_run([TRUE, ALL] + args)
 
 
 def season_series(args: List[str]) -> None:
@@ -121,7 +131,6 @@ def season_series(args: List[str]) -> None:
     quantifier_series([BEEN_DONE_IN_SUMMER] + args)
     quantifier_series([BEEN_DONE_IN_AUTUMN] + args)
     quantifier_series([BEEN_DONE_IN_WINTER] + args)
-    pass
 
 
 def datetime_series(args: List[str], co=FALSE, no2=FALSE, o3=FALSE, so2=FALSE) -> None:
@@ -145,7 +154,6 @@ def datetime_series(args: List[str], co=FALSE, no2=FALSE, o3=FALSE, so2=FALSE) -
         quantifier_series([MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON] + args)
         quantifier_series([MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING] + args)
         quantifier_series([MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT] + args)
-    pass
 
 
 def season_datetime_series(args: List[str], co=FALSE, no2=FALSE, o3=FALSE, so2=FALSE) -> None:
@@ -153,7 +161,6 @@ def season_datetime_series(args: List[str], co=FALSE, no2=FALSE, o3=FALSE, so2=F
     datetime_series([BEEN_DONE_IN_SUMMER] + args, co, no2, o3, so2)
     datetime_series([BEEN_DONE_IN_AUTUMN] + args, co, no2, o3, so2)
     datetime_series([BEEN_DONE_IN_WINTER] + args, co, no2, o3, so2)
-    pass
 
 
 def run_experiments() -> None:
@@ -186,44 +193,45 @@ def run_experiments() -> None:
     # season_series([HIGH_MAXIMUM_SO_2_CONCENTRATION])
 
     season_series([CORRECT_CO_AQI_VALUE])
-    season_series([UNHEALTHY_CO_AQI_VALUE])
-    season_series([HAZARDOUS_CO_AQI_VALUE])
-    season_series([CORRECT_NO_2_AQI_VALUE])
-    season_series([UNHEALTHY_NO_2_AQI_VALUE])
-    season_series([HAZARDOUS_NO_2_AQI_VALUE])
-    season_series([CORRECT_O_3_AQI_VALUE])
-    season_series([UNHEALTHY_O_3_AQI_VALUE])
-    season_series([HAZARDOUS_O_3_AQI_VALUE])
-    season_series([CORRECT_SO_2_AQI_VALUE])
-    season_series([UNHEALTHY_SO_2_AQI_VALUE])
-    season_series([HAZARDOUS_SO_2_AQI_VALUE])
+    # season_series([UNHEALTHY_CO_AQI_VALUE])
+    # season_series([HAZARDOUS_CO_AQI_VALUE])
+    # season_series([CORRECT_NO_2_AQI_VALUE])
+    # season_series([UNHEALTHY_NO_2_AQI_VALUE])
+    # season_series([HAZARDOUS_NO_2_AQI_VALUE])
+    # season_series([CORRECT_O_3_AQI_VALUE])
+    # season_series([UNHEALTHY_O_3_AQI_VALUE])
+    # season_series([HAZARDOUS_O_3_AQI_VALUE])
+    # season_series([CORRECT_SO_2_AQI_VALUE])
+    # season_series([UNHEALTHY_SO_2_AQI_VALUE])
+    # season_series([HAZARDOUS_SO_2_AQI_VALUE])
+    #
+    # datetime_series([CORRECT_CO_AQI_VALUE], co=TRUE)
+    # datetime_series([UNHEALTHY_CO_AQI_VALUE], co=TRUE)
+    # datetime_series([HAZARDOUS_CO_AQI_VALUE], co=TRUE)
+    # datetime_series([CORRECT_NO_2_AQI_VALUE], no2=TRUE)
+    # datetime_series([UNHEALTHY_NO_2_AQI_VALUE], no2=TRUE)
+    # datetime_series([HAZARDOUS_NO_2_AQI_VALUE], no2=TRUE)
+    # datetime_series([CORRECT_O_3_AQI_VALUE], o3=TRUE)
+    # datetime_series([UNHEALTHY_O_3_AQI_VALUE], o3=TRUE)
+    # datetime_series([HAZARDOUS_O_3_AQI_VALUE], o3=TRUE)
+    # datetime_series([CORRECT_SO_2_AQI_VALUE], so2=TRUE)
+    # datetime_series([UNHEALTHY_SO_2_AQI_VALUE], so2=TRUE)
+    # datetime_series([HAZARDOUS_SO_2_AQI_VALUE], so2=TRUE)
+    #
+    # season_datetime_series([CORRECT_CO_AQI_VALUE], co=TRUE)
+    # season_datetime_series([UNHEALTHY_CO_AQI_VALUE], co=TRUE)
+    # season_datetime_series([HAZARDOUS_CO_AQI_VALUE], co=TRUE)
+    # season_datetime_series([CORRECT_NO_2_AQI_VALUE], no2=TRUE)
+    # season_datetime_series([UNHEALTHY_NO_2_AQI_VALUE], no2=TRUE)
+    # season_datetime_series([HAZARDOUS_NO_2_AQI_VALUE], no2=TRUE)
+    # season_datetime_series([CORRECT_O_3_AQI_VALUE], o3=TRUE)
+    # season_datetime_series([UNHEALTHY_O_3_AQI_VALUE], o3=TRUE)
+    # season_datetime_series([HAZARDOUS_O_3_AQI_VALUE], o3=TRUE)
+    # season_datetime_series([CORRECT_SO_2_AQI_VALUE], so2=TRUE)
+    # season_datetime_series([UNHEALTHY_SO_2_AQI_VALUE], so2=TRUE)
+    # season_datetime_series([HAZARDOUS_SO_2_AQI_VALUE], so2=TRUE)
 
-    datetime_series([CORRECT_CO_AQI_VALUE], co=TRUE)
-    datetime_series([UNHEALTHY_CO_AQI_VALUE], co=TRUE)
-    datetime_series([HAZARDOUS_CO_AQI_VALUE], co=TRUE)
-    datetime_series([CORRECT_NO_2_AQI_VALUE], no2=TRUE)
-    datetime_series([UNHEALTHY_NO_2_AQI_VALUE], no2=TRUE)
-    datetime_series([HAZARDOUS_NO_2_AQI_VALUE], no2=TRUE)
-    datetime_series([CORRECT_O_3_AQI_VALUE], o3=TRUE)
-    datetime_series([UNHEALTHY_O_3_AQI_VALUE], o3=TRUE)
-    datetime_series([HAZARDOUS_O_3_AQI_VALUE], o3=TRUE)
-    datetime_series([CORRECT_SO_2_AQI_VALUE], so2=TRUE)
-    datetime_series([UNHEALTHY_SO_2_AQI_VALUE], so2=TRUE)
-    datetime_series([HAZARDOUS_SO_2_AQI_VALUE], so2=TRUE)
-
-    season_datetime_series([CORRECT_CO_AQI_VALUE], co=TRUE)
-    season_datetime_series([UNHEALTHY_CO_AQI_VALUE], co=TRUE)
-    season_datetime_series([HAZARDOUS_CO_AQI_VALUE], co=TRUE)
-    season_datetime_series([CORRECT_NO_2_AQI_VALUE], no2=TRUE)
-    season_datetime_series([UNHEALTHY_NO_2_AQI_VALUE], no2=TRUE)
-    season_datetime_series([HAZARDOUS_NO_2_AQI_VALUE], no2=TRUE)
-    season_datetime_series([CORRECT_O_3_AQI_VALUE], o3=TRUE)
-    season_datetime_series([UNHEALTHY_O_3_AQI_VALUE], o3=TRUE)
-    season_datetime_series([HAZARDOUS_O_3_AQI_VALUE], o3=TRUE)
-    season_datetime_series([CORRECT_SO_2_AQI_VALUE], so2=TRUE)
-    season_datetime_series([UNHEALTHY_SO_2_AQI_VALUE], so2=TRUE)
-    season_datetime_series([HAZARDOUS_SO_2_AQI_VALUE], so2=TRUE)
-    pass
+    # run_selected_args()
 
 
 # MAIN ----------------------------------------------------------------------- #
@@ -246,7 +254,7 @@ def main() -> None:
         else:
             clean_project_directories(False)
 
-    print_finish()
+    display_finish()
 
 
 # UTIL ----------------------------------------------------------------------- #
@@ -277,7 +285,6 @@ def clean_project_directories(remove_jar: bool) -> None:
 
     os.chdir(script_directory.parent.parent)
     remove_files(glob.glob(TXT))
-    pass
 
 
 def remove_files(filenames: List[str]) -> None:
@@ -285,11 +292,10 @@ def remove_files(filenames: List[str]) -> None:
         os.remove(it)
 
 
-def print_finish() -> None:
+def display_finish() -> None:
     print("------------------------------------------------------------------------")
     print("FINISHED")
     print("------------------------------------------------------------------------")
-    pass
 
 
 if __name__ == "__main__":

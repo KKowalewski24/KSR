@@ -93,6 +93,8 @@ CORRECT_SO_2_AQI_VALUE = "correct SO2 AQI value"
 UNHEALTHY_SO_2_AQI_VALUE = "unhealthy SO2 AQI value"
 HAZARDOUS_SO_2_AQI_VALUE = "hazardous SO2 AQI value"
 
+SUMMARY_SEPARATOR_CMD = ","
+
 TRUE = "true"
 FALSE = "false"
 
@@ -101,8 +103,7 @@ args_to_call: List[str] = []
 
 # DEF ------------------------------------------------------------------------ #
 def add_args_to_run(args: List[str]) -> None:
-    args_to_call.append(args)
-    print(args_to_call)
+    args_to_call.extend(args + [SUMMARY_SEPARATOR_CMD])
 
 
 def run_selected_args() -> None:
@@ -231,7 +232,7 @@ def run_experiments() -> None:
     # season_datetime_series([UNHEALTHY_SO_2_AQI_VALUE], so2=TRUE)
     # season_datetime_series([HAZARDOUS_SO_2_AQI_VALUE], so2=TRUE)
 
-    # run_selected_args()
+    run_selected_args()
 
 
 # MAIN ----------------------------------------------------------------------- #

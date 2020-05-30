@@ -1,7 +1,6 @@
 package pl.jkkk.task2.mode;
 
 import org.springframework.stereotype.Component;
-import pl.jkkk.task2.Main;
 import pl.jkkk.task2.logic.exception.FileOperationException;
 import pl.jkkk.task2.logic.fuzzy.linguistic.Label;
 import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticQuantifier;
@@ -167,6 +166,7 @@ public class CommandMode {
                 }
             } else if (args.length > 1) {
                 List<List<String>> callArguments = convertStreamOfArgsToList(args);
+                System.out.println(callArguments);
                 List<Pollution> pollutionData = pollutionService.findAll();
 
                 callArguments.forEach((it) -> {
@@ -204,7 +204,7 @@ public class CommandMode {
                         }
                     }
 
-                    saveDataLog(generateSummaryToString(linguisticSummary));
+                    saveDataLog(generateSummaryToString(linguisticSummary), it);
                 });
             }
         } catch (Exception e) {
@@ -278,8 +278,6 @@ public class CommandMode {
                 .append(lengthOfSummary)
                 .append(", ")
                 .append(degreeOfQuantifierImprecision)
-                .append(", ")
-                .append(degreeOfQuantifierCardinality)
                 .append(", ")
                 .append(degreeOfQuantifierCardinality)
                 .append(", ")
@@ -736,10 +734,10 @@ public class CommandMode {
         System.exit(0);
     }
 
-    private void saveDataLog(String value) {
+    private void saveDataLog(String value, List<String> filename) {
         if (IS_LOGGING_DATA) {
             try {
-                fileWriterPlainText.writePlainText(Main.getMainArgs(), value);
+                fileWriterPlainText.writePlainText(filename, value);
             } catch (FileOperationException e) {
                 e.printStackTrace();
             }

@@ -260,8 +260,8 @@ public class CommandMode {
                 linguisticSummary.degreeOfQualifierImprecision());
         String degreeOfQualifierCardinality = df.format(
                 linguisticSummary.degreeOfQualifierCardinality());
-
-        //        TODO ADD T11
+        String lengthOfQualifier = df.format(
+                linguisticSummary.lengthOfQualifier());
 
         StringBuilder generatedResult = new StringBuilder();
         generatedResult
@@ -286,6 +286,8 @@ public class CommandMode {
                 .append(degreeOfQualifierImprecision)
                 .append(", ")
                 .append(degreeOfQualifierCardinality)
+                .append(", ")
+                .append(lengthOfQualifier)
                 .append("]");
 
         return generatedResult.toString();

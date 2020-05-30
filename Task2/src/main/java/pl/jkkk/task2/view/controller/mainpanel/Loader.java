@@ -147,8 +147,8 @@ public class Loader {
                 linguisticSummary.degreeOfQualifierImprecision());
         String degreeOfQualifierCardinality = df.format(
                 linguisticSummary.degreeOfQualifierCardinality());
-
-        //        TODO ADD T11
+        String lengthOfQualifier = df.format(
+                linguisticSummary.lengthOfQualifier());
 
         StringBuilder generatedResult = new StringBuilder();
         generatedResult
@@ -168,13 +168,13 @@ public class Loader {
                 .append(", ")
                 .append(degreeOfQuantifierCardinality)
                 .append(", ")
-                .append(degreeOfQuantifierCardinality)
-                .append(", ")
                 .append(degreeOfSummarizerCardinality)
                 .append(", ")
                 .append(degreeOfQualifierImprecision)
                 .append(", ")
                 .append(degreeOfQualifierCardinality)
+                .append(", ")
+                .append(lengthOfQualifier)
                 .append("]");
 
         results.add(generatedResult.toString());

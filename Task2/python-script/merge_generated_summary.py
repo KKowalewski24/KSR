@@ -10,8 +10,10 @@ Script merge all .txt files in current directory
 
 # VAR ------------------------------------------------------------------------ #
 TXT = "*.txt"
+TRUE = "true"
+FALSE = "false"
 
-LOCATION_FILE_NAMES = glob.glob(os.path.join(pathlib.Path(os.getcwd()), TXT))
+LOCATION_FILE_NAMES = glob.glob(os.path.join(pathlib.Path(os.getcwd()), TRUE + TXT))
 
 
 # DEF ------------------------------------------------------------------------ #
@@ -27,8 +29,7 @@ def merge() -> None:
             result += "\n"
     result += end
 
-    current_time = str(datetime.now().hour) + str(
-        datetime.now().minute) + str(datetime.now().second)
+    current_time = datetime.now().strftime("%H%M%S")
 
     with open("merged_" + current_time + ".txt", "w") as file:
         file.write(result)

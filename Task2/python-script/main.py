@@ -119,42 +119,80 @@ def seed_linguistic_database() -> None:
 
 
 # BASIC - FIRST STEP FOR EVERY EXPERIMENT
-def quantifier_series(args: List[str]) -> None:
-    add_args_to_run([TRUE, ALMOST_NONE] + args)
-    add_args_to_run([TRUE, SOME] + args)
-    add_args_to_run([TRUE, ABOUT_HALF_OF_ALL] + args)
-    add_args_to_run([TRUE, MANY] + args)
-    add_args_to_run([TRUE, ALL] + args)
+def quantifier_series(args: List[str], is_advanced: str) -> None:
+    add_args_to_run([is_advanced, ALMOST_NONE] + args)
+    add_args_to_run([is_advanced, SOME] + args)
+    add_args_to_run([is_advanced, ABOUT_HALF_OF_ALL] + args)
+    add_args_to_run([is_advanced, MANY] + args)
+    add_args_to_run([is_advanced, ALL] + args)
 
 
-def season_series(args: List[str]) -> None:
-    quantifier_series([BEEN_DONE_IN_SPRING] + args)
-    quantifier_series([BEEN_DONE_IN_SUMMER] + args)
-    quantifier_series([BEEN_DONE_IN_AUTUMN] + args)
-    quantifier_series([BEEN_DONE_IN_WINTER] + args)
+def quantifier_series_basic(args: List[str]) -> None:
+    quantifier_series(args, FALSE)
 
 
-def datetime_series(args: List[str], co=FALSE, no2=FALSE, o3=FALSE, so2=FALSE) -> None:
-    if co:
-        quantifier_series([MAXIMUM_CO_CONCENTRATION_IN_THE_MORNING] + args)
-        quantifier_series([MAXIMUM_CO_CONCENTRATION_IN_THE_AFTERNOON] + args)
-        quantifier_series([MAXIMUM_CO_CONCENTRATION_IN_THE_EVENING] + args)
-        quantifier_series([MAXIMUM_CO_CONCENTRATION_IN_THE_NIGHT] + args)
-    elif no2:
-        quantifier_series([MAXIMUM_NO_2_CONCENTRATION_IN_THE_MORNING] + args)
-        quantifier_series([MAXIMUM_NO_2_CONCENTRATION_IN_THE_AFTERNOON] + args)
-        quantifier_series([MAXIMUM_NO_2_CONCENTRATION_IN_THE_EVENING] + args)
-        quantifier_series([MAXIMUM_NO_2_CONCENTRATION_IN_THE_NIGHT] + args)
-    elif o3:
-        quantifier_series([MAXIMUM_O_3_CONCENTRATION_IN_THE_MORNING] + args)
-        quantifier_series([MAXIMUM_O_3_CONCENTRATION_IN_THE_AFTERNOON] + args)
-        quantifier_series([MAXIMUM_O_3_CONCENTRATION_IN_THE_EVENING] + args)
-        quantifier_series([MAXIMUM_O_3_CONCENTRATION_IN_THE_NIGHT] + args)
-    elif so2:
-        quantifier_series([MAXIMUM_SO_2_CONCENTRATION_IN_THE_MORNING] + args)
-        quantifier_series([MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON] + args)
-        quantifier_series([MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING] + args)
-        quantifier_series([MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT] + args)
+def quantifier_series_advanced(args: List[str]) -> None:
+    quantifier_series(args, TRUE)
+
+
+def season_series(args: List[str], is_advanced=TRUE) -> None:
+    if is_advanced == TRUE:
+        quantifier_series_advanced([BEEN_DONE_IN_SPRING] + args)
+        quantifier_series_advanced([BEEN_DONE_IN_SUMMER] + args)
+        quantifier_series_advanced([BEEN_DONE_IN_AUTUMN] + args)
+        quantifier_series_advanced([BEEN_DONE_IN_WINTER] + args)
+        pass
+    elif is_advanced == FALSE:
+        quantifier_series_basic([BEEN_DONE_IN_SPRING] + args)
+        quantifier_series_basic([BEEN_DONE_IN_SUMMER] + args)
+        quantifier_series_basic([BEEN_DONE_IN_AUTUMN] + args)
+        quantifier_series_basic([BEEN_DONE_IN_WINTER] + args)
+
+
+def datetime_series(args: List[str], co=FALSE, no2=FALSE,
+                    o3=FALSE, so2=FALSE, is_advanced=TRUE) -> None:
+    if is_advanced == TRUE:
+        if co == TRUE:
+            quantifier_series_advanced([MAXIMUM_CO_CONCENTRATION_IN_THE_MORNING] + args)
+            quantifier_series_advanced([MAXIMUM_CO_CONCENTRATION_IN_THE_AFTERNOON] + args)
+            quantifier_series_advanced([MAXIMUM_CO_CONCENTRATION_IN_THE_EVENING] + args)
+            quantifier_series_advanced([MAXIMUM_CO_CONCENTRATION_IN_THE_NIGHT] + args)
+        elif no2 == TRUE:
+            quantifier_series_advanced([MAXIMUM_NO_2_CONCENTRATION_IN_THE_MORNING] + args)
+            quantifier_series_advanced([MAXIMUM_NO_2_CONCENTRATION_IN_THE_AFTERNOON] + args)
+            quantifier_series_advanced([MAXIMUM_NO_2_CONCENTRATION_IN_THE_EVENING] + args)
+            quantifier_series_advanced([MAXIMUM_NO_2_CONCENTRATION_IN_THE_NIGHT] + args)
+        elif o3 == TRUE:
+            quantifier_series_advanced([MAXIMUM_O_3_CONCENTRATION_IN_THE_MORNING] + args)
+            quantifier_series_advanced([MAXIMUM_O_3_CONCENTRATION_IN_THE_AFTERNOON] + args)
+            quantifier_series_advanced([MAXIMUM_O_3_CONCENTRATION_IN_THE_EVENING] + args)
+            quantifier_series_advanced([MAXIMUM_O_3_CONCENTRATION_IN_THE_NIGHT] + args)
+        elif so2 == TRUE:
+            quantifier_series_advanced([MAXIMUM_SO_2_CONCENTRATION_IN_THE_MORNING] + args)
+            quantifier_series_advanced([MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON] + args)
+            quantifier_series_advanced([MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING] + args)
+            quantifier_series_advanced([MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT] + args)
+    elif is_advanced == FALSE:
+        if co == TRUE:
+            quantifier_series_basic([MAXIMUM_CO_CONCENTRATION_IN_THE_MORNING] + args)
+            quantifier_series_basic([MAXIMUM_CO_CONCENTRATION_IN_THE_AFTERNOON] + args)
+            quantifier_series_basic([MAXIMUM_CO_CONCENTRATION_IN_THE_EVENING] + args)
+            quantifier_series_basic([MAXIMUM_CO_CONCENTRATION_IN_THE_NIGHT] + args)
+        elif no2 == TRUE:
+            quantifier_series_basic([MAXIMUM_NO_2_CONCENTRATION_IN_THE_MORNING] + args)
+            quantifier_series_basic([MAXIMUM_NO_2_CONCENTRATION_IN_THE_AFTERNOON] + args)
+            quantifier_series_basic([MAXIMUM_NO_2_CONCENTRATION_IN_THE_EVENING] + args)
+            quantifier_series_basic([MAXIMUM_NO_2_CONCENTRATION_IN_THE_NIGHT] + args)
+        elif o3 == TRUE:
+            quantifier_series_basic([MAXIMUM_O_3_CONCENTRATION_IN_THE_MORNING] + args)
+            quantifier_series_basic([MAXIMUM_O_3_CONCENTRATION_IN_THE_AFTERNOON] + args)
+            quantifier_series_basic([MAXIMUM_O_3_CONCENTRATION_IN_THE_EVENING] + args)
+            quantifier_series_basic([MAXIMUM_O_3_CONCENTRATION_IN_THE_NIGHT] + args)
+        elif so2 == TRUE:
+            quantifier_series_basic([MAXIMUM_SO_2_CONCENTRATION_IN_THE_MORNING] + args)
+            quantifier_series_basic([MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON] + args)
+            quantifier_series_basic([MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING] + args)
+            quantifier_series_basic([MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT] + args)
 
 
 def season_datetime_series(args: List[str], co=FALSE, no2=FALSE, o3=FALSE, so2=FALSE) -> None:
@@ -165,6 +203,25 @@ def season_datetime_series(args: List[str], co=FALSE, no2=FALSE, o3=FALSE, so2=F
 
 
 def run_experiments() -> None:
+    # season_series([], is_advanced=FALSE)
+    # datetime_series([], co=TRUE, is_advanced=FALSE)
+    # datetime_series([], no2=TRUE, is_advanced=FALSE)
+    # datetime_series([], o3=TRUE, is_advanced=FALSE)
+    # datetime_series([], so2=TRUE, is_advanced=FALSE)
+    # 
+    # quantifier_series_basic([CORRECT_CO_AQI_VALUE])
+    # quantifier_series_basic([UNHEALTHY_CO_AQI_VALUE])
+    # quantifier_series_basic([HAZARDOUS_CO_AQI_VALUE])
+    # quantifier_series_basic([CORRECT_NO_2_AQI_VALUE])
+    # quantifier_series_basic([UNHEALTHY_NO_2_AQI_VALUE])
+    # quantifier_series_basic([HAZARDOUS_NO_2_AQI_VALUE])
+    # quantifier_series_basic([CORRECT_O_3_AQI_VALUE])
+    # quantifier_series_basic([UNHEALTHY_O_3_AQI_VALUE])
+    # quantifier_series_basic([HAZARDOUS_O_3_AQI_VALUE])
+    # quantifier_series_basic([CORRECT_SO_2_AQI_VALUE])
+    # quantifier_series_basic([UNHEALTHY_SO_2_AQI_VALUE])
+    # quantifier_series_basic([HAZARDOUS_SO_2_AQI_VALUE])
+
     # TODO  DO NOT DELETE - I LEFT THIS JUST IN CASE - MEAN, MAX AND AQI
     # TODO ARE FUNCTIONALLY RELATED SO RESULTS SHOULD BE SIMILAR
     # season_series([LOW_MEAN_CO_CONCENTRATION])
@@ -192,47 +249,51 @@ def run_experiments() -> None:
     # season_series([LOW_MAXIMUM_SO_2_CONCENTRATION])
     # season_series([MIDDLE_MAXIMUM_SO_2_CONCENTRATION])
     # season_series([HIGH_MAXIMUM_SO_2_CONCENTRATION])
+    #
+    # season_series([CORRECT_CO_AQI_VALUE])
+    # season_series([UNHEALTHY_CO_AQI_VALUE])
+    # season_series([HAZARDOUS_CO_AQI_VALUE])
+    # season_series([CORRECT_NO_2_AQI_VALUE])
+    # season_series([UNHEALTHY_NO_2_AQI_VALUE])
+    # season_series([HAZARDOUS_NO_2_AQI_VALUE])
+    # season_series([CORRECT_O_3_AQI_VALUE])
+    # season_series([UNHEALTHY_O_3_AQI_VALUE])
+    # season_series([HAZARDOUS_O_3_AQI_VALUE])
+    # season_series([CORRECT_SO_2_AQI_VALUE])
+    # season_series([UNHEALTHY_SO_2_AQI_VALUE])
+    # season_series([HAZARDOUS_SO_2_AQI_VALUE])
+    # 
+    # datetime_series([CORRECT_CO_AQI_VALUE], co=TRUE)
+    # datetime_series([UNHEALTHY_CO_AQI_VALUE], co=TRUE)
+    # datetime_series([HAZARDOUS_CO_AQI_VALUE], co=TRUE)
+    # datetime_series([CORRECT_NO_2_AQI_VALUE], no2=TRUE)
+    # datetime_series([UNHEALTHY_NO_2_AQI_VALUE], no2=TRUE)
+    # datetime_series([HAZARDOUS_NO_2_AQI_VALUE], no2=TRUE)
+    # datetime_series([CORRECT_O_3_AQI_VALUE], o3=TRUE)
+    # datetime_series([UNHEALTHY_O_3_AQI_VALUE], o3=TRUE)
+    # datetime_series([HAZARDOUS_O_3_AQI_VALUE], o3=TRUE)
+    # datetime_series([CORRECT_SO_2_AQI_VALUE], so2=TRUE)
+    # datetime_series([UNHEALTHY_SO_2_AQI_VALUE], so2=TRUE)
+    # datetime_series([HAZARDOUS_SO_2_AQI_VALUE], so2=TRUE)
+    #
+    # season_datetime_series([CORRECT_CO_AQI_VALUE], co=TRUE)
+    # season_datetime_series([UNHEALTHY_CO_AQI_VALUE], co=TRUE)
+    # season_datetime_series([HAZARDOUS_CO_AQI_VALUE], co=TRUE)
+    #
+    # season_datetime_series([CORRECT_NO_2_AQI_VALUE], no2=TRUE)
+    # season_datetime_series([UNHEALTHY_NO_2_AQI_VALUE], no2=TRUE)
+    # season_datetime_series([HAZARDOUS_NO_2_AQI_VALUE], no2=TRUE)
+    #
+    # season_datetime_series([CORRECT_O_3_AQI_VALUE], o3=TRUE)
+    # season_datetime_series([UNHEALTHY_O_3_AQI_VALUE], o3=TRUE)
+    # season_datetime_series([HAZARDOUS_O_3_AQI_VALUE], o3=TRUE)
+    #
+    # season_datetime_series([CORRECT_SO_2_AQI_VALUE], so2=TRUE)
+    # season_datetime_series([UNHEALTHY_SO_2_AQI_VALUE], so2=TRUE)
+    # season_datetime_series([HAZARDOUS_SO_2_AQI_VALUE], so2=TRUE)
 
-    season_series([CORRECT_CO_AQI_VALUE])
-    season_series([UNHEALTHY_CO_AQI_VALUE])
-    season_series([HAZARDOUS_CO_AQI_VALUE])
-    season_series([CORRECT_NO_2_AQI_VALUE])
-    season_series([UNHEALTHY_NO_2_AQI_VALUE])
-    season_series([HAZARDOUS_NO_2_AQI_VALUE])
-    season_series([CORRECT_O_3_AQI_VALUE])
-    season_series([UNHEALTHY_O_3_AQI_VALUE])
-    season_series([HAZARDOUS_O_3_AQI_VALUE])
-    season_series([CORRECT_SO_2_AQI_VALUE])
-    season_series([UNHEALTHY_SO_2_AQI_VALUE])
-    season_series([HAZARDOUS_SO_2_AQI_VALUE])
-
-    datetime_series([CORRECT_CO_AQI_VALUE], co=TRUE)
-    datetime_series([UNHEALTHY_CO_AQI_VALUE], co=TRUE)
-    datetime_series([HAZARDOUS_CO_AQI_VALUE], co=TRUE)
-    datetime_series([CORRECT_NO_2_AQI_VALUE], no2=TRUE)
-    datetime_series([UNHEALTHY_NO_2_AQI_VALUE], no2=TRUE)
-    datetime_series([HAZARDOUS_NO_2_AQI_VALUE], no2=TRUE)
-    datetime_series([CORRECT_O_3_AQI_VALUE], o3=TRUE)
-    datetime_series([UNHEALTHY_O_3_AQI_VALUE], o3=TRUE)
-    datetime_series([HAZARDOUS_O_3_AQI_VALUE], o3=TRUE)
-    datetime_series([CORRECT_SO_2_AQI_VALUE], so2=TRUE)
-    datetime_series([UNHEALTHY_SO_2_AQI_VALUE], so2=TRUE)
-    datetime_series([HAZARDOUS_SO_2_AQI_VALUE], so2=TRUE)
-
-    season_datetime_series([CORRECT_CO_AQI_VALUE], co=TRUE)
-    season_datetime_series([UNHEALTHY_CO_AQI_VALUE], co=TRUE)
-    season_datetime_series([HAZARDOUS_CO_AQI_VALUE], co=TRUE)
-    season_datetime_series([CORRECT_NO_2_AQI_VALUE], no2=TRUE)
-    season_datetime_series([UNHEALTHY_NO_2_AQI_VALUE], no2=TRUE)
-    season_datetime_series([HAZARDOUS_NO_2_AQI_VALUE], no2=TRUE)
-    season_datetime_series([CORRECT_O_3_AQI_VALUE], o3=TRUE)
-    season_datetime_series([UNHEALTHY_O_3_AQI_VALUE], o3=TRUE)
-    season_datetime_series([HAZARDOUS_O_3_AQI_VALUE], o3=TRUE)
-    season_datetime_series([CORRECT_SO_2_AQI_VALUE], so2=TRUE)
-    season_datetime_series([UNHEALTHY_SO_2_AQI_VALUE], so2=TRUE)
-    season_datetime_series([HAZARDOUS_SO_2_AQI_VALUE], so2=TRUE)
-
-    run_selected_args()
+    # run_selected_args()
+    pass
 
 
 # MAIN ----------------------------------------------------------------------- #

@@ -14,6 +14,7 @@ def clear_file(filename: str, limit_value: float) -> None:
         data: List[str] = file.readlines()
 
     result: List[str] = []
+    result.extend(data[0])
 
     for i in range(len(data)):
         index: int = data[i].find("[")
@@ -21,6 +22,8 @@ def clear_file(filename: str, limit_value: float) -> None:
             value: float = float(data[i][index + 1:index + 5])
             if value > limit_value:
                 result.extend(data[i])
+
+    result.extend(data[-1])
 
     with open(filename, "w") as file:
         for it in result:

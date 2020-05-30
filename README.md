@@ -55,7 +55,10 @@ or comment out whole application.properties file - h2 database will be used
 * Single param - `seed_linguistic` or `-sl` to seed database with linguistic data
 
 ##### Scipts description
-* `filter_data.py` - filtering csv data - reads first 100000, 
-removes rows with NaN values, removes first column with ID
+* `filter_data.py` - filtering csv data - removes rows with NaN values, removes selected columns
 * `main.py` - script with experiments for report
+* `merge_generated_summary.py` - merging results from `main.py`
+* `draw_chart.py` - generating chart for Quantifier
+* `generate_function.py` - generating membership function formulas
+* `generate_function_to_file.py` - usage of `generate_function.py` with selected params
 * `data-dump`- script with dumped data from database after filtering - restore->custom or tar and filename dump-data

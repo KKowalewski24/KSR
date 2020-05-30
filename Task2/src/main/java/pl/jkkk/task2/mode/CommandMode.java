@@ -37,8 +37,10 @@ import pl.jkkk.task2.logic.service.pollution.PollutionService;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static pl.jkkk.task2.Main.IS_LOGGING_DATA;
 import static pl.jkkk.task2.logic.constant.LogicConstants.POLLUTION_DATA_FILENAME;
@@ -204,7 +206,8 @@ public class CommandMode {
     }
 
     private String generateSummaryToString(LinguisticSummary linguisticSummary) {
-        DecimalFormat df = new DecimalFormat("0.00");
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.US);
+        DecimalFormat df = new DecimalFormat("0.00", decimalFormatSymbols);
 
         String degreeOfTruth = df.format(
                 linguisticSummary.degreeOfTruth());

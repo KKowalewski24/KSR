@@ -18,8 +18,10 @@ import pl.jkkk.task2.view.fxml.PopOutWindow;
 import pl.jkkk.task2.view.fxml.StageController;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static pl.jkkk.task2.view.constant.ViewConstants.DEACTIVATED;
 import static pl.jkkk.task2.view.constant.ViewConstants.SELECT_ITEM;
@@ -120,7 +122,8 @@ public class Loader {
     }
 
     private void generateAndFill(LinguisticSummary<Pollution> linguisticSummary) {
-        DecimalFormat df = new DecimalFormat("0.00");
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.US);
+        DecimalFormat df = new DecimalFormat("0.00", decimalFormatSymbols);
 
         String degreeOfTruth = df.format(
                 linguisticSummary.degreeOfTruth());

@@ -58,6 +58,7 @@ or comment out whole application.properties file - h2 database will be used
 * `filter_data.py` - filtering csv data - removes rows with NaN values, removes selected columns
 * `main.py` - script with experiments for report
 * `merge_generated_summary.py` - merging results from `main.py`
+* `remove_poor_summary.py` - removing merged results from `merge_generated_summary.py` when T1 is below passed value 
 * `draw_chart.py` - generating chart for Quantifier
 * `generate_function.py` - generating membership function formulas
 * `generate_function_to_file.py` - usage of `generate_function.py` with selected params

@@ -98,6 +98,10 @@ SUMMARY_SEPARATOR_CMD = ","
 TRUE = "true"
 FALSE = "false"
 
+TYPE_BASIC = "basic";
+TYPE_ADVANCED = "advanced";
+TYPE_MULTI = "mutli";
+
 args_to_call: List[str] = []
 
 
@@ -119,39 +123,47 @@ def seed_linguistic_database() -> None:
 
 
 # BASIC - FIRST STEP FOR EVERY EXPERIMENT
-def quantifier_series(args: List[str], is_advanced: str) -> None:
-    add_args_to_run([is_advanced, ALMOST_NONE] + args)
-    add_args_to_run([is_advanced, SOME] + args)
-    add_args_to_run([is_advanced, ABOUT_HALF_OF_ALL] + args)
-    add_args_to_run([is_advanced, MANY] + args)
-    add_args_to_run([is_advanced, ALL] + args)
+def quantifier_series(args: List[str], type: str) -> None:
+    add_args_to_run([type, ALMOST_NONE] + args)
+    add_args_to_run([type, SOME] + args)
+    add_args_to_run([type, ABOUT_HALF_OF_ALL] + args)
+    add_args_to_run([type, MANY] + args)
+    add_args_to_run([type, ALL] + args)
 
 
 def quantifier_series_basic(args: List[str]) -> None:
-    quantifier_series(args, FALSE)
+    quantifier_series(args, TYPE_BASIC)
 
 
 def quantifier_series_advanced(args: List[str]) -> None:
-    quantifier_series(args, TRUE)
+    quantifier_series(args, TYPE_ADVANCED)
 
 
-def season_series(args: List[str], is_advanced=TRUE) -> None:
-    if is_advanced == TRUE:
+def quantifier_series_multi(args: List[str]) -> None:
+    quantifier_series(args, TYPE_MULTI)
+
+
+def season_series(args: List[str], type=TYPE_ADVANCED) -> None:
+    if type == TYPE_ADVANCED:
         quantifier_series_advanced([BEEN_DONE_IN_SPRING] + args)
         quantifier_series_advanced([BEEN_DONE_IN_SUMMER] + args)
         quantifier_series_advanced([BEEN_DONE_IN_AUTUMN] + args)
         quantifier_series_advanced([BEEN_DONE_IN_WINTER] + args)
-        pass
-    elif is_advanced == FALSE:
+    elif type == TYPE_BASIC:
         quantifier_series_basic([BEEN_DONE_IN_SPRING] + args)
         quantifier_series_basic([BEEN_DONE_IN_SUMMER] + args)
         quantifier_series_basic([BEEN_DONE_IN_AUTUMN] + args)
         quantifier_series_basic([BEEN_DONE_IN_WINTER] + args)
+    elif type == TYPE_MULTI:
+        quantifier_series_multi([BEEN_DONE_IN_SPRING] + args)
+        quantifier_series_multi([BEEN_DONE_IN_SUMMER] + args)
+        quantifier_series_multi([BEEN_DONE_IN_AUTUMN] + args)
+        quantifier_series_multi([BEEN_DONE_IN_WINTER] + args)
 
 
 def datetime_series(args: List[str], co=FALSE, no2=FALSE,
-                    o3=FALSE, so2=FALSE, is_advanced=TRUE) -> None:
-    if is_advanced == TRUE:
+                    o3=FALSE, so2=FALSE, type=TYPE_ADVANCED) -> None:
+    if type == TYPE_ADVANCED:
         if co == TRUE:
             quantifier_series_advanced([MAXIMUM_CO_CONCENTRATION_IN_THE_MORNING] + args)
             quantifier_series_advanced([MAXIMUM_CO_CONCENTRATION_IN_THE_AFTERNOON] + args)
@@ -172,7 +184,7 @@ def datetime_series(args: List[str], co=FALSE, no2=FALSE,
             quantifier_series_advanced([MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON] + args)
             quantifier_series_advanced([MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING] + args)
             quantifier_series_advanced([MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT] + args)
-    elif is_advanced == FALSE:
+    elif type == TYPE_BASIC:
         if co == TRUE:
             quantifier_series_basic([MAXIMUM_CO_CONCENTRATION_IN_THE_MORNING] + args)
             quantifier_series_basic([MAXIMUM_CO_CONCENTRATION_IN_THE_AFTERNOON] + args)
@@ -193,6 +205,27 @@ def datetime_series(args: List[str], co=FALSE, no2=FALSE,
             quantifier_series_basic([MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON] + args)
             quantifier_series_basic([MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING] + args)
             quantifier_series_basic([MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT] + args)
+    elif type == TYPE_MULTI:
+        if co == TRUE:
+            quantifier_series_multi([MAXIMUM_CO_CONCENTRATION_IN_THE_MORNING] + args)
+            quantifier_series_multi([MAXIMUM_CO_CONCENTRATION_IN_THE_AFTERNOON] + args)
+            quantifier_series_multi([MAXIMUM_CO_CONCENTRATION_IN_THE_EVENING] + args)
+            quantifier_series_multi([MAXIMUM_CO_CONCENTRATION_IN_THE_NIGHT] + args)
+        elif no2 == TRUE:
+            quantifier_series_multi([MAXIMUM_NO_2_CONCENTRATION_IN_THE_MORNING] + args)
+            quantifier_series_multi([MAXIMUM_NO_2_CONCENTRATION_IN_THE_AFTERNOON] + args)
+            quantifier_series_multi([MAXIMUM_NO_2_CONCENTRATION_IN_THE_EVENING] + args)
+            quantifier_series_multi([MAXIMUM_NO_2_CONCENTRATION_IN_THE_NIGHT] + args)
+        elif o3 == TRUE:
+            quantifier_series_multi([MAXIMUM_O_3_CONCENTRATION_IN_THE_MORNING] + args)
+            quantifier_series_multi([MAXIMUM_O_3_CONCENTRATION_IN_THE_AFTERNOON] + args)
+            quantifier_series_multi([MAXIMUM_O_3_CONCENTRATION_IN_THE_EVENING] + args)
+            quantifier_series_multi([MAXIMUM_O_3_CONCENTRATION_IN_THE_NIGHT] + args)
+        elif so2 == TRUE:
+            quantifier_series_multi([MAXIMUM_SO_2_CONCENTRATION_IN_THE_MORNING] + args)
+            quantifier_series_multi([MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON] + args)
+            quantifier_series_multi([MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING] + args)
+            quantifier_series_multi([MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT] + args)
 
 
 def season_datetime_series(args: List[str], co=FALSE, no2=FALSE, o3=FALSE, so2=FALSE) -> None:
@@ -203,11 +236,11 @@ def season_datetime_series(args: List[str], co=FALSE, no2=FALSE, o3=FALSE, so2=F
 
 
 def run_experiments() -> None:
-    # season_series([], is_advanced=FALSE)
-    # datetime_series([], co=TRUE, is_advanced=FALSE)
-    # datetime_series([], no2=TRUE, is_advanced=FALSE)
-    # datetime_series([], o3=TRUE, is_advanced=FALSE)
-    # datetime_series([], so2=TRUE, is_advanced=FALSE)
+    season_series([], type=TYPE_BASIC)
+    datetime_series([], co=TRUE, type=TYPE_BASIC)
+    # datetime_series([], no2=TRUE, type=TYPE_BASIC)
+    # datetime_series([], o3=TRUE, type=TYPE_BASIC)
+    # datetime_series([], so2=TRUE, type=TYPE_BASIC)
     # 
     # quantifier_series_basic([CORRECT_CO_AQI_VALUE])
     # quantifier_series_basic([UNHEALTHY_CO_AQI_VALUE])
@@ -292,7 +325,7 @@ def run_experiments() -> None:
     # season_datetime_series([UNHEALTHY_SO_2_AQI_VALUE], so2=TRUE)
     # season_datetime_series([HAZARDOUS_SO_2_AQI_VALUE], so2=TRUE)
 
-    # run_selected_args()
+    run_selected_args()
     pass
 
 

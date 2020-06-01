@@ -139,6 +139,10 @@ public class CommandMode {
 
     public static final String SUMMARY_SEPARATOR_CMD = ",";
 
+    public static final String TYPE_BASIC = "basic";
+    public static final String TYPE_ADVANCED = "advanced";
+    public static final String TYPE_MULTI = "mutli";
+
     private final PollutionService pollutionService;
     private final LinguisticQuantifierWrapperService linguisticQuantifierWrapperService;
     private final LabelWrapperService labelWrapperService;
@@ -172,34 +176,45 @@ public class CommandMode {
                     LinguisticSummary<Pollution> linguisticSummary = null;
 
                     if (it.size() > 2) {
-                        if (!Boolean.parseBoolean(it.get(0))) {
-                            String selectedQuantifier = it.get(1);
-                            List<String> selectedSummarizers = new ArrayList<>();
 
-                            for (int i = 2; i < it.size(); i++) {
-                                selectedSummarizers.add(it.get(i));
+                        switch (it.get(0)) {
+                            case TYPE_BASIC: {
+                                String selectedQuantifier = it.get(1);
+                                List<String> selectedSummarizers = new ArrayList<>();
+
+                                for (int i = 2; i < it.size(); i++) {
+                                    selectedSummarizers.add(it.get(i));
+                                }
+
+                                linguisticSummary = new LinguisticSummary<>(
+                                        linguisticQuantifierWrapperService.findByName(selectedQuantifier),
+                                        pollutionData,
+                                        labelWrapperService.findByNames(selectedSummarizers)
+                                );
+
+                                break;
                             }
+                            case TYPE_ADVANCED: {
+                                String selectedQuantifier = it.get(1);
+                                String selectedQualifier = it.get(2);
+                                List<String> selectedSummarizers = new ArrayList<>();
 
-                            linguisticSummary = new LinguisticSummary<>(
-                                    linguisticQuantifierWrapperService.findByName(selectedQuantifier),
-                                    pollutionData,
-                                    labelWrapperService.findByNames(selectedSummarizers)
-                            );
-                        } else {
-                            String selectedQuantifier = it.get(1);
-                            String selectedQualifier = it.get(2);
-                            List<String> selectedSummarizers = new ArrayList<>();
+                                for (int i = 3; i < it.size(); i++) {
+                                    selectedSummarizers.add(it.get(i));
+                                }
 
-                            for (int i = 3; i < it.size(); i++) {
-                                selectedSummarizers.add(it.get(i));
+                                linguisticSummary = new LinguisticSummary<>(
+                                        linguisticQuantifierWrapperService.findByName(selectedQuantifier),
+                                        labelWrapperService.findByName(selectedQualifier),
+                                        pollutionData,
+                                        labelWrapperService.findByNames(selectedSummarizers)
+                                );
+                                break;
                             }
+                            case TYPE_MULTI: {
 
-                            linguisticSummary = new LinguisticSummary<>(
-                                    linguisticQuantifierWrapperService.findByName(selectedQuantifier),
-                                    labelWrapperService.findByName(selectedQualifier),
-                                    pollutionData,
-                                    labelWrapperService.findByNames(selectedSummarizers)
-                            );
+                                break;
+                            }
                         }
                     }
 

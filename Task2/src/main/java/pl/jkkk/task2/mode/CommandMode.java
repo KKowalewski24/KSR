@@ -5,6 +5,7 @@ import pl.jkkk.task2.logic.exception.FileOperationException;
 import pl.jkkk.task2.logic.fuzzy.linguistic.Label;
 import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticQuantifier;
 import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticSummary;
+import pl.jkkk.task2.logic.fuzzy.linguistic.MultisubjectLinguisticSummary;
 import pl.jkkk.task2.logic.fuzzy.set.GaussianFuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.TrapezoidalFuzzySet;
 import pl.jkkk.task2.logic.model.Pollution;
@@ -192,6 +193,8 @@ public class CommandMode {
                                         labelWrapperService.findByNames(selectedSummarizers)
                                 );
 
+                                saveDataLog(generateSummaryToString(linguisticSummary), it);
+
                                 break;
                             }
                             case TYPE_ADVANCED: {
@@ -209,16 +212,37 @@ public class CommandMode {
                                         pollutionData,
                                         labelWrapperService.findByNames(selectedSummarizers)
                                 );
+                                saveDataLog(generateSummaryToString(linguisticSummary), it);
+
                                 break;
                             }
                             case TYPE_MULTI: {
+                                String selectedQuantifier = it.get(1);
+                                String attributeValue1 = it.get(2);
+                                String attributeValue2 = it.get(3);
+                                List<String> selectedSummarizers = new ArrayList<>();
+
+                                for (int i = 4; i < it.size(); i++) {
+                                    selectedSummarizers.add(it.get(i));
+                                }
+
+                                MultisubjectLinguisticSummary<Pollution> summary =
+                                        new MultisubjectLinguisticSummary<>(
+                                                linguisticQuantifierWrapperService.findByName(selectedQuantifier),
+                                                pollutionData,
+                                                (Pollution pollution) -> pollution.getCity(),
+                                                attributeValue1,
+                                                attributeValue2,
+                                                labelWrapperService.findByNames(selectedSummarizers)
+                                        );
+
+                                saveDataLog(generateMultiSubjectSummaryToString(summary), it);
 
                                 break;
                             }
                         }
                     }
 
-                    saveDataLog(generateSummaryToString(linguisticSummary), it);
                 });
             }
         } catch (Exception e) {
@@ -248,6 +272,22 @@ public class CommandMode {
         }
 
         return processedArgs;
+    }
+
+    private String generateMultiSubjectSummaryToString(MultisubjectLinguisticSummary summary) {
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.US);
+        DecimalFormat df = new DecimalFormat("0.00", decimalFormatSymbols);
+
+        String degreeOfTruth = df.format(summary.degreeOfTruth());
+
+        StringBuilder generatedResult = new StringBuilder();
+        generatedResult
+                .append(summary.toString())
+                .append(". [")
+                .append(degreeOfTruth)
+                .append("]");
+
+        return generatedResult.toString();
     }
 
     private String generateSummaryToString(LinguisticSummary linguisticSummary) {

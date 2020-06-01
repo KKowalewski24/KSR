@@ -93,6 +93,11 @@ CORRECT_SO_2_AQI_VALUE = "correct SO2 AQI value"
 UNHEALTHY_SO_2_AQI_VALUE = "unhealthy SO2 AQI value"
 HAZARDOUS_SO_2_AQI_VALUE = "hazardous SO2 AQI value"
 
+CITY_NEW_YORK = "New York"
+CITY_LOS_ANGELES = "Los Angeles"
+CITY_PHOENIX = "Phoenix"
+CITY_EL_PASO = "El Paso"
+
 SUMMARY_SEPARATOR_CMD = ","
 
 TRUE = "true"
@@ -155,10 +160,10 @@ def season_series(args: List[str], type=TYPE_ADVANCED) -> None:
         quantifier_series_basic([BEEN_DONE_IN_AUTUMN] + args)
         quantifier_series_basic([BEEN_DONE_IN_WINTER] + args)
     elif type == TYPE_MULTI:
-        quantifier_series_multi([BEEN_DONE_IN_SPRING] + args)
-        quantifier_series_multi([BEEN_DONE_IN_SUMMER] + args)
-        quantifier_series_multi([BEEN_DONE_IN_AUTUMN] + args)
-        quantifier_series_multi([BEEN_DONE_IN_WINTER] + args)
+        quantifier_series_multi(args + [BEEN_DONE_IN_SPRING])
+        quantifier_series_multi(args + [BEEN_DONE_IN_SUMMER])
+        quantifier_series_multi(args + [BEEN_DONE_IN_AUTUMN])
+        quantifier_series_multi(args + [BEEN_DONE_IN_WINTER])
 
 
 def datetime_series(args: List[str], co=FALSE, no2=FALSE,
@@ -207,25 +212,25 @@ def datetime_series(args: List[str], co=FALSE, no2=FALSE,
             quantifier_series_basic([MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT] + args)
     elif type == TYPE_MULTI:
         if co == TRUE:
-            quantifier_series_multi([MAXIMUM_CO_CONCENTRATION_IN_THE_MORNING] + args)
-            quantifier_series_multi([MAXIMUM_CO_CONCENTRATION_IN_THE_AFTERNOON] + args)
-            quantifier_series_multi([MAXIMUM_CO_CONCENTRATION_IN_THE_EVENING] + args)
-            quantifier_series_multi([MAXIMUM_CO_CONCENTRATION_IN_THE_NIGHT] + args)
+            quantifier_series_multi(args + [MAXIMUM_CO_CONCENTRATION_IN_THE_MORNING])
+            quantifier_series_multi(args + [MAXIMUM_CO_CONCENTRATION_IN_THE_AFTERNOON])
+            quantifier_series_multi(args + [MAXIMUM_CO_CONCENTRATION_IN_THE_EVENING])
+            quantifier_series_multi(args + [MAXIMUM_CO_CONCENTRATION_IN_THE_NIGHT])
         elif no2 == TRUE:
-            quantifier_series_multi([MAXIMUM_NO_2_CONCENTRATION_IN_THE_MORNING] + args)
-            quantifier_series_multi([MAXIMUM_NO_2_CONCENTRATION_IN_THE_AFTERNOON] + args)
-            quantifier_series_multi([MAXIMUM_NO_2_CONCENTRATION_IN_THE_EVENING] + args)
-            quantifier_series_multi([MAXIMUM_NO_2_CONCENTRATION_IN_THE_NIGHT] + args)
+            quantifier_series_multi(args + [MAXIMUM_NO_2_CONCENTRATION_IN_THE_MORNING])
+            quantifier_series_multi(args + [MAXIMUM_NO_2_CONCENTRATION_IN_THE_AFTERNOON])
+            quantifier_series_multi(args + [MAXIMUM_NO_2_CONCENTRATION_IN_THE_EVENING])
+            quantifier_series_multi(args + [MAXIMUM_NO_2_CONCENTRATION_IN_THE_NIGHT])
         elif o3 == TRUE:
-            quantifier_series_multi([MAXIMUM_O_3_CONCENTRATION_IN_THE_MORNING] + args)
-            quantifier_series_multi([MAXIMUM_O_3_CONCENTRATION_IN_THE_AFTERNOON] + args)
-            quantifier_series_multi([MAXIMUM_O_3_CONCENTRATION_IN_THE_EVENING] + args)
-            quantifier_series_multi([MAXIMUM_O_3_CONCENTRATION_IN_THE_NIGHT] + args)
+            quantifier_series_multi(args + [MAXIMUM_O_3_CONCENTRATION_IN_THE_MORNING])
+            quantifier_series_multi(args + [MAXIMUM_O_3_CONCENTRATION_IN_THE_AFTERNOON])
+            quantifier_series_multi(args + [MAXIMUM_O_3_CONCENTRATION_IN_THE_EVENING])
+            quantifier_series_multi(args + [MAXIMUM_O_3_CONCENTRATION_IN_THE_NIGHT])
         elif so2 == TRUE:
-            quantifier_series_multi([MAXIMUM_SO_2_CONCENTRATION_IN_THE_MORNING] + args)
-            quantifier_series_multi([MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON] + args)
-            quantifier_series_multi([MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING] + args)
-            quantifier_series_multi([MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT] + args)
+            quantifier_series_multi(args + [MAXIMUM_SO_2_CONCENTRATION_IN_THE_MORNING])
+            quantifier_series_multi(args + [MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON])
+            quantifier_series_multi(args + [MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING])
+            quantifier_series_multi(args + [MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT])
 
 
 def season_datetime_series(args: List[str], co=FALSE, no2=FALSE, o3=FALSE, so2=FALSE) -> None:
@@ -236,8 +241,10 @@ def season_datetime_series(args: List[str], co=FALSE, no2=FALSE, o3=FALSE, so2=F
 
 
 def run_experiments() -> None:
-    season_series([], type=TYPE_BASIC)
-    datetime_series([], co=TRUE, type=TYPE_BASIC)
+    # BASIC BELOW ----------------------------------------------------------------
+
+    # season_series([], type=TYPE_BASIC)
+    # datetime_series([], co=TRUE, type=TYPE_BASIC)
     # datetime_series([], no2=TRUE, type=TYPE_BASIC)
     # datetime_series([], o3=TRUE, type=TYPE_BASIC)
     # datetime_series([], so2=TRUE, type=TYPE_BASIC)
@@ -254,6 +261,12 @@ def run_experiments() -> None:
     # quantifier_series_basic([CORRECT_SO_2_AQI_VALUE])
     # quantifier_series_basic([UNHEALTHY_SO_2_AQI_VALUE])
     # quantifier_series_basic([HAZARDOUS_SO_2_AQI_VALUE])
+
+    # MULTI BELOW ----------------------------------------------------------------
+
+    season_series([CITY_NEW_YORK, CITY_LOS_ANGELES], type=TYPE_MULTI)
+
+    # ADVANCED BELOW ----------------------------------------------------------------
 
     # TODO  DO NOT DELETE - I LEFT THIS JUST IN CASE - MEAN, MAX AND AQI
     # TODO ARE FUNCTIONALLY RELATED SO RESULTS SHOULD BE SIMILAR

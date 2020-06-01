@@ -10,10 +10,11 @@ Script merge all .txt files in current directory
 
 # VAR ------------------------------------------------------------------------ #
 TXT = "*.txt"
-TRUE = "true"
-FALSE = "false"
+TYPE_BASIC = "basic"
+TYPE_ADVANCED = "advanced"
+TYPE_MULTI = "mutli"
 
-LOCATION_FILE_NAMES = glob.glob(os.path.join(pathlib.Path(os.getcwd()), TRUE + TXT))
+LOCATION_FILE_NAMES = glob.glob(os.path.join(pathlib.Path(os.getcwd()), TYPE_MULTI + TXT))
 
 
 # DEF ------------------------------------------------------------------------ #

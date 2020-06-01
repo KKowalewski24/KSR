@@ -103,9 +103,9 @@ SUMMARY_SEPARATOR_CMD = ","
 TRUE = "true"
 FALSE = "false"
 
-TYPE_BASIC = "basic";
-TYPE_ADVANCED = "advanced";
-TYPE_MULTI = "mutli";
+TYPE_BASIC = "basic"
+TYPE_ADVANCED = "advanced"
+TYPE_MULTI = "mutli"
 
 args_to_call: List[str] = []
 
@@ -166,6 +166,15 @@ def season_series(args: List[str], type=TYPE_ADVANCED) -> None:
         quantifier_series_multi(args + [BEEN_DONE_IN_WINTER])
 
 
+def city_series(args: List[str]):
+    quantifier_series_multi([CITY_NEW_YORK, CITY_LOS_ANGELES] + args)
+    quantifier_series_multi([CITY_NEW_YORK, CITY_PHOENIX] + args)
+    quantifier_series_multi([CITY_NEW_YORK, CITY_EL_PASO] + args)
+    quantifier_series_multi([CITY_LOS_ANGELES, CITY_PHOENIX] + args)
+    quantifier_series_multi([CITY_LOS_ANGELES, CITY_EL_PASO] + args)
+    quantifier_series_multi([CITY_PHOENIX, CITY_EL_PASO] + args)
+
+
 def datetime_series(args: List[str], co=FALSE, no2=FALSE,
                     o3=FALSE, so2=FALSE, type=TYPE_ADVANCED) -> None:
     if type == TYPE_ADVANCED:
@@ -212,25 +221,25 @@ def datetime_series(args: List[str], co=FALSE, no2=FALSE,
             quantifier_series_basic([MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT] + args)
     elif type == TYPE_MULTI:
         if co == TRUE:
-            quantifier_series_multi(args + [MAXIMUM_CO_CONCENTRATION_IN_THE_MORNING])
-            quantifier_series_multi(args + [MAXIMUM_CO_CONCENTRATION_IN_THE_AFTERNOON])
-            quantifier_series_multi(args + [MAXIMUM_CO_CONCENTRATION_IN_THE_EVENING])
-            quantifier_series_multi(args + [MAXIMUM_CO_CONCENTRATION_IN_THE_NIGHT])
+            city_series([MAXIMUM_CO_CONCENTRATION_IN_THE_MORNING])
+            city_series([MAXIMUM_CO_CONCENTRATION_IN_THE_AFTERNOON])
+            city_series([MAXIMUM_CO_CONCENTRATION_IN_THE_EVENING])
+            city_series([MAXIMUM_CO_CONCENTRATION_IN_THE_NIGHT])
         elif no2 == TRUE:
-            quantifier_series_multi(args + [MAXIMUM_NO_2_CONCENTRATION_IN_THE_MORNING])
-            quantifier_series_multi(args + [MAXIMUM_NO_2_CONCENTRATION_IN_THE_AFTERNOON])
-            quantifier_series_multi(args + [MAXIMUM_NO_2_CONCENTRATION_IN_THE_EVENING])
-            quantifier_series_multi(args + [MAXIMUM_NO_2_CONCENTRATION_IN_THE_NIGHT])
+            city_series([MAXIMUM_NO_2_CONCENTRATION_IN_THE_MORNING])
+            city_series([MAXIMUM_NO_2_CONCENTRATION_IN_THE_AFTERNOON])
+            city_series([MAXIMUM_NO_2_CONCENTRATION_IN_THE_EVENING])
+            city_series([MAXIMUM_NO_2_CONCENTRATION_IN_THE_NIGHT])
         elif o3 == TRUE:
-            quantifier_series_multi(args + [MAXIMUM_O_3_CONCENTRATION_IN_THE_MORNING])
-            quantifier_series_multi(args + [MAXIMUM_O_3_CONCENTRATION_IN_THE_AFTERNOON])
-            quantifier_series_multi(args + [MAXIMUM_O_3_CONCENTRATION_IN_THE_EVENING])
-            quantifier_series_multi(args + [MAXIMUM_O_3_CONCENTRATION_IN_THE_NIGHT])
+            city_series([MAXIMUM_O_3_CONCENTRATION_IN_THE_MORNING])
+            city_series([MAXIMUM_O_3_CONCENTRATION_IN_THE_AFTERNOON])
+            city_series([MAXIMUM_O_3_CONCENTRATION_IN_THE_EVENING])
+            city_series([MAXIMUM_O_3_CONCENTRATION_IN_THE_NIGHT])
         elif so2 == TRUE:
-            quantifier_series_multi(args + [MAXIMUM_SO_2_CONCENTRATION_IN_THE_MORNING])
-            quantifier_series_multi(args + [MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON])
-            quantifier_series_multi(args + [MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING])
-            quantifier_series_multi(args + [MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT])
+            city_series([MAXIMUM_SO_2_CONCENTRATION_IN_THE_MORNING])
+            city_series([MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON])
+            city_series([MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING])
+            city_series([MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT])
 
 
 def season_datetime_series(args: List[str], co=FALSE, no2=FALSE, o3=FALSE, so2=FALSE) -> None:
@@ -263,8 +272,23 @@ def run_experiments() -> None:
     # quantifier_series_basic([HAZARDOUS_SO_2_AQI_VALUE])
 
     # MULTI BELOW ----------------------------------------------------------------
+    datetime_series([], type=TYPE_MULTI, co=TRUE)
+    datetime_series([], type=TYPE_MULTI, no2=TRUE)
+    datetime_series([], type=TYPE_MULTI, o3=TRUE)
+    datetime_series([], type=TYPE_MULTI, so2=TRUE)
 
-    season_series([CITY_NEW_YORK, CITY_LOS_ANGELES], type=TYPE_MULTI)
+    city_series([CORRECT_CO_AQI_VALUE])
+    city_series([UNHEALTHY_CO_AQI_VALUE])
+    city_series([HAZARDOUS_CO_AQI_VALUE])
+    city_series([CORRECT_NO_2_AQI_VALUE])
+    city_series([UNHEALTHY_NO_2_AQI_VALUE])
+    city_series([HAZARDOUS_NO_2_AQI_VALUE])
+    city_series([CORRECT_O_3_AQI_VALUE])
+    city_series([UNHEALTHY_O_3_AQI_VALUE])
+    city_series([HAZARDOUS_O_3_AQI_VALUE])
+    city_series([CORRECT_SO_2_AQI_VALUE])
+    city_series([UNHEALTHY_SO_2_AQI_VALUE])
+    city_series([HAZARDOUS_SO_2_AQI_VALUE])
 
     # ADVANCED BELOW ----------------------------------------------------------------
 

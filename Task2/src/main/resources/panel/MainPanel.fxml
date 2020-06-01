@@ -20,14 +20,14 @@
                     </ProgressIndicator>
                     <Button fx:id="buttonSubject" mnemonicParsing="false"
                             onAction="#onActionButtonSubject" prefHeight="57.0" prefWidth="108.0"
-                            text="Button">
+                            text="">
                         <HBox.margin>
                             <Insets left="10.0" right="10.0"/>
                         </HBox.margin>
                     </Button>
                     <VBox alignment="CENTER">
                         <children>
-                            <Label alignment="CENTER" prefHeight="19.0" prefWidth="80.0"
+                            <Label alignment="CENTER" prefHeight="22.0" prefWidth="100.0"
                                    text="Quantifier">
                                 <VBox.margin>
                                     <Insets bottom="5.0"/>
@@ -36,7 +36,7 @@
                                     <Font size="15.0"/>
                                 </font>
                             </Label>
-                            <ComboBox fx:id="comboBoxQuantifier" minWidth="250.0"/>
+                            <ComboBox fx:id="comboBoxQuantifier" minWidth="200.0"/>
                         </children>
                         <HBox.margin>
                             <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
@@ -44,7 +44,7 @@
                     </VBox>
                     <VBox fx:id="paneCenterFirst" alignment="CENTER">
                         <children>
-                            <Label alignment="CENTER" prefHeight="19.0" prefWidth="71.0" text="">
+                            <Label alignment="CENTER" prefHeight="22.0" prefWidth="100.0" text="">
                                 <VBox.margin>
                                     <Insets bottom="5.0"/>
                                 </VBox.margin>
@@ -59,7 +59,7 @@
                     </VBox>
                     <VBox fx:id="paneCenterSecond" alignment="CENTER">
                         <children>
-                            <Label alignment="CENTER" prefHeight="19.0" prefWidth="71.0" text="">
+                            <Label alignment="CENTER" prefHeight="22.0" prefWidth="100.0" text="">
                                 <VBox.margin>
                                     <Insets bottom="5.0"/>
                                 </VBox.margin>
@@ -74,7 +74,7 @@
                     </VBox>
                     <VBox fx:id="paneSummarizer" alignment="CENTER">
                         <children>
-                            <Label alignment="CENTER" prefHeight="21.0" prefWidth="92.0"
+                            <Label alignment="CENTER" prefHeight="22.0" prefWidth="100.0"
                                    text="Summarizer">
                                 <VBox.margin>
                                     <Insets bottom="5.0"/>

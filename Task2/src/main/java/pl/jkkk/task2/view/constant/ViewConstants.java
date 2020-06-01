@@ -21,8 +21,14 @@ public class ViewConstants {
     public static final String DEACTIVATED = "Deactivated";
     public static final String SELECT_ITEM = "Select";
 
+    public static final String QUALIFIER = "Qualifier";
+    public static final String CITY_FIRST = "City First";
+    public static final String CITY_SECOND = "City Second";
+
+    public static final String SINGLE_SUBJECT = "Single Subject";
+    public static final String MULTI_SUBJECT = "Multi Subject";
+
     /*------------------------ METHODS REGION ------------------------*/
     private ViewConstants() {
     }
 }
-    

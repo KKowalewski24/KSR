@@ -9,6 +9,7 @@ import javafx.stage.FileChooser;
 import pl.jkkk.task2.logic.exception.FileOperationException;
 import pl.jkkk.task2.logic.fuzzy.linguistic.Label;
 import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticSummary;
+import pl.jkkk.task2.logic.fuzzy.linguistic.MultisubjectLinguisticSummary;
 import pl.jkkk.task2.logic.model.Pollution;
 import pl.jkkk.task2.logic.readerwriter.FileWriterPlainText;
 import pl.jkkk.task2.logic.service.label.LabelWrapperService;
@@ -16,6 +17,7 @@ import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierWrap
 import pl.jkkk.task2.logic.service.pollution.PollutionService;
 import pl.jkkk.task2.view.fxml.PopOutWindow;
 import pl.jkkk.task2.view.fxml.StageController;
+import pl.jkkk.task2.view.model.CustomBoolean;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -47,13 +49,15 @@ public class Loader {
     private List<Pollution> pollutionData;
     private List<String> results = new ArrayList<>();
 
+    private CustomBoolean isMultiSubject;
+
     /*------------------------ METHODS REGION ------------------------*/
     public Loader(ComboBox comboBoxQuantifier, Pane paneCenterFirst, Pane paneCenterSecond,
                   Pane paneSummarizer,
                   ListView listViewResults, PollutionService pollutionService,
                   LabelWrapperService labelWrapperService,
                   LinguisticQuantifierWrapperService quantifierWrapperService,
-                  List<Pollution> pollutionData) {
+                  List<Pollution> pollutionData, CustomBoolean isMultiSubject) {
         this.comboBoxQuantifier = comboBoxQuantifier;
         this.paneCenterFirst = paneCenterFirst;
         this.paneCenterSecond = paneCenterSecond;
@@ -63,27 +67,47 @@ public class Loader {
         this.labelWrapperService = labelWrapperService;
         this.quantifierWrapperService = quantifierWrapperService;
         this.pollutionData = pollutionData;
+        this.isMultiSubject = isMultiSubject;
     }
 
     public void generateBasicSummarization() {
         String selectedQuantifier = getValueFromComboBox(comboBoxQuantifier);
-        String firstSelectedQualifier
-                = getValueFromComboBox((ComboBox) getNodeFromPane(paneCenterFirst, 1));
         String firstSelectedSummarizer
                 = getValueFromComboBox((ComboBox) getNodeFromPane(paneSummarizer, 1));
 
-        if (firstSelectedQualifier.equals(DEACTIVATED)) {
-            if (!firstSelectedSummarizer.equals(SELECT_ITEM)) {
-                generateBasicSummary(selectedQuantifier, firstSelectedSummarizer);
+        if (!isMultiSubject.isState()) {
+            String firstSelectedQualifier
+                    = getValueFromComboBox((ComboBox) getNodeFromPane(paneCenterFirst, 1));
+
+            if (firstSelectedQualifier.equals(DEACTIVATED)) {
+                if (!firstSelectedSummarizer.equals(SELECT_ITEM)) {
+                    generateBasicSummary(selectedQuantifier);
+                } else {
+                    Platform.runLater(() -> {
+                        PopOutWindow.messageBox("", "Summarizer Not Selected",
+                                Alert.AlertType.WARNING);
+                    });
+                }
             } else {
-                Platform.runLater(() -> {
-                    PopOutWindow.messageBox("", "Summarizer Not Selected",
-                            Alert.AlertType.WARNING);
-                });
+                if (!firstSelectedSummarizer.equals(SELECT_ITEM)) {
+                    generateAdvancedSummary(selectedQuantifier, firstSelectedQualifier);
+                } else {
+                    Platform.runLater(() -> {
+                        PopOutWindow.messageBox("", "Summarizer Not Selected",
+                                Alert.AlertType.WARNING);
+                    });
+                }
             }
+
         } else {
+            String attributeValue1
+                    = getValueFromComboBox((ComboBox) getNodeFromPane(paneCenterFirst, 1));
+            String attributeValue2
+                    = getValueFromComboBox((ComboBox) getNodeFromPane(paneCenterSecond, 1));
+
             if (!firstSelectedSummarizer.equals(SELECT_ITEM)) {
-                generateAdvancedSummary(selectedQuantifier, firstSelectedQualifier);
+                generateBasicMultiSubjectSummary(selectedQuantifier,
+                        attributeValue1, attributeValue2);
             } else {
                 Platform.runLater(() -> {
                     PopOutWindow.messageBox("", "Summarizer Not Selected",
@@ -91,6 +115,16 @@ public class Loader {
                 });
             }
         }
+    }
+
+    private void generateBasicSummary(String selectedQuantifier) {
+        LinguisticSummary<Pollution> linguisticSummary = new LinguisticSummary<>(
+                quantifierWrapperService.findByName(selectedQuantifier),
+                pollutionData,
+                getCompoundLabelNameFromPane(paneSummarizer)
+        );
+
+        generateAndFill(linguisticSummary);
     }
 
     private void generateAdvancedSummary(String selectedQuantifier, String selectedQualifier) {
@@ -104,14 +138,18 @@ public class Loader {
         generateAndFill(linguisticSummary);
     }
 
-    private void generateBasicSummary(String selectedQuantifier, String firstSelectedSummarizer) {
-        LinguisticSummary<Pollution> linguisticSummary = new LinguisticSummary<>(
+    private void generateBasicMultiSubjectSummary(String selectedQuantifier,
+                                                  String attributeValue1, String attributeValue2) {
+        MultisubjectLinguisticSummary<Pollution> summary = new MultisubjectLinguisticSummary<>(
                 quantifierWrapperService.findByName(selectedQuantifier),
                 pollutionData,
+                (Pollution pollution) -> pollution.getCity(),
+                attributeValue1,
+                attributeValue2,
                 getCompoundLabelNameFromPane(paneSummarizer)
         );
 
-        generateAndFill(linguisticSummary);
+        generateAndFillMultiSubject(summary);
     }
 
     private Label<Pollution>[] getCompoundLabelNameFromPane(Pane pane) {
@@ -179,6 +217,23 @@ public class Loader {
                 .append(degreeOfQualifierCardinality)
                 .append(", ")
                 .append(lengthOfQualifier)
+                .append("]");
+
+        results.add(generatedResult.toString());
+        Platform.runLater(() -> fillListView(listViewResults, generatedResult.toString()));
+    }
+
+    private void generateAndFillMultiSubject(MultisubjectLinguisticSummary<Pollution> summary) {
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.US);
+        DecimalFormat df = new DecimalFormat("0.00", decimalFormatSymbols);
+
+        String degreeOfTruth = df.format(summary.degreeOfTruth());
+
+        StringBuilder generatedResult = new StringBuilder();
+        generatedResult
+                .append(summary.toString())
+                .append(". [")
+                .append(degreeOfTruth)
                 .append("]");
 
         results.add(generatedResult.toString());

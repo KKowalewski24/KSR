@@ -194,7 +194,6 @@ public class CommandMode {
                                 );
 
                                 saveDataLog(generateSummaryToString(linguisticSummary), it);
-
                                 break;
                             }
                             case TYPE_ADVANCED: {
@@ -212,8 +211,8 @@ public class CommandMode {
                                         pollutionData,
                                         labelWrapperService.findByNames(selectedSummarizers)
                                 );
-                                saveDataLog(generateSummaryToString(linguisticSummary), it);
 
+                                saveDataLog(generateSummaryToString(linguisticSummary), it);
                                 break;
                             }
                             case TYPE_MULTI: {
@@ -237,7 +236,6 @@ public class CommandMode {
                                         );
 
                                 saveDataLog(generateMultiSubjectSummaryToString(summary), it);
-
                                 break;
                             }
                         }

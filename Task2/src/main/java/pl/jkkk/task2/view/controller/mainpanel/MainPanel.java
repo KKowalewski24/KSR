@@ -19,6 +19,7 @@ import pl.jkkk.task2.logic.service.pollution.PollutionService;
 import pl.jkkk.task2.view.fxml.PopOutWindow;
 import pl.jkkk.task2.view.fxml.StageController;
 import pl.jkkk.task2.view.fxml.core.WindowDimensions;
+import pl.jkkk.task2.view.model.CustomBoolean;
 
 import java.net.URL;
 import java.util.List;
@@ -63,6 +64,8 @@ public class MainPanel implements Initializable {
 
     private List<Pollution> pollutionData;
 
+    private CustomBoolean isMultiSubject = new CustomBoolean(false);
+
     /*------------------------ METHODS REGION ------------------------*/
     public MainPanel() {
     }
@@ -79,14 +82,15 @@ public class MainPanel implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializer = new Initializer(
-                comboBoxQuantifier, paneCenterFirst, paneCenterSecond, paneSummarizer,
-                labelWrapperService, quantifierService, pollutionData
+                buttonSubject, comboBoxQuantifier, paneCenterFirst, paneCenterSecond,
+                paneSummarizer,
+                labelWrapperService, quantifierService, pollutionData, isMultiSubject
         );
 
         loader = new Loader(
                 comboBoxQuantifier, paneCenterFirst, paneCenterSecond, paneSummarizer,
                 listViewResults, pollutionService, labelWrapperService,
-                quantifierService, pollutionData
+                quantifierService, pollutionData, isMultiSubject
         );
 
         initializer.fillScene();
@@ -94,7 +98,7 @@ public class MainPanel implements Initializable {
 
     @FXML
     private void onActionButtonSubject(ActionEvent actionEvent) {
-
+        initializer.changeSubjectType();
     }
 
     @FXML

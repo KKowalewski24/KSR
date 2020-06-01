@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.jkkk.task2.Main;
+import pl.jkkk.task2.logic.model.Pollution;
 import pl.jkkk.task2.logic.service.label.LabelWrapperService;
 import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierWrapperService;
 import pl.jkkk.task2.logic.service.pollution.PollutionService;
@@ -19,6 +20,7 @@ import pl.jkkk.task2.view.fxml.StageController;
 import pl.jkkk.task2.view.fxml.core.WindowDimensions;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import static pl.jkkk.task2.view.constant.ViewConstants.EDIT_PANEL_HEIGHT;
@@ -34,7 +36,6 @@ import static pl.jkkk.task2.view.fxml.FxHelper.showProgressIndicator;
 
 @Component
 public class MainPanel implements Initializable {
-
 
     /*------------------------ FIELDS REGION ------------------------*/
     @FXML
@@ -55,6 +56,8 @@ public class MainPanel implements Initializable {
     private LabelWrapperService labelWrapperService;
     private LinguisticQuantifierWrapperService quantifierService;
 
+    private List<Pollution> pollutionData;
+
     /*------------------------ METHODS REGION ------------------------*/
     public MainPanel() {
     }
@@ -65,19 +68,20 @@ public class MainPanel implements Initializable {
         this.pollutionService = pollutionService;
         this.labelWrapperService = labelWrapperService;
         this.quantifierService = quantifierService;
+        pollutionData = pollutionService.findAll();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializer = new Initializer(
                 comboBoxQuantifier, paneQualifier, paneSummarizer,
-                labelWrapperService, quantifierService
+                labelWrapperService, quantifierService, pollutionData
         );
 
         loader = new Loader(
-                comboBoxQuantifier,paneQualifier, paneSummarizer,
+                comboBoxQuantifier, paneQualifier, paneSummarizer,
                 listViewResults, pollutionService, labelWrapperService,
-                quantifierService
+                quantifierService, pollutionData
         );
 
         initializer.fillScene();
@@ -130,4 +134,3 @@ public class MainPanel implements Initializable {
         System.exit(0);
     }
 }
-    

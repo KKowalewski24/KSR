@@ -50,7 +50,8 @@ public class Loader {
     public Loader(ComboBox comboBoxQuantifier, Pane paneQualifier, Pane paneSummarizer,
                   ListView listViewResults, PollutionService pollutionService,
                   LabelWrapperService labelWrapperService,
-                  LinguisticQuantifierWrapperService quantifierWrapperService) {
+                  LinguisticQuantifierWrapperService quantifierWrapperService,
+                  List<Pollution> pollutionData) {
         this.comboBoxQuantifier = comboBoxQuantifier;
         this.paneQualifier = paneQualifier;
         this.paneSummarizer = paneSummarizer;
@@ -58,7 +59,7 @@ public class Loader {
         this.pollutionService = pollutionService;
         this.labelWrapperService = labelWrapperService;
         this.quantifierWrapperService = quantifierWrapperService;
-        this.pollutionData = pollutionService.findAll();
+        this.pollutionData = pollutionData;
     }
 
     public void generateBasicSummarization() {

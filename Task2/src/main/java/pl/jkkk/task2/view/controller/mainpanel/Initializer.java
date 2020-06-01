@@ -2,6 +2,7 @@ package pl.jkkk.task2.view.controller.mainpanel;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
+import pl.jkkk.task2.logic.model.Pollution;
 import pl.jkkk.task2.logic.service.label.LabelWrapperService;
 import pl.jkkk.task2.logic.service.linguisticquantifier.LinguisticQuantifierWrapperService;
 import pl.jkkk.task2.view.model.CustomComboBox;
@@ -25,15 +26,19 @@ public class Initializer {
     private final LabelWrapperService labelWrapperService;
     private final LinguisticQuantifierWrapperService quantifierWrapperService;
 
+    private List<Pollution> pollutionData;
+
     /*------------------------ METHODS REGION ------------------------*/
     public Initializer(ComboBox comboBoxQuantifier, Pane paneQualifier, Pane paneSummarizer,
                        LabelWrapperService labelWrapperService,
-                       LinguisticQuantifierWrapperService quantifierWrapperService) {
+                       LinguisticQuantifierWrapperService quantifierWrapperService,
+                       List<Pollution> pollutionData) {
         this.comboBoxQuantifier = comboBoxQuantifier;
         this.paneQualifier = paneQualifier;
         this.paneSummarizer = paneSummarizer;
         this.labelWrapperService = labelWrapperService;
         this.quantifierWrapperService = quantifierWrapperService;
+        this.pollutionData = pollutionData;
     }
 
     public void fillScene() {

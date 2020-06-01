@@ -61,7 +61,7 @@ public class Initializer {
     }
 
     public void fillScene() {
-        buttonSubject.setText(SINGLE_SUBJECT);
+        buttonSubject.setText(MULTI_SUBJECT);
         fillComboBoxQuantifier();
         fillPaneCenterFirstQualifier();
         fillPaneCenterSecondCity();

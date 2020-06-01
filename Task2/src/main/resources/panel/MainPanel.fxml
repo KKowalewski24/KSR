@@ -19,7 +19,7 @@
                         </HBox.margin>
                     </ProgressIndicator>
                     <Button fx:id="buttonSubject" mnemonicParsing="false"
-                            onAction="#onActionButtonSubject" prefHeight="57.0" prefWidth="108.0"
+                            onAction="#onActionButtonSubject" prefHeight="57.0" prefWidth="138.0"
                             text="">
                         <HBox.margin>
                             <Insets left="10.0" right="10.0"/>

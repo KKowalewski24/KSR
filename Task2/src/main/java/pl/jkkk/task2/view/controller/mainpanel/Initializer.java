@@ -20,7 +20,8 @@ public class Initializer {
 
     /*------------------------ FIELDS REGION ------------------------*/
     private ComboBox comboBoxQuantifier;
-    private Pane paneQualifier;
+    private Pane paneCenterFirst;
+    private Pane paneCenterSecond;
     private Pane paneSummarizer;
 
     private final LabelWrapperService labelWrapperService;
@@ -29,12 +30,14 @@ public class Initializer {
     private List<Pollution> pollutionData;
 
     /*------------------------ METHODS REGION ------------------------*/
-    public Initializer(ComboBox comboBoxQuantifier, Pane paneQualifier, Pane paneSummarizer,
+    public Initializer(ComboBox comboBoxQuantifier, Pane paneCenterFirst, Pane paneCenterSecond,
+                       Pane paneSummarizer,
                        LabelWrapperService labelWrapperService,
                        LinguisticQuantifierWrapperService quantifierWrapperService,
                        List<Pollution> pollutionData) {
         this.comboBoxQuantifier = comboBoxQuantifier;
-        this.paneQualifier = paneQualifier;
+        this.paneCenterFirst = paneCenterFirst;
+        this.paneCenterSecond = paneCenterSecond;
         this.paneSummarizer = paneSummarizer;
         this.labelWrapperService = labelWrapperService;
         this.quantifierWrapperService = quantifierWrapperService;
@@ -58,7 +61,7 @@ public class Initializer {
     private void fillPaneQualifier() {
         CustomComboBox customComboBox = createCustomComboBox(250);
         fillComboBox(customComboBox, addItemToLabelList(DEACTIVATED));
-        addNodeToPane(paneQualifier, customComboBox);
+        addNodeToPane(paneCenterFirst, customComboBox);
 
         //        TODO OLD APPROACH WITH RECURSIVE COMBOBOX FOR QUALIFIER
         //        addComboBox(paneQualifier, DEACTIVATED);

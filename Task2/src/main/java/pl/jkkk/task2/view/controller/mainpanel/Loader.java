@@ -34,7 +34,8 @@ public class Loader {
 
     /*------------------------ FIELDS REGION ------------------------*/
     private ComboBox comboBoxQuantifier;
-    private Pane paneQualifier;
+    private Pane paneCenterFirst;
+    private Pane paneCenterSecond;
     private Pane paneSummarizer;
     private ListView listViewResults;
 
@@ -47,13 +48,15 @@ public class Loader {
     private List<String> results = new ArrayList<>();
 
     /*------------------------ METHODS REGION ------------------------*/
-    public Loader(ComboBox comboBoxQuantifier, Pane paneQualifier, Pane paneSummarizer,
+    public Loader(ComboBox comboBoxQuantifier, Pane paneCenterFirst, Pane paneCenterSecond,
+                  Pane paneSummarizer,
                   ListView listViewResults, PollutionService pollutionService,
                   LabelWrapperService labelWrapperService,
                   LinguisticQuantifierWrapperService quantifierWrapperService,
                   List<Pollution> pollutionData) {
         this.comboBoxQuantifier = comboBoxQuantifier;
-        this.paneQualifier = paneQualifier;
+        this.paneCenterFirst = paneCenterFirst;
+        this.paneCenterSecond = paneCenterSecond;
         this.paneSummarizer = paneSummarizer;
         this.listViewResults = listViewResults;
         this.pollutionService = pollutionService;
@@ -65,7 +68,7 @@ public class Loader {
     public void generateBasicSummarization() {
         String selectedQuantifier = getValueFromComboBox(comboBoxQuantifier);
         String firstSelectedQualifier
-                = getValueFromComboBox((ComboBox) getNodeFromPane(paneQualifier, 1));
+                = getValueFromComboBox((ComboBox) getNodeFromPane(paneCenterFirst, 1));
         String firstSelectedSummarizer
                 = getValueFromComboBox((ComboBox) getNodeFromPane(paneSummarizer, 1));
 

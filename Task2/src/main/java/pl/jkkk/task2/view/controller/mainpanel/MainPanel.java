@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
@@ -39,9 +40,13 @@ public class MainPanel implements Initializable {
 
     /*------------------------ FIELDS REGION ------------------------*/
     @FXML
+    private Button buttonSubject;
+    @FXML
     private ComboBox comboBoxQuantifier;
     @FXML
-    private VBox paneQualifier;
+    private VBox paneCenterFirst;
+    @FXML
+    private VBox paneCenterSecond;
     @FXML
     private VBox paneSummarizer;
     @FXML
@@ -74,17 +79,22 @@ public class MainPanel implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializer = new Initializer(
-                comboBoxQuantifier, paneQualifier, paneSummarizer,
+                comboBoxQuantifier, paneCenterFirst, paneCenterSecond, paneSummarizer,
                 labelWrapperService, quantifierService, pollutionData
         );
 
         loader = new Loader(
-                comboBoxQuantifier, paneQualifier, paneSummarizer,
+                comboBoxQuantifier, paneCenterFirst, paneCenterSecond, paneSummarizer,
                 listViewResults, pollutionService, labelWrapperService,
                 quantifierService, pollutionData
         );
 
         initializer.fillScene();
+    }
+
+    @FXML
+    private void onActionButtonSubject(ActionEvent actionEvent) {
+
     }
 
     @FXML

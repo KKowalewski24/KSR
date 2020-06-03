@@ -261,7 +261,7 @@ public class EditPanel implements Initializable {
     private void onActionButtonEdit(ActionEvent actionEvent) {
         removeQuantifierOrSummarizer();
         paneRightSide.setVisible(true);
-		buttonHideDetails.setVisible(false);
+        buttonHideDetails.setVisible(false);
         buttonConfirm.setVisible(true);
         initializer.prepareTabPane();
     }

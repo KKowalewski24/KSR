@@ -1,11 +1,11 @@
 package pl.jkkk.task2.logic.fuzzy.linguistic;
 
-import java.util.Arrays;
-import java.util.List;
-
 import pl.jkkk.task2.logic.fuzzy.set.FuzzySet;
 import pl.jkkk.task2.logic.fuzzy.set.TrapezoidalFuzzySet;
 import pl.jkkk.task2.logic.model.enumtype.QuantifierType;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class LinguisticSummary<T> {
 
@@ -16,7 +16,7 @@ public class LinguisticSummary<T> {
     private final List<T> objects;
 
     public LinguisticSummary(LinguisticQuantifier quantifier, Label<T> qualifier, List<T> objects,
-            Label<T>... summarizers) {
+                             Label<T>... summarizers) {
         this.quantifier = quantifier;
         this.qualifier = qualifier;
         this.summarizers = summarizers;
@@ -28,7 +28,8 @@ public class LinguisticSummary<T> {
         this.objects = objects;
     }
 
-    public LinguisticSummary(LinguisticQuantifier quantifier, List<T> objects, Label<T>... summarizers) {
+    public LinguisticSummary(LinguisticQuantifier quantifier, List<T> objects,
+                             Label<T>... summarizers) {
         this(quantifier, new AlwaysMatch<T>(), objects, summarizers);
     }
 
@@ -40,28 +41,36 @@ public class LinguisticSummary<T> {
         }
         /* If quantifier is relative, calculate as for the first, or the second form */
         else {
-            return quantifier.compatibilityLevel(
-                    fuzzySetOfCompoundSummarizer.and(qualifier.getFuzzySet()).cardinality(objects) / qualifier
+            return quantifier
+                    .compatibilityLevel(fuzzySetOfCompoundSummarizer
+                            .and(qualifier.getFuzzySet())
+                            .cardinality(objects) / qualifier
                             .getFuzzySet().cardinality(objects));
         }
     }
 
     /* T2 */
     public double degreeOfImprecision() {
-        return 1.0 - Arrays.stream(summarizers).map(Label::getFuzzySet)
-                .mapToDouble(fuzzySet -> fuzzySet.degreeOfFuzziness(objects)).reduce(1.0, (a, b) -> a * b);
+        return 1.0 - Arrays.stream(summarizers)
+                .map(Label::getFuzzySet)
+                .mapToDouble(fuzzySet -> fuzzySet.degreeOfFuzziness(objects))
+                .reduce(1.0, (a, b) -> a * b);
     }
 
     /* T3 */
     public double degreeOfCovering() {
-        return fuzzySetOfCompoundSummarizer.and(qualifier.getFuzzySet()).support(objects).size() / (float) qualifier
+        return fuzzySetOfCompoundSummarizer.and(qualifier.getFuzzySet())
+                .support(objects)
+                .size() / (float) qualifier
                 .getFuzzySet().support(objects).size();
     }
 
     /* T4 */
     public double degreeOfAppropriateness() {
         return Math.abs(Arrays.stream(summarizers)
-                .mapToDouble(summarizer -> summarizer.getFuzzySet().support(objects).size() / (double) objects.size())
+                .mapToDouble(summarizer -> summarizer.getFuzzySet()
+                        .support(objects)
+                        .size() / (double) objects.size())
                 .reduce(1.0, (a, b) -> a * b) - degreeOfCovering());
     }
 
@@ -74,9 +83,11 @@ public class LinguisticSummary<T> {
     public double degreeOfQuantifierImprecision() {
         double continuousSupportLength = 0.0;
         if (quantifier.getFuzzySet() instanceof TrapezoidalFuzzySet) {
-            TrapezoidalFuzzySet<Double> quantifierFuzzySet = (TrapezoidalFuzzySet<Double>) quantifier.getFuzzySet();
+            TrapezoidalFuzzySet<Double> quantifierFuzzySet =
+                    (TrapezoidalFuzzySet<Double>) quantifier.getFuzzySet();
             continuousSupportLength = quantifierFuzzySet.getD() - quantifierFuzzySet.getA();
         }
+
         if (quantifier.getQuantifierType() == QuantifierType.ABSOLUTE) {
             return 1.0 - continuousSupportLength / objects.size();
         } else {
@@ -88,11 +99,14 @@ public class LinguisticSummary<T> {
     public double degreeOfQuantifierCardinality() {
         double measure = 0.0;
         if (quantifier.getFuzzySet() instanceof TrapezoidalFuzzySet) {
-            TrapezoidalFuzzySet<Double> quantifierFuzzySet = (TrapezoidalFuzzySet<Double>) quantifier.getFuzzySet();
-            final double a = quantifierFuzzySet.getA(), b = quantifierFuzzySet.getB(), c = quantifierFuzzySet.getC(),
+            TrapezoidalFuzzySet<Double> quantifierFuzzySet =
+                    (TrapezoidalFuzzySet<Double>) quantifier.getFuzzySet();
+            final double a = quantifierFuzzySet.getA(), b = quantifierFuzzySet.getB(), c =
+                    quantifierFuzzySet.getC(),
                     d = quantifierFuzzySet.getD();
             measure = (b - a) * 0.5 + (c - b) + (d - c) * 0.5;
         }
+
         if (quantifier.getQuantifierType() == QuantifierType.ABSOLUTE) {
             return 1.0 - measure / objects.size();
         } else {
@@ -103,7 +117,8 @@ public class LinguisticSummary<T> {
     /* T8 */
     public double degreeOfSummarizerCardinality() {
         return 1.0 - Arrays.stream(summarizers)
-                .mapToDouble(summarizer -> summarizer.getFuzzySet().cardinality(objects) / objects.size())
+                .mapToDouble(summarizer -> summarizer.getFuzzySet()
+                        .cardinality(objects) / objects.size())
                 .reduce(1.0, (a, b) -> a * b);
     }
 
@@ -123,12 +138,18 @@ public class LinguisticSummary<T> {
     }
 
     /* quality of summary for optimal summary selecting */
-    public double quality(double w1, double w2, double w3, double w4, double w5, double w6, double w7, double w8,
-            double w9, double w10, double w11) {
-        return degreeOfTruth() * w1 + degreeOfImprecision() * w2 + degreeOfCovering() * w3
-                + degreeOfAppropriateness() * w4 + lengthOfSummary() * w5 + degreeOfQuantifierImprecision() * w6
-                + degreeOfQuantifierCardinality() * w7 + degreeOfSummarizerCardinality() * w8
-                + degreeOfQualifierImprecision() * w9 + degreeOfQualifierCardinality() * w10
+    public double quality(double w1, double w2, double w3, double w4, double w5, double w6,
+                          double w7, double w8, double w9, double w10, double w11) {
+        return degreeOfTruth() * w1
+                + degreeOfImprecision() * w2
+                + degreeOfCovering() * w3
+                + degreeOfAppropriateness() * w4
+                + lengthOfSummary() * w5
+                + degreeOfQuantifierImprecision() * w6
+                + degreeOfQuantifierCardinality() * w7
+                + degreeOfSummarizerCardinality() * w8
+                + degreeOfQualifierImprecision() * w9
+                + degreeOfQualifierCardinality() * w10
                 + lengthOfQualifier() * w11;
     }
 
@@ -141,7 +162,8 @@ public class LinguisticSummary<T> {
         if (qualifier instanceof AlwaysMatch) {
             return quantifier.getName() + " measurements have " + compoundSummarizerName;
         } else {
-            return quantifier.getName() + " measurements, which have " + qualifier.getName() + ", have "
+            return quantifier.getName() + " measurements, which have " + qualifier.getName() + ","
+                    + " have "
                     + compoundSummarizerName;
         }
     }

@@ -10,6 +10,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import pl.jkkk.task2.Main;
 import pl.jkkk.task2.logic.model.Pollution;
@@ -58,12 +59,13 @@ public class MainPanel implements Initializable {
     private Initializer initializer;
     private Loader loader;
 
+    @Autowired
+    private Environment environment;
     private PollutionService pollutionService;
     private LabelWrapperService labelWrapperService;
     private LinguisticQuantifierWrapperService quantifierService;
 
     private List<Pollution> pollutionData;
-
     private CustomBoolean isMultiSubject = new CustomBoolean(false);
 
     /*------------------------ METHODS REGION ------------------------*/
@@ -90,7 +92,7 @@ public class MainPanel implements Initializable {
         loader = new Loader(
                 comboBoxQuantifier, paneCenterFirst, paneCenterSecond, paneSummarizer,
                 listViewResults, pollutionService, labelWrapperService,
-                quantifierService, pollutionData, isMultiSubject
+                quantifierService, pollutionData, isMultiSubject, environment
         );
 
         initializer.fillScene();

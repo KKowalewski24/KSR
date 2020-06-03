@@ -6,6 +6,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import org.springframework.core.env.Environment;
 import pl.jkkk.task2.logic.exception.FileOperationException;
 import pl.jkkk.task2.logic.fuzzy.linguistic.Label;
 import pl.jkkk.task2.logic.fuzzy.linguistic.LinguisticSummary;
@@ -49,6 +50,7 @@ public class Loader {
     private List<Pollution> pollutionData;
     private List<String> results = new ArrayList<>();
 
+    private Environment environment;
     private CustomBoolean isMultiSubject;
 
     /*------------------------ METHODS REGION ------------------------*/
@@ -57,7 +59,8 @@ public class Loader {
                   ListView listViewResults, PollutionService pollutionService,
                   LabelWrapperService labelWrapperService,
                   LinguisticQuantifierWrapperService quantifierWrapperService,
-                  List<Pollution> pollutionData, CustomBoolean isMultiSubject) {
+                  List<Pollution> pollutionData, CustomBoolean isMultiSubject,
+                  Environment environment) {
         this.comboBoxQuantifier = comboBoxQuantifier;
         this.paneCenterFirst = paneCenterFirst;
         this.paneCenterSecond = paneCenterSecond;
@@ -68,6 +71,7 @@ public class Loader {
         this.quantifierWrapperService = quantifierWrapperService;
         this.pollutionData = pollutionData;
         this.isMultiSubject = isMultiSubject;
+        this.environment = environment;
     }
 
     public void generateBasicSummarization() {
@@ -168,55 +172,27 @@ public class Loader {
     private void generateAndFill(LinguisticSummary<Pollution> linguisticSummary) {
         DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.US);
         DecimalFormat df = new DecimalFormat("0.00", decimalFormatSymbols);
+        final String baseName = "optional.summary.quality.w";
 
-        String degreeOfTruth = df.format(
-                linguisticSummary.degreeOfTruth());
-        String degreeOfImprecision = df.format(
-                linguisticSummary.degreeOfImprecision());
-        String degreeOfCovering = df.format(
-                linguisticSummary.degreeOfCovering());
-        String degreeOfAppropriateness = df.format(
-                linguisticSummary.degreeOfAppropriateness());
-        String lengthOfSummary = df.format(
-                linguisticSummary.lengthOfSummary());
-        String degreeOfQuantifierImprecision = df.format(
-                linguisticSummary.degreeOfQuantifierImprecision());
-        String degreeOfQuantifierCardinality = df.format(
-                linguisticSummary.degreeOfQuantifierCardinality());
-        String degreeOfSummarizerCardinality = df.format(
-                linguisticSummary.degreeOfSummarizerCardinality());
-        String degreeOfQualifierImprecision = df.format(
-                linguisticSummary.degreeOfQualifierImprecision());
-        String degreeOfQualifierCardinality = df.format(
-                linguisticSummary.degreeOfQualifierCardinality());
-        String lengthOfQualifier = df.format(
-                linguisticSummary.lengthOfQualifier());
+        String quality = df.format(linguisticSummary.quality(
+                Double.valueOf(environment.getProperty(baseName + "1")),
+                Double.valueOf(environment.getProperty(baseName + "2")),
+                Double.valueOf(environment.getProperty(baseName + "3")),
+                Double.valueOf(environment.getProperty(baseName + "4")),
+                Double.valueOf(environment.getProperty(baseName + "5")),
+                Double.valueOf(environment.getProperty(baseName + "6")),
+                Double.valueOf(environment.getProperty(baseName + "7")),
+                Double.valueOf(environment.getProperty(baseName + "8")),
+                Double.valueOf(environment.getProperty(baseName + "9")),
+                Double.valueOf(environment.getProperty(baseName + "10")),
+                Double.valueOf(environment.getProperty(baseName + "11"))
+        ));
 
         StringBuilder generatedResult = new StringBuilder();
         generatedResult
                 .append(linguisticSummary.toString())
                 .append(". [")
-                .append(degreeOfTruth)
-                .append(", ")
-                .append(degreeOfImprecision)
-                .append(", ")
-                .append(degreeOfCovering)
-                .append(", ")
-                .append(degreeOfAppropriateness)
-                .append(", ")
-                .append(lengthOfSummary)
-                .append(", ")
-                .append(degreeOfQuantifierImprecision)
-                .append(", ")
-                .append(degreeOfQuantifierCardinality)
-                .append(", ")
-                .append(degreeOfSummarizerCardinality)
-                .append(", ")
-                .append(degreeOfQualifierImprecision)
-                .append(", ")
-                .append(degreeOfQualifierCardinality)
-                .append(", ")
-                .append(lengthOfQualifier)
+                .append(quality)
                 .append("]");
 
         results.add(generatedResult.toString());

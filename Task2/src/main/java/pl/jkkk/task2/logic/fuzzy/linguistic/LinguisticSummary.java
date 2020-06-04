@@ -81,37 +81,35 @@ public class LinguisticSummary<T> {
 
     /* T6 */
     public double degreeOfQuantifierImprecision() {
-        double continuousSupportLength = 0.0;
         if (quantifier.getFuzzySet() instanceof TrapezoidalFuzzySet) {
             TrapezoidalFuzzySet<Double> quantifierFuzzySet =
                     (TrapezoidalFuzzySet<Double>) quantifier.getFuzzySet();
-            continuousSupportLength = quantifierFuzzySet.getD() - quantifierFuzzySet.getA();
+            double continuousSupportLength = quantifierFuzzySet.getD() - quantifierFuzzySet.getA();
+            if (quantifier.getQuantifierType() == QuantifierType.ABSOLUTE) {
+                return 1.0 - continuousSupportLength / objects.size();
+            } else {
+                return 1.0 - continuousSupportLength;
+            }
         }
-
-        if (quantifier.getQuantifierType() == QuantifierType.ABSOLUTE) {
-            return 1.0 - continuousSupportLength / objects.size();
-        } else {
-            return 1.0 - continuousSupportLength;
-        }
+        return 0.0;
     }
 
     /* T7 */
     public double degreeOfQuantifierCardinality() {
-        double measure = 0.0;
         if (quantifier.getFuzzySet() instanceof TrapezoidalFuzzySet) {
             TrapezoidalFuzzySet<Double> quantifierFuzzySet =
                     (TrapezoidalFuzzySet<Double>) quantifier.getFuzzySet();
             final double a = quantifierFuzzySet.getA(), b = quantifierFuzzySet.getB(), c =
                     quantifierFuzzySet.getC(),
                     d = quantifierFuzzySet.getD();
-            measure = (b - a) * 0.5 + (c - b) + (d - c) * 0.5;
+            double measure = (b - a) * 0.5 + (c - b) + (d - c) * 0.5;
+            if (quantifier.getQuantifierType() == QuantifierType.ABSOLUTE) {
+                return 1.0 - measure / objects.size();
+            } else {
+                return 1.0 - measure;
+            }
         }
-
-        if (quantifier.getQuantifierType() == QuantifierType.ABSOLUTE) {
-            return 1.0 - measure / objects.size();
-        } else {
-            return 1.0 - measure;
-        }
+        return 0.0;
     }
 
     /* T8 */

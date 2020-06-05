@@ -1,4 +1,7 @@
+!jFuzzyLogic_v3.0.jar
 .idea
 *~
 *.txt
 *.jar
+.mypy_cache
+__pycache__

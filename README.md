@@ -1,6 +1,10 @@
 # KSR
 
-## Task 1
+### Team Members
+* [Jan Karwowski](https://github.com/karwojan)
+* [Kamil Kowalewski](https://github.com/KKowalewski24)
+
+## Task 1 - Console App Java SE
 `mvn clean package` \
 `java -jar <jar-with-dependencies> param1 param2 param3 param4 param5`
 
@@ -35,7 +39,7 @@
 Uncomment selected function in main function in `main.py` and run by `python main.py`\
 The rest of information is stored in script
 
-## Task 2
+## Task 2 - JavaFX Desktop App + Spring Data JPA + PostgreSQL
 
 ###### [Dataset](https://www.kaggle.com/sogun3/uspollution) 
 

@@ -75,3 +75,8 @@ where date_part('month', date_local)>=6
 and date_part('month', date_local)<=9
 order by no2aqi desc
 ```
+
+#### Chosen screenshots
+<kbd>![](assets/single_main.png)</kbd>
+<kbd>![](assets/multi_main.png)</kbd>
+<kbd>![](assets/editor.png)</kbd>

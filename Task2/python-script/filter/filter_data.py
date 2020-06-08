@@ -3,15 +3,15 @@ import matplotlib.pyplot as plt
 import pandas
 
 # VAR ------------------------------------------------------------------------ #
-FILTERED_FILE_PATH = "../src/main/resources/filtered_pollution_data.csv"
+FILTERED_FILE_PATH = "../../src/main/resources/filtered_pollution_data.csv"
 
 
 # DEF ------------------------------------------------------------------------ #
 def print_statistics():
     data = pandas.read_csv(FILTERED_FILE_PATH)
-    data.info()
-    data.hist()
-    plt.show()
+    # data.info()
+    # data.hist()
+    # plt.show()
     print(data.min())
     print("\n\n")
     print(data.max())

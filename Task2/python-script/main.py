@@ -105,9 +105,34 @@ FALSE = "false"
 
 TYPE_BASIC = "basic"
 TYPE_ADVANCED = "advanced"
-TYPE_MULTI = "mutli"
+TYPE_MULTI_FIRST = "multiFirst"
+TYPE_MULTI_SECOND = "multiSecond"
+TYPE_MULTI_THIRD = "multiThird"
 
 args_to_call: List[str] = []
+
+
+# MAIN ----------------------------------------------------------------------- #
+def main() -> None:
+    # subprocess.call(["mypy", "main.py"])
+
+    if len(sys.argv) == 2:
+        if sys.argv[1] == "build" or sys.argv[1] == "-b":
+            build_jar()
+        elif sys.argv[1] == "seed_pollution" or sys.argv[1] == "-sp":
+            seed_pollution_database()
+        elif sys.argv[1] == "seed_linguistic" or sys.argv[1] == "-sl":
+            seed_linguistic_database()
+        elif sys.argv[1] == "run" or sys.argv[1] == "-r":
+            run_experiments()
+
+    if len(sys.argv) >= 2 and (sys.argv[1] == "clean" or sys.argv[1] == "-c"):
+        if len(sys.argv) == 3 and (sys.argv[2] == "jar" or sys.argv[2] == "-j"):
+            clean_project_directories(True)
+        else:
+            clean_project_directories(False)
+
+    display_finish()
 
 
 # DEF ------------------------------------------------------------------------ #
@@ -145,7 +170,7 @@ def quantifier_series_advanced(args: List[str]) -> None:
 
 
 def quantifier_series_multi(args: List[str]) -> None:
-    quantifier_series(args, TYPE_MULTI)
+    quantifier_series(args, TYPE_MULTI_FIRST)
 
 
 def season_series(args: List[str], type=TYPE_ADVANCED) -> None:
@@ -159,7 +184,7 @@ def season_series(args: List[str], type=TYPE_ADVANCED) -> None:
         quantifier_series_basic([BEEN_DONE_IN_SUMMER] + args)
         quantifier_series_basic([BEEN_DONE_IN_AUTUMN] + args)
         quantifier_series_basic([BEEN_DONE_IN_WINTER] + args)
-    elif type == TYPE_MULTI:
+    elif type == TYPE_MULTI_FIRST:
         quantifier_series_multi(args + [BEEN_DONE_IN_SPRING])
         quantifier_series_multi(args + [BEEN_DONE_IN_SUMMER])
         quantifier_series_multi(args + [BEEN_DONE_IN_AUTUMN])
@@ -185,17 +210,20 @@ def datetime_series(args: List[str], co=FALSE, no2=FALSE,
             quantifier_series_advanced([MAXIMUM_CO_CONCENTRATION_IN_THE_NIGHT] + args)
         elif no2 == TRUE:
             quantifier_series_advanced([MAXIMUM_NO_2_CONCENTRATION_IN_THE_MORNING] + args)
-            quantifier_series_advanced([MAXIMUM_NO_2_CONCENTRATION_IN_THE_AFTERNOON] + args)
+            quantifier_series_advanced(
+                [MAXIMUM_NO_2_CONCENTRATION_IN_THE_AFTERNOON] + args)
             quantifier_series_advanced([MAXIMUM_NO_2_CONCENTRATION_IN_THE_EVENING] + args)
             quantifier_series_advanced([MAXIMUM_NO_2_CONCENTRATION_IN_THE_NIGHT] + args)
         elif o3 == TRUE:
             quantifier_series_advanced([MAXIMUM_O_3_CONCENTRATION_IN_THE_MORNING] + args)
-            quantifier_series_advanced([MAXIMUM_O_3_CONCENTRATION_IN_THE_AFTERNOON] + args)
+            quantifier_series_advanced(
+                [MAXIMUM_O_3_CONCENTRATION_IN_THE_AFTERNOON] + args)
             quantifier_series_advanced([MAXIMUM_O_3_CONCENTRATION_IN_THE_EVENING] + args)
             quantifier_series_advanced([MAXIMUM_O_3_CONCENTRATION_IN_THE_NIGHT] + args)
         elif so2 == TRUE:
             quantifier_series_advanced([MAXIMUM_SO_2_CONCENTRATION_IN_THE_MORNING] + args)
-            quantifier_series_advanced([MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON] + args)
+            quantifier_series_advanced(
+                [MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON] + args)
             quantifier_series_advanced([MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING] + args)
             quantifier_series_advanced([MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT] + args)
     elif type == TYPE_BASIC:
@@ -219,7 +247,7 @@ def datetime_series(args: List[str], co=FALSE, no2=FALSE,
             quantifier_series_basic([MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON] + args)
             quantifier_series_basic([MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING] + args)
             quantifier_series_basic([MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT] + args)
-    elif type == TYPE_MULTI:
+    elif type == TYPE_MULTI_FIRST:
         if co == TRUE:
             city_series([MAXIMUM_CO_CONCENTRATION_IN_THE_MORNING])
             city_series([MAXIMUM_CO_CONCENTRATION_IN_THE_AFTERNOON])
@@ -242,14 +270,15 @@ def datetime_series(args: List[str], co=FALSE, no2=FALSE,
             city_series([MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT])
 
 
-def season_datetime_series(args: List[str], co=FALSE, no2=FALSE, o3=FALSE, so2=FALSE) -> None:
+def season_datetime_series(args: List[str], co=FALSE, no2=FALSE, o3=FALSE,
+                           so2=FALSE) -> None:
     datetime_series([BEEN_DONE_IN_SPRING] + args, co, no2, o3, so2)
     datetime_series([BEEN_DONE_IN_SUMMER] + args, co, no2, o3, so2)
     datetime_series([BEEN_DONE_IN_AUTUMN] + args, co, no2, o3, so2)
     datetime_series([BEEN_DONE_IN_WINTER] + args, co, no2, o3, so2)
 
 
-def run_experiments() -> None:
+def all_combinations() -> None:
     # BASIC BELOW ----------------------------------------------------------------
 
     # season_series([], type=TYPE_BASIC)
@@ -257,7 +286,7 @@ def run_experiments() -> None:
     # datetime_series([], no2=TRUE, type=TYPE_BASIC)
     # datetime_series([], o3=TRUE, type=TYPE_BASIC)
     # datetime_series([], so2=TRUE, type=TYPE_BASIC)
-    # 
+    #
     # quantifier_series_basic([CORRECT_CO_AQI_VALUE])
     # quantifier_series_basic([UNHEALTHY_CO_AQI_VALUE])
     # quantifier_series_basic([HAZARDOUS_CO_AQI_VALUE])
@@ -271,24 +300,24 @@ def run_experiments() -> None:
     # quantifier_series_basic([UNHEALTHY_SO_2_AQI_VALUE])
     # quantifier_series_basic([HAZARDOUS_SO_2_AQI_VALUE])
 
-    # MULTI BELOW ----------------------------------------------------------------
-    datetime_series([], type=TYPE_MULTI, co=TRUE)
-    datetime_series([], type=TYPE_MULTI, no2=TRUE)
-    datetime_series([], type=TYPE_MULTI, o3=TRUE)
-    datetime_series([], type=TYPE_MULTI, so2=TRUE)
-
-    city_series([CORRECT_CO_AQI_VALUE])
-    city_series([UNHEALTHY_CO_AQI_VALUE])
-    city_series([HAZARDOUS_CO_AQI_VALUE])
-    city_series([CORRECT_NO_2_AQI_VALUE])
-    city_series([UNHEALTHY_NO_2_AQI_VALUE])
-    city_series([HAZARDOUS_NO_2_AQI_VALUE])
-    city_series([CORRECT_O_3_AQI_VALUE])
-    city_series([UNHEALTHY_O_3_AQI_VALUE])
-    city_series([HAZARDOUS_O_3_AQI_VALUE])
-    city_series([CORRECT_SO_2_AQI_VALUE])
-    city_series([UNHEALTHY_SO_2_AQI_VALUE])
-    city_series([HAZARDOUS_SO_2_AQI_VALUE])
+    # MULTI FIRST BELOW ----------------------------------------------------------------
+    # datetime_series([], type=TYPE_MULTI_FIRST, co=TRUE)
+    # datetime_series([], type=TYPE_MULTI_FIRST, no2=TRUE)
+    # datetime_series([], type=TYPE_MULTI_FIRST, o3=TRUE)
+    # datetime_series([], type=TYPE_MULTI_FIRST, so2=TRUE)
+    #
+    # city_series([CORRECT_CO_AQI_VALUE])
+    # city_series([UNHEALTHY_CO_AQI_VALUE])
+    # city_series([HAZARDOUS_CO_AQI_VALUE])
+    # city_series([CORRECT_NO_2_AQI_VALUE])
+    # city_series([UNHEALTHY_NO_2_AQI_VALUE])
+    # city_series([HAZARDOUS_NO_2_AQI_VALUE])
+    # city_series([CORRECT_O_3_AQI_VALUE])
+    # city_series([UNHEALTHY_O_3_AQI_VALUE])
+    # city_series([HAZARDOUS_O_3_AQI_VALUE])
+    # city_series([CORRECT_SO_2_AQI_VALUE])
+    # city_series([UNHEALTHY_SO_2_AQI_VALUE])
+    # city_series([HAZARDOUS_SO_2_AQI_VALUE])
 
     # ADVANCED BELOW ----------------------------------------------------------------
 
@@ -332,7 +361,7 @@ def run_experiments() -> None:
     # season_series([CORRECT_SO_2_AQI_VALUE])
     # season_series([UNHEALTHY_SO_2_AQI_VALUE])
     # season_series([HAZARDOUS_SO_2_AQI_VALUE])
-    # 
+    #
     # datetime_series([CORRECT_CO_AQI_VALUE], co=TRUE)
     # datetime_series([UNHEALTHY_CO_AQI_VALUE], co=TRUE)
     # datetime_series([HAZARDOUS_CO_AQI_VALUE], co=TRUE)
@@ -366,27 +395,83 @@ def run_experiments() -> None:
     pass
 
 
-# MAIN ----------------------------------------------------------------------- #
-def main() -> None:
-    # subprocess.call(["mypy", "main.py"])
+def chosen_experiments() -> None:
+    add_args_to_run([TYPE_BASIC, SOME, BEEN_DONE_IN_SUMMER])
+    add_args_to_run([TYPE_BASIC, SOME, BEEN_DONE_IN_WINTER])
+    add_args_to_run([TYPE_BASIC, ALMOST_NONE, HAZARDOUS_NO_2_AQI_VALUE])
+    add_args_to_run([TYPE_BASIC, ALMOST_NONE, HAZARDOUS_CO_AQI_VALUE])
+    add_args_to_run([TYPE_BASIC, ALMOST_NONE, UNHEALTHY_CO_AQI_VALUE])
+    add_args_to_run([TYPE_BASIC, ALMOST_NONE, UNHEALTHY_O_3_AQI_VALUE])
+    add_args_to_run([TYPE_BASIC, MANY, CORRECT_NO_2_AQI_VALUE])
+    add_args_to_run([TYPE_BASIC, SOME, MAXIMUM_NO_2_CONCENTRATION_IN_THE_NIGHT])
+    add_args_to_run([TYPE_BASIC, SOME, CORRECT_CO_AQI_VALUE])
+    add_args_to_run([TYPE_BASIC, ABOUT_HALF_OF_ALL, MAXIMUM_SO_2_CONCENTRATION_IN_THE_MORNING])
+    add_args_to_run([TYPE_BASIC, MANY, MAXIMUM_O_3_CONCENTRATION_IN_THE_MORNING])
+    add_args_to_run([TYPE_BASIC, ALMOST_NONE, MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING])
+    add_args_to_run([TYPE_BASIC, SOME, MAXIMUM_NO_2_CONCENTRATION_IN_THE_MORNING])
+    add_args_to_run([TYPE_BASIC, SOME, MAXIMUM_NO_2_CONCENTRATION_IN_THE_EVENING])
+    add_args_to_run([TYPE_BASIC, ALMOST_NONE, MAXIMUM_CO_CONCENTRATION_IN_THE_AFTERNOON])
+    add_args_to_run([TYPE_BASIC, MANY, MAXIMUM_CO_CONCENTRATION_IN_THE_NIGHT])
+    add_args_to_run([TYPE_BASIC, ALMOST_NONE, MAXIMUM_NO_2_CONCENTRATION_IN_THE_AFTERNOON])
+    add_args_to_run([TYPE_BASIC, SOME, MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT])
+    add_args_to_run([TYPE_BASIC, ALMOST_NONE, MAXIMUM_CO_CONCENTRATION_IN_THE_EVENING])
+    add_args_to_run([TYPE_BASIC, ALMOST_NONE, MAXIMUM_O_3_CONCENTRATION_IN_THE_EVENING])
+    add_args_to_run([TYPE_BASIC, ALMOST_NONE, MAXIMUM_O_3_CONCENTRATION_IN_THE_AFTERNOON])
+    add_args_to_run([TYPE_BASIC, ALMOST_NONE, MAXIMUM_O_3_CONCENTRATION_IN_THE_NIGHT])
+    add_args_to_run([TYPE_BASIC, SOME, MAXIMUM_CO_CONCENTRATION_IN_THE_MORNING])
 
-    if len(sys.argv) == 2:
-        if sys.argv[1] == "build" or sys.argv[1] == "-b":
-            build_jar()
-        elif sys.argv[1] == "seed_pollution" or sys.argv[1] == "-sp":
-            seed_pollution_database()
-        elif sys.argv[1] == "seed_linguistic" or sys.argv[1] == "-sl":
-            seed_linguistic_database()
-        elif sys.argv[1] == "run" or sys.argv[1] == "-r":
-            run_experiments()
+    add_args_to_run([TYPE_ADVANCED, ALL, MAXIMUM_O_3_CONCENTRATION_IN_THE_EVENING, BEEN_DONE_IN_WINTER, CORRECT_O_3_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, ALL, MAXIMUM_NO_2_CONCENTRATION_IN_THE_AFTERNOON, BEEN_DONE_IN_WINTER, CORRECT_NO_2_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, ALL, BEEN_DONE_IN_SPRING, CORRECT_O_3_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, ALL, BEEN_DONE_IN_AUTUMN, CORRECT_O_3_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, ALL, MAXIMUM_O_3_CONCENTRATION_IN_THE_EVENING, CORRECT_O_3_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, MANY, MAXIMUM_NO_2_CONCENTRATION_IN_THE_AFTERNOON, CORRECT_NO_2_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, MANY, MAXIMUM_O_3_CONCENTRATION_IN_THE_NIGHT, BEEN_DONE_IN_WINTER, CORRECT_O_3_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, MANY, MAXIMUM_NO_2_CONCENTRATION_IN_THE_NIGHT, CORRECT_NO_2_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, MANY, MAXIMUM_O_3_CONCENTRATION_IN_THE_EVENING, BEEN_DONE_IN_WINTER, CORRECT_O_3_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, MANY, MAXIMUM_NO_2_CONCENTRATION_IN_THE_MORNING, CORRECT_NO_2_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, MANY, BEEN_DONE_IN_SUMMER, CORRECT_NO_2_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, MANY, BEEN_DONE_IN_SPRING, CORRECT_NO_2_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, ABOUT_HALF_OF_ALL, MAXIMUM_CO_CONCENTRATION_IN_THE_EVENING, UNHEALTHY_CO_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, ABOUT_HALF_OF_ALL, MAXIMUM_O_3_CONCENTRATION_IN_THE_EVENING, BEEN_DONE_IN_WINTER, CORRECT_O_3_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, ABOUT_HALF_OF_ALL, MAXIMUM_NO_2_CONCENTRATION_IN_THE_AFTERNOON, BEEN_DONE_IN_WINTER, CORRECT_NO_2_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, ABOUT_HALF_OF_ALL, MAXIMUM_O_3_CONCENTRATION_IN_THE_NIGHT, BEEN_DONE_IN_WINTER, CORRECT_O_3_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, ABOUT_HALF_OF_ALL, BEEN_DONE_IN_WINTER, CORRECT_CO_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, SOME, MAXIMUM_O_3_CONCENTRATION_IN_THE_AFTERNOON, BEEN_DONE_IN_SPRING, CORRECT_O_3_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, SOME, MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING, CORRECT_SO_2_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, SOME, MAXIMUM_NO_2_CONCENTRATION_IN_THE_AFTERNOON, BEEN_DONE_IN_AUTUMN, CORRECT_NO_2_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, SOME, BEEN_DONE_IN_SPRING, CORRECT_CO_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, SOME, MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON, CORRECT_SO_2_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, ALMOST_NONE, MAXIMUM_O_3_CONCENTRATION_IN_THE_AFTERNOON, BEEN_DONE_IN_SPRING, UNHEALTHY_O_3_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, ALMOST_NONE, MAXIMUM_NO_2_CONCENTRATION_IN_THE_AFTERNOON, BEEN_DONE_IN_WINTER, UNHEALTHY_NO_2_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, ALMOST_NONE, BEEN_DONE_IN_AUTUMN, UNHEALTHY_O_3_AQI_VALUE])
+    add_args_to_run([TYPE_ADVANCED, ALMOST_NONE, MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING, BEEN_DONE_IN_AUTUMN, CORRECT_SO_2_AQI_VALUE])
 
-    if len(sys.argv) >= 2 and (sys.argv[1] == "clean" or sys.argv[1] == "-c"):
-        if len(sys.argv) == 3 and (sys.argv[2] == "jar" or sys.argv[2] == "-j"):
-            clean_project_directories(True)
-        else:
-            clean_project_directories(False)
+    add_args_to_run([TYPE_MULTI_FIRST, ALL, CITY_LOS_ANGELES, CITY_EL_PASO, UNHEALTHY_CO_AQI_VALUE])
+    add_args_to_run([TYPE_MULTI_FIRST, MANY, CITY_LOS_ANGELES, CITY_PHOENIX, UNHEALTHY_CO_AQI_VALUE])
+    add_args_to_run([TYPE_MULTI_FIRST, MANY, CITY_LOS_ANGELES, CITY_PHOENIX, MAXIMUM_O_3_CONCENTRATION_IN_THE_AFTERNOON])
+    add_args_to_run([TYPE_MULTI_FIRST, MANY, CITY_NEW_YORK, CITY_EL_PASO, MAXIMUM_O_3_CONCENTRATION_IN_THE_EVENING])
+    add_args_to_run([TYPE_MULTI_FIRST, MANY, CITY_LOS_ANGELES, CITY_PHOENIX, MAXIMUM_CO_CONCENTRATION_IN_THE_AFTERNOON])
+    add_args_to_run([TYPE_MULTI_FIRST, MANY, CITY_NEW_YORK, CITY_PHOENIX, CORRECT_SO_2_AQI_VALUE])
+    add_args_to_run([TYPE_MULTI_FIRST, ABOUT_HALF_OF_ALL, CITY_PHOENIX, CITY_EL_PASO, MAXIMUM_CO_CONCENTRATION_IN_THE_NIGHT])
+    add_args_to_run([TYPE_MULTI_FIRST, ABOUT_HALF_OF_ALL, CITY_LOS_ANGELES, CITY_PHOENIX, UNHEALTHY_SO_2_AQI_VALUE])
+    add_args_to_run([TYPE_MULTI_FIRST, ABOUT_HALF_OF_ALL, CITY_NEW_YORK, CITY_PHOENIX, MAXIMUM_NO_2_CONCENTRATION_IN_THE_NIGHT])
+    add_args_to_run([TYPE_MULTI_FIRST, ABOUT_HALF_OF_ALL, CITY_NEW_YORK, CITY_LOS_ANGELES, MAXIMUM_O_3_CONCENTRATION_IN_THE_MORNING])
+    add_args_to_run([TYPE_MULTI_FIRST, ALMOST_NONE, CITY_NEW_YORK, CITY_LOS_ANGELES, UNHEALTHY_CO_AQI_VALUE])
+    add_args_to_run([TYPE_MULTI_FIRST, ABOUT_HALF_OF_ALL, CITY_PHOENIX, CITY_EL_PASO, CORRECT_NO_2_AQI_VALUE])
+    add_args_to_run([TYPE_MULTI_FIRST, ABOUT_HALF_OF_ALL, CITY_LOS_ANGELES, CITY_EL_PASO, CORRECT_NO_2_AQI_VALUE])
+    add_args_to_run([TYPE_MULTI_FIRST, ABOUT_HALF_OF_ALL, CITY_NEW_YORK, CITY_PHOENIX, MAXIMUM_CO_CONCENTRATION_IN_THE_MORNING])
+    add_args_to_run([TYPE_MULTI_FIRST, SOME, CITY_NEW_YORK, CITY_LOS_ANGELES, UNHEALTHY_NO_2_AQI_VALUE])
+    add_args_to_run([TYPE_MULTI_FIRST, SOME, CITY_NEW_YORK, CITY_PHOENIX, UNHEALTHY_O_3_AQI_VALUE])
+    add_args_to_run([TYPE_MULTI_FIRST, SOME, CITY_PHOENIX, CITY_EL_PASO, MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON])
+    add_args_to_run([TYPE_MULTI_FIRST, SOME, CITY_LOS_ANGELES, CITY_PHOENIX, MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING])
+    pass
 
-    display_finish()
+
+def run_experiments() -> None:
+    # TODO SELECT PROPER ONE
+    all_combinations()
+    chosen_experiments()
 
 
 # UTIL ----------------------------------------------------------------------- #
@@ -399,7 +484,8 @@ def build_jar() -> None:
     os.chdir(script_directory.parent)
     if platform.system().lower() == "windows":
         subprocess.call("mvnw.cmd clean package", shell=True)
-        subprocess.call("copy target\\" + JAR_NAME + " " + str(script_directory), shell=True)
+        subprocess.call("copy target\\" + JAR_NAME + " " + str(script_directory),
+                        shell=True)
     elif platform.system().lower() == "linux":
         subprocess.call("./mvnw clean package", shell=True)
         subprocess.call("cp target/" + JAR_NAME + " " + str(script_directory), shell=True)

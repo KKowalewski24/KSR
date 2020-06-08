@@ -144,7 +144,9 @@ public class CommandMode {
 
     public static final String TYPE_BASIC = "basic";
     public static final String TYPE_ADVANCED = "advanced";
-    public static final String TYPE_MULTI = "mutli";
+    public static final String TYPE_MULTI_FIRST = "multiFirst";
+    public static final String TYPE_MULTI_SECOND = "multiSecond";
+    public static final String TYPE_MULTI_THIRD = "multiThird";
 
     private final PollutionService pollutionService;
     private final LinguisticQuantifierWrapperService linguisticQuantifierWrapperService;
@@ -220,7 +222,7 @@ public class CommandMode {
                                 saveDataLog(generateSummaryToString(linguisticSummary), it);
                                 break;
                             }
-                            case TYPE_MULTI: {
+                            case TYPE_MULTI_FIRST: {
                                 String selectedQuantifier = it.get(1);
                                 String attributeValue1 = it.get(2);
                                 String attributeValue2 = it.get(3);
@@ -241,6 +243,14 @@ public class CommandMode {
                                         );
 
                                 saveDataLog(generateMultiSubjectSummaryToString(summary), it);
+                                break;
+                            }
+                            case TYPE_MULTI_SECOND: {
+                                //TODO
+                                break;
+                            }
+                            case TYPE_MULTI_THIRD: {
+                                //TODO
                                 break;
                             }
                         }

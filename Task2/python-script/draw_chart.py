@@ -10,7 +10,7 @@ Run `python draw_chart.py first_param second_param etc `
 first_param - center
 second_param - width
 
-python draw_chart.py 0.05 0.05 "Almost none" 0.28 0.07 "Some" 0.5 0.08 "About half of all" 0.72 0.07 "Many" 0.95 0.04 "All"
+python draw_chart.py 0.00 0.07 "Almost none" 0.28 0.07 "Some" 0.5 0.08 "About half of all" 0.72 0.07 "Many" 1.00 0.07 "All"
 
 """
 

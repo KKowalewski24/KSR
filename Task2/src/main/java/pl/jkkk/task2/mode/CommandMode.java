@@ -334,7 +334,7 @@ public class CommandMode {
         // Kwantyfikatory
         saveLinguisticQuantifier(new LinguisticQuantifier(
                 ALMOST_NONE,
-                new GaussianFuzzySet<Double>(x -> x, 0.05, 0.05),
+                new GaussianFuzzySet<Double>(x -> x, 0.00, 0.07),
                 QuantifierType.RELATIVE)
         );
         saveLinguisticQuantifier(new LinguisticQuantifier(
@@ -354,7 +354,7 @@ public class CommandMode {
         );
         saveLinguisticQuantifier(new LinguisticQuantifier(
                 ALL,
-                new GaussianFuzzySet<Double>(x -> x, 0.95, 0.04),
+                new GaussianFuzzySet<Double>(x -> x, 1.00, 0.07),
                 QuantifierType.RELATIVE)
         );
 

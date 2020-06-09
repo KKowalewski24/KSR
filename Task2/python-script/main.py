@@ -226,6 +226,11 @@ def all_combinations() -> None:
     # city_series([UNHEALTHY_SO_2_AQI_VALUE])
     # city_series([HAZARDOUS_SO_2_AQI_VALUE])
 
+    # MULTI SECOND BELOW ----------------------------------------------------------------
+
+    # MULTI THIRD BELOW ----------------------------------------------------------------
+
+
     run_selected_args()
     pass
 
@@ -396,19 +401,19 @@ def season_series(args: List[str], type=TYPE_ADVANCED) -> None:
         quantifier_series_basic([BEEN_DONE_IN_AUTUMN] + args)
         quantifier_series_basic([BEEN_DONE_IN_WINTER] + args)
     elif type == TYPE_MULTI_FIRST:
-        quantifier_series_multi(args + [BEEN_DONE_IN_SPRING])
-        quantifier_series_multi(args + [BEEN_DONE_IN_SUMMER])
-        quantifier_series_multi(args + [BEEN_DONE_IN_AUTUMN])
-        quantifier_series_multi(args + [BEEN_DONE_IN_WINTER])
+        quantifier_series_multi_first(args + [BEEN_DONE_IN_SPRING])
+        quantifier_series_multi_first(args + [BEEN_DONE_IN_SUMMER])
+        quantifier_series_multi_first(args + [BEEN_DONE_IN_AUTUMN])
+        quantifier_series_multi_first(args + [BEEN_DONE_IN_WINTER])
 
 
 def city_series(args: List[str]):
-    quantifier_series_multi([CITY_NEW_YORK, CITY_LOS_ANGELES] + args)
-    quantifier_series_multi([CITY_NEW_YORK, CITY_PHOENIX] + args)
-    quantifier_series_multi([CITY_NEW_YORK, CITY_EL_PASO] + args)
-    quantifier_series_multi([CITY_LOS_ANGELES, CITY_PHOENIX] + args)
-    quantifier_series_multi([CITY_LOS_ANGELES, CITY_EL_PASO] + args)
-    quantifier_series_multi([CITY_PHOENIX, CITY_EL_PASO] + args)
+    quantifier_series_multi_first([CITY_NEW_YORK, CITY_LOS_ANGELES] + args)
+    quantifier_series_multi_first([CITY_NEW_YORK, CITY_PHOENIX] + args)
+    quantifier_series_multi_first([CITY_NEW_YORK, CITY_EL_PASO] + args)
+    quantifier_series_multi_first([CITY_LOS_ANGELES, CITY_PHOENIX] + args)
+    quantifier_series_multi_first([CITY_LOS_ANGELES, CITY_EL_PASO] + args)
+    quantifier_series_multi_first([CITY_PHOENIX, CITY_EL_PASO] + args)
 
 
 def quantifier_series_basic(args: List[str]) -> None:
@@ -419,7 +424,7 @@ def quantifier_series_advanced(args: List[str]) -> None:
     quantifier_series(args, TYPE_ADVANCED)
 
 
-def quantifier_series_multi(args: List[str]) -> None:
+def quantifier_series_multi_first(args: List[str]) -> None:
     quantifier_series(args, TYPE_MULTI_FIRST)
 
 

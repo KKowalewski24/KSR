@@ -227,10 +227,34 @@ def all_combinations() -> None:
     # city_series([HAZARDOUS_SO_2_AQI_VALUE])
 
     # MULTI SECOND BELOW ----------------------------------------------------------------
+    # datetime_series([CORRECT_CO_AQI_VALUE], type=TYPE_MULTI_SECOND, co=TRUE)
+    # datetime_series([UNHEALTHY_CO_AQI_VALUE], type=TYPE_MULTI_SECOND, co=TRUE)
+    # datetime_series([HAZARDOUS_CO_AQI_VALUE], type=TYPE_MULTI_SECOND, co=TRUE)
+    # datetime_series([CORRECT_NO_2_AQI_VALUE], type=TYPE_MULTI_SECOND, no2=TRUE)
+    # datetime_series([UNHEALTHY_NO_2_AQI_VALUE], type=TYPE_MULTI_SECOND, no2=TRUE)
+    # datetime_series([HAZARDOUS_NO_2_AQI_VALUE], type=TYPE_MULTI_SECOND, no2=TRUE)
+    # datetime_series([CORRECT_O_3_AQI_VALUE], type=TYPE_MULTI_SECOND, o3=TRUE)
+    # datetime_series([UNHEALTHY_O_3_AQI_VALUE], type=TYPE_MULTI_SECOND, o3=TRUE)
+    # datetime_series([HAZARDOUS_O_3_AQI_VALUE], type=TYPE_MULTI_SECOND, o3=TRUE)
+    # datetime_series([CORRECT_SO_2_AQI_VALUE], type=TYPE_MULTI_SECOND, so2=TRUE)
+    # datetime_series([UNHEALTHY_SO_2_AQI_VALUE], type=TYPE_MULTI_SECOND, so2=TRUE)
+    # datetime_series([HAZARDOUS_SO_2_AQI_VALUE], type=TYPE_MULTI_SECOND, so2=TRUE)
 
     # MULTI THIRD BELOW ----------------------------------------------------------------
+    # datetime_series([CORRECT_CO_AQI_VALUE], type=TYPE_MULTI_THIRD, co=TRUE)
+    # datetime_series([UNHEALTHY_CO_AQI_VALUE], type=TYPE_MULTI_THIRD, co=TRUE)
+    # datetime_series([HAZARDOUS_CO_AQI_VALUE], type=TYPE_MULTI_THIRD, co=TRUE)
+    # datetime_series([CORRECT_NO_2_AQI_VALUE], type=TYPE_MULTI_THIRD, no2=TRUE)
+    # datetime_series([UNHEALTHY_NO_2_AQI_VALUE], type=TYPE_MULTI_THIRD, no2=TRUE)
+    # datetime_series([HAZARDOUS_NO_2_AQI_VALUE], type=TYPE_MULTI_THIRD, no2=TRUE)
+    # datetime_series([CORRECT_O_3_AQI_VALUE], type=TYPE_MULTI_THIRD, o3=TRUE)
+    # datetime_series([UNHEALTHY_O_3_AQI_VALUE], type=TYPE_MULTI_THIRD, o3=TRUE)
+    # datetime_series([HAZARDOUS_O_3_AQI_VALUE], type=TYPE_MULTI_THIRD, o3=TRUE)
+    # datetime_series([CORRECT_SO_2_AQI_VALUE], type=TYPE_MULTI_THIRD, so2=TRUE)
+    # datetime_series([UNHEALTHY_SO_2_AQI_VALUE], type=TYPE_MULTI_THIRD, so2=TRUE)
+    # datetime_series([HAZARDOUS_SO_2_AQI_VALUE], type=TYPE_MULTI_THIRD, so2=TRUE)
 
-
+    # print(args_to_call)
     run_selected_args()
     pass
 
@@ -358,27 +382,27 @@ def datetime_series(args: List[str], co=FALSE, no2=FALSE,
             quantifier_series_basic([MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON] + args)
             quantifier_series_basic([MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING] + args)
             quantifier_series_basic([MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT] + args)
-    elif type == TYPE_MULTI_FIRST:
+    elif type == TYPE_MULTI_FIRST or type == TYPE_MULTI_SECOND or type == TYPE_MULTI_THIRD:
         if co == TRUE:
-            city_series([MAXIMUM_CO_CONCENTRATION_IN_THE_MORNING])
-            city_series([MAXIMUM_CO_CONCENTRATION_IN_THE_AFTERNOON])
-            city_series([MAXIMUM_CO_CONCENTRATION_IN_THE_EVENING])
-            city_series([MAXIMUM_CO_CONCENTRATION_IN_THE_NIGHT])
+            city_series([MAXIMUM_CO_CONCENTRATION_IN_THE_MORNING] + args, type)
+            city_series([MAXIMUM_CO_CONCENTRATION_IN_THE_AFTERNOON] + args, type)
+            city_series([MAXIMUM_CO_CONCENTRATION_IN_THE_EVENING] + args, type)
+            city_series([MAXIMUM_CO_CONCENTRATION_IN_THE_NIGHT] + args, type)
         elif no2 == TRUE:
-            city_series([MAXIMUM_NO_2_CONCENTRATION_IN_THE_MORNING])
-            city_series([MAXIMUM_NO_2_CONCENTRATION_IN_THE_AFTERNOON])
-            city_series([MAXIMUM_NO_2_CONCENTRATION_IN_THE_EVENING])
-            city_series([MAXIMUM_NO_2_CONCENTRATION_IN_THE_NIGHT])
+            city_series([MAXIMUM_NO_2_CONCENTRATION_IN_THE_MORNING] + args, type)
+            city_series([MAXIMUM_NO_2_CONCENTRATION_IN_THE_AFTERNOON] + args, type)
+            city_series([MAXIMUM_NO_2_CONCENTRATION_IN_THE_EVENING] + args, type)
+            city_series([MAXIMUM_NO_2_CONCENTRATION_IN_THE_NIGHT] + args, type)
         elif o3 == TRUE:
-            city_series([MAXIMUM_O_3_CONCENTRATION_IN_THE_MORNING])
-            city_series([MAXIMUM_O_3_CONCENTRATION_IN_THE_AFTERNOON])
-            city_series([MAXIMUM_O_3_CONCENTRATION_IN_THE_EVENING])
-            city_series([MAXIMUM_O_3_CONCENTRATION_IN_THE_NIGHT])
+            city_series([MAXIMUM_O_3_CONCENTRATION_IN_THE_MORNING] + args, type)
+            city_series([MAXIMUM_O_3_CONCENTRATION_IN_THE_AFTERNOON] + args, type)
+            city_series([MAXIMUM_O_3_CONCENTRATION_IN_THE_EVENING] + args, type)
+            city_series([MAXIMUM_O_3_CONCENTRATION_IN_THE_NIGHT] + args, type)
         elif so2 == TRUE:
-            city_series([MAXIMUM_SO_2_CONCENTRATION_IN_THE_MORNING])
-            city_series([MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON])
-            city_series([MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING])
-            city_series([MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT])
+            city_series([MAXIMUM_SO_2_CONCENTRATION_IN_THE_MORNING] + args, type)
+            city_series([MAXIMUM_SO_2_CONCENTRATION_IN_THE_AFTERNOON] + args, type)
+            city_series([MAXIMUM_SO_2_CONCENTRATION_IN_THE_EVENING] + args, type)
+            city_series([MAXIMUM_SO_2_CONCENTRATION_IN_THE_NIGHT] + args, type)
 
 
 def season_datetime_series(args: List[str], co=FALSE, no2=FALSE, o3=FALSE,
@@ -407,13 +431,28 @@ def season_series(args: List[str], type=TYPE_ADVANCED) -> None:
         quantifier_series_multi_first(args + [BEEN_DONE_IN_WINTER])
 
 
-def city_series(args: List[str]):
-    quantifier_series_multi_first([CITY_NEW_YORK, CITY_LOS_ANGELES] + args)
-    quantifier_series_multi_first([CITY_NEW_YORK, CITY_PHOENIX] + args)
-    quantifier_series_multi_first([CITY_NEW_YORK, CITY_EL_PASO] + args)
-    quantifier_series_multi_first([CITY_LOS_ANGELES, CITY_PHOENIX] + args)
-    quantifier_series_multi_first([CITY_LOS_ANGELES, CITY_EL_PASO] + args)
-    quantifier_series_multi_first([CITY_PHOENIX, CITY_EL_PASO] + args)
+def city_series(args: List[str], type=TYPE_MULTI_FIRST):
+    if type == TYPE_MULTI_FIRST:
+        quantifier_series_multi_first([CITY_NEW_YORK, CITY_LOS_ANGELES] + args)
+        quantifier_series_multi_first([CITY_NEW_YORK, CITY_PHOENIX] + args)
+        quantifier_series_multi_first([CITY_NEW_YORK, CITY_EL_PASO] + args)
+        quantifier_series_multi_first([CITY_LOS_ANGELES, CITY_PHOENIX] + args)
+        quantifier_series_multi_first([CITY_LOS_ANGELES, CITY_EL_PASO] + args)
+        quantifier_series_multi_first([CITY_PHOENIX, CITY_EL_PASO] + args)
+    elif type == TYPE_MULTI_SECOND:
+        quantifier_series_multi_second([CITY_NEW_YORK, CITY_LOS_ANGELES] + args)
+        quantifier_series_multi_second([CITY_NEW_YORK, CITY_PHOENIX] + args)
+        quantifier_series_multi_second([CITY_NEW_YORK, CITY_EL_PASO] + args)
+        quantifier_series_multi_second([CITY_LOS_ANGELES, CITY_PHOENIX] + args)
+        quantifier_series_multi_second([CITY_LOS_ANGELES, CITY_EL_PASO] + args)
+        quantifier_series_multi_second([CITY_PHOENIX, CITY_EL_PASO] + args)
+    elif type == TYPE_MULTI_THIRD:
+        quantifier_series_multi_third([CITY_NEW_YORK, CITY_LOS_ANGELES] + args)
+        quantifier_series_multi_third([CITY_NEW_YORK, CITY_PHOENIX] + args)
+        quantifier_series_multi_third([CITY_NEW_YORK, CITY_EL_PASO] + args)
+        quantifier_series_multi_third([CITY_LOS_ANGELES, CITY_PHOENIX] + args)
+        quantifier_series_multi_third([CITY_LOS_ANGELES, CITY_EL_PASO] + args)
+        quantifier_series_multi_third([CITY_PHOENIX, CITY_EL_PASO] + args)
 
 
 def quantifier_series_basic(args: List[str]) -> None:
@@ -426,6 +465,14 @@ def quantifier_series_advanced(args: List[str]) -> None:
 
 def quantifier_series_multi_first(args: List[str]) -> None:
     quantifier_series(args, TYPE_MULTI_FIRST)
+
+
+def quantifier_series_multi_second(args: List[str]) -> None:
+    quantifier_series(args, TYPE_MULTI_SECOND)
+
+
+def quantifier_series_multi_third(args: List[str]) -> None:
+    quantifier_series(args, TYPE_MULTI_THIRD)
 
 
 # BASIC - FIRST STEP FOR EVERY EXPERIMENT

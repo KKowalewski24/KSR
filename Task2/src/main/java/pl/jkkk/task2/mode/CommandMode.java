@@ -246,11 +246,37 @@ public class CommandMode {
                                 break;
                             }
                             case TYPE_MULTI_SECOND: {
+                                String selectedQuantifier = it.get(1);
+                                String attributeValue1 = it.get(2);
+                                String attributeValue2 = it.get(3);
+                                String selectedQualifier = it.get(4);
+                                List<String> selectedSummarizers = new ArrayList<>();
+
+                                for (int i = 5; i < it.size(); i++) {
+                                    selectedSummarizers.add(it.get(i));
+                                }
+
                                 //TODO
+//                                MultisubjectLinguisticSummary<Pollution> summary = null;
+//
+//                                saveDataLog(generateMultiSubjectSummaryToString(summary), it);
                                 break;
                             }
                             case TYPE_MULTI_THIRD: {
+                                String selectedQuantifier = it.get(1);
+                                String attributeValue1 = it.get(2);
+                                String attributeValue2 = it.get(3);
+                                String selectedQualifier = it.get(4);
+                                List<String> selectedSummarizers = new ArrayList<>();
+
+                                for (int i = 5; i < it.size(); i++) {
+                                    selectedSummarizers.add(it.get(i));
+                                }
+
                                 //TODO
+//                                MultisubjectLinguisticSummary<Pollution> summary = null;
+//
+//                                saveDataLog(generateMultiSubjectSummaryToString(summary), it);
                                 break;
                             }
                         }

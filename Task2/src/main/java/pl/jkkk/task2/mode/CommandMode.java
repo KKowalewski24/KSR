@@ -256,10 +256,18 @@ public class CommandMode {
                                     selectedSummarizers.add(it.get(i));
                                 }
 
-                                //TODO
-//                                MultisubjectLinguisticSummary<Pollution> summary = null;
-//
-//                                saveDataLog(generateMultiSubjectSummaryToString(summary), it);
+                                MultisubjectLinguisticSummary<Pollution> summary =
+                                        new MultisubjectLinguisticSummary<>(
+                                                linguisticQuantifierWrapperService.findByName(selectedQuantifier),
+                                                pollutionData,
+                                                (Pollution pollution) -> pollution.getCity(),
+                                                attributeValue1,
+                                                labelWrapperService.findByName(selectedQualifier),
+                                                attributeValue2,
+                                                labelWrapperService.findByNames(selectedSummarizers)
+                                        );
+
+                                saveDataLog(generateMultiSubjectSummaryToString(summary), it);
                                 break;
                             }
                             case TYPE_MULTI_THIRD: {
@@ -273,10 +281,18 @@ public class CommandMode {
                                     selectedSummarizers.add(it.get(i));
                                 }
 
-                                //TODO
-//                                MultisubjectLinguisticSummary<Pollution> summary = null;
-//
-//                                saveDataLog(generateMultiSubjectSummaryToString(summary), it);
+                                MultisubjectLinguisticSummary<Pollution> summary =
+                                        new MultisubjectLinguisticSummary<>(
+                                                linguisticQuantifierWrapperService.findByName(selectedQuantifier),
+                                                pollutionData,
+                                                (Pollution pollution) -> pollution.getCity(),
+                                                labelWrapperService.findByName(selectedQualifier),
+                                                attributeValue1,
+                                                attributeValue2,
+                                                labelWrapperService.findByNames(selectedSummarizers)
+                                        );
+
+                                saveDataLog(generateMultiSubjectSummaryToString(summary), it);
                                 break;
                             }
                         }

@@ -12,9 +12,11 @@ Script merge all .txt files in current directory
 TXT = "*.txt"
 TYPE_BASIC = "basic"
 TYPE_ADVANCED = "advanced"
-TYPE_MULTI = "mutli"
+TYPE_MULTI_FIRST = "multiFirst"
+TYPE_MULTI_SECOND = "multiSecond"
+TYPE_MULTI_THIRD = "multiThird"
 
-LOCATION_FILE_NAMES = glob.glob(os.path.join(pathlib.Path(os.getcwd()), TYPE_MULTI + TXT))
+LOCATION_FILE_NAMES = glob.glob(os.path.join(pathlib.Path(os.getcwd()), TYPE_MULTI_THIRD + TXT))
 
 
 # DEF ------------------------------------------------------------------------ #

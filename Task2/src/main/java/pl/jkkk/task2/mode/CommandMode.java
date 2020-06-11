@@ -144,7 +144,9 @@ public class CommandMode {
 
     public static final String TYPE_BASIC = "basic";
     public static final String TYPE_ADVANCED = "advanced";
-    public static final String TYPE_MULTI = "mutli";
+    public static final String TYPE_MULTI_FIRST = "multiFirst";
+    public static final String TYPE_MULTI_SECOND = "multiSecond";
+    public static final String TYPE_MULTI_THIRD = "multiThird";
 
     private final PollutionService pollutionService;
     private final LinguisticQuantifierWrapperService linguisticQuantifierWrapperService;
@@ -220,7 +222,7 @@ public class CommandMode {
                                 saveDataLog(generateSummaryToString(linguisticSummary), it);
                                 break;
                             }
-                            case TYPE_MULTI: {
+                            case TYPE_MULTI_FIRST: {
                                 String selectedQuantifier = it.get(1);
                                 String attributeValue1 = it.get(2);
                                 String attributeValue2 = it.get(3);
@@ -235,6 +237,56 @@ public class CommandMode {
                                                 linguisticQuantifierWrapperService.findByName(selectedQuantifier),
                                                 pollutionData,
                                                 (Pollution pollution) -> pollution.getCity(),
+                                                attributeValue1,
+                                                attributeValue2,
+                                                labelWrapperService.findByNames(selectedSummarizers)
+                                        );
+
+                                saveDataLog(generateMultiSubjectSummaryToString(summary), it);
+                                break;
+                            }
+                            case TYPE_MULTI_SECOND: {
+                                String selectedQuantifier = it.get(1);
+                                String attributeValue1 = it.get(2);
+                                String attributeValue2 = it.get(3);
+                                String selectedQualifier = it.get(4);
+                                List<String> selectedSummarizers = new ArrayList<>();
+
+                                for (int i = 5; i < it.size(); i++) {
+                                    selectedSummarizers.add(it.get(i));
+                                }
+
+                                MultisubjectLinguisticSummary<Pollution> summary =
+                                        new MultisubjectLinguisticSummary<>(
+                                                linguisticQuantifierWrapperService.findByName(selectedQuantifier),
+                                                pollutionData,
+                                                (Pollution pollution) -> pollution.getCity(),
+                                                attributeValue1,
+                                                labelWrapperService.findByName(selectedQualifier),
+                                                attributeValue2,
+                                                labelWrapperService.findByNames(selectedSummarizers)
+                                        );
+
+                                saveDataLog(generateMultiSubjectSummaryToString(summary), it);
+                                break;
+                            }
+                            case TYPE_MULTI_THIRD: {
+                                String selectedQuantifier = it.get(1);
+                                String attributeValue1 = it.get(2);
+                                String attributeValue2 = it.get(3);
+                                String selectedQualifier = it.get(4);
+                                List<String> selectedSummarizers = new ArrayList<>();
+
+                                for (int i = 5; i < it.size(); i++) {
+                                    selectedSummarizers.add(it.get(i));
+                                }
+
+                                MultisubjectLinguisticSummary<Pollution> summary =
+                                        new MultisubjectLinguisticSummary<>(
+                                                linguisticQuantifierWrapperService.findByName(selectedQuantifier),
+                                                pollutionData,
+                                                (Pollution pollution) -> pollution.getCity(),
+                                                labelWrapperService.findByName(selectedQualifier),
                                                 attributeValue1,
                                                 attributeValue2,
                                                 labelWrapperService.findByNames(selectedSummarizers)
@@ -334,7 +386,7 @@ public class CommandMode {
         // Kwantyfikatory
         saveLinguisticQuantifier(new LinguisticQuantifier(
                 ALMOST_NONE,
-                new GaussianFuzzySet<Double>(x -> x, 0.05, 0.05),
+                new GaussianFuzzySet<Double>(x -> x, 0.00, 0.07),
                 QuantifierType.RELATIVE)
         );
         saveLinguisticQuantifier(new LinguisticQuantifier(
@@ -354,7 +406,7 @@ public class CommandMode {
         );
         saveLinguisticQuantifier(new LinguisticQuantifier(
                 ALL,
-                new GaussianFuzzySet<Double>(x -> x, 0.95, 0.04),
+                new GaussianFuzzySet<Double>(x -> x, 1.00, 0.07),
                 QuantifierType.RELATIVE)
         );
 

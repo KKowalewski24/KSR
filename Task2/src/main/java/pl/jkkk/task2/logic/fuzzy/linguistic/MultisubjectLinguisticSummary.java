@@ -19,10 +19,10 @@ public class MultisubjectLinguisticSummary<T> {
     private final String attributeValue2;
 
     private MultisubjectLinguisticSummary(LinguisticQuantifier quantifier,
-                                         Label<T> qualifier1, Label<T> qualifier2, List<T> objects,
-                                         Function<T, String> attributeExtractor,
-                                         String attributeValue1, String attributeValue2,
-                                         Label<T>... summarizers) {
+                                          Label<T> qualifier1, Label<T> qualifier2, List<T> objects,
+                                          Function<T, String> attributeExtractor,
+                                          String attributeValue1, String attributeValue2,
+                                          Label<T>... summarizers) {
         this.quantifier = quantifier;
         this.qualifier1 = qualifier1;
         this.qualifier2 = qualifier2;
@@ -45,34 +45,38 @@ public class MultisubjectLinguisticSummary<T> {
     }
 
     public MultisubjectLinguisticSummary(LinguisticQuantifier quantifier,
-            List<T> objects, Function<T, String> attributeExtractor,
-            String attributeValue1, String attributeValue2,
-            Label<T>... summarizers) {
-        this(quantifier, new AlwaysMatch<>(), new AlwaysMatch<>(), objects, attributeExtractor, attributeValue1,
-                attributeValue2, summarizers);
+                                         List<T> objects, Function<T, String> attributeExtractor,
+                                         String attributeValue1, String attributeValue2,
+                                         Label<T>... summarizers) {
+        this(quantifier, new AlwaysMatch<>(), new AlwaysMatch<>(),
+                objects, attributeExtractor, attributeValue1, attributeValue2, summarizers);
     }
 
     public MultisubjectLinguisticSummary(LinguisticQuantifier quantifier,
-            List<T> objects, Function<T, String> attributeExtractor,
-            Label<T> qualifier1, String attributeValue1, String attributeValue2,
-            Label<T>... summarizers) {
-        this(quantifier, qualifier1, new AlwaysMatch<>(), objects, attributeExtractor, attributeValue1,
-                attributeValue2, summarizers);
+                                         List<T> objects, Function<T, String> attributeExtractor,
+                                         Label<T> qualifier1, String attributeValue1,
+                                         String attributeValue2,
+                                         Label<T>... summarizers) {
+        this(quantifier, qualifier1, new AlwaysMatch<>(),
+                objects, attributeExtractor, attributeValue1, attributeValue2, summarizers);
     }
 
     public MultisubjectLinguisticSummary(LinguisticQuantifier quantifier,
-            List<T> objects, Function<T, String> attributeExtractor,
-            String attributeValue1, Label<T> qualifier2, String attributeValue2,
-            Label<T>... summarizers) {
-        this(quantifier, new AlwaysMatch<>(), qualifier2, objects, attributeExtractor, attributeValue1,
-                attributeValue2, summarizers);
+                                         List<T> objects, Function<T, String> attributeExtractor,
+                                         String attributeValue1, Label<T> qualifier2,
+                                         String attributeValue2,
+                                         Label<T>... summarizers) {
+        this(quantifier, new AlwaysMatch<>(), qualifier2,
+                objects, attributeExtractor, attributeValue1, attributeValue2, summarizers);
     }
 
     public double degreeOfTruth() {
-            final double p1tmp = 1.0 / objectsP1.size()
-                    * fuzzySetOfCompoundSummarizer.and(qualifier1.getFuzzySet()).cardinality(objectsP1);
+        final double p1tmp = 1.0 / objectsP1.size()
+                * fuzzySetOfCompoundSummarizer
+                .and(qualifier1.getFuzzySet()).cardinality(objectsP1);
         final double p2tmp = 1.0 / objectsP2.size()
-                * fuzzySetOfCompoundSummarizer.and(qualifier2.getFuzzySet()).cardinality(objectsP2);
+                * fuzzySetOfCompoundSummarizer
+                .and(qualifier2.getFuzzySet()).cardinality(objectsP2);
 
         return quantifier.compatibilityLevel(p1tmp / (p1tmp + p2tmp));
     }

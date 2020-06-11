@@ -1,5 +1,6 @@
 package pl.jkkk.task2.logic.readerwriter;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import pl.jkkk.task2.logic.exception.FileOperationException;
 
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Disabled
 class FileWriterPlainTextTest {
 
     /*------------------------ FIELDS REGION ------------------------*/
